@@ -10,5 +10,5 @@ assignees: ''
 📍 Issue Feature
 전체적인 작업사항을 입력해주세요
 
-✅Todo
+✅ Todo
 - [ ] 작업사항
