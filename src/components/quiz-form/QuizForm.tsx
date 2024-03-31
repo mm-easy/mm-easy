@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import QuestionForm from './QuestionForm';
+import Image from 'next/image';
 
 const QuizForm = () => {
   const [level, setLevel] = useState<number>(0);
@@ -68,7 +69,7 @@ const QuizForm = () => {
             onClick={handleImgClick}
             className="bg-gray-200 w-72 min-h-52 border-solid border-2 border-indigo-600 flex items-center"
           >
-            <img
+            <Image
               src={selectedImg}
               alt="샘플이미지"
               className="object-cover"
