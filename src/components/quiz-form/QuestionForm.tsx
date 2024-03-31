@@ -34,7 +34,7 @@ const QuestionForm = () => {
         </div>
         <section>
           {questionType === 'objective' ? (
-            <form>
+            <div>
               <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
               <input
                 type="text"
@@ -45,16 +45,16 @@ const QuestionForm = () => {
                 <input type="text" style={{ width: '500px' }} placeholder="선택지를 입력해 주세요. ex)사과" />
                 <input type="text" style={{ width: '500px' }} placeholder="선택지를 입력해 주세요. ex)포도" />
               </section>
-            </form>
+            </div>
           ) : (
-            <form>
+            <div>
               <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
               <input
                 type="text"
                 style={{ width: '500px' }}
                 placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻을 작성해 주세요."
               />
-            </form>
+            </div>
           )}
         </section>
       </article>
