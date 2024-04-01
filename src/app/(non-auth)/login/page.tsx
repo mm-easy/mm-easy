@@ -1,13 +1,31 @@
+"use client"
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth'; 
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { signIn, loading, error } = useAuth(); 
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await signIn(email, password);
+    
+    if (!error) {
+      router.push('/'); 
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-2xl">
         <div className="flex items-center justify-center w-24 h-24 mx-auto mb-4 bg-black rounded-full">
           {/* 고양이 예시 */}
         </div>
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
               ID
@@ -19,6 +37,8 @@ const LoginPage = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="you@example.com"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} 
               />
             </div>
           </div>
@@ -33,13 +53,17 @@ const LoginPage = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="••••••••"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} 
               />
             </div>
           </div>
+          {error && <div className="text-red-500">{error}</div>}
           <div>
             <button 
               type="submit" 
               className="w-full px-4 py-2 text-white bg-black rounded-md shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
+              disabled={loading} 
             >
               로그인
             </button>

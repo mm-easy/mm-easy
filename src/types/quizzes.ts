@@ -1,22 +1,21 @@
 export enum QuestionType {
-  subjective,
-  objective
+  objective = 'objective',
+  subjective = 'subjective'
 }
 
 export type Option = {
   id: string;
-  questionId: string;
   content: string;
   isAnswer: boolean;
 };
 
 export type Question = {
   id: string;
-  quizId: string; //????????
   type: QuestionType;
   title: string;
   imgUrl?: string;
   correctAnswer?: string;
+  options: Option[];
   // options?: Option[];
 };
 
