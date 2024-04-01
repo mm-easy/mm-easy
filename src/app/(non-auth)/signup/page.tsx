@@ -1,14 +1,16 @@
 "use client"
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSignUp } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { signUp } = useSignUp(); 
+  const { signUp } = useAuth(); 
+  const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,9 +18,14 @@ const SignUpPage = () => {
       toast.error('비밀번호가 서로 일치하지 않습니다.'); 
       return;
     }
+    if (password.length < 6) {
+      toast.error('비밀번호는 최소 6자 이상이어야 합니다.');
+      return;
+    }
     try {
       await signUp(email, password);
       toast.success('회원가입에 성공했습니다!'); 
+      router.push('/login');
     } catch (error) {
     }
   };
@@ -58,7 +65,6 @@ const SignUpPage = () => {
                 placeholder="Create a password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete="new-password"
               />
             </div>
           </div>
