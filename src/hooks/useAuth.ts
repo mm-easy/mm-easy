@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabase/supabase';
 
-export const useSignUp = () => {
+export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,13 +14,8 @@ export const useSignUp = () => {
       setLoading(false);
       return;
     }
-    if (password.length < 6) {
-      setError('비밀번호는 6자리 이상이어야 합니다.');
-      setLoading(false);
-      return;
-    }
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -29,7 +24,51 @@ export const useSignUp = () => {
     else setError(null);
 
     setLoading(false);
+
+    if (data.user) {
+        const nickname = email.split('@')[0];
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert([{ id: data.user.id, email, nickname }]);
+    
+        if (insertError) {
+          setError(insertError.message);
+        }
+      } else {
+        setError('회원가입에 성공했으나 사용자 정보를 불러올 수 없습니다.');
+      }
+    
+      setLoading(false);
   };
 
-  return { signUp, loading, error, setError };
+  const signIn = async (email: string, password: string) => {
+    setLoading(true);
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+      setError(null);
+    }
+
+    setLoading(false);
+  };
+
+  const logout = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      setError(error.message);
+    } else {
+      setError(null);
+    }
+    setLoading(false);
+  };
+
+  return { signUp, signIn, logout, loading, error, setError };
 };

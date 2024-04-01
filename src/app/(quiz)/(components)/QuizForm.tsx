@@ -4,14 +4,34 @@ import QuestionForm from './QuestionForm';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import type { Option, Question, Quiz } from '@/types/quizzes';
-import PageUpBtn from '../../../components/common/PageUpBtn';
+import type { Question } from '@/types/quizzes';
+import { QuestionType } from '@/types/quizzes';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizForm = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [options, setOptions] = useState<Option[]>([]);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
+  const [questions, setQuestions] = useState<Question[]>([
+    {
+      id: crypto.randomUUID(),
+      type: QuestionType.objective,
+      title: '',
+      options: [
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        },
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        }
+      ]
+      // imgUrl: '',
+      // correctAnswer: ''
+    }
+  ]);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -108,9 +128,7 @@ const QuizForm = () => {
             />
           </div>
         </div>
-        <div className="">
-          <QuestionForm questions={questions} setQuestions={setQuestions} options={options} setOptions={setOptions} />
-        </div>
+        <QuestionForm questions={questions} setQuestions={setQuestions} />
         <div className="flex gap-2">
           <button type="button">취소하기</button>
           <button type="submit">등록하기</button>
