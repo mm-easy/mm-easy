@@ -11,13 +11,13 @@ export type Option = {
 };
 
 export type Question = {
-  id: string;
+  // id: string;
   quizId: string; //????????
   type: QuestionType;
   title: string;
   imgUrl?: string;
   correctAnswer?: string;
-  // options?: Option[];
+  options?: Option[];
 };
 
 export type Quiz = {

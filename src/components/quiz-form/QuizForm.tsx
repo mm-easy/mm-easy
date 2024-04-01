@@ -4,20 +4,30 @@ import QuestionForm from './QuestionForm';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import type { Option, Question, Quiz } from '@/types/quizzes';
+import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
 import PageUpBtn from '../common/PageUpBtn';
+import { useRouter } from 'next/navigation';
+import PlusQuestionBtn from './PlusQuestionBtn';
 
 const QuizForm = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [options, setOptions] = useState<Option[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([
+    {
+      quizId: '',
+      type: QuestionType.objective,
+      title: '',
+      options: []
+    }
+  ]);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  /** 스크롤 이동 추적 이벤트 */
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
@@ -47,6 +57,12 @@ const QuizForm = () => {
     }
   };
 
+  /** 취소 버튼 클릭 핸들러 */
+  const handleCancelBtn = () => {
+    if (!window.confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?')) return;
+    router.push('/quiz-list');
+  };
+
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = () => {
     if (!level) {
@@ -65,6 +81,18 @@ const QuizForm = () => {
       selectedImg
     };
     console.log('등록될 게시글', newQuiz);
+  };
+
+  const handleAddQuestion = () => {
+    setQuestions((prevQuestions) => [
+      ...prevQuestions,
+      {
+        quizId: '',
+        type: QuestionType.objective,
+        title: '',
+        options: []
+      }
+    ]);
   };
 
   return (
@@ -108,11 +136,16 @@ const QuizForm = () => {
             />
           </div>
         </div>
-        <div className="">
-          <QuestionForm questions={questions} setQuestions={setQuestions} options={options} setOptions={setOptions} />
+        <div className="flex flex-col">
+          {questions.map(() => (
+            <QuestionForm questions={questions} setQuestions={setQuestions} />
+          ))}
+          <PlusQuestionBtn onClick={handleAddQuestion} />
         </div>
-        <div className="flex gap-2">
-          <button type="button">취소하기</button>
+        <div className="flex gap-2 mt-10">
+          <button type="button" onClick={handleCancelBtn}>
+            취소하기
+          </button>
           <button type="submit">등록하기</button>
         </div>
       </form>
