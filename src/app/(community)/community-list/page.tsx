@@ -1,12 +1,20 @@
-import { createClient } from '@/utils/supabase/create-client';
-
+import { getPosts } from '@/api/posts';
 const page = async () => {
-  const supabase = createClient();
-  const { data: posts, error } = await supabase.from('').select('*');
-
+  const posts = await getPosts();
   console.log('posts', posts);
-
-  return <div></div>;
+  return (
+    <article>
+      <div>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
 };
-
 export default page;
