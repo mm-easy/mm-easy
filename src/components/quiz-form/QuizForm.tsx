@@ -27,9 +27,9 @@ const QuizForm = () => {
           content: '',
           isAnswer: false
         }
-      ]
-      // imgUrl: '',
-      // correctAnswer: ''
+      ],
+      correctAnswer: ''
+      // imgUrl: 'https://via.placeholder.com/200x150'
     }
   ]);
   const [level, setLevel] = useState<number>(0);

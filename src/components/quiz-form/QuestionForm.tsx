@@ -12,42 +12,82 @@ const QuestionForm = ({
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
 }) => {
-  const handleQuestionType = (id: string, type: QuestionType) => {
-    const newQuestions = questions.map((question) => {
-      return question.id === id ? { ...question, type: type } : question;
-    });
+  /** 문제 타입 바꾸기 버튼 핸들러 */
+  const handleChangeType = (id: string, type: QuestionType) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id ? { ...question, type } : question;
+      })
+    );
+  };
 
-    setQuestions(newQuestions);
+  /** 문제 타이틀 입력 핸들러 */
+  const handleChangeTitle = (id: string, title: string) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id ? { ...question, title } : question;
+      })
+    );
+  };
+
+  /** 문제 주관식 정답 입력 핸들러 */
+  const handleChangeCorrectAnswer = (id: string, correctAnswer: string) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id ? { ...question, correctAnswer } : question;
+      })
+    );
+  };
+
+  /** 문제 삭제하기 버튼 핸들러 */
+  const handleDeleteQuestion = (id: string) => {
+    if (questions.length > 1) {
+      if (!window.confirm(`해당 문제를 삭제하시겠습니까? ${id}`)) return;
+      setQuestions((prev) => {
+        const newQuestions = prev.filter((question) => question.id !== id);
+        return newQuestions;
+      });
+    } else {
+      alert('최소 1개의 문제는 있어야 합니다.');
+      return;
+    }
   };
 
   return (
     <>
       <article style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
         {questions.map((question) => {
-          const { id, type, title, options } = question;
+          const { id, type, options } = question;
           return (
             <section key={id}>
-              <div>
-                <input
-                  type="radio"
-                  id="objective"
-                  name="question-type"
-                  value="objective"
-                  defaultChecked
-                  onChange={() => handleQuestionType(id, QuestionType.objective)}
-                />
-                <label htmlFor="objective">객관식</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="subjective"
-                  name="question-type"
-                  value="subjective"
-                  onChange={() => handleQuestionType(id, QuestionType.subjective)}
-                />
-                <label htmlFor="subjective">주관식</label>
-              </div>
+              <section style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <section>
+                  <div>
+                    <input
+                      type="radio"
+                      id="objective"
+                      name="question-type"
+                      value="objective"
+                      defaultChecked
+                      onChange={() => handleChangeType(id, QuestionType.objective)}
+                    />
+                    <label htmlFor="objective">객관식</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="subjective"
+                      name="question-type"
+                      value="subjective"
+                      onChange={() => handleChangeType(id, QuestionType.subjective)}
+                    />
+                    <label htmlFor="subjective">주관식</label>
+                  </div>
+                </section>
+                <button type="button" onClick={() => handleDeleteQuestion(id)}>
+                  🗑️
+                </button>
+              </section>
               <section>
                 {type === QuestionType.objective ? (
                   <div>
@@ -56,6 +96,10 @@ const QuestionForm = ({
                       type="text"
                       style={{ width: '500px' }}
                       placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeTitle(id, e.target.value);
+                      }}
                     />
                     {options.map((option) => {
                       return (
@@ -72,8 +116,20 @@ const QuestionForm = ({
                       type="text"
                       style={{ width: '500px' }}
                       placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeTitle(id, e.target.value);
+                      }}
                     />
-                    <input type="text" style={{ width: '500px' }} placeholder="정답을 입력해 주세요." />
+                    <input
+                      type="text"
+                      style={{ width: '500px' }}
+                      placeholder="정답을 입력해 주세요."
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeCorrectAnswer(id, e.target.value);
+                      }}
+                    />
                   </div>
                 )}
               </section>
