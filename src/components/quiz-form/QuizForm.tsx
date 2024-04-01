@@ -83,16 +83,34 @@ const QuizForm = () => {
     console.log('등록될 게시글', newQuiz);
   };
 
+  /** 문제 추가하기 버튼 클릭 핸들러 */
   const handleAddQuestion = () => {
-    setQuestions((prevQuestions) => [
-      ...prevQuestions,
-      {
-        quizId: '',
-        type: QuestionType.objective,
-        title: '',
-        options: []
-      }
-    ]);
+    if (questions.length < 5) {
+      setQuestions((prevQuestions) => [
+        ...prevQuestions,
+        {
+          quizId: '',
+          type: QuestionType.objective,
+          title: '',
+          options: []
+        }
+      ]);
+    } else {
+      alert('최대 5개까지만 문제를 추가할 수 있습니다.');
+    }
+  };
+
+  /** 문제 삭제하기 버튼 클릭 핸들러 */
+  const handleDeleteQuestion = (idx: number) => {
+    if (questions.length > 1) {
+      setQuestions((prevQuestions) => {
+        const newQuestions = [...prevQuestions];
+        newQuestions.splice(idx, 1);
+        return newQuestions;
+      });
+    } else {
+      alert('최소 1개의 문제는 있어야 합니다.');
+    }
   };
 
   return (
@@ -137,8 +155,11 @@ const QuizForm = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          {questions.map(() => (
-            <QuestionForm questions={questions} setQuestions={setQuestions} />
+          {questions.map((item, idx) => (
+            <div key={idx} className="flex gap-2">
+              <QuestionForm questions={questions} setQuestions={setQuestions} />
+              <div onClick={() => handleDeleteQuestion(idx)}>삭제</div>
+            </div>
           ))}
           <PlusQuestionBtn onClick={handleAddQuestion} />
         </div>
