@@ -116,7 +116,7 @@ const QuizForm = () => {
           <button type="submit">등록하기</button>
         </div>
       </form>
-      <div style={{ position: 'fixed', bottom: '20px', left: '20px;' }}>
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px;' }}>
         <PageUpBtn scrollPosition={scrollPosition} />
       </div>
     </main>

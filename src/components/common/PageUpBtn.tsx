@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface PageUpBtnProps {
@@ -32,7 +33,7 @@ const PageUpBtn = ({ scrollPosition }: PageUpBtnProps) => {
   return (
     <>
       {isVisible && (
-        <img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" width={30} onClick={handlePageUp} />
+        <Image src="https://via.placeholder.com/30x30" alt="" width={30} height={30} onClick={handlePageUp} />
       )}
     </>
   );
