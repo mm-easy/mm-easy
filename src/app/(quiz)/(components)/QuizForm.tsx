@@ -2,27 +2,44 @@
 
 import QuestionForm from './QuestionForm';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-
-import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
-import { useRouter } from 'next/navigation';
 import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
 
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { insertQuizToTable } from '@/api/quizzes';
+
+import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
+
 const QuizForm = () => {
-  const [questions, setQuestions] = useState<Question[]>([
-    {
-      quizId: crypto.randomUUID(),
-      type: QuestionType.objective,
-      title: '',
-      options: []
-    }
-  ]);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
+
+  const [questions, setQuestions] = useState<Question[]>([
+    {
+      id: crypto.randomUUID(),
+      type: QuestionType.objective,
+      title: '',
+      options: [
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        },
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        }
+      ]
+      // imgUrl: '',
+      // correctAnswer: ''
+    }
+  ]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -32,7 +49,6 @@ const QuizForm = () => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
@@ -69,10 +85,21 @@ const QuizForm = () => {
       setQuestions((prevQuestions) => [
         ...prevQuestions,
         {
-          quizId: crypto.randomUUID(),
+          id: crypto.randomUUID(),
           type: QuestionType.objective,
           title: '',
-          options: []
+          options: [
+            {
+              id: crypto.randomUUID(),
+              content: '',
+              isAnswer: false
+            },
+            {
+              id: crypto.randomUUID(),
+              content: '',
+              isAnswer: false
+            }
+          ]
         }
       ]);
     } else {
@@ -81,21 +108,10 @@ const QuizForm = () => {
     }
   };
 
-  /** 문제 삭제하기 버튼 클릭 핸들러 */
-  const handleDeleteQuestion = (id: string) => {
-    if (questions.length > 1) {
-      if (!window.confirm(`해당 문제를 삭제하시겠습니까? ${id}`)) return;
-      setQuestions((prevQuestions) => {
-        const newQuestions = prevQuestions.filter((item) => item.quizId !== id);
-        return newQuestions;
-      });
-    } else {
-      alert('최소 1개의 문제는 있어야 합니다.');
-      return;
-    }
-  };
-
   /** 퀴즈 등록 mutation */
+  const insertQuizMutation = useMutation({
+    mutationFn: async () => {}
+  });
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = () => {
@@ -163,15 +179,10 @@ const QuizForm = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          {questions.map((item, idx) => (
-            <div key={idx} className="flex gap-2">
-              <QuestionForm questions={questions} setQuestions={setQuestions} />
-              <div onClick={() => handleDeleteQuestion(item.quizId)}>삭제</div>
-            </div>
-          ))}
-          <PlusQuestionBtn onClick={handleAddQuestion} />
+          <QuestionForm questions={questions} setQuestions={setQuestions} />
         </div>
-        <div className="flex gap-2 mt-10">
+        <PlusQuestionBtn onClick={handleAddQuestion} />
+        <div className="flex gap-2">
           <button type="button" onClick={handleCancelBtn}>
             취소하기
           </button>
