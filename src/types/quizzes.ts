@@ -1,6 +1,6 @@
 export enum QuestionType {
-  objective,
-  subjective
+  objective = 'objective',
+  subjective = 'subjective'
 }
 
 export type Option = {
