@@ -4,6 +4,8 @@ import Footer from '@/components/layout/Footer';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { Provider } from 'jotai';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
 
@@ -25,6 +27,7 @@ export default function RootLayout({
       <Provider>
         <QueryProvider>
           <Header />
+          <ToastContainer />
           {children}
           <Footer />
         </QueryProvider>
