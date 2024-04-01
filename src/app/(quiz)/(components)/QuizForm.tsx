@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import type { Option, Question, Quiz } from '@/types/quizzes';
-import PageUpBtn from '../common/PageUpBtn';
+import PageUpBtn from '../../../components/common/PageUpBtn';
 
 const QuizForm = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
