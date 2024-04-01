@@ -1,11 +1,21 @@
 'use client';
 
+import { Option, Question } from '@/types/quizzes';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 
-const QuestionForm = () => {
-  const [questionType, setQuestionType] = useState('objective');
-  console.log(questionType);
+type QuestionFormType = {
+  questions: Question[];
+  setQuestions: Dispatch<Question[]>;
+  options: Option[];
+  setOptions: Dispatch<Option[]>;
+};
+
+const QuestionForm = ({ questions, setQuestions, options, setOptions }: QuestionFormType) => {
+  // const [questionType, setQuestionType] = useState('objective');
+  // console.log(questionType);
+  console.log('questions', questions);
+  const { id, quizId, type, title } = questions;
 
   return (
     <>
@@ -18,7 +28,7 @@ const QuestionForm = () => {
             name="question-type"
             value="objective"
             defaultChecked
-            onChange={() => setQuestionType('objective')}
+            // onChange={() => setQuestions(() => 'objective')}
           />
           <label htmlFor="objective">객관식</label>
         </div>
@@ -28,12 +38,12 @@ const QuestionForm = () => {
             id="subjective"
             name="question-type"
             value="subjective"
-            onChange={() => setQuestionType('subjective')}
+            // onChange={() => setQuestions('subjective')}
           />
           <label htmlFor="subjective">주관식</label>
         </div>
         <section>
-          {questionType === 'objective' ? (
+          {type === 'objective' ? (
             <div>
               <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
               <input

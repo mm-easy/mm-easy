@@ -3,8 +3,21 @@
 import { useRef, useState } from 'react';
 import QuestionForm from './QuestionForm';
 import Image from 'next/image';
+import { Option, Question, QuestionType } from '@/types/quizzes';
+import { randomUUID } from 'crypto';
 
 const QuizForm = () => {
+  const [questions, setQuestions] = useState<Question[]>([
+    {
+      id: crypto.randomUUID(),
+      quizId: '',
+      type: QuestionType.subjective,
+      title: ''
+      // imgUrl: '',
+      // correctAnswer: ''
+    }
+  ]);
+  const [options, setOptions] = useState<Option[]>([{ id: '', questionId: '', content: '', isAnswer: false }]);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -86,7 +99,7 @@ const QuizForm = () => {
             />
           </div>
         </div>
-        <QuestionForm />
+        <QuestionForm questions={questions} setQuestions={setQuestions} options={options} setOptions={setOptions} />
         <div className="flex gap-2">
           <button type="button">취소하기</button>
           <button type="submit">등록하기</button>
