@@ -1,3 +1,5 @@
+// 인증할 때 이거 쓰시면 됩니다
+
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 export const createClient = () => {
