@@ -1,22 +1,17 @@
 import { PostDetailDateType } from '@/types/posts';
-import { createClient } from '@/utils/supabase/create-client';
+import { supabase } from '@/utils/supabase/supabase';
 
-export const postDetailDate = (postId: string) => {
-  const supabase = createClient();
-  const fetchPost = async () => {
-    try {
-      const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
-      if (error) throw error;
-      return posts![0];
-    } catch (error) {
-      throw error;
-    }
-  };
-  fetchPost();
+export const postDetailDate = async (postId: string) => {
+  try {
+    const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
+    if (error) throw error;
+    return posts![0];
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getPosts = async () => {
-  const supabase = createClient();
   try {
     const { data: posts, error } = await supabase.from('posts').select('*');
     if (error) throw error;
