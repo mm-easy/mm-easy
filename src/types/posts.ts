@@ -1,5 +1,5 @@
 export type PostDetailDateType = {
-  id: string;
+  id?: string;
   author_id: string;
   title: string;
   content: string;

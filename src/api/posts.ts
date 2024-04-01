@@ -1,7 +1,7 @@
 import { PostDetailDateType } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
 
-export const postDetailDate = async (postId: string) => {
+export const postDetailDate = async (postId: string | string[]) => {
   try {
     const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
     if (error) throw error;
