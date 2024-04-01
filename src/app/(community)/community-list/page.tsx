@@ -1,12 +1,27 @@
-import { createClient } from '@/utils/supabase/create-client';
+import { useQuery } from '@tanstack/react-query';
+import { getPosts } from '@/api/posts';
 
-const page = async () => {
-  const supabase = createClient();
-  const { data: posts, error } = await supabase.from('').select('*');
+const page = () => {
+  const { data: posts, isLoading, isError } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
 
-  console.log('posts', posts);
+  if (isLoading) return <div>Loading...</div>; 
+  if (isError) return <div>Error fetching data</div>;
 
-  return <div></div>;
+  const postList = posts || [];
+
+  return (
+    <div>
+      {postList.map((post) => (
+        <div key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default page;

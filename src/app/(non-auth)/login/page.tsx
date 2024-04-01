@@ -3,11 +3,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth'; 
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn, loading, error } = useAuth(); 
+  const { signIn, loading, error, signInWithGoogle } = useAuth(); 
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -17,6 +19,10 @@ const LoginPage = () => {
     if (!error) {
       router.push('/'); 
     }
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signInWithGoogle();
   };
 
   return (
@@ -69,6 +75,20 @@ const LoginPage = () => {
             </button>
           </div>
         </form>
+        <button 
+          onClick={handleGoogleSignIn}
+          disabled={loading} 
+          className="flex items-center justify-center w-full mt-4 px-4 py-2"
+        >
+          <FcGoogle className="mr-2" />구글로 로그인
+        </button>
+        <button 
+          onClick={handleGoogleSignIn}
+          disabled={loading} 
+          className="flex items-center justify-center w-full mt-4 px-4 py-2"
+        >
+          <FaFacebook className="mr-2 text-blue-600" />페이스북으로 로그인
+        </button>
         <div className="flex justify-center mt-6">
         <Link href="/signup" className="text-sm font-medium text-blue-600 hover:underline">
             회원가입하러가기
