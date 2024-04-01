@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
-import PageUpBtn from '../common/PageUpBtn';
 import { useRouter } from 'next/navigation';
 import PlusQuestionBtn from './PlusQuestionBtn';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizForm = () => {
   const [questions, setQuestions] = useState<Question[]>([
     {
-      quizId: '',
+      quizId: crypto.randomUUID(),
       type: QuestionType.objective,
       title: '',
       options: []
@@ -21,7 +21,7 @@ const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [info, setInfo] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -63,33 +63,13 @@ const QuizForm = () => {
     router.push('/quiz-list');
   };
 
-  /** 등록 버튼 클릭 핸들러 */
-  const handleSubmitBtn = () => {
-    if (!level) {
-      alert('난이도를 선택해주세요.');
-      return;
-    }
-    if (!title || !description) {
-      alert('제목과 설명을 입력해주세요.');
-      return;
-    }
-
-    const newQuiz = {
-      level,
-      title,
-      description,
-      selectedImg
-    };
-    console.log('등록될 게시글', newQuiz);
-  };
-
   /** 문제 추가하기 버튼 클릭 핸들러 */
   const handleAddQuestion = () => {
     if (questions.length < 5) {
       setQuestions((prevQuestions) => [
         ...prevQuestions,
         {
-          quizId: '',
+          quizId: crypto.randomUUID(),
           type: QuestionType.objective,
           title: '',
           options: []
@@ -97,20 +77,48 @@ const QuizForm = () => {
       ]);
     } else {
       alert('최대 5개까지만 문제를 추가할 수 있습니다.');
+      return;
     }
   };
 
   /** 문제 삭제하기 버튼 클릭 핸들러 */
-  const handleDeleteQuestion = (idx: number) => {
+  const handleDeleteQuestion = (id: string) => {
     if (questions.length > 1) {
+      if (!window.confirm(`해당 문제를 삭제하시겠습니까? ${id}`)) return;
       setQuestions((prevQuestions) => {
-        const newQuestions = [...prevQuestions];
-        newQuestions.splice(idx, 1);
+        const newQuestions = prevQuestions.filter((item) => item.quizId !== id);
         return newQuestions;
       });
     } else {
       alert('최소 1개의 문제는 있어야 합니다.');
+      return;
     }
+  };
+
+  /** 퀴즈 등록 mutation */
+
+  /** 등록 버튼 클릭 핸들러 */
+  const handleSubmitBtn = () => {
+    if (!level) {
+      alert('난이도를 선택해주세요.');
+      return;
+    }
+    if (!title || !info) {
+      alert('제목과 설명을 입력해주세요.');
+      return;
+    }
+
+    // try {
+    // } catch (error) {}
+
+    const newQuiz = {
+      creatorId: 'cocoa@naver.com',
+      level,
+      title,
+      info,
+      thumbnailImgUrl: selectedImg
+    };
+    console.log('등록될 게시글', newQuiz);
   };
 
   return (
@@ -131,7 +139,7 @@ const QuizForm = () => {
               <option value={3}>대장급</option>
             </select>
             <input placeholder="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <textarea placeholder="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <textarea placeholder="info" value={info} onChange={(e) => setInfo(e.target.value)} />
           </div>
           <div
             onClick={handleImgClick}
@@ -158,7 +166,7 @@ const QuizForm = () => {
           {questions.map((item, idx) => (
             <div key={idx} className="flex gap-2">
               <QuestionForm questions={questions} setQuestions={setQuestions} />
-              <div onClick={() => handleDeleteQuestion(idx)}>삭제</div>
+              <div onClick={() => handleDeleteQuestion(item.quizId)}>삭제</div>
             </div>
           ))}
           <PlusQuestionBtn onClick={handleAddQuestion} />

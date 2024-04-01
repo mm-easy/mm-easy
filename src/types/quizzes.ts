@@ -21,7 +21,7 @@ export type Question = {
 };
 
 export type Quiz = {
-  id: string;
+  id?: string;
   creatorId: string;
   level: number;
   title: string;
