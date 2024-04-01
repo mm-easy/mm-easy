@@ -14,11 +14,6 @@ export const useAuth = () => {
       setLoading(false);
       return;
     }
-    if (password.length < 6) {
-      setError('비밀번호는 6자리 이상이어야 합니다.');
-      setLoading(false);
-      return;
-    }
 
     const { data, error } = await supabase.auth.signUp({
       email,
