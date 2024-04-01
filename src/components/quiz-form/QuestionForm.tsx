@@ -1,34 +1,62 @@
 'use client';
 
-import { Option, Question } from '@/types/quizzes';
+import { Option, Question, QuestionType } from '@/types/quizzes';
 import Image from 'next/image';
-import { Dispatch, useState } from 'react';
 
-type QuestionFormType = {
-  questions: Question[];
-  setQuestions: Dispatch<Question[]>;
-  options: Option[];
-  setOptions: Dispatch<Option[]>;
-};
+const QuestionForm = ({ question }: { question: Question }) => {
+  const { id, type, title, options } = question;
+  // const handleQuestionType = (id: string, type: QuestionType) => {
+  //   const newQuestions = questions.map((prev) => {
+  //     return prev.id === id ? { ...prev, type: type } : prev;
+  //   });
 
-const QuestionForm = ({ questions, setQuestions, options, setOptions }: QuestionFormType) => {
-  // const [questionType, setQuestionType] = useState('objective');
-  // console.log(questionType);
-  console.log('questions', questions);
-  const { id, quizId, type, title } = questions;
+  //   setQuestions(newQuestions);
+  // };
 
   return (
     <>
-      <h1>QuestionForm</h1> {/*지울 예정*/}
       <article style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
-        <div>
+        <section>
+          <div>
+            <input
+              type="radio"
+              id="objective"
+              name="question-type"
+              value="objective"
+              defaultChecked
+              // onChange={() => handleQuestionType(id, QuestionType.objective)}
+            />
+            <label htmlFor="objective">객관식</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="subjective"
+              name="question-type"
+              value="subjective"
+              // onChange={() => handleQuestionType(id, QuestionType.subjective)}
+            />
+            <label htmlFor="subjective">주관식</label>
+          </div>
+          {/* <section>
+                {options.map((option) => {
+                  console.log(option);
+                  return <div key={option}>hi</div>;
+                })}
+              </section> */}
+        </section>
+        {/* <div>
           <input
             type="radio"
             id="objective"
             name="question-type"
             value="objective"
             defaultChecked
-            // onChange={() => setQuestions(() => 'objective')}
+            onChange={(id) => {
+              const newQuestion = questions.map((question) => {
+                return question.id === id ? { ...question, type: QuestionForm.objective } : question;
+              });
+            }}
           />
           <label htmlFor="objective">객관식</label>
         </div>
@@ -38,12 +66,12 @@ const QuestionForm = ({ questions, setQuestions, options, setOptions }: Question
             id="subjective"
             name="question-type"
             value="subjective"
-            // onChange={() => setQuestions('subjective')}
+            onChange={() => setQuestions({ ...questions, type: QuestionType.subjective })}
           />
           <label htmlFor="subjective">주관식</label>
         </div>
         <section>
-          {type === 'objective' ? (
+          {type === QuestionType.objective ? (
             <div>
               <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
               <input
@@ -66,7 +94,7 @@ const QuestionForm = ({ questions, setQuestions, options, setOptions }: Question
               />
             </div>
           )}
-        </section>
+        </section> */}
       </article>
     </>
   );

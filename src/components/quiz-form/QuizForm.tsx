@@ -1,33 +1,61 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import QuestionForm from './QuestionForm';
 import Image from 'next/image';
-import { Option, Question, QuestionType } from '@/types/quizzes';
-import { randomUUID } from 'crypto';
+import { useEffect, useRef, useState } from 'react';
+
+import type { Question } from '@/types/quizzes';
+import { QuestionType } from '@/types/quizzes';
+import PageUpBtn from '../common/PageUpBtn';
 
 const QuizForm = () => {
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: crypto.randomUUID(),
-      quizId: '',
-      type: QuestionType.subjective,
-      title: ''
+      type: QuestionType.objective,
+      title: '',
+      options: [
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        },
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        }
+      ]
       // imgUrl: '',
       // correctAnswer: ''
     }
   ]);
-  const [options, setOptions] = useState<Option[]>([{ id: '', questionId: '', content: '', isAnswer: false }]);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
+
+  /** 썸네일 이미지 클릭 이벤트 */
   const handleImgClick = () => {
     fileInputRef.current?.click();
   };
 
+  /** 썸네일 이미지 클릭하여 이미지 파일 첨부하기 */
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -39,6 +67,7 @@ const QuizForm = () => {
     }
   };
 
+  /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = () => {
     if (!level) {
       alert('난이도를 선택해주세요.');
@@ -59,7 +88,7 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-rose-100 p-5">
+    <main className="bg-rose-100 p-5 flex gap-5 h-[2000px]">
       <form
         className="flex flex-col"
         onSubmit={(e) => {
@@ -99,12 +128,19 @@ const QuizForm = () => {
             />
           </div>
         </div>
-        <QuestionForm questions={questions} setQuestions={setQuestions} options={options} setOptions={setOptions} />
+        {questions.map((question) => {
+          // const { id, type, title, options } = question;
+          return <QuestionForm key={question.id} question={question} />;
+        })}
+        {/* <QuestionForm questions={questions} setQuestions={setQuestions} /> */}
         <div className="flex gap-2">
           <button type="button">취소하기</button>
           <button type="submit">등록하기</button>
         </div>
       </form>
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px;' }}>
+        <PageUpBtn scrollPosition={scrollPosition} />
+      </div>
     </main>
   );
 };
