@@ -128,11 +128,7 @@ const QuizForm = () => {
             />
           </div>
         </div>
-        {questions.map((question) => {
-          // const { id, type, title, options } = question;
-          return <QuestionForm key={question.id} question={question} />;
-        })}
-        {/* <QuestionForm questions={questions} setQuestions={setQuestions} /> */}
+        <QuestionForm questions={questions} setQuestions={setQuestions} />
         <div className="flex gap-2">
           <button type="button">취소하기</button>
           <button type="submit">등록하기</button>
