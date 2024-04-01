@@ -1,5 +1,4 @@
-// import server-only
-
+import 'server-only'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 export const createClient = () => {
   return createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SECRET_KEY!, {});
