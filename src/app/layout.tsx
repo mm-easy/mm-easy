@@ -6,8 +6,9 @@ import { Inter } from 'next/font/google';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
+import '@radix-ui/themes/styles.css';
+
 import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
