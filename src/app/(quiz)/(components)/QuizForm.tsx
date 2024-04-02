@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Question } from '@/types/quizzes';
 import { QuestionType } from '@/types/quizzes';
-import PageUpBtn from '../common/PageUpBtn';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
