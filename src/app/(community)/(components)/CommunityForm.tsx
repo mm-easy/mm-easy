@@ -20,19 +20,19 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
     selectedCategory === '전체' ? posts : posts.filter((post) => post.post_category === selectedCategory);
 
   return (
-    <Box style={{ backgroundColor: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }}>
-      <Container>
+    <>
+      <div className='bg-gray-200 p-4'>
         <ul>
           {filteredPosts.map((post) => (
-            <Section size="2" key={post.id}>
+            <li className='bg-white p-4 border-solid border' key={post.id}>
               <h3>{post.title}</h3>
               <p>{post.content}</p>
               <time>{formatToLocaleDateTimeString(post.created_at)}</time>
-            </Section>
+            </li>
           ))}
         </ul>
-      </Container>
-    </Box>
+      </div>
+    </>
   );
 };
 export default CommunityForm;
