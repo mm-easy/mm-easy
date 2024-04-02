@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertQuizToTable, uploadThumbnailToStorage } from '@/api/quizzes';
+import { toast } from 'react-toastify';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
 import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
@@ -160,13 +161,13 @@ const QuizForm = () => {
         level,
         title,
         info,
-        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x150'
+        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
       };
 
       insertQuizMutation.mutate(newQuiz, {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-          alert('퀴즈가 정상적으로 등록되었습니다.');
+          toast.success('퀴즈가 등록되었습니다.');
           router.replace('/quiz-list');
         }
       });
