@@ -6,6 +6,7 @@ import { useState } from 'react';
 const PostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category, setCategory] = useState('전체')
 
   const handleTitle = (e: any) => {
     setTitle(e.target.value);
@@ -14,6 +15,10 @@ const PostForm = () => {
   const handleContent = (e: any) => {
     setContent(e.target.value);
   };
+
+  const handleCategory = (e: any) => {
+    setCategory(e.target.value)
+  }
 
   const addPostHandler = async (e: any) => {
     e.preventDefault();
@@ -29,7 +34,7 @@ const PostForm = () => {
 
     const { data, error } = await supabase
       .from('posts')
-      .insert([{ title, content, author_id: "jaemina20@gmail.com" }])
+      .insert([{ title, content, category }])
       .select('*');
 
     if (error) {
@@ -42,6 +47,15 @@ const PostForm = () => {
 
   return (
     <form onSubmit={addPostHandler}>
+      <div>
+        <label>분류</label>
+        <select value={category} onChange={handleCategory}>
+          <option value="질문">질문</option>
+          <option value="잡담">잡담</option>
+          <option value="공부">공부</option>
+          <option value="일기">일기</option>
+        </select>
+      </div>
       <div>
         <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
