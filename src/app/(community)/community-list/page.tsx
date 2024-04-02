@@ -1,12 +1,11 @@
-import { createClient } from '@/utils/supabase/create-client';
+import CommunityForm from '@/app/(community)/(components)/CommunityForm'
 
-const page = async () => {
-  const supabase = createClient();
-  const { data: posts, error } = await supabase.from('').select('*');
+const CommunityPage = () => {
+  return (
+    <div>
+      <CommunityForm />
+    </div>
+  )
+}
 
-  console.log('posts', posts);
-
-  return <div></div>;
-};
-
-export default page;
+export default CommunityPage
