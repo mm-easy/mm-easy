@@ -20,7 +20,7 @@ const QuizForm = () => {
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/208x208');
+  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/240x240');
   const [file, setFile] = useState<File | null>(null);
 
   const [questions, setQuestions] = useState<Question[]>([
@@ -137,44 +137,49 @@ const QuizForm = () => {
     mutationFn: (newQuiz: Quiz) => insertQuizToTable(newQuiz)
   });
 
-  /** 등록 버튼 클릭 핸들러 */
-  const handleSubmitBtn = async () => {
-    if (!level) {
-      alert('난이도를 선택해주세요.');
-      return;
-    }
-    if (!title || !info) {
-      alert('제목과 설명을 입력해주세요.');
-      return;
-    }
-
-    try {
-      let imgUrl = null;
-      if (file) {
-        const fileName = generateFileName(file);
-        imgUrl = await uploadThumbnailToStorage(file, fileName);
-        console.log('스토리지에 이미지 업로드 성공', imgUrl);
-      }
-
-      const newQuiz = {
-        creator_id: 'cocoa@naver.com',
-        level,
-        title,
-        info,
-        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
-      };
-
-      insertQuizMutation.mutate(newQuiz, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-          toast.success('퀴즈가 등록되었습니다.');
-          router.replace('/quiz-list');
-        }
-      });
-    } catch (error) {
-      console.log('스토리지에 이미지 업로드 중 에러 발생');
-    }
+  /** 등록 버튼 클릭 핸들러(임시) */
+  const handleSubmitBtn = () => {
+    console.log('입력된 값들', questions);
   };
+
+  /** 등록 버튼 클릭 핸들러 */
+  // const handleSubmitBtn = async () => {
+  //   if (!level) {
+  //     alert('난이도를 선택해주세요.');
+  //     return;
+  //   }
+  //   if (!title || !info) {
+  //     alert('제목과 설명을 입력해주세요.');
+  //     return;
+  //   }
+
+  //   try {
+  //     let imgUrl = null;
+  //     if (file) {
+  //       const fileName = generateFileName(file);
+  //       imgUrl = await uploadThumbnailToStorage(file, fileName);
+  //       console.log('스토리지에 이미지 업로드 성공', imgUrl);
+  //     }
+
+  //     const newQuiz = {
+  //       creator_id: 'cocoa@naver.com',
+  //       level,
+  //       title,
+  //       info,
+  //       thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
+  //     };
+
+  //     insertQuizMutation.mutate(newQuiz, {
+  //       onSuccess: () => {
+  //         queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+  //         toast.success('퀴즈가 등록되었습니다.');
+  //         router.replace('/quiz-list');
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log('스토리지에 이미지 업로드 중 에러 발생');
+  //   }
+  // };
 
   return (
     <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
@@ -186,30 +191,42 @@ const QuizForm = () => {
         }}
       >
         <div className="p-10 flex gap-10 bg-white justify-center items-center">
-          <div
-            onClick={handleImgClick}
-            className="bg-gray-200 w-52 h-52 border-solid border border-blue-500 flex items-center"
-          >
-            <Image
-              src={selectedImg}
-              alt="샘플이미지"
-              className="object-cover"
-              style={{ cursor: 'pointer' }}
-              width={208}
-              height={208}
-            />
-            <input
-              type="file"
-              id="fileInput"
-              ref={fileInputRef}
-              onChange={handleImgChange}
-              style={{ display: 'none' }}
-            />
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-blue-500">썸네일 이미지</p>
+            <div
+              onClick={handleImgClick}
+              className="bg-gray-200 w-60 h-60 border-solid border border-blue-500 flex items-center"
+            >
+              <Image
+                src={selectedImg}
+                alt="샘플이미지"
+                className="object-cover"
+                style={{ cursor: 'pointer' }}
+                width={240}
+                height={240}
+              />
+              <input
+                type="file"
+                id="fileInput"
+                ref={fileInputRef}
+                onChange={handleImgChange}
+                style={{ display: 'none' }}
+              />
+            </div>
           </div>
           <div className="flex flex-col gap-2">
-            <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
-            <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
-            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-blue-500">난이도</p>
+              <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-blue-500">퀴즈 제목</p>
+              <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-blue-500">퀴즈 설명</p>
+              <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
+            </div>
           </div>
         </div>
         <div className="flex flex-col">
