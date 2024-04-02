@@ -19,13 +19,9 @@ export const uploadThumbnailToStorage = async (file: File, fileName: string) => 
 
 export const insertQuizToTable = async (newQuiz: Quiz) => {
   try {
-    const { data, error } = await supabase.from('quizzes').insert([newQuiz]);
+    const { error } = await supabase.from('quizzes').insert([newQuiz]);
     if (error) {
       throw error;
-    }
-    if (data) {
-      console.log('등록된 게시글', data);
-      alert('퀴즈가 성공적으로 등록되었습니다.');
     }
   } catch (error) {
     console.error('게시글 등록 실패', error);

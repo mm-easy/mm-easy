@@ -22,7 +22,7 @@ export const BlueInput: React.FC<BlueInputProps> = ({ value, onChange }) => {
 };
 
 export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) => {
-  return <textarea className="border border-solid border-blue-500 w-96 p-2 h-28" value={value} onChange={onChange} />;
+  return <textarea className="border border-solid border-blue-500 w-96 p-2 h-24" value={value} onChange={onChange} />;
 };
 
 export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChange }) => {

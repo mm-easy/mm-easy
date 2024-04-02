@@ -3,7 +3,7 @@ import { Box, Button, TextArea } from '@radix-ui/themes';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
-const CommentForm = ({ postId }: { postId: string }) => {
+const CommentForm = ({ postId }: { postId: string | undefined}) => {
   const [content, setContent] = useState('');
 
   const handleSubmitBtn = async (e: React.FormEvent) => {
@@ -21,11 +21,13 @@ const CommentForm = ({ postId }: { postId: string }) => {
     console.log(error);
   };
 
+
+
   return (
     <div>
       <form onSubmit={handleSubmitBtn}>
-        {user?.nickname}
-        {user?.avatar_img_url}
+        {/* {user?.nickname}
+        {user?.avatar_img_url} */}
         <Box maxWidth="200px">
           <TextArea
             value={content}

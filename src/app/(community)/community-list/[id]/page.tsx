@@ -38,7 +38,7 @@ const page = () => {
           <p>{post.created_at.toLocaleString()}</p>
         </div>
       )}
-      <CommentForm />
+      <CommentForm postId={post?.id} />
     </div>
   );
 };
