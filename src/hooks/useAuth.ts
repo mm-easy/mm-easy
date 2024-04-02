@@ -29,7 +29,7 @@ export const useAuth = () => {
         const nickname = email.split('@')[0];
         const { error: insertError } = await supabase
           .from('profiles')
-          .insert([{ id: data.user.id, email, nickname }]);
+          .insert([{ id: data.user.id, email, nickname, avatar_img_url: "https://via.placeholder.com/150" }]);
     
         if (insertError) {
           setError(insertError.message);
@@ -99,5 +99,29 @@ export const useAuth = () => {
         }
       };
 
-  return { signUp, signIn, logout, loading, error, setError, signInWithGoogle };
+      const signInWithKakao = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'kakao',
+            options: {
+            },
+          });
+      
+          if (error) {
+            setError(error.message);
+          } else {
+            setError(null);
+          }
+      
+          setLoading(false);
+        } catch (error) {
+          console.error('카카오톡 소셜 로그인 오류:', error);
+          setError('카카오톡 소셜 로그인 중 오류가 발생했습니다.');
+          setLoading(false);
+        }
+      };
+
+  return { signUp, signIn, logout, loading, error, setError, signInWithGoogle, signInWithKakao };
 };
