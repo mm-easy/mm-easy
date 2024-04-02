@@ -31,7 +31,23 @@ const QuestionForm = ({
     );
   };
 
-  /** 문제 선택지 추가 핸들러 */
+  /** 선택지 입력 핸들러 */
+  const handleChangeOption = (id: string, content: string, options: Option[], optionId: string) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id
+          ? {
+              ...question,
+              options: options.map((option) => {
+                return option.id === optionId ? { ...option, content } : option;
+              })
+            }
+          : question;
+      })
+    );
+  };
+
+  /** 선택지 추가 핸들러 */
   const handleAddOption = (id: string, options: Option[]) => {
     if (options.length < 5) {
       const newOption = {
@@ -54,7 +70,7 @@ const QuestionForm = ({
     }
   };
 
-  /** 문제 선택지 삭제 핸들러 */
+  /** 선택지 삭제 핸들러 */
   const handleDeleteOption = (id: string, options: Option[], optionId: string) => {
     if (options.length > 2) {
       setQuestions((prev) =>
@@ -69,7 +85,7 @@ const QuestionForm = ({
     }
   };
 
-  /** 문제 주관식 정답 입력 핸들러 */
+  /** 주관식 정답 입력 핸들러 */
   const handleChangeCorrectAnswer = (id: string, correctAnswer: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
@@ -97,7 +113,7 @@ const QuestionForm = ({
         const { id, type, options } = question;
         return (
           /** 유형, 휴지통 섹션 */
-          <section key={id} style={{ margin: '0 auto', width: '40vw', paddingBottom: '20px' }}>
+          <section key={id} style={{ width: '40vw', margin: '0 auto', paddingBottom: '20px' }}>
             <section style={{ display: 'flex', justifyContent: 'space-between' }}>
               <section>
                 <label>
@@ -125,7 +141,7 @@ const QuestionForm = ({
                   <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
                   <input
                     type="text"
-                    style={{ width: '500px', fontWeight: 'bold' }}
+                    style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
                     placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
                     onChange={(e) => {
                       e.preventDefault();
@@ -135,7 +151,15 @@ const QuestionForm = ({
                   {options.map((option) => {
                     return (
                       <div key={option.id}>
-                        <input type="text" style={{ width: '500px' }} placeholder="선택지를 입력해 주세요." />
+                        <input
+                          type="text"
+                          style={{ width: '500px', marginBottom: '10px' }}
+                          placeholder="선택지를 입력해 주세요."
+                          onChange={(e) => {
+                            e.preventDefault();
+                            handleChangeOption(id, e.target.value, options, option.id);
+                          }}
+                        />
                         <button type="button" onClick={() => handleDeleteOption(id, options, option.id)}>
                           ❎
                         </button>
@@ -151,7 +175,7 @@ const QuestionForm = ({
                   <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
                   <input
                     type="text"
-                    style={{ width: '500px', fontWeight: 'bold' }}
+                    style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
                     placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
                     onChange={(e) => {
                       e.preventDefault();
