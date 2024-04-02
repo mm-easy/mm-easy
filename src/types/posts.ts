@@ -4,5 +4,11 @@ type Post = {
   content: string;
   created_at: string;
   attached_img_url: string;
-  author_id: string
-}
+  author_id: string;
+  post_category: string;
+};
+
+type MenuItem = {
+  key: string;
+  label: string;
+};

@@ -1,4 +1,4 @@
-import { supabase } from "@/utils/supabase/supabase";
+import { supabase } from '@/utils/supabase/supabase';
 
 export const getPosts = async () => {
   try {
@@ -6,7 +6,7 @@ export const getPosts = async () => {
     if (error) throw error;
     return posts || [];
   } catch (error) {
-    console.error("포스트를 가져오는 중 오류 발생:", error);
-    return []; 
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
   }
 };

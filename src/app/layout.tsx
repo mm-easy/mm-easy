@@ -6,7 +6,8 @@ import { Inter } from 'next/font/google';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
 import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -24,14 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Provider>
-        <QueryProvider>
-          <Header />
-          <ToastContainer />
-          {children}
-          <Footer />
-        </QueryProvider>
-      </Provider>
+        <Provider>
+          <QueryProvider>
+            <Theme>
+              <Header />
+              <ToastContainer />
+              {children}
+              <Footer />
+            </Theme>
+          </QueryProvider>
+        </Provider>
       </body>
     </html>
   );

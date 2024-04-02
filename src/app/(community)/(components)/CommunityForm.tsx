@@ -1,35 +1,39 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/api/posts';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-const CommunityForm = () => {
-  const {
-    data: posts,
-    isLoading,
-    isError
-  } = useQuery({
-    queryKey: ['posts'],
-    queryFn: getPosts
-  });
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
-  const postList = posts || [];
+import { Box, Container, Section } from '@radix-ui/themes';
+import { useEffect, useState } from 'react';
+const CommunityForm = ({ selectedCategory }) => {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const loadedPosts = await getPosts();
+      setPosts(loadedPosts);
+    };
+
+    fetchPosts();
+  }, []);
+
+  const filteredPosts =
+    selectedCategory === '전체' ? posts : posts.filter((post) => post.post_category === selectedCategory);
 
   return (
-    <>
-      <article>
+    <Box
+    style={{ backgroundColor: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }}>
+      <Container >
         <ul>
-          {postList.map((post) => (
-            <li key={post.id}>
-              <h2>{post.title}</h2>
+          {filteredPosts.map((post) => (
+            <Section size="2" key={post.id}>
+              <h3>{post.title}</h3>
               <p>{post.content}</p>
               <time>{formatToLocaleDateTimeString(post.created_at)}</time>
-            </li>
+            </Section>
           ))}
         </ul>
-      </article>
-    </>
+      </Container>
+    </Box>
   );
 };
 export default CommunityForm;

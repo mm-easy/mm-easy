@@ -1,13 +1,21 @@
-import CommunityForm from '@/app/(community)/(components)/CommunityForm'
-import CommunityMenu from '../(components)/CommunityMenu'
+'use client';
+
+import CommunityForm from '@/app/(community)/(components)/CommunityForm';
+import CommunityMenu from '../(components)/CommunityMenu';
+import { useState } from 'react';
 
 const CommunityPage = () => {
-  return (
-    <div>
-      <CommunityMenu />
-      <CommunityForm />
-    </div>
-  )
-}
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
-export default CommunityPage
+  return (
+    <article>
+      <h1 className='text-xl'>커뮤니티</h1>
+      <div className="flex">
+        <CommunityMenu setSelectedCategory={setSelectedCategory} />
+        <CommunityForm selectedCategory={selectedCategory} />
+      </div>
+    </article>
+  );
+};
+
+export default CommunityPage;
