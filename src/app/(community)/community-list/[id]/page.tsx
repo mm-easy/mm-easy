@@ -12,7 +12,16 @@ const page = () => {
     return <div>로딩중...</div>;
   }
 
-  return <div>{data && data.title}</div>;
+  return (
+    <div>
+      {data && (
+        <>
+          {data.title}
+          {data.content}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default page;
