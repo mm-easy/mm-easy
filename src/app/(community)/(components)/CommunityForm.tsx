@@ -4,7 +4,7 @@ import { getPosts } from '@/api/posts';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { Box, Container, Section } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
-const CommunityForm = ({ selectedCategory }) => {
+const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -20,9 +20,8 @@ const CommunityForm = ({ selectedCategory }) => {
     selectedCategory === '전체' ? posts : posts.filter((post) => post.post_category === selectedCategory);
 
   return (
-    <Box
-    style={{ backgroundColor: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }}>
-      <Container >
+    <Box style={{ backgroundColor: 'var(--gray-a2)', borderRadius: 'var(--radius-3)' }}>
+      <Container>
         <ul>
           {filteredPosts.map((post) => (
             <Section size="2" key={post.id}>

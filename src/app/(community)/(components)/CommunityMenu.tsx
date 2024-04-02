@@ -1,6 +1,6 @@
 'use client';
 
-const CommunityMenu = ({ setSelectedCategory }) => {
+const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
     { key: 'all', label: '전체' },
     { key: 'notice', label: '공지' },
@@ -9,7 +9,6 @@ const CommunityMenu = ({ setSelectedCategory }) => {
     { key: 'study', label: '공부' },
     { key: 'diary', label: '일기' }
   ];
-
 
   return (
     <nav>

@@ -12,3 +12,11 @@ type MenuItem = {
   key: string;
   label: string;
 };
+
+type CommunityMenuProps = {
+  setSelectedCategory: (category: string) => void;
+}
+
+type CommunityFormProps = {
+  selectedCategory: string;
+}
