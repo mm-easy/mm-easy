@@ -14,6 +14,14 @@ export type PostDetailUserType = {
   avatar_img_url: string;
 };
 
+export type PostDetailCommentType = {
+  id: string;
+  author_id: string;
+  post_id: string;
+  content: string;
+  created_at: Date;
+};
+
 type Post = {
   id: number;
   title: string;

@@ -21,6 +21,16 @@ export const postDetailUserDate = async (userId: string | undefined) => {
   }
 };
 
+export const postDetailCommentDate = async (postId: string | string[]) => {
+  try {
+    const { data: comments, error } = await supabase.from('comments').select('*').eq('post_id', postId);
+    if (error) throw error;
+    return comments![0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPosts = async () => {
   try {
     const { data: posts, error } = await supabase.from('posts').select('*');

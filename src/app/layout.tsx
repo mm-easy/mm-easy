@@ -6,6 +6,8 @@ import { Inter } from 'next/font/google';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Theme } from '@radix-ui/themes';
+import '@radix-ui/themes/styles.css';
 
 import type { Metadata } from 'next';
 
@@ -24,14 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Provider>
-        <QueryProvider>
-          <Header />
-          <ToastContainer />
-          {children}
-          <Footer />
-        </QueryProvider>
-      </Provider>
+        <Provider>
+          <QueryProvider>
+            <Theme>
+              <Header />
+              <ToastContainer />
+              {children}
+              <Footer />
+            </Theme>
+          </QueryProvider>
+        </Provider>
       </body>
     </html>
   );
