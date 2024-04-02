@@ -1,20 +1,11 @@
-import { getPosts } from '@/api/posts';
-const page = async () => {
-  const posts = await getPosts();
-  console.log('posts', posts);
+import CommunityForm from '@/app/(community)/(components)/CommunityForm';
+
+const CommunityPage = () => {
   return (
-    <article>
-      <div>
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.content}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </article>
+    <div>
+      <CommunityForm />
+    </div>
   );
 };
-export default page;
+
+export default CommunityPage;

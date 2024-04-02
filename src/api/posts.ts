@@ -3,13 +3,23 @@ import { supabase } from '@/utils/supabase/supabase';
 
 export const postDetailDate = async (postId: string | string[]) => {
   try {
-    const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
+    const { data: post, error } = await supabase.from('posts').select('*').eq('id', postId);
     if (error) throw error;
-    return posts![0];
+    return post![0];
   } catch (error) {
     throw error;
   }
 };
+
+// export const postDetailUserDate = async (userId: string | undefined) => {
+//   try {
+//     const { data: profiles, error } = await supabase.from('profiles').select('*').eq('id', userId);
+//     if (error) throw error;
+//     return profiles![0];
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const getPosts = async () => {
   try {
