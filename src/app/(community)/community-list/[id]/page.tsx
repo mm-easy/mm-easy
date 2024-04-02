@@ -1,7 +1,6 @@
 'use client';
 
-import { usePostDetailDate } from '@/hooks/post/usePost';
-import { supabase } from '@/utils/supabase/supabase';
+import { usePostDetailDate, usePostDetailUserDate } from '@/hooks/post/usePost';
 import { useParams } from 'next/navigation';
 
 const page = () => {
@@ -9,21 +8,7 @@ const page = () => {
 
   const { data, isLoading } = usePostDetailDate(params.id);
 
-  const postDetailUserDate = async () => {
-    try {
-      const { data: profiles, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', '31c887a9-874b-4142-bc8e-8440f5bb9025');
-      if (error) throw error;
-      return profiles![0];
-    } catch (error) {
-      console.log('error', error);
-      throw error;
-    }
-  };
-
-  postDetailUserDate();
+  const { data: user } = usePostDetailUserDate(data?.author_id);
 
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -33,6 +18,8 @@ const page = () => {
     <div>
       {data && (
         <>
+          <p>{user?.nickname}</p>
+          <p>{user?.avatar_img_url}</p>
           <p>{data.title}</p>
           <p>{data.content}</p>
           <p>{data.attached_img_url}</p>

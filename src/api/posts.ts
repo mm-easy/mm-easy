@@ -11,15 +11,15 @@ export const postDetailDate = async (postId: string | string[]) => {
   }
 };
 
-// export const postDetailUserDate = async (userId: string | undefined) => {
-//   try {
-//     const { data: profiles, error } = await supabase.from('profiles').select('*').eq('id', userId);
-//     if (error) throw error;
-//     return profiles![0];
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+export const postDetailUserDate = async (userId: string | undefined) => {
+  try {
+    const { data: profiles, error } = await supabase.from('profiles').select('*').eq('id', userId);
+    if (error) throw error;
+    return profiles![0];
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getPosts = async () => {
   try {
