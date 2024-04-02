@@ -26,8 +26,6 @@ export const insertQuizToTable = async (newQuiz: Quiz) => {
     if (data) {
       console.log('등록된 게시글', data);
       alert('퀴즈가 성공적으로 등록되었습니다.');
-    } else {
-      throw new Error('퀴즈 등록 실패');
     }
   } catch (error) {
     console.error('게시글 등록 실패', error);

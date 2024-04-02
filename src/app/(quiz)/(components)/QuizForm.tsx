@@ -147,29 +147,31 @@ const QuizForm = () => {
       return;
     }
 
-    if (file) {
-      const fileName = generateFileName(file);
-      try {
-        const imgUrl = await uploadThumbnailToStorage(file, fileName);
+    try {
+      let imgUrl = null;
+      if (file) {
+        const fileName = generateFileName(file);
+        imgUrl = await uploadThumbnailToStorage(file, fileName);
         console.log('스토리지에 이미지 업로드 성공', imgUrl);
-
-        const newQuiz = {
-          creator_id: 'cocoa@naver.com',
-          level,
-          title,
-          info,
-          thumbnail_img_url: imgUrl
-        };
-
-        insertQuizMutation.mutate(newQuiz, {
-          onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-            router.replace('/quiz-list');
-          }
-        });
-      } catch (error) {
-        console.log('스토리지에 이미지 업로드 중 에러 발생');
       }
+
+      const newQuiz = {
+        creator_id: 'cocoa@naver.com',
+        level,
+        title,
+        info,
+        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x150'
+      };
+
+      insertQuizMutation.mutate(newQuiz, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+          alert('퀴즈가 정상적으로 등록되었습니다.');
+          router.replace('/quiz-list');
+        }
+      });
+    } catch (error) {
+      console.log('스토리지에 이미지 업로드 중 에러 발생');
     }
   };
 
