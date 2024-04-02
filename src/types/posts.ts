@@ -1,4 +1,10 @@
+type UserProfile = {
+  nickname: string;
+  avatar_img_url: string;
+};
+
 export type PostDetailDateType = {
+  profiles?: UserProfile;
   id: string;
   author_id: string;
   title: string;
