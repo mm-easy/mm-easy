@@ -20,10 +20,10 @@ export type Question = {
 };
 
 export type Quiz = {
-  id: string;
-  creatorId: string;
+  id?: string;
+  creator_id: string;
   level: number;
   title: string;
   info: string;
-  thumbnailImgUrl?: string;
+  thumbnail_img_url: string | null;
 };
