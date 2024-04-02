@@ -97,7 +97,7 @@ const QuestionForm = ({
         const { id, type, options } = question;
         return (
           /** 유형, 휴지통 섹션 */
-          <section key={id} style={{ paddingBottom: '20px' }}>
+          <section key={id} style={{ margin: '0 auto', width: '40vw', paddingBottom: '20px' }}>
             <section style={{ display: 'flex', justifyContent: 'space-between' }}>
               <section>
                 <label>
@@ -121,7 +121,7 @@ const QuestionForm = ({
             {/* 이미지, input 섹션 */}
             <section>
               {type === QuestionType.objective ? (
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', placeItems: 'center' }}>
                   <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
                   <input
                     type="text"
@@ -147,7 +147,7 @@ const QuestionForm = ({
                   </button>
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', placeItems: 'center' }}>
                   <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
                   <input
                     type="text"
