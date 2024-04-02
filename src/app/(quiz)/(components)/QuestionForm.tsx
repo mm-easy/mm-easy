@@ -1,9 +1,10 @@
 'use client';
 
-import { Question, QuestionType } from '@/types/quizzes';
+import { Option, Question, QuestionType } from '@/types/quizzes';
 import { SetStateAction } from 'jotai';
 import Image from 'next/image';
 import { Dispatch } from 'react';
+import { toast } from 'react-toastify';
 
 const QuestionForm = ({
   questions,
@@ -28,6 +29,29 @@ const QuestionForm = ({
         return question.id === id ? { ...question, title } : question;
       })
     );
+  };
+
+  /** 문제 선택지 추가 핸들러 */
+  const handleAddOption = (id: string, options: Option[]) => {
+    if (options.length < 5) {
+      const newOption = {
+        id: crypto.randomUUID(),
+        content: '',
+        isAnswer: false
+      };
+      setQuestions((prev) =>
+        prev.map((question) => {
+          return question.id === id
+            ? {
+                ...question,
+                options: [...options, newOption]
+              }
+            : question;
+        })
+      );
+    } else {
+      toast.warn('선택지는 5개까지 추가할 수 있습니다.');
+    }
   };
 
   /** 문제 주관식 정답 입력 핸들러 */
@@ -59,6 +83,7 @@ const QuestionForm = ({
         {questions.map((question) => {
           const { id, type, options } = question;
           return (
+            /** 유형, 휴지통 섹션 */
             <section key={id}>
               <section style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <section>
@@ -80,6 +105,7 @@ const QuestionForm = ({
                   🗑️
                 </button>
               </section>
+              {/* 이미지, input 섹션 */}
               <section>
                 {type === QuestionType.objective ? (
                   <div>
@@ -124,6 +150,9 @@ const QuestionForm = ({
                     />
                   </div>
                 )}
+                <button type="button" onClick={() => handleAddOption(id, options)}>
+                  ➕
+                </button>
               </section>
             </section>
           );
