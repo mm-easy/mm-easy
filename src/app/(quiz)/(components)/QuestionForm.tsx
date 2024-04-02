@@ -142,6 +142,9 @@ const QuestionForm = ({
                       </div>
                     );
                   })}
+                  <button type="button" onClick={() => handleAddOption(id, options)}>
+                    ➕
+                  </button>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -166,9 +169,6 @@ const QuestionForm = ({
                   />
                 </div>
               )}
-              <button type="button" onClick={() => handleAddOption(id, options)}>
-                ➕
-              </button>
             </section>
           </section>
         );
