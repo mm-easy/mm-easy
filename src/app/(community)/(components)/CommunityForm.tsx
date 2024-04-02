@@ -17,7 +17,7 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   }, []);
 
   const filteredPosts =
-    selectedCategory === '전체' ? posts : posts.filter((post) => post.post_category === selectedCategory);
+    selectedCategory === '전체' ? posts : posts.filter((post) => post.category === selectedCategory);
 
   return (
     <>

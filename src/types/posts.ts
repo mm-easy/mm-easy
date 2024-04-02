@@ -5,7 +5,7 @@ type Post = {
   created_at: string;
   attached_img_url: string;
   author_id: string;
-  post_category: string;
+  category: string;
 };
 
 type MenuItem = {

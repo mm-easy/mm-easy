@@ -1,12 +1,24 @@
 'use client';
 
+import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 const PostForm = () => {
+  const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('전체')
+
+  const { data: profile, isLoading, error } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getCurrentUserProfile
+  });
+
+  if (isLoading) return <div>Loading profile...</div>;
+  if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
+  
 
   const handleTitle = (e: any) => {
     setTitle(e.target.value);
@@ -23,6 +35,11 @@ const PostForm = () => {
   const addPostHandler = async (e: any) => {
     e.preventDefault();
 
+    if (!profile) {
+      alert('사용자 정보가 없습니다.');
+      return;
+    }
+
     if (!title.trim()) {
       alert('제목을 입력해주세요.');
       return;
@@ -34,7 +51,7 @@ const PostForm = () => {
 
     const { data, error } = await supabase
       .from('posts')
-      .insert([{ title, content, category }])
+      .insert([{ title, content, category, author_id: profile.id }])
       .select('*');
 
     if (error) {
@@ -43,6 +60,8 @@ const PostForm = () => {
     } else {
       alert('게시물이 등록되었습니다.');
     }
+
+    console.log(data)
   };
 
   return (
