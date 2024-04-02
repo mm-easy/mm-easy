@@ -44,19 +44,20 @@ export const useAuth = () => {
   const signIn = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-
+  
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-
+  
+    setLoading(false); 
+  
     if (error) {
       setError(error.message);
-    } else {
-      setError(null);
+      return false; 
     }
-
-    setLoading(false);
+  
+    return true;
   };
 
   const logout = async () => {
@@ -83,6 +84,7 @@ export const useAuth = () => {
               },
             },
           });
+          
           if (error) {
             setError(error.message);
           } else {
@@ -96,7 +98,6 @@ export const useAuth = () => {
           setLoading(false);
         }
       };
-
 
   return { signUp, signIn, logout, loading, error, setError, signInWithGoogle };
 };

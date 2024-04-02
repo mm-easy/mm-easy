@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth'; 
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -14,12 +15,13 @@ const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn(email, password);
-    
-    if (!error) {
+    const loginSuccess = await signIn(email, password);
+    if (loginSuccess) {
       router.push('/'); 
+    } else {
     }
   };
+  
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
