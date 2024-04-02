@@ -64,8 +64,8 @@ const QuizForm = () => {
     }
   ]);
 
-  console.log('1', questions[0].options);
-  console.log('2', questions[1].options);
+  // console.log('1', questions[0].options);
+  // console.log('2', questions[1].options);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();

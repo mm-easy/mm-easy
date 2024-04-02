@@ -1,14 +1,14 @@
-"use client"
+'use client';
 
-import { useAuth } from "@/hooks/useAuth";
-import { toast } from "react-toastify";
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const { logout } = useAuth();
   const handleLogout = async () => {
     await logout();
     toast.success('로그아웃되었습니다.');
-  }
+  };
 
   return (
     <div>

@@ -31,22 +31,6 @@ const QuestionForm = ({
     );
   };
 
-  /** 선택지 입력 핸들러 */
-  const handleChangeOption = (id: string, content: string, options: Option[], optionId: string) => {
-    setQuestions((prev) =>
-      prev.map((question) => {
-        return question.id === id
-          ? {
-              ...question,
-              options: options.map((option) => {
-                return option.id === optionId ? { ...option, content } : option;
-              })
-            }
-          : question;
-      })
-    );
-  };
-
   /** 선택지 추가 핸들러 */
   const handleAddOption = (id: string, options: Option[]) => {
     if (options.length < 5) {
@@ -70,6 +54,22 @@ const QuestionForm = ({
     }
   };
 
+  /** 선택지 입력 핸들러 */
+  const handleChangeOption = (id: string, content: string, options: Option[], optionId: string) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id
+          ? {
+              ...question,
+              options: options.map((option) => {
+                return option.id === optionId ? { ...option, content } : option;
+              })
+            }
+          : question;
+      })
+    );
+  };
+
   /** 선택지 삭제 핸들러 */
   const handleDeleteOption = (id: string, options: Option[], optionId: string) => {
     if (options.length > 2) {
@@ -84,6 +84,14 @@ const QuestionForm = ({
       toast.warn('최소 2개의 선택지가 있어야 합니다.');
     }
   };
+
+  /** 객관식 정답 체크 핸들러 */
+  // const handleCheckObjectAnswer = (id: string, checkedOption: HTMLInputElement, optionId: string) => {
+  //   const checkboxes = document.getElementsByName(optionId)
+  //   checkboxes.forEach(checkbox=>{
+  //     checkbox === checkedOption ? checkbox.checked=true
+  //   })
+  // };
 
   /** 주관식 정답 입력 핸들러 */
   const handleChangeCorrectAnswer = (id: string, correctAnswer: string) => {
@@ -151,6 +159,14 @@ const QuestionForm = ({
                   {options.map((option) => {
                     return (
                       <div key={option.id}>
+                        <input
+                          type="checkbox"
+                          name={option.id}
+                          onChange={(e) => {
+                            e.preventDefault();
+                            // handleCheckObjectAnswer(id, e.target, option.id);
+                          }}
+                        />
                         <input
                           type="text"
                           style={{ width: '500px', marginBottom: '10px' }}
