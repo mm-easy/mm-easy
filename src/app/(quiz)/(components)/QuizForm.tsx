@@ -11,13 +11,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertQuizToTable } from '@/api/quizzes';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
+import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
+  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/208x208');
   const [file, setFile] = useState(null);
 
   const [questions, setQuestions] = useState<Question[]>([
@@ -148,35 +149,25 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-rose-100 p-5 flex gap-5 h-[2000px]">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
       <form
-        className="flex flex-col"
+        className="flex flex-col min-w-full"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmitBtn();
         }}
       >
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2">
-            <select value={level} onChange={(e) => setLevel(+e.target.value)}>
-              <option value={0}>난이도를 선택하세요.</option>
-              <option value={1}>꼬마급</option>
-              <option value={2}>똑똑이급</option>
-              <option value={3}>대장급</option>
-            </select>
-            <input placeholder="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <textarea placeholder="info" value={info} onChange={(e) => setInfo(e.target.value)} />
-          </div>
+        <div className="p-10 flex gap-10 bg-white justify-center items-center">
           <div
             onClick={handleImgClick}
-            className="bg-gray-200 w-72 min-h-52 border-solid border-2 border-indigo-600 flex items-center"
+            className="bg-gray-200 w-52 h-52 border-solid border border-blue-500 flex items-center"
           >
             <Image
               src={selectedImg}
               alt="샘플이미지"
               className="object-cover"
               style={{ cursor: 'pointer' }}
-              width={288}
+              width={208}
               height={208}
             />
             <input
@@ -186,6 +177,11 @@ const QuizForm = () => {
               onChange={handleImgChange}
               style={{ display: 'none' }}
             />
+          </div>
+          <div className="flex flex-col gap-2">
+            <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
+            <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
+            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
           </div>
         </div>
         <div className="flex flex-col">
