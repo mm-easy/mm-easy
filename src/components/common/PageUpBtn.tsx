@@ -18,7 +18,7 @@ const PageUpBtn = ({ scrollPosition }: PageUpBtnProps) => {
 
   useEffect(() => {
     const showButton = () => {
-      if (scrollPosition > 400) {
+      if (scrollPosition > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
