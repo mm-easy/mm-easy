@@ -70,5 +70,33 @@ export const useAuth = () => {
     setLoading(false);
   };
 
-  return { signUp, signIn, logout, loading, error, setError };
+  const signInWithGoogle = async () => {
+    try {
+        setLoading(true);
+        setError(null);
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+              queryParams: {
+                access_type: 'offline',
+                prompt: 'consent',
+              },
+            },
+          });
+          if (error) {
+            setError(error.message);
+          } else {
+            setError(null);
+          }
+      
+          setLoading(false);
+        } catch (error) {
+          console.error('구글 소셜 로그인 오류:', error);
+          setError('구글 소셜 로그인 중 오류가 발생했습니다.');
+          setLoading(false);
+        }
+      };
+
+
+  return { signUp, signIn, logout, loading, error, setError, signInWithGoogle };
 };
