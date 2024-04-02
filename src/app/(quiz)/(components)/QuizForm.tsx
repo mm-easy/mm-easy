@@ -30,25 +30,6 @@ const QuizForm = () => {
       ],
       correctAnswer: ''
       // imgUrl: 'https://via.placeholder.com/200x150'
-    },
-    {
-      id: crypto.randomUUID(),
-      type: QuestionType.objective,
-      title: '',
-      options: [
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        },
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        }
-      ],
-      correctAnswer: ''
-      // imgUrl: 'https://via.placeholder.com/200x150'
     }
   ]);
   const [level, setLevel] = useState<number>(0);

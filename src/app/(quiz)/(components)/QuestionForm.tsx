@@ -63,25 +63,27 @@ const QuestionForm = ({
               <section style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <section>
                   <div>
-                    <input
-                      type="radio"
-                      id="objective"
-                      name="question-type"
-                      value="objective"
-                      defaultChecked
-                      onChange={() => handleChangeType(id, QuestionType.objective)}
-                    />
-                    <label htmlFor="objective">객관식</label>
+                    <label htmlFor={`${id}-obj`}>
+                      <input
+                        type="radio"
+                        id={`${id}-obj`}
+                        name={id}
+                        defaultChecked
+                        onChange={() => handleChangeType(id, QuestionType.objective)}
+                      />
+                      객관식
+                    </label>
                   </div>
                   <div>
-                    <input
-                      type="radio"
-                      id="subjective"
-                      name="question-type"
-                      value="subjective"
-                      onChange={() => handleChangeType(id, QuestionType.subjective)}
-                    />
-                    <label htmlFor="subjective">주관식</label>
+                    <label htmlFor={`${id}-sub`}>
+                      <input
+                        type="radio"
+                        id={`${id}-sub`}
+                        name={id}
+                        onChange={() => handleChangeType(id, QuestionType.subjective)}
+                      />
+                      주관식
+                    </label>
                   </div>
                 </section>
                 <button type="button" onClick={() => handleDeleteQuestion(id)}>
