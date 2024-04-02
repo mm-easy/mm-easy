@@ -7,7 +7,7 @@ import PageUpBtn from '@/components/common/PageUpBtn';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertQuizToTable } from '@/api/quizzes';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
@@ -18,6 +18,7 @@ const QuizForm = () => {
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/288x208');
+  const [file, setFile] = useState(null);
 
   const [questions, setQuestions] = useState<Question[]>([
     {
@@ -43,6 +44,7 @@ const QuizForm = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   /** 스크롤 이동 추적 이벤트 */
   useEffect(() => {
@@ -109,9 +111,9 @@ const QuizForm = () => {
   };
 
   /** 퀴즈 등록 mutation */
-  const insertQuizMutation = useMutation({
-    mutationFn: async () => {}
-  });
+  // const insertQuizMutation = useMutation({
+  //   mutationFn:
+  // });
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = () => {
@@ -124,17 +126,25 @@ const QuizForm = () => {
       return;
     }
 
-    // try {
-    // } catch (error) {}
-
-    const newQuiz = {
-      creatorId: 'cocoa@naver.com',
-      level,
-      title,
-      info,
-      thumbnailImgUrl: selectedImg
-    };
-    console.log('등록될 게시글', newQuiz);
+    try {
+      const fileName = file.name;
+      const newQuiz = {
+        creatorId: 'cocoa@naver.com',
+        level,
+        title,
+        info,
+        thumbnailImgUrl: selectedImg
+      };
+      insertQuizMutation.mutate(newQuiz, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+          router.replace('/quiz-list');
+        }
+      });
+      console.log('등록될 게시글', newQuiz);
+    } catch (error) {
+      console.error('퀴즈 등록 중 오류 발생', error);
+    }
   };
 
   return (
