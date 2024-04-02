@@ -8,10 +8,11 @@ import PageUpBtn from '@/components/common/PageUpBtn';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { insertQuizToTable } from '@/api/quizzes';
+import { insertQuizToTable, uploadThumbnailToStorage } from '@/api/quizzes';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
 import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
+import { generateFileName } from '@/utils/generateFileName';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -19,7 +20,7 @@ const QuizForm = () => {
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
   const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/208x208');
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const [questions, setQuestions] = useState<Question[]>([
     {
@@ -47,7 +48,7 @@ const QuizForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  /** 스크롤 이동 추적 이벤트 */
+  /** 스크롤 이동 추적 */
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
@@ -59,15 +60,15 @@ const QuizForm = () => {
     };
   }, [scrollPosition]);
 
-  /** 썸네일 이미지 클릭 이벤트 */
+  /** 썸네일 이미지 클릭하여 이미지 파일 첨부하기*/
   const handleImgClick = () => {
     fileInputRef.current?.click();
   };
 
-  /** 썸네일 이미지 클릭하여 이미지 파일 첨부하기 */
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImg(reader.result as string);
@@ -117,7 +118,7 @@ const QuizForm = () => {
   // });
 
   /** 등록 버튼 클릭 핸들러 */
-  const handleSubmitBtn = () => {
+  const handleSubmitBtn = async () => {
     if (!level) {
       alert('난이도를 선택해주세요.');
       return;
@@ -127,25 +128,38 @@ const QuizForm = () => {
       return;
     }
 
-    try {
-      const fileName = file.name;
-      const newQuiz = {
-        creatorId: 'cocoa@naver.com',
-        level,
-        title,
-        info,
-        thumbnailImgUrl: selectedImg
-      };
-      insertQuizMutation.mutate(newQuiz, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-          router.replace('/quiz-list');
-        }
-      });
-      console.log('등록될 게시글', newQuiz);
-    } catch (error) {
-      console.error('퀴즈 등록 중 오류 발생', error);
+    if (file) {
+      const fileName = generateFileName(file);
+      console.log('낑낑', fileName);
+      try {
+        const thumbnailImgUrl = await uploadThumbnailToStorage(file, fileName);
+        console.log('스토리지에 이미지 업로드 성공', thumbnailImgUrl);
+      } catch (error) {
+        console.log('스토리지에 이미지 업로드 중 에러 발생');
+      }
+    } else {
+      alert('에엥');
     }
+
+    // try {
+    //   const fileName = file.name;
+    //   const newQuiz = {
+    //     creatorId: 'cocoa@naver.com',
+    //     level,
+    //     title,
+    //     info,
+    //     thumbnailImgUrl: selectedImg
+    //   };
+    //   insertQuizMutation.mutate(newQuiz, {
+    //     onSuccess: () => {
+    //       queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+    //       router.replace('/quiz-list');
+    //     }
+    //   });
+    //   console.log('등록될 게시글', newQuiz);
+    // } catch (error) {
+    //   console.error('퀴즈 등록 중 오류 발생', error);
+    // }
   };
 
   return (
