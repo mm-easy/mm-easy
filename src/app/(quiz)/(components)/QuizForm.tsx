@@ -113,9 +113,9 @@ const QuizForm = () => {
   };
 
   /** 퀴즈 등록 mutation */
-  // const insertQuizMutation = useMutation({
-  //   mutationFn:
-  // });
+  const insertQuizMutation = useMutation({
+    mutationFn: (newQuiz: Quiz) => insertQuizToTable(newQuiz)
+  });
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = async () => {
@@ -130,36 +130,28 @@ const QuizForm = () => {
 
     if (file) {
       const fileName = generateFileName(file);
-      console.log('낑낑', fileName);
       try {
-        const thumbnailImgUrl = await uploadThumbnailToStorage(file, fileName);
-        console.log('스토리지에 이미지 업로드 성공', thumbnailImgUrl);
+        const imgUrl = await uploadThumbnailToStorage(file, fileName);
+        console.log('스토리지에 이미지 업로드 성공', imgUrl);
+
+        const newQuiz = {
+          creator_id: 'cocoa@naver.com',
+          level,
+          title,
+          info,
+          thumbnail_img_url: imgUrl
+        };
+
+        insertQuizMutation.mutate(newQuiz, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+            router.replace('/quiz-list');
+          }
+        });
       } catch (error) {
         console.log('스토리지에 이미지 업로드 중 에러 발생');
       }
-    } else {
-      alert('에엥');
     }
-
-    // try {
-    //   const fileName = file.name;
-    //   const newQuiz = {
-    //     creatorId: 'cocoa@naver.com',
-    //     level,
-    //     title,
-    //     info,
-    //     thumbnailImgUrl: selectedImg
-    //   };
-    //   insertQuizMutation.mutate(newQuiz, {
-    //     onSuccess: () => {
-    //       queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-    //       router.replace('/quiz-list');
-    //     }
-    //   });
-    //   console.log('등록될 게시글', newQuiz);
-    // } catch (error) {
-    //   console.error('퀴즈 등록 중 오류 발생', error);
-    // }
   };
 
   return (
