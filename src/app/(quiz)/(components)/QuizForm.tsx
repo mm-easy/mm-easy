@@ -61,30 +61,11 @@ const QuizForm = () => {
       ],
       imgUrl: 'https://via.placeholder.com/200x200',
       correctAnswer: ''
-    },
-    {
-      id: crypto.randomUUID(),
-      type: QuestionType.objective,
-      title: '',
-      options: [
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        },
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        }
-      ],
-      imgUrl: 'https://via.placeholder.com/200x200',
-      correctAnswer: ''
     }
   ]);
 
-  // console.log('1', questions[0].options);
-  // console.log('2', questions[1].options);
+  console.log('1', questions[0]);
+  console.log('2', questions[1]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
