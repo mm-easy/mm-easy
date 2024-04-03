@@ -40,8 +40,8 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
+      imgUrl: 'https://via.placeholder.com/200x200',
       correctAnswer: ''
-      // imgUrl: 'https://via.placeholder.com/200x150'
     },
     {
       id: crypto.randomUUID(),
@@ -59,8 +59,27 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
+      imgUrl: 'https://via.placeholder.com/200x200',
       correctAnswer: ''
-      // imgUrl: 'https://via.placeholder.com/200x150'
+    },
+    {
+      id: crypto.randomUUID(),
+      type: QuestionType.objective,
+      title: '',
+      options: [
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        },
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        }
+      ],
+      imgUrl: 'https://via.placeholder.com/200x200',
+      correctAnswer: ''
     }
   ]);
 
@@ -126,7 +145,9 @@ const QuizForm = () => {
               content: '',
               isAnswer: false
             }
-          ]
+          ],
+          imgUrl: 'https://via.placeholder.com/200x200',
+          correctAnswer: ''
         }
       ]);
     } else {
