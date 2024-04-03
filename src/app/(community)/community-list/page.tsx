@@ -15,7 +15,7 @@ const CommunityPage = () => {
         <div>
           <CommunityMenu setSelectedCategory={setSelectedCategory} />
         </div>
-        <div className='flex-grow flex justify-center'>
+        <div className='flex justify-center items-center w-full'>
           <CommunityForm selectedCategory={selectedCategory} />
         </div>
       </div>
