@@ -1,10 +1,10 @@
 import QuizForm from '@/app/(quiz)/(components)/QuizForm';
-import QuizFormHeader from '../(components)/Header';
+import SubHeader from '../../../components/common/Header';
 
 const QuizFormPage = () => {
   return (
     <>
-      <QuizFormHeader />
+      <SubHeader text="퀴즈 만들기" />
       <QuizForm />
     </>
   );
