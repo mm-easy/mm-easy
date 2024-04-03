@@ -1,8 +1,10 @@
+import { PostDetailDateType } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
 
 export const getPosts = async () => {
   try {
-    const { data: posts, error } = await supabase.from('posts').select('*');
+    const { data: posts, error } = await supabase.from('posts').select(`*, profiles!inner(nickname)`);
+
     if (error) throw error;
     return posts || [];
   } catch (error) {
