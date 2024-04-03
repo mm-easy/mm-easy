@@ -4,25 +4,30 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth'; 
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { SiKakaotalk } from "react-icons/si";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn, loading, error, signInWithGoogle } = useAuth(); 
+  const { signIn, loading, error, signInWithGoogle, signInWithKakao } = useAuth(); 
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn(email, password);
-    
-    if (!error) {
+    const loginSuccess = await signIn(email, password);
+    if (loginSuccess) {
       router.push('/'); 
+    } else {
     }
   };
+  
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
+  };
+
+  const handleKakaoSignIn = async () => {
+    await signInWithKakao();
   };
 
   return (
@@ -89,16 +94,16 @@ const LoginPage = () => {
         <div className="flex justify-center mt-3">
         <button 
           onClick={handleGoogleSignIn}
-          disabled={loading} 
-          className="flex items-center justify-center w-full mr-3 px-1 py-3 text-blue-800 border border-blue-700 shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black hover:text-white"
+          className="flex items-center justify-center w-full mr-3 px-1 py-3 text-blue-700 border border-blue-700 hover:bg-gray-300 rounded-md shadow"
         >
           <FcGoogle className="mr-2" size="2em" />Google 로그인
         </button>
-        <button   
-          disabled={loading} 
-          className="flex items-center justify-center w-full px-1 py-3 text-blue-800 border border-blue-700 shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black hover:text-white"
+        <button
+          onClick={handleKakaoSignIn}
+          className="flex items-center justify-center w-full px-1 py-3 text-blue-700 border border-blue-700 hover:bg-gray-300 rounded-md shadow"
         >
-          <FaFacebook className="mr-2 text-blue-600" size="2em" />Facebook 로그인
+        <SiKakaotalk className="mr-2 bg-black text-yellow-500" size="2em" />
+        Kakao 로그인
         </button>
         </div>
       </div>
