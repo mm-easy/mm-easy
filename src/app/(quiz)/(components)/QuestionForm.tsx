@@ -181,7 +181,7 @@ const QuestionForm = ({
                     <Image
                       src={imgUrl}
                       alt="문항 이미지"
-                      className="object-cover cursor-pointer"
+                      className="w-full h-full object-cover cursor-pointer"
                       width={200}
                       height={200}
                     />
