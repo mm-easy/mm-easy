@@ -3,6 +3,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 const Header = () => {
   const { logout } = useAuth();
@@ -12,8 +13,10 @@ const Header = () => {
   };
 
   return (
-    <section className="bg-bgColor1 border-solid border-b border-pointColor1 p-5 pl-10 pr-10 min-h-20 flex items-end justify-between">
-      <button>MENU</button>
+    <section className="h-16 fixed w-full bg-bgColor1 border-solid border-b border-pointColor1 p-5 pl-10 pr-10 flex items-end justify-between">
+      <button>
+        <GiHamburgerMenu className="text-pointColor1" />
+      </button>
       <Link href="/">로고ㅎ</Link>
       <button onClick={handleLogout} className="ml-10">
         로그아웃
