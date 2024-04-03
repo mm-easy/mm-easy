@@ -74,7 +74,7 @@ const LoginPage = () => {
           </div>
           {error && <div className="text-red-500">{error}</div>}
           <div className="flex mt-6 justify-between">
-          <Link className="text-sm font-medium text-blue-600 hover:underline" href="/signup">
+          <Link className="text-sm font-medium text-blue-600 hover:underline" href="/terms">
               회원가입
           </Link>
           <Link className="text-sm font-medium text-blue-600 hover:underline" href="/">
