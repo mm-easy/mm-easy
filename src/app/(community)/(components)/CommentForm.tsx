@@ -8,33 +8,35 @@ const CommentForm = ({ postId }: { postId: string | undefined }) => {
   const [content, setContent] = useState('');
   const { getCurrentUserProfile } = useAuth();
 
-  const {
-    data: profile,
-    isLoading,
-    error
-  } = useQuery({
+  const { data: profile } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
 
-  const handleSubmitBtn = async (e: React.FormEvent, id: string) => {
+  const handleSubmitBtn = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!profile) {
+      alert('사용자 정보가 없습니다.');
+      return;
+    }
 
     const { data, error } = await supabase
       .from('comments')
-      .insert([{ author_id: id, post_id: postId, content }])
+      .insert([{ author_id: profile.id, post_id: postId, content }])
       .select();
 
-    if (data) {
-      alert('성공');
+    if (error) {
+      console.error('게시물 추가 중 오류가 발생했습니다:', error.message);
+      alert('게시물 추가 중 오류가 발생했습니다.');
+    } else {
+      alert('게시물이 등록되었습니다.');
     }
-    console.log(error);
   };
 
   return (
     <div>
       {profile && (
-        <form onSubmit={(e) => handleSubmitBtn(e, profile.id)}>
+        <form onSubmit={handleSubmitBtn}>
           {profile.avatar_img_url}
           {profile.nickname}
           <Box maxWidth="200px">
