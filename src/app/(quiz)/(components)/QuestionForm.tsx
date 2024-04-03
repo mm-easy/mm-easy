@@ -17,7 +17,7 @@ const QuestionForm = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   /** 문제 타입 바꾸기 버튼 핸들러 */
-  const handleChangeType = (id: string, type: QuestionType) => {
+  const handleChangeType = (id: string | undefined, type: QuestionType) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id ? { ...question, type } : question;
@@ -26,7 +26,7 @@ const QuestionForm = ({
   };
 
   /** 문제 타이틀 입력 핸들러 */
-  const handleChangeTitle = (id: string, title: string) => {
+  const handleChangeTitle = (id: string | undefined, title: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id ? { ...question, title } : question;
@@ -35,7 +35,7 @@ const QuestionForm = ({
   };
 
   /** 선택지 추가 핸들러 */
-  const handleAddOption = (id: string, options: Option[]) => {
+  const handleAddOption = (id: string | undefined, options: Option[]) => {
     if (options.length < 5) {
       const newOption = {
         id: crypto.randomUUID(),
@@ -58,7 +58,7 @@ const QuestionForm = ({
   };
 
   /** 선택지 입력 핸들러 */
-  const handleChangeOption = (id: string, content: string, options: Option[], optionId: string) => {
+  const handleChangeOption = (id: string | undefined, content: string, options: Option[], optionId: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id
@@ -74,7 +74,7 @@ const QuestionForm = ({
   };
 
   /** 선택지 삭제 핸들러 */
-  const handleDeleteOption = (id: string, options: Option[], optionId: string) => {
+  const handleDeleteOption = (id: string | undefined, options: Option[], optionId: string) => {
     if (options.length > 2) {
       setQuestions((prev) =>
         prev.map((question) => {
@@ -89,7 +89,7 @@ const QuestionForm = ({
   };
 
   /** 객관식 정답 체크 핸들러 */
-  const handleCheckObjectAnswer = (id: string, options: Option[], optionId: string) => {
+  const handleCheckObjectAnswer = (id: string | undefined, options: Option[], optionId: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id
@@ -105,7 +105,7 @@ const QuestionForm = ({
   };
 
   /** 주관식 정답 입력 핸들러 */
-  const handleChangeCorrectAnswer = (id: string, correctAnswer: string) => {
+  const handleChangeCorrectAnswer = (id: string | undefined, correctAnswer: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id ? { ...question, correctAnswer } : question;
@@ -118,7 +118,7 @@ const QuestionForm = ({
     fileInputRef.current?.click();
   };
 
-  const handleChangeImg = (id: string, files: FileList | null) => {
+  const handleChangeImg = (id: string | undefined, files: FileList | null) => {
     const file = files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -134,7 +134,7 @@ const QuestionForm = ({
   };
 
   /** 문제 삭제하기 버튼 핸들러 */
-  const handleDeleteQuestion = (id: string) => {
+  const handleDeleteQuestion = (id: string | undefined) => {
     if (questions.length > 1) {
       if (!window.confirm(`해당 문제를 삭제하시겠습니까? ${id}`)) return;
       setQuestions((prev) => {
