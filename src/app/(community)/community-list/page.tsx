@@ -1,6 +1,6 @@
 'use client';
 
-import CommunityForm from '@/app/(community)/(components)/CommunityForm';
+import CommunityForm from '../(components)/CommunityForm';
 import CommunityMenu from '../(components)/CommunityMenu';
 import { useState } from 'react';
 import SubHeader from '@/components/common/SubHeader';

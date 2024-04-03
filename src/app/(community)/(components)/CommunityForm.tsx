@@ -21,7 +21,7 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   }, []);
 
   const navigateToDetailPost = (post: any) => {
-    router.push(`/community-list/${post}`);
+    router.push(`/community-list/${post.id}`);
   };
 
   const truncateTitle = (title: any) => {
@@ -48,7 +48,7 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
               <tr
                 className=" bg-white cursor-pointer border-y border-solid border-pointColor1"
                 key={post.id}
-                onClick={navigateToDetailPost}
+                onClick={() => navigateToDetailPost(post)}
               >
                 <td className='p-3 pr-12 w-24'>{post.category}</td>
                 <td className='pr-10'>{post.profiles.nickname || '알 수 없음'}</td>

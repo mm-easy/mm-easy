@@ -1,3 +1,4 @@
+import { PostDetailDateType } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
 
 export const getPosts = async () => {
