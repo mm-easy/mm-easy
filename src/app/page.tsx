@@ -14,13 +14,14 @@ const Home = () => {
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <h1>User Profile</h1>
       {profile ? (
         <div>
+          <p>Id: {profile.id}</p>
           <p>Email: {profile.email}</p>
           <p>Nickname: {profile.nickname}</p>
-          {/* 필요한 다른 프로필 정보를 여기에 추가하세요. */}
+          <p>Avatar: {profile.avatar_img_url}</p>
         </div>
       ) : (
         <p>No profile data</p>
