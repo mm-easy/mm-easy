@@ -50,7 +50,7 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
                 key={post.id}
                 onClick={navigateToDetailPost}
               >
-                <td className='p-3 pr-12'>{post.category}</td>
+                <td className='p-3 pr-12 w-24'>{post.category}</td>
                 <td className='pr-10'>{post.profiles.nickname || '알 수 없음'}</td>
                 <td>{truncateTitle(post.title)}</td>
                 <td>{formatToLocaleDateTimeString(post.created_at)}</td>
