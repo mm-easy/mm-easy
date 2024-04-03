@@ -5,7 +5,7 @@ import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const CommentForm = ({ postId }: { postId: string | string[] }) => {
+const CommentForm = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
   const { getCurrentUserProfile } = useAuth();
 
@@ -36,21 +36,20 @@ const CommentForm = ({ postId }: { postId: string | string[] }) => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <form onSubmit={handleSubmitBtn}>
         {profile?.avatar_img_url}
         {profile?.nickname}
-        <Box maxWidth="200px">
+        <Box maxWidth="w-full">
           <TextArea
+            className="border-solid border-2 border-pointColor1"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             variant="classic"
             placeholder="Reply to comment…"
           />
         </Box>
-        <Button type="submit" color="gray" variant="surface">
-          등록
-        </Button>
+        <button type="submit">등록</button>
       </form>
     </div>
   );

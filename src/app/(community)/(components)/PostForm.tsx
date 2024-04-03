@@ -9,16 +9,19 @@ const PostForm = () => {
   const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('전체')
+  const [category, setCategory] = useState('전체');
 
-  const { data: profile, isLoading, error } = useQuery({
+  const {
+    data: profile,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
 
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
-  
 
   const handleTitle = (e: any) => {
     setTitle(e.target.value);
@@ -29,8 +32,8 @@ const PostForm = () => {
   };
 
   const handleCategory = (e: any) => {
-    setCategory(e.target.value)
-  }
+    setCategory(e.target.value);
+  };
 
   const addPostHandler = async (e: any) => {
     e.preventDefault();
@@ -54,6 +57,8 @@ const PostForm = () => {
       .insert([{ title, content, category, author_id: profile.id }])
       .select('*');
 
+    console.log(profile);
+
     if (error) {
       console.error('게시물 추가 중 오류가 발생했습니다:', error.message);
       alert('게시물 추가 중 오류가 발생했습니다.');
@@ -61,7 +66,7 @@ const PostForm = () => {
       alert('게시물이 등록되었습니다.');
     }
 
-    console.log(data)
+    console.log(data);
   };
 
   return (

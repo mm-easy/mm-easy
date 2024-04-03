@@ -38,6 +38,8 @@ export type Post = {
   attached_img_url: string;
   author_id: string;
   category: string;
+  nickname: string;
+  profiles: UserProfile;
 };
 
 export type MenuItem = {

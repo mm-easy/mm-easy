@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import type { PostDetailCommentType } from '@/types/posts';
 
-const CommentList = ({ postId }: { postId: string | string[] }) => {
+const CommentList = ({ postId }: { postId: string | string[] | undefined }) => {
   const [postCommentList, setPostCommentList] = useState<PostDetailCommentType[]>([]);
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
@@ -69,7 +69,7 @@ const CommentList = ({ postId }: { postId: string | string[] }) => {
     <div>
       {postCommentList?.map((prev) => {
         return (
-          <div key={prev.id}>
+          <div className="border-solid border-b-2" key={prev.id}>
             <p>{prev.profiles?.nickname}</p>
             <p>{prev.profiles?.avatar_img_url}</p>
             <time>{formatToLocaleDateTimeString(prev.created_at)}</time>
@@ -92,38 +92,34 @@ const CommentList = ({ postId }: { postId: string | string[] }) => {
               (profile.id === prev.author_id ? (
                 btnChange ? (
                   <>
-                    <Button type="submit" color="gray" variant="surface" onClick={() => handleUpdateBtn(prev.id)}>
+                    <button type="submit" onClick={() => handleUpdateBtn(prev.id)}>
                       수정완료
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       type="submit"
-                      color="gray"
-                      variant="surface"
                       onClick={() => {
                         setBtnChange(!btnChange);
                         setContentChange(prev.content);
                       }}
                     >
                       취소
-                    </Button>
+                    </button>
                   </>
                 ) : (
                   <>
-                    <Button
+                    <button
                       type="submit"
-                      color="gray"
-                      variant="surface"
                       onClick={() => {
                         setBtnChange(!btnChange);
                         setContentChange(prev.content);
                       }}
                     >
                       수정
-                    </Button>
+                    </button>
 
-                    <Button type="submit" color="gray" variant="surface" onClick={() => handleDeleteBtn(prev.id)}>
+                    <button type="submit" onClick={() => handleDeleteBtn(prev.id)}>
                       삭제
-                    </Button>
+                    </button>
                   </>
                 )
               ) : (

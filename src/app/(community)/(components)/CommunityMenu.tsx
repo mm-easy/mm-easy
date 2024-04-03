@@ -13,10 +13,10 @@ const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   ];
 
   return (
-    <nav>
+    <nav className="w-40">
       <ul>
         {menuItems.map((item) => (
-          <li key={item.key}>
+          <li key={item.key} className="p-3 bg-white border-x-2 border-b-2 border-solid border-r-0 border-pointColor1">
             <button className="p-2" onClick={() => setSelectedCategory(item.label)}>
               {item.label}
             </button>
