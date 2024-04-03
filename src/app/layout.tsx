@@ -26,16 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme>
-          <Provider>
-            <QueryProvider>
-              <Header />
-              <ToastContainer />
-              {children}
-              <Footer />
-            </QueryProvider>
-          </Provider>
-        </Theme>
+        <Provider>
+          <QueryProvider>
+            <Header />
+            <ToastContainer />
+            {children}
+            <Footer />
+          </QueryProvider>
+        </Provider>
       </body>
     </html>
   );

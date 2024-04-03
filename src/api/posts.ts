@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { PostDetailDateType } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
 
@@ -30,6 +31,9 @@ import { supabase } from '@/utils/supabase/supabase';
 //     throw error;
 //   }
 // };
+=======
+import { supabase } from '@/utils/supabase/supabase';
+>>>>>>> 2450ad9e4251bc472aa7bfb64ddf0a1f96636af5
 
 export const getPosts = async () => {
   try {
