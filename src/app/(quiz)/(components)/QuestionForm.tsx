@@ -1,10 +1,11 @@
 'use client';
 
-import { Option, Question, QuestionType } from '@/types/quizzes';
-import { SetStateAction } from 'jotai';
 import Image from 'next/image';
-import { Dispatch } from 'react';
+import { Dispatch, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { SetStateAction } from 'jotai';
+
+import { type Option, type Question, QuestionType } from '@/types/quizzes';
 
 const QuestionForm = ({
   questions,
@@ -13,6 +14,8 @@ const QuestionForm = ({
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   /** 문제 타입 바꾸기 버튼 핸들러 */
   const handleChangeType = (id: string, type: QuestionType) => {
     setQuestions((prev) =>
@@ -110,6 +113,26 @@ const QuestionForm = ({
     );
   };
 
+  /** 이미지 첨부 핸들러 */
+  const handleClickImg = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleChangeImg = (id: string, files: FileList | null) => {
+    const file = files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setQuestions((prev) =>
+          prev.map((question) => {
+            return question.id === id ? { ...question, imgUrl: reader.result as string } : question;
+          })
+        );
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   /** 문제 삭제하기 버튼 핸들러 */
   const handleDeleteQuestion = (id: string) => {
     if (questions.length > 1) {
@@ -126,7 +149,7 @@ const QuestionForm = ({
   return (
     <article style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
       {questions.map((question) => {
-        const { id, type, options } = question;
+        const { id, type, options, imgUrl } = question;
         return (
           /** 유형, 휴지통 섹션 */
           <section key={id} style={{ width: '40vw', margin: '0 auto', paddingBottom: '20px' }}>
@@ -153,14 +176,30 @@ const QuestionForm = ({
             {/* 이미지, input 섹션 */}
             <section>
               {type === QuestionType.objective ? (
-                <div style={{ display: 'flex', flexDirection: 'column', placeItems: 'center' }}>
-                  <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
+                <div className="flex flex-col place-items-center">
+                  <div className="w-40 h-40" onClick={handleClickImg}>
+                    <Image
+                      src={imgUrl}
+                      alt="문항 이미지"
+                      className="object-cover cursor-pointer"
+                      width={200}
+                      height={200}
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeImg(id, e.target.files);
+                      }}
+                      className="hidden"
+                    />
+                  </div>
                   <input
                     type="text"
                     style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
                     placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
                     onChange={(e) => {
-                      e.preventDefault();
                       handleChangeTitle(id, e.target.value);
                     }}
                   />
@@ -194,8 +233,14 @@ const QuestionForm = ({
                   </button>
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', placeItems: 'center' }}>
-                  <Image src="https://via.placeholder.com/200x150" alt="fake image" width={200} height={150} />
+                <div className="flex flex-col place-items-center">
+                  <Image
+                    src={imgUrl}
+                    alt="문항 이미지"
+                    className="object-cover cursor-pointer"
+                    width={200}
+                    height={200}
+                  />
                   <input
                     type="text"
                     style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
