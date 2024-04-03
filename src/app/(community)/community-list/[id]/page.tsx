@@ -36,9 +36,9 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center text-pointColor1">
+    <div className="flex bg-bgColor1 items-center justify-center text-pointColor1 pt-16">
       {/* <CommunityMenu /> */}
-      <div className="bg-white py-5 px-10 border border-solid border-pointColor1 max-w-md w-full mx-4">
+      <div className="py-5 bg-white px-10 border border-solid border-pointColor1 w-full">
         {post && post.profiles && (
           <div>
             <div className="flex justify-between">
@@ -66,8 +66,12 @@ const page = () => {
                 <span className="ml-2">좋아요</span>
               </div>
               <div>
-                <button className="border border-soild border-pointColor1 py-3 px-4">수정</button>
-                <button className="border border-soild border-pointColor1 py-3 px-4">삭제</button>
+                <button className="border border-solid border-pointColor1 py-3 px-4 border-r-0 border-t-0 border-b-0">
+                  수정
+                </button>
+                <button className="border border-solid border-pointColor1 py-3 px-4 border-l-1 border-t-0 border-b-0">
+                  삭제
+                </button>
               </div>
             </div>
             <p className="m-5 text-blackColor">{post.content}</p>

@@ -142,7 +142,7 @@ export const useAuth = () => {
       }
   
       const { data, error: getUserError } = await supabase.auth.getUser();
-  
+      console.log('kakao data:',data);
       if (getUserError) {
         setError(getUserError.message);
         setLoading(false);
