@@ -147,25 +147,31 @@ const QuestionForm = ({
   };
 
   return (
-    <article style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
+    <article className="pb-12 flex flex-col place-items-center gap-12">
       {questions.map((question) => {
         const { id, type, options, imgUrl } = question;
         return (
           /** 유형, 휴지통 섹션 */
-          <section key={id} style={{ width: '40vw', margin: '0 auto', paddingBottom: '20px' }}>
-            <section style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <section>
-                <label>
+          <section key={id}>
+            <section className="flex justify-between">
+              <section className="w-[45vw]">
+                <label className="pr-4">
                   <input
                     type="radio"
                     name={id}
                     defaultChecked
+                    className="mr-2"
                     onChange={() => handleChangeType(id, QuestionType.objective)}
                   />
                   객관식
                 </label>
                 <label>
-                  <input type="radio" name={id} onChange={() => handleChangeType(id, QuestionType.subjective)} />
+                  <input
+                    type="radio"
+                    name={id}
+                    className="mr-2"
+                    onChange={() => handleChangeType(id, QuestionType.subjective)}
+                  />
                   주관식
                 </label>
               </section>
@@ -176,7 +182,7 @@ const QuestionForm = ({
             {/* 이미지, input 섹션 */}
             <section>
               {type === QuestionType.objective ? (
-                <div className="flex flex-col place-items-center">
+                <div className="flex flex-col place-items-center gap-4">
                   <div className="w-40 h-40" onClick={() => handleClickImg(id)}>
                     <Image
                       src={imgUrl}
@@ -198,7 +204,7 @@ const QuestionForm = ({
                   </div>
                   <input
                     type="text"
-                    style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
+                    className="w-[500px] px-4 py-2 font-bold border-solid border border-pointColor1"
                     placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
                     onChange={(e) => {
                       handleChangeTitle(id, e.target.value);
@@ -206,9 +212,10 @@ const QuestionForm = ({
                   />
                   {options.map((option) => {
                     return (
-                      <div key={option.id}>
+                      <div key={option.id} className="flex place-items-center gap-3">
                         <input
                           type="checkbox"
+                          className="w-[42px] h-[42px]"
                           checked={option.isAnswer}
                           onChange={() => {
                             handleCheckObjectAnswer(id, options, option.id);
@@ -216,15 +223,19 @@ const QuestionForm = ({
                         />
                         <input
                           type="text"
-                          style={{ width: '500px', marginBottom: '10px' }}
+                          className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
                           placeholder="선택지를 입력해 주세요."
                           onChange={(e) => {
                             e.preventDefault();
                             handleChangeOption(id, e.target.value, options, option.id);
                           }}
                         />
-                        <button type="button" onClick={() => handleDeleteOption(id, options, option.id)}>
-                          ❎
+                        <button
+                          type="button"
+                          className="w-[42px] h-[42px] text-2xl text-white bg-pointColor1"
+                          onClick={() => handleDeleteOption(id, options, option.id)}
+                        >
+                          -
                         </button>
                       </div>
                     );
@@ -234,17 +245,29 @@ const QuestionForm = ({
                   </button>
                 </div>
               ) : (
-                <div className="flex flex-col place-items-center">
-                  <Image
-                    src={imgUrl}
-                    alt="문항 이미지"
-                    className="object-cover cursor-pointer"
-                    width={200}
-                    height={200}
-                  />
+                <div className="flex flex-col place-items-center gap-4">
+                  <div className="w-40 h-40" onClick={() => handleClickImg(id)}>
+                    <Image
+                      src={imgUrl}
+                      alt="문항 이미지"
+                      className="w-full h-full object-cover cursor-pointer"
+                      width={200}
+                      height={200}
+                    />
+                    <input
+                      type="file"
+                      id={`fileInput${id}`}
+                      // ref={fileInputRef}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeImg(id, e.target.files);
+                      }}
+                      className="hidden"
+                    />
+                  </div>
                   <input
                     type="text"
-                    style={{ width: '500px', marginBottom: '10px', fontWeight: 'bold' }}
+                    className="w-[500px] px-4 py-2 font-bold border-solid border border-pointColor1"
                     placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
                     onChange={(e) => {
                       e.preventDefault();
@@ -253,7 +276,7 @@ const QuestionForm = ({
                   />
                   <input
                     type="text"
-                    style={{ width: '500px' }}
+                    className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
                     placeholder="정답을 입력해 주세요."
                     onChange={(e) => {
                       e.preventDefault();
