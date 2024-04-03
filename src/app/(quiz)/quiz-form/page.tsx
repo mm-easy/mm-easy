@@ -1,5 +1,5 @@
 import QuizForm from '@/app/(quiz)/(components)/QuizForm';
-import SubHeader from '../../../components/common/Header';
+import SubHeader from '../../../components/common/SubHeader';
 
 const QuizFormPage = () => {
   return (
