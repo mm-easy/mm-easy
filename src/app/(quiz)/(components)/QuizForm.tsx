@@ -185,7 +185,7 @@ const QuizForm = () => {
   // };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-16">
       <form
         className="flex flex-col min-w-full"
         onSubmit={(e) => {
@@ -243,7 +243,7 @@ const QuizForm = () => {
           <button type="submit">등록하기</button>
         </div>
       </form>
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px;' }}>
+      <div style={{ position: 'fixed', bottom: '50px', right: '50px;' }}>
         <PageUpBtn scrollPosition={scrollPosition} />
       </div>
     </main>
