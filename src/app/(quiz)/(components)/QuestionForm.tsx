@@ -147,12 +147,12 @@ const QuestionForm = ({
   };
 
   return (
-    <article style={{ border: '1px solid red', margin: '10px', padding: '10px' }}>
+    <article className="width-[40vw] pb-12 flex flex-col place-items-center gap-12">
       {questions.map((question) => {
         const { id, type, options, imgUrl } = question;
         return (
           /** 유형, 휴지통 섹션 */
-          <section key={id} style={{ width: '40vw', margin: '0 auto', paddingBottom: '20px' }}>
+          <section key={id}>
             <section style={{ display: 'flex', justifyContent: 'space-between' }}>
               <section>
                 <label>
