@@ -54,6 +54,8 @@ const PostForm = () => {
       .insert([{ title, content, category, author_id: profile.id }])
       .select('*');
 
+      console.log(profile)
+
     if (error) {
       console.error('게시물 추가 중 오류가 발생했습니다:', error.message);
       alert('게시물 추가 중 오류가 발생했습니다.');
