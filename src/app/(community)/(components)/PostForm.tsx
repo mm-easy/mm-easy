@@ -1,15 +1,57 @@
 'use client';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 
 const PostForm = () => {
   const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('전체');
+  const [category, setCategory] = useState('질문');
+  const router = useRouter();
+
+  const formats = [
+    'font',
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'align',
+    'color',
+    'background',
+    'size',
+    'h1',
+  ];
+
+ const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ align: [] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [
+            {
+              color: [],
+            },
+            { background: [] },
+          ],
+        ],
+      },
+    };
+  }, []);
 
   const {
     data: profile,
@@ -27,15 +69,20 @@ const PostForm = () => {
     setTitle(e.target.value);
   };
 
-  const handleContent = (e: any) => {
-    setContent(e.target.value);
-  };
+  // const handleContent = (e: any) => {
+  //   setContent(e.target.value);
+  // };
 
   const handleCategory = (e: any) => {
     setCategory(e.target.value);
   };
 
-  const addPostHandler = async (e: any) => {
+  const handleCancel = (e: any) => {
+    e.preventDefault(); 
+    router.push('/community-list');
+  };
+
+  const handleNewPost = async (e: any) => {
     e.preventDefault();
 
     if (!profile) {
@@ -64,13 +111,14 @@ const PostForm = () => {
       alert('게시물 추가 중 오류가 발생했습니다.');
     } else {
       alert('게시물이 등록되었습니다.');
+      router.push('/community-list');
     }
 
     console.log(data);
   };
 
   return (
-    <form onSubmit={addPostHandler}>
+    <form onSubmit={handleNewPost}>
       <div>
         <label>분류</label>
         <select value={category} onChange={handleCategory}>
@@ -84,11 +132,18 @@ const PostForm = () => {
         <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
       </div>
-      <div>
+      {/* <div>
         <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>
-      </div>
+      </div> */}
+      <ReactQuill
+      theme="snow"
+      modules={modules}
+      formats={formats}
+      value={content}
+      onChange={setContent}
+    />
       <div>
-        <button>취소</button>
+        <button onClick={handleCancel}>취소</button>
         <button type="submit">작성</button>
       </div>
     </form>
