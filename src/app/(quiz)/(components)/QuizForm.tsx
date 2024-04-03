@@ -195,10 +195,10 @@ const QuizForm = () => {
       >
         <div className="p-10 flex gap-10 bg-white justify-center items-center">
           <div className="flex flex-col gap-1">
-            <p className="text-xs text-blue-500">썸네일 이미지</p>
+            <p className="text-xs text-pointColor1">썸네일 이미지</p>
             <div
               onClick={handleImgClick}
-              className="bg-gray-200 w-60 h-60 border-solid border border-blue-500 flex items-center"
+              className="bg-gray-200 w-60 h-60 border-solid border border-pointColor1 flex items-center"
             >
               <Image
                 src={selectedImg}
@@ -219,15 +219,15 @@ const QuizForm = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-1">
-              <p className="text-xs text-blue-500">난이도</p>
+              <p className="text-xs text-pointColor1">난이도</p>
               <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-xs text-blue-500">퀴즈 제목</p>
+              <p className="text-xs text-pointColor1">퀴즈 제목</p>
               <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
             <div className="flex flex-col gap-1">
-              <p className="text-xs text-blue-500">퀴즈 설명</p>
+              <p className="text-xs text-pointColor1">퀴즈 설명</p>
               <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
             </div>
           </div>

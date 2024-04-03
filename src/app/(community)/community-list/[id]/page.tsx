@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
@@ -33,23 +34,43 @@ const page = () => {
   }, []);
 
   return (
-    <div>
-      {/* <div className="flex">
+    <div className="flex items-center justify-center">
+      <CommunityMenu />
+      <div className="bg-white p-3 border border-solid border-pointColor1 max-w-md w-full mx-4">
+        {/* <div className="flex">
         <CommunityMenu setSelectedCategory={setSelectedCategory} />
         <CommunityForm selectedCategory={selectedCategory} />
       </div> */}
-      {post && (
-        <div>
-          <p>{post.category}</p>
-          <p>{post.profiles?.nickname}</p>
-          <p>{post.profiles?.avatar_img_url}</p>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
-          <time>{formatToLocaleDateTimeString(post.created_at)}</time>
-        </div>
-      )}
-      <CommentForm postId={params.id} />
-      <CommentList postId={params.id} />
+
+        {post && post.profiles && (
+          <div>
+            <div className="flex flex-row">
+              <p>{post.category}</p>
+              <time>{formatToLocaleDateTimeString(post.created_at)}</time>
+            </div>
+            <div className="flex">
+              <div className="w-100 h-100 rounded-full overflow-hidden border border-solid border-pointColor1">
+                <Image
+                  src={post.profiles.avatar_img_url}
+                  alt="프로필이미지"
+                  width={100}
+                  height={100}
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <p>{post.profiles.nickname}</p>
+                <p>{post.title}</p>
+              </div>
+            </div>
+
+            <p>{post.content}</p>
+
+            <CommentList postId={params.id} />
+            <CommentForm postId={params.id} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
