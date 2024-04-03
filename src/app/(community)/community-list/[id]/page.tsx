@@ -5,6 +5,8 @@ import { supabase } from '@/utils/supabase/supabase';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CommentForm from '../../(components)/CommentForm';
+import CommentList from '../../(components)/CommentList';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 
 const page = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -34,11 +36,12 @@ const page = () => {
           <p>{post.profiles?.avatar_img_url}</p>
           <p>{post.title}</p>
           <p>{post.content}</p>
-          <p>{post.attached_img_url}</p>
+          <time>{formatToLocaleDateTimeString(post.created_at)}</time>
           <p>{post.created_at.toLocaleString()}</p>
         </div>
       )}
-      <CommentForm postId={post?.id} />
+      <CommentForm postId={params.id} />
+      <CommentList postId={params.id} />
     </div>
   );
 };

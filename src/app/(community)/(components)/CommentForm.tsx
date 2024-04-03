@@ -4,7 +4,7 @@ import { Box, Button, TextArea } from '@radix-ui/themes';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-const CommentForm = ({ postId }: { postId: string | undefined }) => {
+const CommentForm = ({ postId }: { postId: string | string[] }) => {
   const [content, setContent] = useState('');
   const { getCurrentUserProfile } = useAuth();
 

@@ -1,10 +1,12 @@
 'use client';
 
 import { getPosts } from '@/api/posts';
-import { CommunityFormProps, Post } from '@/types/posts';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { Box, Container, Section } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
+
+import type { CommunityFormProps, Post } from '@/types/posts';
+
 const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
 

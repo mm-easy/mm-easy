@@ -1,5 +1,7 @@
 'use client';
 
+import { CommunityMenuProps, MenuItem } from '@/types/posts';
+
 const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
     { key: 'all', label: '전체' },
@@ -15,7 +17,9 @@ const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
       <ul>
         {menuItems.map((item) => (
           <li key={item.key}>
-            <button className="p-2" onClick={() => setSelectedCategory(item.label)}>{item.label}</button>
+            <button className="p-2" onClick={() => setSelectedCategory(item.label)}>
+              {item.label}
+            </button>
           </li>
         ))}
       </ul>

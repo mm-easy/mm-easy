@@ -10,7 +10,7 @@ export type PostDetailDateType = {
   title: string;
   content: string;
   attached_img_url: string;
-  created_at: Date;
+  created_at: string;
 };
 
 export type PostDetailUserType = {
@@ -25,7 +25,8 @@ export type PostDetailCommentType = {
   author_id: string;
   post_id: string;
   content: string;
-  created_at: Date;
+  created_at: string;
+  profiles?: UserProfile;
 };
 
 export type Post = {
@@ -38,12 +39,12 @@ export type Post = {
   category: string;
 };
 
-type MenuItem = {
+export type MenuItem = {
   key: string;
   label: string;
 };
 
-type CommunityMenuProps = {
+export type CommunityMenuProps = {
   setSelectedCategory: (category: string) => void;
 };
 
