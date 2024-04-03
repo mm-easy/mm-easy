@@ -1,6 +1,10 @@
+import PostForm from "../(components)/PostForm"
+
 const page = () => {
   return (
-    <div>page</div>
+    <>
+      <PostForm/>
+    </>
   )
 }
 
