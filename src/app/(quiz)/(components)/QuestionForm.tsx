@@ -14,7 +14,8 @@ const QuestionForm = ({
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
 }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // const fileInputRef = useRef<HTMLInputElement>(null);
+  // const fileInput = document.getElementById(id)
 
   /** 문제 타입 바꾸기 버튼 핸들러 */
   const handleChangeType = (id: string | undefined, type: QuestionType) => {
@@ -114,22 +115,21 @@ const QuestionForm = ({
   };
 
   /** 이미지 첨부 핸들러 */
-  const handleClickImg = () => {
-    fileInputRef.current?.click();
+  const handleClickImg = (id: string | undefined) => {
+    const fileInput = document.getElementById(`fileInput${id}`);
+    console.log(fileInput);
+    fileInput?.click();
   };
 
   const handleChangeImg = (id: string | undefined, files: FileList | null) => {
     const file = files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setQuestions((prev) =>
-          prev.map((question) => {
-            return question.id === id ? { ...question, imgUrl: reader.result as string } : question;
-          })
-        );
-      };
-      reader.readAsDataURL(file);
+      const imgUrl = URL.createObjectURL(file);
+      setQuestions((prev) =>
+        prev.map((question) => {
+          return question.id === id ? { ...question, imgUrl } : question;
+        })
+      );
     }
   };
 
@@ -177,7 +177,7 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center">
-                  <div className="w-40 h-40" onClick={handleClickImg}>
+                  <div className="w-40 h-40" onClick={() => handleClickImg(id)}>
                     <Image
                       src={imgUrl}
                       alt="문항 이미지"
@@ -187,7 +187,8 @@ const QuestionForm = ({
                     />
                     <input
                       type="file"
-                      ref={fileInputRef}
+                      id={`fileInput${id}`}
+                      // ref={fileInputRef}
                       onChange={(e) => {
                         e.preventDefault();
                         handleChangeImg(id, e.target.files);
