@@ -1,5 +1,7 @@
 'use client';
 
+import type { CommunityMenuProps, MenuItem } from "@/types/posts";
+
 const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
     { key: 'all', label: '전체' },

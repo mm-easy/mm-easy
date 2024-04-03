@@ -1,4 +1,4 @@
-type Post = {
+export type Post = {
   id: string;
   title: string;
   content: string;
@@ -8,15 +8,15 @@ type Post = {
   category: string;
 };
 
-type MenuItem = {
+export type MenuItem = {
   key: string;
   label: string;
 };
 
-type CommunityMenuProps = {
+export type CommunityMenuProps = {
   setSelectedCategory: (category: string) => void;
 }
 
-type CommunityFormProps = {
+export type CommunityFormProps = {
   selectedCategory: string;
 }
