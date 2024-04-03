@@ -40,8 +40,8 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
+      imgUrl: 'https://via.placeholder.com/200x200',
       correctAnswer: ''
-      // imgUrl: 'https://via.placeholder.com/200x150'
     },
     {
       id: crypto.randomUUID(),
@@ -59,8 +59,27 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
+      imgUrl: 'https://via.placeholder.com/200x200',
       correctAnswer: ''
-      // imgUrl: 'https://via.placeholder.com/200x150'
+    },
+    {
+      id: crypto.randomUUID(),
+      type: QuestionType.objective,
+      title: '',
+      options: [
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        },
+        {
+          id: crypto.randomUUID(),
+          content: '',
+          isAnswer: false
+        }
+      ],
+      imgUrl: 'https://via.placeholder.com/200x200',
+      correctAnswer: ''
     }
   ]);
 
@@ -84,11 +103,11 @@ const QuizForm = () => {
   }, [scrollPosition]);
 
   /** 썸네일 이미지 클릭하여 이미지 파일 첨부하기*/
-  const handleImgClick = () => {
+  const handleClickImg = () => {
     fileInputRef.current?.click();
   };
 
-  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setFile(file);
@@ -126,7 +145,9 @@ const QuizForm = () => {
               content: '',
               isAnswer: false
             }
-          ]
+          ],
+          imgUrl: 'https://via.placeholder.com/200x200',
+          correctAnswer: ''
         }
       ]);
     } else {
@@ -197,7 +218,7 @@ const QuizForm = () => {
           <div className="flex flex-col gap-1">
             <p className="text-xs text-pointColor1">썸네일 이미지</p>
             <div
-              onClick={handleImgClick}
+              onClick={handleClickImg}
               className="bg-gray-200 w-60 h-60 border-solid border border-pointColor1 flex items-center"
             >
               <Image
@@ -212,7 +233,7 @@ const QuizForm = () => {
                 type="file"
                 id="fileInput"
                 ref={fileInputRef}
-                onChange={handleImgChange}
+                onChange={handleChangeImg}
                 style={{ display: 'none' }}
               />
             </div>
