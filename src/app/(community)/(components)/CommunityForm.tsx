@@ -6,6 +6,7 @@ import { Box, Container, Section } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 
 import type { CommunityFormProps, Post } from '@/types/posts';
+import Link from 'next/link';
 
 const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -24,13 +25,15 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
 
   return (
     <>
-      <div className='bg-gray-200 p-4'>
+      <div className="bg-gray-200 p-4">
         <ul>
           {filteredPosts.map((post) => (
-            <li className='bg-white p-4 border-solid border' key={post.id}>
-              <h3>{post.title}</h3>
-              <p>{post.content}</p>
-              <time>{formatToLocaleDateTimeString(post.created_at)}</time>
+            <li className="bg-white p-4 border-solid border" key={post.id}>
+              <Link href={`community-detail/${post.id}`}>
+                <h3>{post.title}</h3>
+                <p>{post.content}</p>
+                <time>{formatToLocaleDateTimeString(post.created_at)}</time>
+              </Link>
             </li>
           ))}
         </ul>
