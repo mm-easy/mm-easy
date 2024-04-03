@@ -1,19 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { supabase } from '@/utils/supabase/supabase';
+import SubHeader from '@/components/common/SubHeader';
 import CommentForm from '../../(components)/CommentForm';
 import CommentList from '../../(components)/CommentList';
 import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { FaHeart } from 'react-icons/fa';
 
 import type { PostDetailDateType } from '@/types/posts';
-import { FaHeart } from 'react-icons/fa';
-import { Button } from '@radix-ui/themes';
-import SubHeader from '@/components/common/SubHeader';
 
 const page = () => {
   const [post, setPost] = useState<PostDetailDateType>();
