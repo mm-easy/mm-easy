@@ -3,6 +3,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const PostForm = () => {
@@ -10,6 +11,7 @@ const PostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('전체')
+  const router = useRouter();
 
   const { data: profile, isLoading, error } = useQuery({
     queryKey: ['userProfile'],
@@ -32,7 +34,7 @@ const PostForm = () => {
     setCategory(e.target.value)
   }
 
-  const addPostHandler = async (e: any) => {
+  const handleNewPost = async (e: any) => {
     e.preventDefault();
 
     if (!profile) {
@@ -61,13 +63,14 @@ const PostForm = () => {
       alert('게시물 추가 중 오류가 발생했습니다.');
     } else {
       alert('게시물이 등록되었습니다.');
+      router.push('/community-list')
     }
 
     console.log(data)
   };
 
   return (
-    <form onSubmit={addPostHandler}>
+    <form onSubmit={handleNewPost}>
       <div>
         <label>분류</label>
         <select value={category} onChange={handleCategory}>
