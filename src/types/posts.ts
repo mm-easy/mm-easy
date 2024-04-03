@@ -11,6 +11,7 @@ export type PostDetailDateType = {
   content: string;
   attached_img_url: string;
   created_at: string;
+  category: string;
 };
 
 export type PostDetailUserType = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { CommunityMenuProps, MenuItem } from '@/types/posts';
+import type { CommunityMenuProps, MenuItem } from '@/types/posts';
 
 const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
