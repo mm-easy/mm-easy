@@ -127,14 +127,18 @@ const QuestionForm = ({
                 <label>
                   <input
                     type="radio"
-                    name={id}
+                    name={`radio${id}`}
                     defaultChecked
                     onChange={() => handleChangeType(id, QuestionType.objective)}
                   />
                   객관식
                 </label>
                 <label>
-                  <input type="radio" name={id} onChange={() => handleChangeType(id, QuestionType.subjective)} />
+                  <input
+                    type="radio"
+                    name={`radio${id}`}
+                    onChange={() => handleChangeType(id, QuestionType.subjective)}
+                  />
                   주관식
                 </label>
               </section>
@@ -161,7 +165,7 @@ const QuestionForm = ({
                       <div key={option.id}>
                         <input
                           type="checkbox"
-                          name={option.id}
+                          name={`checkbox${id}`}
                           onChange={(e) => {
                             e.preventDefault();
                             // handleCheckObjectAnswer(id, e.target, option.id);
