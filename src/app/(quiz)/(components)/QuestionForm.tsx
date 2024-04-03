@@ -86,14 +86,14 @@ const QuestionForm = ({
   };
 
   /** 객관식 정답 체크 핸들러 */
-  const handleCheckObjectAnswer = (id: string, options: Option[], optionId: string, isAnswer: boolean) => {
+  const handleCheckObjectAnswer = (id: string, options: Option[], optionId: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id
           ? {
               ...question,
               options: options.map((option) => {
-                return option.id === optionId ? { ...option, isAnswer: !isAnswer } : { ...option, isAnswer: false };
+                return option.id === optionId ? { ...option, isAnswer: true } : { ...option, isAnswer: false };
               })
             }
           : question;
@@ -171,9 +171,8 @@ const QuestionForm = ({
                           type="checkbox"
                           name={id}
                           checked={option.isAnswer}
-                          onChange={(e) => {
-                            e.preventDefault();
-                            handleCheckObjectAnswer(id, options, option.id, option.isAnswer);
+                          onChange={() => {
+                            handleCheckObjectAnswer(id, options, option.id);
                           }}
                         />
                         <input
