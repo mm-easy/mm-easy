@@ -17,18 +17,20 @@ interface BlueLevelSelectProps {
 
 export const BlueInput: React.FC<BlueInputProps> = ({ value, onChange }) => {
   return (
-    <input className="border border-solid border-blue-500 w-96 p-2" type="text" value={value} onChange={onChange} />
+    <input className="border border-solid border-pointColor1 w-96 p-2" type="text" value={value} onChange={onChange} />
   );
 };
 
 export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) => {
-  return <textarea className="border border-solid border-blue-500 w-96 p-2 h-24" value={value} onChange={onChange} />;
+  return (
+    <textarea className="border border-solid border-pointColor1 w-96 p-2 h-24" value={value} onChange={onChange} />
+  );
 };
 
 export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChange }) => {
   return (
     <select
-      className="border border-solid border-blue-500 w-96 p-2"
+      className="border border-solid border-pointColor1 w-96 p-2"
       value={value}
       onChange={(e) => onChange(+e.target.value)}
     >
