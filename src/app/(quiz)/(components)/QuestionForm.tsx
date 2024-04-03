@@ -86,12 +86,20 @@ const QuestionForm = ({
   };
 
   /** 객관식 정답 체크 핸들러 */
-  // const handleCheckObjectAnswer = (id: string, checkedOption: HTMLInputElement, optionId: string) => {
-  //   const checkboxes = document.getElementsByName(optionId)
-  //   checkboxes.forEach(checkbox=>{
-  //     checkbox === checkedOption ? checkbox.checked=true
-  //   })
-  // };
+  const handleCheckObjectAnswer = (id: string, options: Option[], optionId: string, isAnswer: boolean) => {
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id
+          ? {
+              ...question,
+              options: options.map((option) => {
+                return option.id === optionId ? { ...option, isAnswer: !isAnswer } : { ...option, isAnswer: false };
+              })
+            }
+          : question;
+      })
+    );
+  };
 
   /** 주관식 정답 입력 핸들러 */
   const handleChangeCorrectAnswer = (id: string, correctAnswer: string) => {
@@ -127,18 +135,14 @@ const QuestionForm = ({
                 <label>
                   <input
                     type="radio"
-                    name={`radio${id}`}
+                    name={id}
                     defaultChecked
                     onChange={() => handleChangeType(id, QuestionType.objective)}
                   />
                   객관식
                 </label>
                 <label>
-                  <input
-                    type="radio"
-                    name={`radio${id}`}
-                    onChange={() => handleChangeType(id, QuestionType.subjective)}
-                  />
+                  <input type="radio" name={id} onChange={() => handleChangeType(id, QuestionType.subjective)} />
                   주관식
                 </label>
               </section>
@@ -165,10 +169,11 @@ const QuestionForm = ({
                       <div key={option.id}>
                         <input
                           type="checkbox"
-                          name={`checkbox${id}`}
+                          name={id}
+                          checked={option.isAnswer}
                           onChange={(e) => {
                             e.preventDefault();
-                            // handleCheckObjectAnswer(id, e.target, option.id);
+                            handleCheckObjectAnswer(id, options, option.id, option.isAnswer);
                           }}
                         />
                         <input
