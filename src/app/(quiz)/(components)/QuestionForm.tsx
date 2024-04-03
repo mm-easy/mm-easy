@@ -169,7 +169,6 @@ const QuestionForm = ({
                       <div key={option.id}>
                         <input
                           type="checkbox"
-                          name={id}
                           checked={option.isAnswer}
                           onChange={() => {
                             handleCheckObjectAnswer(id, options, option.id);
