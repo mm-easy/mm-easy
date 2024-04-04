@@ -14,9 +14,11 @@ const CommunityPage = () => {
       <div className="flex">
         <div>
           <CommunityMenu setSelectedCategory={setSelectedCategory} />
-          <button>
-            <a href="/community-post">작성하기</a>
-          </button>
+          <div className='flex justify-center pt-64'>
+            <button className="">
+              <a href="/community-post">작성하기</a>
+            </button>
+          </div>
         </div>
         <div className="flex justify-center w-full">
           <CommunityForm selectedCategory={selectedCategory} />

@@ -172,6 +172,17 @@ a {
   transition: opacity 300ms, transform 300ms;
 }
 
-strong {
+.ql-editor strong, em {
   font-weight: bold;
+}
+.ql-editor em {
+  font-style: italic;
+}
+
+.ql-editor h1 {
+  font-size: xx-large;
+}
+
+.ql-editor h2 {
+  font-size: x-large;
 }

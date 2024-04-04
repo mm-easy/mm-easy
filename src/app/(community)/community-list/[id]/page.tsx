@@ -77,7 +77,7 @@ const DetailPage = () => {
                   </button>
                 </div>
               </div>
-              <p className="m-5 text-blackColor" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}></p>
+              <p className="ql-editor m-5 text-blackColor" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}></p>
               <div className="border-solid border-t-2">
                 <span>댓글</span>
                 <CommentList postId={params.id} />

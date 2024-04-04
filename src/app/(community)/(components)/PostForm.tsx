@@ -15,6 +15,10 @@ const PostForm = () => {
   const [category, setCategory] = useState('질문');
   const router = useRouter();
 
+  const editerStyle = {
+    
+  }
+
   // const formats = [
   //   'font',
   //   'header',
@@ -136,7 +140,9 @@ const PostForm = () => {
         <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
       </div>
-      <NoticeEditor value={content} onChange={handleEditorChange}/>
+      <div>
+        <NoticeEditor value={content} onChange={handleEditorChange} />
+      </div>
 
       {/* <div>
         <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>
