@@ -1,6 +1,6 @@
 'use client';
 
-import type { CommunityMenuProps, MenuItem } from "@/types/posts";
+import type { CommunityMenuProps, MenuItem } from '@/types/posts';
 
 const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
@@ -13,11 +13,11 @@ const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   ];
 
   return (
-    <nav>
+    <nav className="w-40 text-pointColor1 font-bold">
       <ul>
         {menuItems.map((item) => (
-          <li key={item.key}>
-            <button className="p-2" onClick={() => setSelectedCategory(item.label)}>{item.label}</button>
+          <li key={item.key} className="p-5 pl-6 border-x border-b border-solid border-pointColor1">
+            <button onClick={() => setSelectedCategory(item.label)}>{item.label}</button>
           </li>
         ))}
       </ul>

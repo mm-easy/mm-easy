@@ -1,11 +1,15 @@
-"use client"
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../hooks/useAuth";
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '../hooks/useAuth';
 
 const Home = () => {
   const { getCurrentUserProfile } = useAuth();
 
-  const { data: profile, isLoading, error } = useQuery({
+  const {
+    data: profile,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
@@ -14,7 +18,7 @@ const Home = () => {
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-16">
       <h1>User Profile</h1>
       {profile ? (
         <div>

@@ -1,18 +1,23 @@
 'use client';
 
-import CommunityForm from '@/app/(community)/(components)/CommunityForm';
+import CommunityForm from '../(components)/CommunityForm';
 import CommunityMenu from '../(components)/CommunityMenu';
 import { useState } from 'react';
+import SubHeader from '@/components/common/SubHeader';
 
 const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
   return (
     <article>
-      <h1 className="text-xl">커뮤니티</h1>
+      <SubHeader text="커뮤니티" />
       <div className="flex">
-        <CommunityMenu setSelectedCategory={setSelectedCategory} />
-        <CommunityForm selectedCategory={selectedCategory} />
+        <div>
+          <CommunityMenu setSelectedCategory={setSelectedCategory} />
+        </div>
+        <div className='flex justify-center items-center w-full'>
+          <CommunityForm selectedCategory={selectedCategory} />
+        </div>
       </div>
       <div>
         <button>
