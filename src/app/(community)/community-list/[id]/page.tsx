@@ -8,9 +8,9 @@ import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { FaHeart } from 'react-icons/fa';
 import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { FaHeart } from 'react-icons/fa';
 
 import type { PostDetailDateType } from '@/types/posts';
 

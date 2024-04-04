@@ -1,9 +1,9 @@
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/utils/supabase/supabase';
-import { Box, Button, TextArea } from '@radix-ui/themes';
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
+import { Box, TextArea } from '@radix-ui/themes';
 
 const CommentForm = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
