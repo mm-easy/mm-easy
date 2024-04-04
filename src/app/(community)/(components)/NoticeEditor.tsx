@@ -25,13 +25,14 @@ const formats = [
   "align",
   "color",
   "background",
+
 ];
 
 const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
+      ["bold", "italic", "underline", "strike"],
       [
         { list: "ordered" },
         { list: "bullet" },
@@ -39,12 +40,11 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
         { indent: "+1" },
       ],
       ["link", "image"],
-      [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
-      ["clean"],
+      [{ align: [] }, { color: [] }, { background: [] }], 
     ],
   };
 
-  return <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} />;
+  return <ReactQuill theme="snow" value={value} onChange={onChange} modules={modules} formats={formats} placeholder='내용을 입력해 주세요.' />;
 };
 
 export default NoticeEditor;

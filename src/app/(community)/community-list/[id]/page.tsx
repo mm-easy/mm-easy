@@ -13,7 +13,6 @@ import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 
-
 import type { PostDetailDateType } from '@/types/posts';
 
 const DetailPage = () => {
@@ -77,7 +76,10 @@ const DetailPage = () => {
                   </button>
                 </div>
               </div>
-              <p className="ql-editor m-5 text-blackColor" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}></p>
+              <p
+                className="ql-editor m-5 text-blackColor"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
+              ></p>
               <div className="border-solid border-t-2">
                 <span>댓글</span>
                 <CommentList postId={params.id} />
