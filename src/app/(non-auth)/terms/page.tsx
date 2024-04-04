@@ -40,9 +40,8 @@ const TermsPage = () => {
         }
     };
     
-
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center pt-16">
         <div className="bg-white p-3 rounded shadow max-w-md w-full mx-4">
           <h1 className="text-xl font-semibold text-center mt-4 mb-6">약관 동의</h1>
           <form className="space-y-6 mb-10" onSubmit={handleSubmit}>

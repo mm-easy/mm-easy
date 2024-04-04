@@ -31,7 +31,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 pt-8">
       <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-2xl">
         <div className="flex items-center justify-center w-24 h-24 mx-auto mb-4 bg-black rounded-full">
           {/* 여기에 고양이 */}

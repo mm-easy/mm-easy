@@ -175,7 +175,6 @@ export const useAuth = () => {
     setLoading(true);
 
     const { data: userData, error: getUserError } = await supabase.auth.getUser();
-    console.log('data', userData); 
     if (getUserError || !userData.user) {
       setError(getUserError?.message || "로그인한 사용자가 없습니다.");
       setLoading(false);
