@@ -1,5 +1,4 @@
 import { QuestionType } from '@/types/quizzes';
-import { ReactNode } from 'react';
 
 const SelectQuestionType = ({
   id,

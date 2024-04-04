@@ -8,6 +8,7 @@ import checkboxImg from '@/assets/checkbox.png';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
 import SelectQuestionType from './SelectQuestionType';
+import InputQuestionTitle from './InputQuestionTitle';
 
 const QuestionForm = ({
   questions,
@@ -171,14 +172,7 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
-                    placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
-                    onChange={(e) => {
-                      handleChangeTitle(id, e.target.value);
-                    }}
-                  />
+                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
                   <div className="w-full h-40 border-solid border border-pointColor1 rounded-md">
                     <input
                       type="file"
@@ -239,7 +233,8 @@ const QuestionForm = ({
                 </div>
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
-                  <div className="w-40 h-40">
+                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
+                  <div className="w-full h-40">
                     <input
                       type="file"
                       id={`fileInput${id}`}
@@ -259,15 +254,7 @@ const QuestionForm = ({
                       />
                     </label>
                   </div>
-                  <input
-                    type="text"
-                    className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
-                    placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
-                    onChange={(e) => {
-                      e.preventDefault();
-                      handleChangeTitle(id, e.target.value);
-                    }}
-                  />
+
                   <input
                     type="text"
                     className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
