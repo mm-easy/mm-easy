@@ -6,11 +6,13 @@ import CommentForm from '../../(components)/CommentForm';
 import CommentList from '../../(components)/CommentList';
 import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
+import DOMPurify from 'dompurify';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { FaHeart } from 'react-icons/fa';
+
 
 import type { PostDetailDateType } from '@/types/posts';
 
@@ -75,7 +77,7 @@ const DetailPage = () => {
                   </button>
                 </div>
               </div>
-              <p className="m-5 text-blackColor">{post.content}</p>
+              <p className="m-5 text-blackColor" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}></p>
               <div className="border-solid border-t-2">
                 <span>댓글</span>
                 <CommentList postId={params.id} />
