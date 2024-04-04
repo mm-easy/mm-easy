@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Terms from '@/constant/Terms';
 import PrivacyPolicy from '@/constant/PrivacyPolicy';
+import SubHeader from '@/components/common/SubHeader';
 
 const TermsPage = () => {
     const [allChecked, setAllChecked] = useState(false);
@@ -41,7 +42,9 @@ const TermsPage = () => {
     };
     
     return (
-        <div className="flex items-center justify-center pt-16">
+      <article>
+      <SubHeader text="회원가입" />
+        <div className="flex items-center justify-center pb-4">
         <div className="bg-white p-3 rounded shadow max-w-md w-full mx-4">
           <h1 className="text-xl font-semibold text-center mt-4 mb-6">약관 동의</h1>
           <form className="space-y-6 mb-10" onSubmit={handleSubmit}>
@@ -69,7 +72,7 @@ const TermsPage = () => {
                 <span className="text-pointColor1">[필수]</span> 뭔말Easy? 이용약관
               </label>
             </div>
-            <div className="border border-solid border-pointColor1 p-4 rounded space-y-4 overflow-auto max-h-40">
+            <div className="rounded-md border border-solid border-pointColor1 p-4 space-y-4 overflow-auto max-h-40">
               <Terms />
             </div>
             <div className="flex items-start">
@@ -84,7 +87,7 @@ const TermsPage = () => {
                 <span className="text-pointColor1">[필수]</span> 개인정보 수집 및 이용
                 </label>
             </div>
-            <div className="border border-solid border-pointColor1 p-4 rounded space-y-4 overflow-auto max-h-40">
+            <div className="rounded-md border border-solid border-pointColor1 p-4 space-y-4 overflow-auto max-h-40">
                 <PrivacyPolicy />
             </div>
             <div className="flex">
@@ -94,7 +97,8 @@ const TermsPage = () => {
             </div>
           </form>
         </div>
-      </div>       
+      </div>  
+      </article>     
     );
 };
 
