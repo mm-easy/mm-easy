@@ -1,25 +1,27 @@
-import { supabase } from '@/utils/supabase/supabase';
+import LikeToggleButton from './LikeToggleButton';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
-import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAuth } from '@/hooks/useAuth';
 
 const Like = ({ postId }: { postId: string | string[] }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
   const [likeCount, setLikeCount] = useState<number>(0);
 
+  /**현재 로그인된 유저 정보 가져오기*/
   const { getCurrentUserProfile } = useAuth();
 
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
 
   const userId = profile?.id;
 
+  /**현재 게시글에 좋아요 상태 불러오기*/
   useEffect(() => {
     const likedStatus = async () => {
       const { data: likedUser, error } = await supabase.from('likes').select('*').eq('post_id', postId);
@@ -30,8 +32,6 @@ const Like = ({ postId }: { postId: string | string[] }) => {
       }
 
       const likedUserNow = likedUser.some((prev) => prev.user_id === userId);
-      // console.log('user', userId);
-      // console.log('now', likedUser?.length);
 
       if (likedUserNow) {
         setLikes(true);
@@ -44,6 +44,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
     likedStatus();
   }, [userId, postId]);
 
+  /**좋아요 토글*/
   const handleLikeToggle = async () => {
     if (!userId) {
       toast.warning('로그인 후 이용해 주세요.');
@@ -62,22 +63,17 @@ const Like = ({ postId }: { postId: string | string[] }) => {
     setLikes(!likes);
   };
 
+  /**좋아요 하기*/
   const addLikedUser = async (postId: string | string[], userId: string) => {
-    const { data, error } = await supabase.from('likes').insert({ user_id: userId, post_id: postId }).select();
-    // .update({ user_id: [...liketest, userId] })
-    // .eq('post_id', postId)
-
+    const { error } = await supabase.from('likes').insert({ user_id: userId, post_id: postId }).select();
     if (error) {
       throw error;
     }
   };
 
+  /**좋아요 삭제*/
   const removeLikedUser = async (postId: string | string[], userId: string) => {
-    const { data, error } = await supabase.from('likes').delete().eq('user_id', userId);
-    // .from('likes')
-    // .update({ user_id: liketest.filter((id) => id !== userId) })
-    // .eq('post_id', postId)
-    // .select();
+    const { error } = await supabase.from('likes').delete().eq('user_id', userId);
 
     if (error) {
       throw error;
@@ -86,15 +82,8 @@ const Like = ({ postId }: { postId: string | string[] }) => {
 
   return (
     <div className="flex w-full justify-between">
-      {/* <p className="text-gray-400">
-        {new Date(todo.created_at).toLocaleDateString('ko-KR', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })}
-      </p> */}
       <div className="flex">
-        <ToggleButton
+        <LikeToggleButton
           toggled={likes ?? false}
           onToggle={handleLikeToggle}
           onIcon={<AiFillHeart />}
@@ -107,18 +96,3 @@ const Like = ({ postId }: { postId: string | string[] }) => {
 };
 
 export default Like;
-
-type Props = {
-  toggled: boolean;
-  onToggle: (toggled: boolean) => void;
-  onIcon: React.ReactNode;
-  offIcon: React.ReactNode;
-};
-
-const ToggleButton = ({ toggled, onToggle, onIcon, offIcon }: Props) => {
-  return (
-    <div>
-      <button onClick={() => onToggle(!toggled)}>{toggled ? onIcon : offIcon}</button>
-    </div>
-  );
-};

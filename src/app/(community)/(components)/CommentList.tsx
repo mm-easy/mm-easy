@@ -13,6 +13,7 @@ const CommentList = ({ postId }: { postId: string | string[] | undefined }) => {
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
 
+  /**현재 로그인된 유저 정보 */
   const { getCurrentUserProfile } = useAuth();
 
   const { data: profile } = useQuery({
@@ -20,6 +21,7 @@ const CommentList = ({ postId }: { postId: string | string[] | undefined }) => {
     queryFn: getCurrentUserProfile
   });
 
+  /**해당 댓글 수정하기 */
   const handleUpdateBtn = async (id: string) => {
     const nowReal = window.confirm('댓글을 수정하시겠습니까?');
     if (nowReal) {
@@ -35,6 +37,7 @@ const CommentList = ({ postId }: { postId: string | string[] | undefined }) => {
     }
   };
 
+  /**해당 댓글 삭제하기*/
   const handleDeleteBtn = async (id: string) => {
     const nowReal = window.confirm('댓글을 삭제하시겠습니까?');
     if (nowReal) {
@@ -49,6 +52,7 @@ const CommentList = ({ postId }: { postId: string | string[] | undefined }) => {
     }
   };
 
+  /**게시글에 맞는 댓글 가져오기*/
   useEffect(() => {
     const commentList = async () => {
       try {
