@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth'; 
 import { FcGoogle } from "react-icons/fc";
 import { SiKakaotalk } from "react-icons/si";
+import SubHeader from '@/components/common/SubHeader';
+import { supabase } from '@/utils/supabase/supabase';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -20,17 +22,18 @@ const LoginPage = () => {
     } else {
     }
   };
-  
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
   };
-
+  
   const handleKakaoSignIn = async () => {
     await signInWithKakao();
   };
 
   return (
+    <article>
+      <SubHeader text="로그인" />
     <div className="flex min-h-screen bg-bgColor1">
     <div className="flex-1 flex items-center justify-center">
       <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
@@ -48,7 +51,7 @@ const LoginPage = () => {
                 id="email"
                 type="email" 
                 required
-                className="w-full px-3 py-4 border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="you@example.com"
                 autoComplete="email"
                 value={email}
@@ -64,7 +67,7 @@ const LoginPage = () => {
                 id="password"
                 type="password" 
                 required
-                className="w-full px-3 py-4 border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="••••••••"
                 autoComplete="current-password"
                 value={password}
@@ -84,7 +87,7 @@ const LoginPage = () => {
           <div>
             <button 
               type="submit" 
-              className="w-full px-4 py-5 text-white bg-pointColor1 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
+              className="w-full px-4 py-5 rounded-md text-white bg-pointColor1 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
               disabled={loading} 
             >
               로그인
@@ -109,6 +112,7 @@ const LoginPage = () => {
       </div>
     </div>
   </div>
+  </article>
   );
 };
 

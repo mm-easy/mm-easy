@@ -1,4 +1,6 @@
 "use client"
+
+import SubHeader from '@/components/common/SubHeader';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
@@ -9,7 +11,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { signUp } = useAuth(); 
+  const { signUp, error } = useAuth(); 
   const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -31,11 +33,16 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 pt-8">
-      <div className="w-full max-w-md p-8 bg-white shadow-lg rounded-2xl">
-        <div className="flex items-center justify-center w-24 h-24 mx-auto mb-4 bg-black rounded-full">
-          {/* 여기에 고양이 */}
-        </div>
+    <article>
+      <SubHeader text="회원가입" />
+    <div className="flex min-h-screen bg-bgColor1">
+    <div className="flex-1 flex items-center justify-center">
+      <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
+        {/* 고양이 예시 */}
+      </div>
+    </div>
+    <div className="flex-1 flex items-center bg-white justify-center">
+      <div className="w-full max-w-md p-8 bg-white">
         <form className="space-y-6" onSubmit={handleSignUp}>
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
@@ -45,11 +52,12 @@ const SignUpPage = () => {
               <input 
                 id="email"
                 type="email" 
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                required
+                className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} 
               />
             </div>
           </div>
@@ -61,10 +69,12 @@ const SignUpPage = () => {
               <input 
                 id="password"
                 type="password" 
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                required
+                className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Create a password"
+                autoComplete="new-password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)} 
               />
             </div>
           </div>
@@ -76,29 +86,34 @@ const SignUpPage = () => {
               <input 
                 id="confirm-password"
                 type="password" 
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                required
+                className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Confirm your password"
+                autoComplete="new-password"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)} 
               />
             </div>
           </div>
+          {error && <div className="text-red-500">{error}</div>}
           <div>
             <button 
               type="submit" 
-              className="w-full px-4 py-2 text-white bg-black rounded-md shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
+              className="w-full px-4 py-5 rounded-md text-white bg-pointColor1 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
             >
               회원가입
             </button>
           </div>
         </form>
-        <div className="flex justify-center mt-6">
-          <Link href="/login" className="text-sm font-medium text-blue-600 hover:underline">
+        <div className="flex justify-center mt-3">
+        <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/login">
               이미 계정이 있나요? 로그인하기
           </Link>
         </div>
       </div>
     </div>
+  </div>
+  </article>
   );
 };
 
