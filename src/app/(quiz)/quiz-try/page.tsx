@@ -1,5 +1,11 @@
+import SubHeader from '@/components/common/SubHeader';
+
 const QuizTryPage = () => {
-  return <div>QuizTryPage</div>;
+  return (
+    <>
+      <SubHeader text="퀴즈 풀기" />
+    </>
+  );
 };
 
 export default QuizTryPage;
