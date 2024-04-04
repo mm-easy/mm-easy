@@ -9,6 +9,7 @@ import checkboxImg from '@/assets/checkbox.png';
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
 import SelectQuestionType from './SelectQuestionType';
 import InputQuestionTitle from './InputQuestionTitle';
+import InputQuestionImg from './InputQuestionImg';
 
 const QuestionForm = ({
   questions,
@@ -173,26 +174,7 @@ const QuestionForm = ({
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
                   <InputQuestionTitle id={id} onChange={handleChangeTitle} />
-                  <div className="w-full h-40 border-solid border border-pointColor1 rounded-md">
-                    <input
-                      type="file"
-                      id={`file-input-${id}`}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        handleChangeImg(id, e.target.files);
-                      }}
-                      className="hidden"
-                    />
-                    <label htmlFor={`file-input-${id}`} className="">
-                      <Image
-                        src={img_url}
-                        alt="문항 이미지"
-                        className="w-full h-full object-cover rounded-md cursor-pointer"
-                        width={570}
-                        height={160}
-                      />
-                    </label>
-                  </div>
+                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
                   {options.map((option) => {
                     return (
                       <div key={option.id} className="w-full flex place-items-center justify-between">
@@ -234,27 +216,7 @@ const QuestionForm = ({
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
                   <InputQuestionTitle id={id} onChange={handleChangeTitle} />
-                  <div className="w-full h-40">
-                    <input
-                      type="file"
-                      id={`fileInput${id}`}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        handleChangeImg(id, e.target.files);
-                      }}
-                      className="hidden"
-                    />
-                    <label htmlFor={`file-input-${id}`} className="cursor-pointer">
-                      <Image
-                        src={img_url}
-                        alt="문항 이미지"
-                        className="w-full h-full object-cover cursor-pointer"
-                        width={200}
-                        height={200}
-                      />
-                    </label>
-                  </div>
-
+                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
                   <input
                     type="text"
                     className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
