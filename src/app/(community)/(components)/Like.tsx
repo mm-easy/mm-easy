@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const Like = ({ postId }: { postId: string | string[] }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
-  const [liketest, setLiketest] = useState<string[]>([]);
+  const [likeCount, setLikeCount] = useState<number>(0);
 
   const { getCurrentUserProfile } = useAuth();
 
@@ -29,12 +29,16 @@ const Like = ({ postId }: { postId: string | string[] }) => {
         return;
       }
 
-      if (likedUser?.user_id && likedUser.user_id.includes(userId)) {
+      const likedUserNow = likedUser.some((prev) => prev.user_id === userId);
+      // console.log('user', userId);
+      // console.log('now', likedUser?.length);
+
+      if (likedUserNow) {
         setLikes(true);
       } else {
         setLikes(false);
       }
-      setLiketest(likedUser?.user_id || []);
+      setLikeCount(likedUser?.length);
     };
 
     likedStatus();
@@ -49,11 +53,11 @@ const Like = ({ postId }: { postId: string | string[] }) => {
     if (likes) {
       await removeLikedUser(postId, userId);
       setLikes(false);
-      setLiketest((prevLiketest) => prevLiketest.filter((id) => id !== userId));
+      setLikeCount(likeCount - 1);
     } else {
       await addLikedUser(postId, userId);
       setLikes(true);
-      setLiketest((prevLiketest) => [...prevLiketest, userId]);
+      setLikeCount(likeCount + 1);
     }
     setLikes(!likes);
   };
@@ -69,7 +73,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
   };
 
   const removeLikedUser = async (postId: string | string[], userId: string) => {
-    const { data, error } = await supabase.from('likes').delete().eq('id', id);
+    const { data, error } = await supabase.from('likes').delete().eq('user_id', userId);
     // .from('likes')
     // .update({ user_id: liketest.filter((id) => id !== userId) })
     // .eq('post_id', postId)
@@ -96,11 +100,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
           onIcon={<AiFillHeart />}
           offIcon={<AiOutlineHeart />}
         />
-        <p className="ml-[5px]">{`${liketest?.length ?? 0}`}</p>
-        {/* <div className="flex">
-          <AiOutlineComment className="ml-[10px]" />
-          <p className="ml-[5px]">{`${commentCount ?? 0}`}</p>
-        </div> */}
+        <p className="ml-[5px]">{likeCount}</p>
       </div>
     </div>
   );

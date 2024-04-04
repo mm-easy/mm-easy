@@ -15,7 +15,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import type { PostDetailDateType } from '@/types/posts';
 import Like from '../../(components)/Like';
 
-const page = () => {
+const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
   const params = useParams();
 
@@ -91,4 +91,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DetailPage;
