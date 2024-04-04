@@ -1,37 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
-import type { Question, Quiz } from '@/types/quizzes';
-import { insertQuestionsToTable, insertQuizToTable } from '@/api/quizzes';
+import type { OptionsToInsert, Question, QuestionsToInsert, Quiz } from '@/types/quizzes';
+import { insertOptionsToTable, insertQuestionsToTable, insertQuizToTable } from '@/api/quizzes';
 
+/** quiz를 quizzes 테이블에 insert */
 export const useSubmitQuiz = () => {
   const queryClient = useQueryClient();
 
   const insertQuizMutation = useMutation({
-    mutationFn: async ({ newQuiz, newQuestions }: { newQuiz: Quiz; newQuestions: Question[] }) => {
+    mutationFn: async (newQuiz: Quiz) => {
       try {
         const result = await insertQuizToTable(newQuiz);
-        console.log('의의', result);
+        return result;
       } catch (error) {
         console.error('퀴즈 등록 실패', error);
         throw error;
       }
-
-      try {
-        const result = await insertQuestionsToTable(newQuestions);
-        console.log('의의', result);
-      } catch (error) {
-        console.error('퀴즈 등록 실패', error);
-        throw error;
-      }
-
-      // try {
-      //   const result = await insertQuizToTable(newQuiz);
-      //   console.log('의의', result);
-      // } catch (error) {
-      //   console.error('퀴즈 등록 실패', error);
-      //   throw error;
-      // }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quizzes'] });
@@ -43,4 +28,48 @@ export const useSubmitQuiz = () => {
   return insertQuizMutation;
 };
 
-export default useSubmitQuiz;
+/** questions를 questions 테이블에 insert */
+export const useSubmitQuestions = () => {
+  const queryClient = useQueryClient();
+
+  const insertQuestionsMutation = useMutation({
+    mutationFn: async (newQuestions: QuestionsToInsert) => {
+      try {
+        const result = await insertQuestionsToTable(newQuestions);
+        const questionId = result[0]?.id;
+        return questionId;
+      } catch (error) {
+        console.error('문제들 등록 실패', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['questions'] });
+    }
+  });
+
+  return insertQuestionsMutation;
+};
+
+/** options를 question_options 테이블에 insert */
+export const useSubmitOptions = () => {
+  const queryClient = useQueryClient();
+
+  const insertOptionsMutation = useMutation({
+    mutationFn: async (newOptions: OptionsToInsert[]) => {
+      try {
+        const result = await insertOptionsToTable(newOptions);
+        const optionIds = result.map((result) => result[0]?.id);
+        return optionIds;
+      } catch (error) {
+        console.error('객관식 선택지 등록 실패', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['options'] });
+    }
+  });
+
+  return insertOptionsMutation;
+};

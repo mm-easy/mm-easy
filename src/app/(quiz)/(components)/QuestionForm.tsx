@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { SetStateAction } from 'jotai';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
+import { generateImgFileName } from '@/utils/generateFileName';
 
 const QuestionForm = ({
   questions,
@@ -42,7 +43,7 @@ const QuestionForm = ({
       const newOption = {
         id: crypto.randomUUID(),
         content: '',
-        isAnswer: false
+        is_answer: false
       };
       setQuestions((prev) =>
         prev.map((question) => {
@@ -98,7 +99,7 @@ const QuestionForm = ({
           ? {
               ...question,
               options: options.map((option) => {
-                return option.id === optionId ? { ...option, isAnswer: true } : { ...option, isAnswer: false };
+                return option.id === optionId ? { ...option, is_answer: true } : { ...option, is_answer: false };
               })
             }
           : question;
@@ -107,10 +108,10 @@ const QuestionForm = ({
   };
 
   /** 주관식 정답 입력 핸들러 */
-  const handleChangeCorrectAnswer = (id: string | undefined, correctAnswer: string) => {
+  const handleChangeCorrectAnswer = (id: string | undefined, correct_answer: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
-        return question.id === id ? { ...question, correctAnswer } : question;
+        return question.id === id ? { ...question, correct_answer } : question;
       })
     );
   };
@@ -122,7 +123,7 @@ const QuestionForm = ({
       const img_url = URL.createObjectURL(file);
       setQuestions((prev) =>
         prev.map((question) => {
-          return question.id === id ? { ...question, img_url } : question;
+          return question.id === id ? { ...question, img_url, img_file: file } : question;
         })
       );
     }
@@ -212,7 +213,7 @@ const QuestionForm = ({
                         <input
                           type="checkbox"
                           className="w-[42px] h-[42px]"
-                          checked={option.isAnswer}
+                          checked={option.is_answer}
                           onChange={() => {
                             handleCheckObjectAnswer(id, options, option.id);
                           }}
