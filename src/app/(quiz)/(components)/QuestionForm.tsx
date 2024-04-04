@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Dispatch, useRef } from 'react';
+import { Dispatch, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SetStateAction } from 'jotai';
 import checkboxImg from '@/assets/checkbox.png';
@@ -18,6 +18,12 @@ const QuestionForm = ({
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
 }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, [setLoaded]);
+
   /** 문제 타입 바꾸기 버튼 핸들러 */
   const handleChangeType = (id: string | undefined, type: QuestionType) => {
     setQuestions((prev) =>
@@ -174,7 +180,7 @@ const QuestionForm = ({
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
                   <InputQuestionTitle id={id} onChange={handleChangeTitle} />
-                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
+                  {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   {options.map((option) => {
                     return (
                       <div key={option.id} className="w-full flex place-items-center justify-between">
@@ -216,7 +222,7 @@ const QuestionForm = ({
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
                   <InputQuestionTitle id={id} onChange={handleChangeTitle} />
-                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
+                  {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   <input
                     type="text"
                     className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
