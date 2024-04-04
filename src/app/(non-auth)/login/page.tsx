@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { FcGoogle } from "react-icons/fc";
 import { SiKakaotalk } from "react-icons/si";
 import SubHeader from '@/components/common/SubHeader';
+import { supabase } from '@/utils/supabase/supabase';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -24,8 +25,32 @@ const LoginPage = () => {
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
-  };
+    const userData = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
+    if (userData) {
+      const userdata = JSON.parse(userData);
+      const user = userdata.user; 
 
+      if (user) {
+        const nickname = user.email.split('@')[0];
+        try {
+          const { error } = await supabase
+            .from('profiles')
+            .insert([
+              { id: user.id, email: user.email, nickname, avatar_img_url: "https://via.placeholder.com/150" }
+            ]);
+  
+          if (error) {
+            console.error('프로필 정보 저장 실패:', error.message);
+          } else {
+            console.log('프로필 정보가 성공적으로 저장되었습니다.');
+          }
+        } catch (error) {
+          console.error('프로필 정보 저장 중 오류 발생:', error);
+        }
+      }
+    } 
+  };
+  
   const handleKakaoSignIn = async () => {
     await signInWithKakao();
   };
