@@ -13,6 +13,7 @@ import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { PostDetailDateType } from '@/types/posts';
+import Like from '../../(components)/Like';
 
 const page = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -63,8 +64,9 @@ const page = () => {
               </div>
               <div className="flex items-center justify-between border-solid border-b-2">
                 <div className="flex items-center">
-                  <FaHeart />
-                  <span className="ml-2">좋아요</span>
+                  {/* <FaHeart />
+                  <span className="ml-2">좋아요</span> */}
+                  <Like postId={params.id} />
                 </div>
                 <div>
                   <button className="border-2 border-solid border-pointColor1 py-3 px-4 border-r-0 border-t-0 border-b-0">

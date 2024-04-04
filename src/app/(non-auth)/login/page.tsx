@@ -31,7 +31,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-red-100">
+    <div className="flex min-h-screen bg-bgColor1">
     <div className="flex-1 flex items-center justify-center">
       <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
         {/* 고양이 예시 */}
@@ -48,7 +48,7 @@ const LoginPage = () => {
                 id="email"
                 type="email" 
                 required
-                className="w-full px-3 py-4 border border-blue-700 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-4 border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="you@example.com"
                 autoComplete="email"
                 value={email}
@@ -64,7 +64,7 @@ const LoginPage = () => {
                 id="password"
                 type="password" 
                 required
-                className="w-full px-3 py-4 border border-blue-700 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-4 border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="••••••••"
                 autoComplete="current-password"
                 value={password}
@@ -74,17 +74,17 @@ const LoginPage = () => {
           </div>
           {error && <div className="text-red-500">{error}</div>}
           <div className="flex mt-6 justify-between">
-          <Link className="text-sm font-medium text-blue-600 hover:underline" href="/terms">
+          <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/terms">
               회원가입
           </Link>
-          <Link className="text-sm font-medium text-blue-600 hover:underline" href="/">
+          <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/">
               아이디 찾기 | 비밀번호 찾기
           </Link>
         </div>
           <div>
             <button 
               type="submit" 
-              className="w-full px-4 py-5 text-white bg-blue-700 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
+              className="w-full px-4 py-5 text-white bg-pointColor1 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
               disabled={loading} 
             >
               로그인
@@ -94,13 +94,13 @@ const LoginPage = () => {
         <div className="flex justify-center mt-3">
         <button 
           onClick={handleGoogleSignIn}
-          className="flex items-center justify-center w-full mr-3 px-1 py-3 text-blue-700 border border-blue-700 hover:bg-gray-300 rounded-md shadow"
+          className="flex items-center justify-center w-full mr-3 px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
         >
           <FcGoogle className="mr-2" size="2em" />Google 로그인
         </button>
         <button
           onClick={handleKakaoSignIn}
-          className="flex items-center justify-center w-full px-1 py-3 text-blue-700 border border-blue-700 hover:bg-gray-300 rounded-md shadow"
+          className="flex items-center justify-center w-full px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
         >
         <SiKakaotalk className="mr-2 bg-black text-yellow-500" size="2em" />
         Kakao 로그인
