@@ -13,8 +13,8 @@ export type Question = {
   id?: string;
   type: QuestionType;
   title: string;
-  imgUrl: string;
-  correctAnswer?: string;
+  img_url: string;
+  correct_answer?: string;
   options: Option[];
   // options?: Option[];
 };

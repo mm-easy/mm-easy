@@ -14,6 +14,7 @@ const QuestionForm = ({
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
 }) => {
+  const fileInputRef = useRef([]);
   // const fileInputRef = useRef<HTMLInputElement>(null);
   // const fileInput = document.getElementById(id)
 
@@ -115,19 +116,13 @@ const QuestionForm = ({
   };
 
   /** 이미지 첨부 핸들러 */
-  const handleClickImg = (id: string | undefined) => {
-    const fileInput = document.getElementById(`fileInput${id}`);
-    console.log(fileInput);
-    fileInput?.click();
-  };
-
   const handleChangeImg = (id: string | undefined, files: FileList | null) => {
     const file = files?.[0];
     if (file) {
-      const imgUrl = URL.createObjectURL(file);
+      const img_url = URL.createObjectURL(file);
       setQuestions((prev) =>
         prev.map((question) => {
-          return question.id === id ? { ...question, imgUrl } : question;
+          return question.id === id ? { ...question, img_url } : question;
         })
       );
     }
@@ -149,7 +144,7 @@ const QuestionForm = ({
   return (
     <article className="pb-12 flex flex-col place-items-center gap-12">
       {questions.map((question) => {
-        const { id, type, options, imgUrl } = question;
+        const { id, type, options, img_url } = question;
         return (
           /** 유형, 휴지통 섹션 */
           <section key={id}>
@@ -183,24 +178,25 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
-                  <div className="w-40 h-40" onClick={() => handleClickImg(id)}>
-                    <Image
-                      src={imgUrl}
-                      alt="문항 이미지"
-                      className="w-full h-full object-cover cursor-pointer"
-                      width={200}
-                      height={200}
-                    />
+                  <div className="w-40 h-40">
                     <input
                       type="file"
-                      id={`fileInput${id}`}
-                      // ref={fileInputRef}
+                      id={`file-input-${id}`}
                       onChange={(e) => {
                         e.preventDefault();
                         handleChangeImg(id, e.target.files);
                       }}
                       className="hidden"
                     />
+                    <label htmlFor={`file-input-${id}`}>
+                      <Image
+                        src={img_url}
+                        alt="문항 이미지"
+                        className="w-full h-full object-cover cursor-pointer"
+                        width={200}
+                        height={200}
+                      />
+                    </label>
                   </div>
                   <input
                     type="text"
@@ -246,24 +242,25 @@ const QuestionForm = ({
                 </div>
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
-                  <div className="w-40 h-40" onClick={() => handleClickImg(id)}>
-                    <Image
-                      src={imgUrl}
-                      alt="문항 이미지"
-                      className="w-full h-full object-cover cursor-pointer"
-                      width={200}
-                      height={200}
-                    />
+                  <div className="w-40 h-40">
                     <input
                       type="file"
                       id={`fileInput${id}`}
-                      // ref={fileInputRef}
                       onChange={(e) => {
                         e.preventDefault();
                         handleChangeImg(id, e.target.files);
                       }}
                       className="hidden"
                     />
+                    <label htmlFor={`file-input-${id}`} className="cursor-pointer">
+                      <Image
+                        src={img_url}
+                        alt="문항 이미지"
+                        className="w-full h-full object-cover cursor-pointer"
+                        width={200}
+                        height={200}
+                      />
+                    </label>
                   </div>
                   <input
                     type="text"
