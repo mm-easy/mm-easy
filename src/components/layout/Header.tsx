@@ -35,9 +35,7 @@ const Header = () => {
         </button>
       </section>
 
-      {isMenuOpen && (
-        <MenuPage />
-      )}
+      {isMenuOpen && <MenuPage />}
     </>
   );
 };
