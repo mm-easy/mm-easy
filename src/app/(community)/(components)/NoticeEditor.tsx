@@ -1,59 +1,16 @@
-import {
-  useMemo,
-  useState,
-} from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import { ReactElement } from 'react';
 
-const formats = [
-  'font',
-  'header',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'align',
-  'color',
-  'background',
-  'size',
-  'h1',
-];
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-export const QuillEditor = () => {
-  
- const [values, setValues] = useState("");
-  
- const modules = useMemo(() => {
-    return {
-      toolbar: {
-        container: [
-          [{ size: ['small', false, 'large', 'huge'] }],
-          [{ align: [] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [
-            {
-              color: [],
-            },
-            { background: [] },
-          ],
-        ],
-      },
-    };
-  }, []);
-
-	return(
-     <ReactQuill
-      theme="snow"
-      modules={modules}
-      formats={formats}
-      value={values}
-      onChange={setValues}
-    />
-    )
+interface NoticeEditorProps {
+  value: string;
+  onChange: (content: string) => void;
 }
+
+const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
+  return <ReactQuill theme="snow" value={value} onChange={onChange} />;
+};
+
+export default NoticeEditor;

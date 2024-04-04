@@ -32,8 +32,8 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
     selectedCategory === '전체' ? posts : posts.filter((post) => post.category === selectedCategory);
 
   return (
-    <article className="flex w-full ,">
-      <div className="bg-white p-4 w-full">
+    <article className="flex w-full">
+      <div className="bg-white p-4 w-full ">
         <table className="w-full">
           <thead className="text-left">
             <tr className=" text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
