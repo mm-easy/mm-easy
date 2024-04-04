@@ -7,6 +7,7 @@ import { SetStateAction } from 'jotai';
 import checkboxImg from '@/assets/checkbox.png';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
+import SelectQuestionType from './SelectQuestionType';
 
 const QuestionForm = ({
   questions,
@@ -147,25 +148,20 @@ const QuestionForm = ({
           <article key={id} className="w-[570px] mx-auto pb-12 flex flex-col gap-4">
             <section className="w-full flex justify-between text-md">
               <section>
-                <label className="pr-4">
-                  <input
-                    type="radio"
-                    name={id}
-                    defaultChecked
-                    className="mr-2"
-                    onChange={() => handleChangeType(id, QuestionType.objective)}
-                  />
-                  선택형
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name={id}
-                    className="mr-2"
-                    onChange={() => handleChangeType(id, QuestionType.subjective)}
-                  />
-                  주관형
-                </label>
+                <SelectQuestionType
+                  id={id}
+                  defaultChecked={true}
+                  onChange={handleChangeType}
+                  type={QuestionType.objective}
+                  title="선택형"
+                />
+                <SelectQuestionType
+                  id={id}
+                  defaultChecked={false}
+                  onChange={handleChangeType}
+                  type={QuestionType.subjective}
+                  title="주관형"
+                />
               </section>
               <button type="button" className="text-xl" onClick={() => handleDeleteQuestion(id)}>
                 ✕
