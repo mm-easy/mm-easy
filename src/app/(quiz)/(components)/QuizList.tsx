@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const QuizList = () => {
   return (
-    <main className="pt-64 p-5 flex flex-col gap-4 items-center">
+    <main className="p-5 flex flex-col gap-4 items-center">
       <div className="flex gap-5 flex-wrap mt-5">
         <div className="flex flex-col gap-3">
           <div className="border-solid border border-pointColor1 rounded-md overflow-hidden">
