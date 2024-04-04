@@ -119,10 +119,10 @@ const QuestionForm = ({
   const handleChangeImg = (id: string | undefined, files: FileList | null) => {
     const file = files?.[0];
     if (file) {
-      const imgUrl = URL.createObjectURL(file);
+      const img_url = URL.createObjectURL(file);
       setQuestions((prev) =>
         prev.map((question) => {
-          return question.id === id ? { ...question, imgUrl } : question;
+          return question.id === id ? { ...question, img_url } : question;
         })
       );
     }
@@ -144,7 +144,7 @@ const QuestionForm = ({
   return (
     <article className="pb-12 flex flex-col place-items-center gap-12">
       {questions.map((question) => {
-        const { id, type, options, imgUrl } = question;
+        const { id, type, options, img_url } = question;
         return (
           /** 유형, 휴지통 섹션 */
           <section key={id}>
@@ -190,7 +190,7 @@ const QuestionForm = ({
                     />
                     <label htmlFor={`file-input-${id}`}>
                       <Image
-                        src={imgUrl}
+                        src={img_url}
                         alt="문항 이미지"
                         className="w-full h-full object-cover cursor-pointer"
                         width={200}
@@ -254,7 +254,7 @@ const QuestionForm = ({
                     />
                     <label htmlFor={`file-input-${id}`} className="cursor-pointer">
                       <Image
-                        src={imgUrl}
+                        src={img_url}
                         alt="문항 이미지"
                         className="w-full h-full object-cover cursor-pointer"
                         width={200}
