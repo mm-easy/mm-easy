@@ -7,6 +7,9 @@ import { SetStateAction } from 'jotai';
 import checkboxImg from '@/assets/checkbox.png';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
+import SelectQuestionType from './SelectQuestionType';
+import InputQuestionTitle from './InputQuestionTitle';
+import InputQuestionImg from './InputQuestionImg';
 
 const QuestionForm = ({
   questions,
@@ -147,25 +150,20 @@ const QuestionForm = ({
           <article key={id} className="w-[570px] mx-auto pb-12 flex flex-col gap-4">
             <section className="w-full flex justify-between text-md">
               <section>
-                <label className="pr-4">
-                  <input
-                    type="radio"
-                    name={id}
-                    defaultChecked
-                    className="mr-2"
-                    onChange={() => handleChangeType(id, QuestionType.objective)}
-                  />
-                  선택형
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name={id}
-                    className="mr-2"
-                    onChange={() => handleChangeType(id, QuestionType.subjective)}
-                  />
-                  주관형
-                </label>
+                <SelectQuestionType
+                  id={id}
+                  defaultChecked={true}
+                  onChange={handleChangeType}
+                  type={QuestionType.objective}
+                  title="선택형"
+                />
+                <SelectQuestionType
+                  id={id}
+                  defaultChecked={false}
+                  onChange={handleChangeType}
+                  type={QuestionType.subjective}
+                  title="주관형"
+                />
               </section>
               <button type="button" className="text-xl" onClick={() => handleDeleteQuestion(id)}>
                 ✕
@@ -175,34 +173,8 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
-                    placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
-                    onChange={(e) => {
-                      handleChangeTitle(id, e.target.value);
-                    }}
-                  />
-                  <div className="w-full h-40 border-solid border border-pointColor1 rounded-md">
-                    <input
-                      type="file"
-                      id={`file-input-${id}`}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        handleChangeImg(id, e.target.files);
-                      }}
-                      className="hidden"
-                    />
-                    <label htmlFor={`file-input-${id}`} className="">
-                      <Image
-                        src={img_url}
-                        alt="문항 이미지"
-                        className="w-full h-full object-cover rounded-md cursor-pointer"
-                        width={570}
-                        height={160}
-                      />
-                    </label>
-                  </div>
+                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
+                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
                   {options.map((option) => {
                     return (
                       <div key={option.id} className="w-full flex place-items-center justify-between">
@@ -243,38 +215,11 @@ const QuestionForm = ({
                 </div>
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
-                  <div className="w-40 h-40">
-                    <input
-                      type="file"
-                      id={`fileInput${id}`}
-                      onChange={(e) => {
-                        e.preventDefault();
-                        handleChangeImg(id, e.target.files);
-                      }}
-                      className="hidden"
-                    />
-                    <label htmlFor={`file-input-${id}`} className="cursor-pointer">
-                      <Image
-                        src={img_url}
-                        alt="문항 이미지"
-                        className="w-full h-full object-cover cursor-pointer"
-                        width={200}
-                        height={200}
-                      />
-                    </label>
-                  </div>
+                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
+                  <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
                   <input
                     type="text"
-                    className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
-                    placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
-                    onChange={(e) => {
-                      e.preventDefault();
-                      handleChangeTitle(id, e.target.value);
-                    }}
-                  />
-                  <input
-                    type="text"
-                    className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
+                    className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
                     placeholder="정답을 입력해 주세요."
                     onChange={(e) => {
                       e.preventDefault();
