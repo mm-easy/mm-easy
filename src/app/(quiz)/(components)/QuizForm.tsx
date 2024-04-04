@@ -4,24 +4,28 @@ import QuestionForm from './QuestionForm';
 import Image from 'next/image';
 import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import useSubmitQuiz from '../mutations';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { insertQuizToTable, uploadThumbnailToStorage } from '@/api/quizzes';
-import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
+import { uploadThumbnailToStorage } from '@/api/quizzes';
+import { generateFileName } from '@/utils/generateFileName';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
 import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
-import { generateFileName } from '@/utils/generateFileName';
+import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/240x240');
+  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/144x144');
   const [file, setFile] = useState<File | null>(null);
+
+  /** 퀴즈 등록 mutation */
+  const insertQuizMutation = useSubmitQuiz();
 
   const [questions, setQuestions] = useState<Question[]>([
     {
@@ -40,8 +44,8 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
-      imgUrl: 'https://via.placeholder.com/200x200',
-      correctAnswer: ''
+      img_url: 'https://via.placeholder.com/200x200',
+      correct_answer: ''
     },
     {
       id: crypto.randomUUID(),
@@ -59,8 +63,8 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
-      imgUrl: 'https://via.placeholder.com/200x200',
-      correctAnswer: ''
+      img_url: 'https://via.placeholder.com/200x200',
+      correct_answer: ''
     }
   ]);
 
@@ -127,8 +131,8 @@ const QuizForm = () => {
               isAnswer: false
             }
           ],
-          imgUrl: 'https://via.placeholder.com/200x200',
-          correctAnswer: ''
+          img_url: 'https://via.placeholder.com/200x200',
+          correct_answer: ''
         }
       ]);
     } else {
@@ -137,57 +141,44 @@ const QuizForm = () => {
     }
   };
 
-  /** 퀴즈 등록 mutation */
-  const insertQuizMutation = useMutation({
-    mutationFn: (newQuiz: Quiz) => insertQuizToTable(newQuiz)
-  });
-
-  /** 등록 버튼 클릭 핸들러(임시) */
-  const handleSubmitBtn = () => {
+  /** 등록 버튼 클릭 핸들러 */
+  const handleSubmitBtn = async () => {
     console.log('입력된 값들', questions);
+
+    if (!level) {
+      alert('난이도를 선택해주세요.');
+      return;
+    }
+    if (!title || !info) {
+      alert('제목과 설명을 입력해주세요.');
+      return;
+    }
+
+    try {
+      let imgUrl = null;
+      if (file) {
+        const fileName = generateFileName(file);
+        imgUrl = await uploadThumbnailToStorage(file, fileName);
+        console.log('스토리지에 이미지 업로드 성공', imgUrl);
+      }
+
+      const newQuiz = {
+        creator_id: 'cocoa@naver.com',
+        level,
+        title,
+        info,
+        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
+      };
+      const newQuestions = questions.map((item) => item);
+
+      insertQuizMutation.mutate({ newQuiz, newQuestions });
+    } catch (error) {
+      console.log('스토리지에 이미지 업로드 중 에러 발생');
+    }
   };
 
-  /** 등록 버튼 클릭 핸들러 */
-  // const handleSubmitBtn = async () => {
-  //   if (!level) {
-  //     alert('난이도를 선택해주세요.');
-  //     return;
-  //   }
-  //   if (!title || !info) {
-  //     alert('제목과 설명을 입력해주세요.');
-  //     return;
-  //   }
-
-  //   try {
-  //     let imgUrl = null;
-  //     if (file) {
-  //       const fileName = generateFileName(file);
-  //       imgUrl = await uploadThumbnailToStorage(file, fileName);
-  //       console.log('스토리지에 이미지 업로드 성공', imgUrl);
-  //     }
-
-  //     const newQuiz = {
-  //       creator_id: 'cocoa@naver.com',
-  //       level,
-  //       title,
-  //       info,
-  //       thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
-  //     };
-
-  //     insertQuizMutation.mutate(newQuiz, {
-  //       onSuccess: () => {
-  //         queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-  //         toast.success('퀴즈가 등록되었습니다.');
-  //         router.replace('/quiz-list');
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log('스토리지에 이미지 업로드 중 에러 발생');
-  //   }
-  // };
-
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-16">
       <form
         className="flex flex-col min-w-full"
         onSubmit={(e) => {
@@ -195,57 +186,48 @@ const QuizForm = () => {
           handleSubmitBtn();
         }}
       >
-        <div className="p-10 flex gap-10 bg-white justify-center items-center">
-          <div className="flex flex-col gap-1">
-            <p className="text-xs text-pointColor1">썸네일 이미지</p>
+        <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b border-pointColor1">
+          <div className="flex gap-10">
             <div
               onClick={handleClickImg}
-              className="bg-gray-200 w-60 h-60 border-solid border border-pointColor1 flex items-center"
+              className="bg-gray-200 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
             >
               <Image
                 src={selectedImg}
                 alt="샘플이미지"
-                className="object-cover"
-                style={{ cursor: 'pointer' }}
-                width={240}
-                height={240}
+                width={144}
+                height={144}
+                className="object-cover cursor-pointer"
               />
-              <input
-                type="file"
-                id="fileInput"
-                ref={fileInputRef}
-                onChange={handleChangeImg}
-                style={{ display: 'none' }}
-              />
+              <input type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleChangeImg} />
+            </div>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-pointColor1">난이도</p>
+                <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-pointColor1">퀴즈 제목</p>
+                <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">난이도</p>
-              <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">퀴즈 제목</p>
-              <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">퀴즈 설명</p>
-              <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
-            </div>
+          <div className="flex flex-col gap-1 w-auto">
+            <p className="text-xs text-pointColor1">퀴즈 설명</p>
+            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
           </div>
         </div>
+
         <div className="flex flex-col">
           <QuestionForm questions={questions} setQuestions={setQuestions} />
         </div>
         <PlusQuestionBtn onClick={handleAddQuestion} />
-        <div className="flex gap-2">
-          <button type="button" onClick={handleCancelBtn}>
-            취소하기
-          </button>
-          <button type="submit">등록하기</button>
+        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t border-pointColor1">
+          <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-64" />
+          <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-64" />
         </div>
       </form>
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px;' }}>
+      <div style={{ position: 'fixed', bottom: '50px', right: '50px;' }}>
         <PageUpBtn scrollPosition={scrollPosition} />
       </div>
     </main>
