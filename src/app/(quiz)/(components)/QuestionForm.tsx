@@ -219,7 +219,7 @@ const QuestionForm = ({
                   <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
                   <input
                     type="text"
-                    className="w-[500px] px-4 py-2 border-solid border border-pointColor1"
+                    className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
                     placeholder="정답을 입력해 주세요."
                     onChange={(e) => {
                       e.preventDefault();
