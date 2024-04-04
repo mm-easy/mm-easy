@@ -1,19 +1,21 @@
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/utils/supabase/supabase';
-import { Box, Button, TextArea } from '@radix-ui/themes';
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
+import { Box, TextArea } from '@radix-ui/themes';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/utils/supabase/supabase';
 
 const CommentForm = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
   const { getCurrentUserProfile } = useAuth();
 
+  /**현재 유저 정보 가져오기 */
   const { data: profile } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
 
+  /**댓글 작성 */
   const handleSubmitBtn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) {

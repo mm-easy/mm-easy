@@ -83,9 +83,7 @@ const Header = () => {
         )}
       </section>
 
-      {isMenuOpen && (
-        <MenuPage />
-      )}
+      {isMenuOpen && <MenuPage />}
     </>
   );
 };
