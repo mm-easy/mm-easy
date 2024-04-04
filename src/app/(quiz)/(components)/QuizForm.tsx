@@ -65,25 +65,6 @@ const QuizForm = () => {
       ],
       img_url: 'https://via.placeholder.com/200x200',
       correct_answer: ''
-    },
-    {
-      id: crypto.randomUUID(),
-      type: QuestionType.objective,
-      title: '',
-      options: [
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        },
-        {
-          id: crypto.randomUUID(),
-          content: '',
-          isAnswer: false
-        }
-      ],
-      img_url: 'https://via.placeholder.com/200x200',
-      correct_answer: ''
     }
   ]);
 
