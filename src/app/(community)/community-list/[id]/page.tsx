@@ -7,11 +7,11 @@ import CommentList from '../../(components)/CommentList';
 import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
 import DOMPurify from 'dompurify';
+import Like from '../../(components)/Like';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { FaHeart } from 'react-icons/fa';
 
 
 import type { PostDetailDateType } from '@/types/posts';
@@ -20,6 +20,7 @@ const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
   const params = useParams();
 
+  /**해당 게시글 정보가져오기 */
   useEffect(() => {
     const postDetailDate = async () => {
       try {
@@ -65,8 +66,7 @@ const DetailPage = () => {
               </div>
               <div className="flex items-center justify-between border-solid border-b-2">
                 <div className="flex items-center">
-                  <FaHeart />
-                  <span className="ml-2">좋아요</span>
+                  <Like postId={params.id} />
                 </div>
                 <div>
                   <button className="border-2 border-solid border-pointColor1 py-3 px-4 border-r-0 border-t-0 border-b-0">

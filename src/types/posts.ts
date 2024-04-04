@@ -54,3 +54,10 @@ export type CommunityMenuProps = {
 export type CommunityFormProps = {
   selectedCategory: string;
 };
+
+export type ToggleProps = {
+  toggled: boolean;
+  onToggle: (toggled: boolean) => void;
+  onIcon: React.ReactNode;
+  offIcon: React.ReactNode;
+};

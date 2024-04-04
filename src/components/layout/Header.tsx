@@ -57,31 +57,33 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
-      <section className="h-16 fixed w-full bg-bgColor1 border-solid border-b border-pointColor1 p-5 pl-10 pr-10 flex items-center justify-between z-50">
+      <section className="h-16 fixed w-full bg-bgColor1 border-solid border-b-2 border-pointColor1 p-5 pl-10 pr-10 flex items-center justify-between z-50">
         <button onClick={toggleMenuModal}>
           <GiHamburgerMenu className="text-pointColor1" />
         </button>
-        <Link href="/" className="text-pointColor1 font-bold">
+        <Link href="/" onClick={handleLinkClick} className="text-pointColor1 font-bold">
           로고ㅎ
         </Link>
         {isLoggedIn ? ( 
-          <button onClick={handleLogout} className="ml-10">
+          <button onClick={handleLogout} className="ml-10 text-pointColor1 font-bold">
             로그아웃
           </button>
         ) : (
-          <Link href="/login"> 
-            <button className="ml-10">
+          <Link href="/login" onClick={handleLinkClick}> 
+            <button className="ml-10 text-pointColor1 font-bold">
               로그인
             </button>
           </Link>
         )}
       </section>
 
-      {isMenuOpen && (
-        <MenuPage />
-      )}
+      {isMenuOpen && <MenuPage />}
     </>
   );
 };

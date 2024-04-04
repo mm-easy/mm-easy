@@ -150,6 +150,28 @@ a {
   color: inherit;
 }
 
+.menu-enter {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.menu-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.menu-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.menu-exit-active {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
 strong {
   font-weight: bold;
 }
