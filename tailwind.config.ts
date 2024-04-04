@@ -15,7 +15,8 @@ const config: Config = {
         pointColor2: '#FF8878',
         blackColor: '#2e2e2e'
       }
-    }
+    },
+    backgroundSize: { md: '80%' }
   },
   plugins: []
 };
