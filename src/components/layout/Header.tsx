@@ -10,6 +10,7 @@ import { useAtom } from 'jotai';
 import { isMenuOpenAtom } from '../../store/store';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
+import { AuthChangeEvent } from '@supabase/supabase-js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
@@ -17,7 +18,7 @@ const Header = () => {
   const { logout } = useAuth();
 
   useEffect(() => {
-    const handleAuthStateChange = (event: any, session: any) => {
+    const handleAuthStateChange = (event: AuthChangeEvent) => {
       if (event === 'SIGNED_IN') {
         setIsLoggedIn(true); 
       } else if (event === 'SIGNED_OUT') {
