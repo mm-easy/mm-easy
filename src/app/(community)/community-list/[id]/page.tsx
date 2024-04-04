@@ -14,7 +14,7 @@ import { FaHeart } from 'react-icons/fa';
 
 import type { PostDetailDateType } from '@/types/posts';
 
-const page = () => {
+const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
   const params = useParams();
 
@@ -89,4 +89,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DetailPage;
