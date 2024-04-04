@@ -14,7 +14,7 @@ const Home = () => {
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-16">
       <h1>User Profile</h1>
       {profile ? (
         <div>
