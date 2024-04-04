@@ -44,7 +44,7 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
-      img_url: 'https://via.placeholder.com/200x200',
+      img_url: 'https://via.placeholder.com/570x160',
       correct_answer: ''
     },
     {
@@ -63,7 +63,7 @@ const QuizForm = () => {
           isAnswer: false
         }
       ],
-      img_url: 'https://via.placeholder.com/200x200',
+      img_url: 'https://via.placeholder.com/570x160',
       correct_answer: ''
     }
   ]);
@@ -217,10 +217,7 @@ const QuizForm = () => {
             <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
           </div>
         </div>
-
-        <div className="flex flex-col">
-          <QuestionForm questions={questions} setQuestions={setQuestions} />
-        </div>
+        <QuestionForm questions={questions} setQuestions={setQuestions} />
         <PlusQuestionBtn onClick={handleAddQuestion} />
         <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t border-pointColor1">
           <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-64" />
