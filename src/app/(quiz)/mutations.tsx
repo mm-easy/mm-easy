@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-
-import type { OptionsToInsert, Question, QuestionsToInsert, Quiz } from '@/types/quizzes';
 import { insertOptionsToTable, insertQuestionsToTable, insertQuizToTable } from '@/api/quizzes';
+
+import type { OptionsToInsert, QuestionsToInsert, Quiz } from '@/types/quizzes';
 
 /** quiz를 quizzes 테이블에 insert */
 export const useSubmitQuiz = () => {
@@ -20,8 +20,6 @@ export const useSubmitQuiz = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-      toast.success('퀴즈가 등록되었습니다.');
-      // router.replace('/quiz-list');
     }
   });
 
@@ -68,6 +66,7 @@ export const useSubmitOptions = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['options'] });
+      toast.success('퀴즈가 등록되었습니다.');
     }
   });
 

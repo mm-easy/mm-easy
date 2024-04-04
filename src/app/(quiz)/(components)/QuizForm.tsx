@@ -215,6 +215,7 @@ const QuizForm = () => {
           question_id: insertQuestionResult
         }));
         await insertOptionsMutation.mutateAsync(newOptions);
+        router.replace('/quiz-list');
       });
     } catch (error) {
       console.log('퀴즈 생성 중 에러 발생');
