@@ -241,9 +241,9 @@ const QuizForm = () => {
           <QuestionForm questions={questions} setQuestions={setQuestions} />
         </div>
         <PlusQuestionBtn onClick={handleAddQuestion} />
-        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-3 border-solid border-t border-pointColor1">
-          <CancelButton text="취소하기" onClick={handleCancelBtn} />
-          <SubmitButton text="등록하기" onClick={handleSubmitBtn} />
+        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t border-pointColor1">
+          <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-64" />
+          <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-64" />
         </div>
       </form>
       <div style={{ position: 'fixed', bottom: '50px', right: '50px;' }}>
