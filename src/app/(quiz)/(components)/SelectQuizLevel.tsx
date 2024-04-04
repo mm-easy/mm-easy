@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const SelectQuizLevel = () => {
   return (
-    <main className="fixed w-full bg-bgColor1 border-b border-pointColor1 flex justify-center">
+    <main className="fixed w-full bg-pointColor1 border-b border-pointColor1 flex justify-center">
       <div className="flex items-end gap-1 overflow-hidden">
         <Image
           src="https://via.placeholder.com/350x240"

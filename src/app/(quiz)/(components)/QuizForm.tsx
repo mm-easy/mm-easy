@@ -14,13 +14,14 @@ import { generateFileName } from '@/utils/generateFileName';
 
 import { QuestionType, type Question, type Quiz } from '@/types/quizzes';
 import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
+import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/240x240');
+  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/144x144');
   const [file, setFile] = useState<File | null>(null);
 
   /** 퀴즈 등록 mutation */
@@ -187,7 +188,6 @@ const QuizForm = () => {
         info,
         thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
       };
-
       const newQuestions = questions.map((item) => item);
 
       insertQuizMutation.mutate({ newQuiz, newQuestions });
@@ -205,54 +205,45 @@ const QuizForm = () => {
           handleSubmitBtn();
         }}
       >
-        <div className="p-10 flex gap-10 bg-white justify-center items-center">
-          <div className="flex flex-col gap-1">
-            <p className="text-xs text-pointColor1">썸네일 이미지</p>
+        <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b border-pointColor1">
+          <div className="flex gap-10">
             <div
               onClick={handleClickImg}
-              className="bg-gray-200 w-60 h-60 border-solid border border-pointColor1 flex items-center"
+              className="bg-gray-200 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
             >
               <Image
                 src={selectedImg}
                 alt="샘플이미지"
-                className="object-cover"
-                style={{ cursor: 'pointer' }}
-                width={240}
-                height={240}
+                width={144}
+                height={144}
+                className="object-cover cursor-pointer"
               />
-              <input
-                type="file"
-                id="fileInput"
-                ref={fileInputRef}
-                onChange={handleChangeImg}
-                style={{ display: 'none' }}
-              />
+              <input type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleChangeImg} />
+            </div>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-pointColor1">난이도</p>
+                <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-pointColor1">퀴즈 제목</p>
+                <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">난이도</p>
-              <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">퀴즈 제목</p>
-              <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-pointColor1">퀴즈 설명</p>
-              <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
-            </div>
+          <div className="flex flex-col gap-1 w-auto">
+            <p className="text-xs text-pointColor1">퀴즈 설명</p>
+            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
           </div>
         </div>
+
         <div className="flex flex-col">
           <QuestionForm questions={questions} setQuestions={setQuestions} />
         </div>
         <PlusQuestionBtn onClick={handleAddQuestion} />
-        <div className="flex gap-2">
-          <button type="button" onClick={handleCancelBtn}>
-            취소하기
-          </button>
-          <button type="submit">등록하기</button>
+        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-3 border-solid border-t border-pointColor1">
+          <CancelButton text="취소하기" onClick={handleCancelBtn} />
+          <SubmitButton text="등록하기" onClick={handleSubmitBtn} />
         </div>
       </form>
       <div style={{ position: 'fixed', bottom: '50px', right: '50px;' }}>
