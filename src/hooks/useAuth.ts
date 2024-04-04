@@ -103,20 +103,7 @@ export const useAuth = () => {
         setLoading(false);
         return;
       }
-  
-      if (data && data.user) {
-        // console.log("로그인된 사용자 정보:", data);
-        // console.log("로그인된 사용자 정보:", data.user);
-        // // const email = data.user.email || '';
-        // const nickname = email.split('@')[0];
-        // const { error: insertError } = await supabase
-        //   .from('profiles')
-        //   .insert([{ id: data.user.id, email, nickname, avatar_img_url: "https://via.placeholder.com/150" }]);
-  
-        // if (insertError) {
-        //   setError(insertError.message);
-        // }
-      } else {
+      else {
         setError('회원가입에 성공했으나 사용자 정보를 불러올 수 없습니다.');
       }
       setLoading(false);
