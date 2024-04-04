@@ -1,6 +1,5 @@
 'use client';
-// import ReactQuill, { Quill } from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
+
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
@@ -19,44 +18,6 @@ const PostForm = () => {
     
   }
 
-  // const formats = [
-  //   'font',
-  //   'header',
-  //   'bold',
-  //   'italic',
-  //   'underline',
-  //   'strike',
-  //   'blockquote',
-  //   'list',
-  //   'bullet',
-  //   'indent',
-  //   'link',
-  //   'align',
-  //   'color',
-  //   'background',
-  //   'size',
-  //   'h1',
-  // ];
-
-  //  const modules = useMemo(() => {
-  //     return {
-  //       toolbar: {
-  //         container: [
-  //           [{ size: ['small', false, 'large', 'huge'] }],
-  //           [{ align: [] }],
-  //           ['bold', 'italic', 'underline', 'strike'],
-  //           [{ list: 'ordered' }, { list: 'bullet' }],
-  //           [
-  //             {
-  //               color: [],
-  //             },
-  //             { background: [] },
-  //           ],
-  //         ],
-  //       },
-  //     };
-  //   }, []);
-
   const {
     data: profile,
     isLoading,
@@ -72,10 +33,6 @@ const PostForm = () => {
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-
-  // const handleContent = (e: any) => {
-  //   setContent(e.target.value);
-  // };
 
   const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
@@ -143,10 +100,6 @@ const PostForm = () => {
       <div>
         <NoticeEditor value={content} onChange={handleEditorChange} />
       </div>
-
-      {/* <div>
-        <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>
-      </div> */}
       <div>
         <button onClick={handleCancel}>취소</button>
         <button type="submit">작성</button>

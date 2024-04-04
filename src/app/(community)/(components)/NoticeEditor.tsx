@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { ReactElement, useMemo } from 'react';
-import { Quill } from 'react-quill';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
