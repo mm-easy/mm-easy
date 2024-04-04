@@ -1,7 +1,6 @@
 'use client';
 // import ReactQuill, { Quill } from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
-
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
@@ -137,7 +136,7 @@ const PostForm = () => {
         <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
       </div>
-      <NoticeEditor value={content} onChange={handleEditorChange} />
+      <NoticeEditor value={content} onChange={handleEditorChange}/>
 
       {/* <div>
         <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>

@@ -149,3 +149,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+strong {
+  font-weight: bold;
+}
