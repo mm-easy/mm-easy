@@ -33,7 +33,7 @@ const PageUpBtn = ({ scrollPosition }: PageUpBtnProps) => {
   return (
     <>
       {isVisible && (
-        <Image src="https://via.placeholder.com/30x30" alt="" width={30} height={30} onClick={handlePageUp} />
+        <Image src="https://via.placeholder.com/40x40" alt="" width={40} height={40} onClick={handlePageUp} />
       )}
     </>
   );
