@@ -148,7 +148,7 @@ const QuestionForm = ({
   };
 
   return (
-    <main className="py-8 text-pointColor1">
+    <main className="pt-8 text-pointColor1">
       {questions.map((question) => {
         const { id, type, options, img_url } = question;
         return (
