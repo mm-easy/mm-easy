@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <section className="fixed bottom-0 w-full bg-pointColor1 flex justify-center p-4 items-center text-white text-sm">
+    <section className="h-[8vh] py-4 text-center text-sm text-white bg-pointColor1">
       뭔말이지? Project. All rights reserved @ Coding Legend
     </section>
   );
