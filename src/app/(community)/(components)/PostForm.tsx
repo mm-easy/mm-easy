@@ -14,10 +14,6 @@ const PostForm = () => {
   const [category, setCategory] = useState('질문');
   const router = useRouter();
 
-  const editerStyle = {
-    
-  }
-
   const {
     data: profile,
     isLoading,
