@@ -14,10 +14,6 @@ const config: Config = {
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
         blackColor: '#2e2e2e'
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       }
     },
     backgroundSize: { md: '80%' }

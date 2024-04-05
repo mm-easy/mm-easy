@@ -48,7 +48,7 @@ const QuestionForm = ({
       const newOption = {
         id: crypto.randomUUID(),
         content: '',
-        isAnswer: false
+        is_answer: false
       };
       setQuestions((prev) =>
         prev.map((question) => {
@@ -104,7 +104,7 @@ const QuestionForm = ({
           ? {
               ...question,
               options: options.map((option) => {
-                return option.id === optionId ? { ...option, isAnswer: true } : { ...option, isAnswer: false };
+                return option.id === optionId ? { ...option, is_answer: true } : { ...option, is_answer: false };
               })
             }
           : question;
@@ -113,10 +113,10 @@ const QuestionForm = ({
   };
 
   /** 주관식 정답 입력 핸들러 */
-  const handleChangeCorrectAnswer = (id: string | undefined, correctAnswer: string) => {
+  const handleChangeCorrectAnswer = (id: string | undefined, correct_answer: string) => {
     setQuestions((prev) =>
       prev.map((question) => {
-        return question.id === id ? { ...question, correctAnswer } : question;
+        return question.id === id ? { ...question, correct_answer } : question;
       })
     );
   };
@@ -128,7 +128,7 @@ const QuestionForm = ({
       const img_url = URL.createObjectURL(file);
       setQuestions((prev) =>
         prev.map((question) => {
-          return question.id === id ? { ...question, img_url } : question;
+          return question.id === id ? { ...question, img_url, img_file: file } : question;
         })
       );
     }
@@ -148,7 +148,7 @@ const QuestionForm = ({
   };
 
   return (
-    <main className="py-8 text-pointColor1">
+    <main className="pt-8 text-pointColor1">
       {questions.map((question) => {
         const { id, type, options, img_url } = question;
         return (
@@ -186,7 +186,7 @@ const QuestionForm = ({
                       <div key={option.id} className="w-full flex place-items-center justify-between">
                         <input
                           type="checkbox"
-                          checked={option.isAnswer}
+                          checked={option.is_answer}
                           className="w-11 h-11 appearance-none border-solid border border-pointColor1 rounded-md checked:bg-pointColor1 checked:bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/checkbox.png')] bg-md bg-no-repeat bg-center"
                           onChange={() => {
                             handleCheckObjectAnswer(id, options, option.id);
