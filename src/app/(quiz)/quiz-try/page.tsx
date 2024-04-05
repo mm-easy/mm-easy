@@ -6,7 +6,7 @@ const QuizTryPage = () => {
     <>
       <SubHeader text="퀴즈 풀기" />
       <main className="grid grid-cols-[20%_80%]">
-        <article className="border-solid border-r-2 border-pointColor1">
+        <article className="h-[76vh] border-solid border-r-2 border-pointColor1">
           <section>
             <Image
               src="https://via.placeholder.com/144x144"
