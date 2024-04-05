@@ -10,7 +10,7 @@ const SelectQuizLevel = () => {
     router.push('/quiz-form');
   };
   return (
-    <main className="w-full bg-pointColor1 border-b border-pointColor1 flex flex-col justify-center items-center">
+    <main className="w-full bg-pointColor1 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
       <div className="mt-5 mr-1/4 ml-auto">
         <BlueButton text="퀴즈 만들기" onClick={handleMakeQuizBtn} width="w-36" />
       </div>
