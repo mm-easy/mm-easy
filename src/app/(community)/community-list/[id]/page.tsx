@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import SubHeader from '@/components/common/SubHeader';
-import CommentForm from '../../(components)/CommentForm';
-import CommentList from '../../(components)/CommentList';
+import Comment from '../../(components)/Comment';
 import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
 import Like from '../../(components)/Like';
@@ -78,9 +77,8 @@ const DetailPage = () => {
               <p className="m-5 text-blackColor">{post.content}</p>
               <div className="border-solid border-t-2">
                 <span>댓글</span>
-                <CommentList postId={params.id} />
+                <Comment postId={params.id} />
               </div>
-              <CommentForm postId={params.id} />
             </div>
           )}
         </div>
