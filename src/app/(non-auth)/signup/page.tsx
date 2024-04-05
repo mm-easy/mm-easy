@@ -33,20 +33,20 @@ const SignUpPage = () => {
   };
 
   return (
-    <article>
-      <SubHeader text="회원가입" />
-    <div className="flex min-h-screen bg-bgColor1">
-    <div className="flex-1 flex items-center justify-center">
+    <article className="flex flex-col min-h-screen">
+  <SubHeader text="회원가입" />
+    <div className="grid grid-cols-10 min-h-full bg-bgColor1">
+    <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
       <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
         {/* 고양이 예시 */}
       </div>
     </div>
-    <div className="flex-1 flex items-center bg-white justify-center">
+    <div className="col-span-6 flex items-center bg-white justify-center">
       <div className="w-full max-w-md p-8 bg-white">
         <form className="space-y-6" onSubmit={handleSignUp}>
+          <div className="flex flex-col gap-2">
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
-              ID
             </label>
             <div className="mt-1">
               <input 
@@ -54,7 +54,7 @@ const SignUpPage = () => {
                 type="email" 
                 required
                 className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Enter your email"
+                placeholder="이메일을 입력해주세요"
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)} 
@@ -63,7 +63,6 @@ const SignUpPage = () => {
           </div>
           <div>
             <label htmlFor="password" className="text-sm font-medium text-gray-700">
-              Password
             </label>
             <div className="mt-1">
               <input 
@@ -71,7 +70,7 @@ const SignUpPage = () => {
                 type="password" 
                 required
                 className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Create a password"
+                placeholder="비밀번호를 입력해주세요"
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} 
@@ -80,7 +79,6 @@ const SignUpPage = () => {
           </div>
           <div>
             <label htmlFor="confirm-password" className="text-sm font-medium text-gray-700">
-              Confirm Password
             </label>
             <div className="mt-1">
               <input 
@@ -88,12 +86,13 @@ const SignUpPage = () => {
                 type="password" 
                 required
                 className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Confirm your password"
+                placeholder="비밀번호를 다시 입력해주세요"
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)} 
               />
             </div>
+          </div>
           </div>
           {error && <div className="text-red-500">{error}</div>}
           <div>
