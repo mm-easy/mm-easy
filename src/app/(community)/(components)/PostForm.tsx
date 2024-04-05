@@ -1,57 +1,61 @@
 'use client';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-
+// import ReactQuill, { Quill } from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { ChangeEvent, FormEvent, useMemo, useState } from 'react';
+import NoticeEditor from './NoticeEditor';
 
 const PostForm = () => {
   const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<string>('');
   const [category, setCategory] = useState('질문');
   const router = useRouter();
 
-  const formats = [
-    'font',
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'align',
-    'color',
-    'background',
-    'size',
-    'h1',
-  ];
+  const editerStyle = {
+    
+  }
 
- const modules = useMemo(() => {
-    return {
-      toolbar: {
-        container: [
-          [{ size: ['small', false, 'large', 'huge'] }],
-          [{ align: [] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [
-            {
-              color: [],
-            },
-            { background: [] },
-          ],
-        ],
-      },
-    };
-  }, []);
+  // const formats = [
+  //   'font',
+  //   'header',
+  //   'bold',
+  //   'italic',
+  //   'underline',
+  //   'strike',
+  //   'blockquote',
+  //   'list',
+  //   'bullet',
+  //   'indent',
+  //   'link',
+  //   'align',
+  //   'color',
+  //   'background',
+  //   'size',
+  //   'h1',
+  // ];
+
+  //  const modules = useMemo(() => {
+  //     return {
+  //       toolbar: {
+  //         container: [
+  //           [{ size: ['small', false, 'large', 'huge'] }],
+  //           [{ align: [] }],
+  //           ['bold', 'italic', 'underline', 'strike'],
+  //           [{ list: 'ordered' }, { list: 'bullet' }],
+  //           [
+  //             {
+  //               color: [],
+  //             },
+  //             { background: [] },
+  //           ],
+  //         ],
+  //       },
+  //     };
+  //   }, []);
 
   const {
     data: profile,
@@ -65,7 +69,7 @@ const PostForm = () => {
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
-  const handleTitle = (e: any) => {
+  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
@@ -73,16 +77,20 @@ const PostForm = () => {
   //   setContent(e.target.value);
   // };
 
-  const handleCategory = (e: any) => {
+  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
 
-  const handleCancel = (e: any) => {
-    e.preventDefault(); 
+  const handleCancel = (e: FormEvent) => {
+    e.preventDefault();
     router.push('/community-list');
   };
 
-  const handleNewPost = async (e: any) => {
+  const handleEditorChange = (content: string) => {
+    setContent(content);
+  };
+
+  const handleNewPost = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!profile) {
@@ -132,16 +140,13 @@ const PostForm = () => {
         <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
       </div>
+      <div>
+        <NoticeEditor value={content} onChange={handleEditorChange} />
+      </div>
+
       {/* <div>
         <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>
       </div> */}
-      <ReactQuill
-      theme="snow"
-      modules={modules}
-      formats={formats}
-      value={content}
-      onChange={setContent}
-    />
       <div>
         <button onClick={handleCancel}>취소</button>
         <button type="submit">작성</button>
