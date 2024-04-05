@@ -31,7 +31,7 @@ const TypingGamePage = () => {
           left: Math.random() * (window.innerWidth - 100) - 50
         };
         setWords((prevWords) => [...prevWords, newWord]);
-      }, 2000);
+      }, 4000);
     }
     return () => clearInterval(interval);
   }, [gameStarted]);
