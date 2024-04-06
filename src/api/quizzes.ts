@@ -38,9 +38,7 @@ export const uploadImageToStorage = async (imgFile: File | null, fileName: strin
 export const insertQuizToTable = async (newQuiz: Quiz) => {
   try {
     const { data, error } = await supabase.from('quizzes').insert([newQuiz]).select('*');
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
     const quizId = data?.[0].id;
     return quizId;
   } catch (error) {
@@ -54,9 +52,7 @@ export const insertQuizToTable = async (newQuiz: Quiz) => {
 export const insertQuestionsToTable = async (newQuestions: QuestionsToInsert) => {
   try {
     const { data, error } = await supabase.from('questions').insert([newQuestions]).select('*');
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
     return data;
   } catch (error) {
     console.error('문제 등록 실패', error);
@@ -70,16 +66,26 @@ export const insertOptionsToTable = async (newOptions: OptionsToInsert[]) => {
   try {
     const insertPromises = newOptions.map(async (option) => {
       const { data, error } = await supabase.from('question_options').insert([option]).select('*');
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
       return data;
     });
     const insertResults = await Promise.all(insertPromises);
     return insertResults;
   } catch (error) {
     console.error('선택지 등록 실패', error);
-    alert('일시적인 오류 발생');
+    alert('객관식 선택지를 등록하지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
+export const getQuizzes = async () => {
+  try {
+    const { data, error } = await supabase.from('quizzes').select('*');
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('퀴즈 목록 받아오기 실패', error);
+    alert('일시적으로 퀴즈 목록을 받아오지 못했습니다. 다시 시도하세요.');
     throw error;
   }
 };
