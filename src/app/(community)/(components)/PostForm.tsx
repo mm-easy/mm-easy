@@ -1,12 +1,13 @@
 'use client';
-// import ReactQuill, { Quill } from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
+
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useMemo, useState } from 'react';
-import NoticeEditor from './NoticeEditor';
+import { ChangeEvent, FormEvent, useState } from 'react';
+
+const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
 const PostForm = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -14,48 +15,6 @@ const PostForm = () => {
   const [content, setContent] = useState<string>('');
   const [category, setCategory] = useState('질문');
   const router = useRouter();
-
-  const editerStyle = {
-    
-  }
-
-  // const formats = [
-  //   'font',
-  //   'header',
-  //   'bold',
-  //   'italic',
-  //   'underline',
-  //   'strike',
-  //   'blockquote',
-  //   'list',
-  //   'bullet',
-  //   'indent',
-  //   'link',
-  //   'align',
-  //   'color',
-  //   'background',
-  //   'size',
-  //   'h1',
-  // ];
-
-  //  const modules = useMemo(() => {
-  //     return {
-  //       toolbar: {
-  //         container: [
-  //           [{ size: ['small', false, 'large', 'huge'] }],
-  //           [{ align: [] }],
-  //           ['bold', 'italic', 'underline', 'strike'],
-  //           [{ list: 'ordered' }, { list: 'bullet' }],
-  //           [
-  //             {
-  //               color: [],
-  //             },
-  //             { background: [] },
-  //           ],
-  //         ],
-  //       },
-  //     };
-  //   }, []);
 
   const {
     data: profile,
@@ -73,11 +32,7 @@ const PostForm = () => {
     setTitle(e.target.value);
   };
 
-  // const handleContent = (e: any) => {
-  //   setContent(e.target.value);
-  // };
-
-  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value);
   };
 
@@ -125,28 +80,37 @@ const PostForm = () => {
     console.log(data);
   };
 
+  const categories = [
+    { id: 'question', value: '질문', label: '질문' },
+    { id: 'chat', value: '잡담', label: '잡담' },
+    { id: 'study', value: '공부', label: '공부' },
+    { id: 'diary', value: '일기', label: '일기' }
+  ];
+
   return (
     <form onSubmit={handleNewPost}>
+      <section className="flex">
+        {categories.map((item) => (
+          <div className="w-20" key={item.id}>
+            <input
+              className=""
+              type="radio"
+              id={item.id}
+              name="category"
+              value={item.value}
+              checked={category === item.value}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor={item.id}>{item.label}</label>
+          </div>
+        ))}
+      </section>
       <div>
-        <label>분류</label>
-        <select value={category} onChange={handleCategory}>
-          <option value="질문">질문</option>
-          <option value="잡담">잡담</option>
-          <option value="공부">공부</option>
-          <option value="일기">일기</option>
-        </select>
-      </div>
-      <div>
-        <label></label>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
       </div>
       <div>
         <NoticeEditor value={content} onChange={handleEditorChange} />
       </div>
-
-      {/* <div>
-        <textarea value={content} onChange={handleContent} placeholder=" 내용을 입력해 주세요."></textarea>
-      </div> */}
       <div>
         <button onClick={handleCancel}>취소</button>
         <button type="submit">작성</button>
