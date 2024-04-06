@@ -1,17 +1,16 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { wordList } from '@/utils/wordList';
+import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 
-const difficultySettings = {
+const difficultySettings: { [key: number]: { speed: number; interval: number } } = {
   1: { speed: 10, interval: 2000 },
   2: { speed: 20, interval: 1000 },
   3: { speed: 30, interval: 500 },
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length; 
-
 
 const TypingGamePage = () => {
   const [words, setWords] = useState<Word[]>([]);
@@ -26,21 +25,23 @@ const TypingGamePage = () => {
   const gameAreaHeight = 600;
   const wordHeight = 80; 
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (gameStarted) {
-      interval = setInterval(() => {
-        const newWord = {
-          id: Date.now(),
-          text: wordList[Math.floor(Math.random() * wordList.length)],
-          top: 0,
-          left: Math.random() * (gameAreaWidth - 200),
-        };
-        setWords((prevWords) => [...prevWords, newWord]);
-      }, 3000);
-    }
-    return () => clearInterval(interval);
-  }, [gameStarted]);
+useEffect(() => {
+  let interval: NodeJS.Timeout;
+  if (gameStarted) {
+    interval = setInterval(() => {
+      const difficultyKey = difficulty as keyof typeof wordLists; 
+      const currentWordList = wordLists[difficultyKey]; 
+      const newWord = {
+        id: Date.now(),
+        text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
+        top: 0,
+        left: Math.random() * (gameAreaWidth - 200),
+      };
+      setWords((prevWords) => [...prevWords, newWord]);
+    }, difficultySettings[difficulty].interval);
+  }
+  return () => clearInterval(interval);
+}, [gameStarted, difficulty]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -99,6 +100,7 @@ const TypingGamePage = () => {
     setInput('');
     setScore(0);
     setLives(maxLives);
+    setDifficulty(1);
   };
 
   const lifePercentage = (lives / maxLives) * 100;
