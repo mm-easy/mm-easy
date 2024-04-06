@@ -63,7 +63,7 @@ const Header = () => {
 
   return (
     <>
-      <section className="h-[8vh] w-full bg-bgColor1 border-solid border-b-2 border-pointColor1 p-5 pl-10 pr-10 flex items-center justify-between z-50">
+      <section className="w-full h-[8vh] px-10 flex justify-between items-center bg-bgColor1 border-solid border-b-2 border-pointColor1">
         <button onClick={toggleMenuModal}>
           <GiHamburgerMenu className="text-pointColor1" />
         </button>
