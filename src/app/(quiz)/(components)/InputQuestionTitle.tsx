@@ -22,7 +22,7 @@ const InputQuestionTitle = ({
           onChange(id, e.target.value);
         }}
       />
-      <p className="absolute top-0 right-2 py-2 pr-2">{value.length}/30</p>
+      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 30</p>
     </div>
   );
 };

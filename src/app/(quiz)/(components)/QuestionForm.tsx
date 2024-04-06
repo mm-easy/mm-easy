@@ -206,7 +206,7 @@ const QuestionForm = ({
                               handleChangeOption(id, e.target.value, options, option.id);
                             }}
                           />
-                          <p className="absolute top-0 right-2 py-2 pr-2">{option.content.length}/25</p>
+                          <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{option.content.length}/25</p>
                         </div>
                         <button
                           type="button"
@@ -243,7 +243,7 @@ const QuestionForm = ({
                         handleChangeCorrectAnswer(id, e.target.value);
                       }}
                     />
-                    <p className="absolute top-0 right-2 py-2 pr-2">{correct_answer.length}/25</p>
+                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length}/25</p>
                   </div>
                 </div>
               )}
