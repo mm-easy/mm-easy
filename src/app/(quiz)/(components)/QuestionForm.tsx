@@ -151,7 +151,7 @@ const QuestionForm = ({
   return (
     <main className="pt-8 text-pointColor1">
       {questions.map((question) => {
-        const { id, type, options, img_url } = question;
+        const { id, type, options, title, img_url, correct_answer } = question;
         return (
           /** 유형, 휴지통 섹션 */
           <article key={id} className="w-[570px] mx-auto pb-12 flex flex-col gap-4">
@@ -180,7 +180,7 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
-                  <InputQuestionTitle id={id} onInput={handleMaxLength} onChange={handleChangeTitle} />
+                  <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   {options.map((option) => {
                     return (
@@ -193,18 +193,21 @@ const QuestionForm = ({
                             handleCheckObjectAnswer(id, options, option.id);
                           }}
                         />
-                        <input
-                          type="text"
-                          className="w-4/5 px-4 py-[9px] border-solid border border-pointColor1 rounded-md"
-                          placeholder="선택지를 입력해 주세요."
-                          onInput={(e) => {
-                            handleMaxLength(e, 25);
-                          }}
-                          onChange={(e) => {
-                            e.preventDefault();
-                            handleChangeOption(id, e.target.value, options, option.id);
-                          }}
-                        />
+                        <div className="w-4/5 relative">
+                          <input
+                            type="text"
+                            className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                            placeholder="선택지를 입력해 주세요."
+                            onInput={(e) => {
+                              handleMaxLength(e, 25);
+                            }}
+                            onChange={(e) => {
+                              e.preventDefault();
+                              handleChangeOption(id, e.target.value, options, option.id);
+                            }}
+                          />
+                          <p className="absolute top-0 right-2 py-2 pr-2">{option.content.length}/25</p>
+                        </div>
                         <button
                           type="button"
                           className="w-11 h-11 text-2xl text-pointColor1 bg-white border-solid border border-pointColor1 rounded-md"
@@ -225,20 +228,23 @@ const QuestionForm = ({
                 </div>
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
-                  <InputQuestionTitle id={id} onInput={handleMaxLength} onChange={handleChangeTitle} />
+                  <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
-                    placeholder="정답을 입력해 주세요."
-                    onInput={(e) => {
-                      handleMaxLength(e, 25);
-                    }}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      handleChangeCorrectAnswer(id, e.target.value);
-                    }}
-                  />
+                  <div className="w-full relative">
+                    <input
+                      type="text"
+                      className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
+                      placeholder="정답을 입력해 주세요."
+                      onInput={(e) => {
+                        handleMaxLength(e, 25);
+                      }}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleChangeCorrectAnswer(id, e.target.value);
+                      }}
+                    />
+                    <p className="absolute top-0 right-2 py-2 pr-2">{correct_answer.length}/25</p>
+                  </div>
                 </div>
               )}
             </section>
