@@ -223,9 +223,9 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-16">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-12">
       <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
-        <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b border-pointColor1">
+        <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b-2 border-pointColor1">
           <div className="flex gap-10">
             <div
               onClick={handleClickImg}
@@ -258,12 +258,12 @@ const QuizForm = () => {
         </div>
         <QuestionForm questions={questions} setQuestions={setQuestions} />
         <PlusQuestionBtn onClick={handleAddQuestion} />
-        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t border-pointColor1">
-          <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-64" />
-          <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-64" />
+        <div className="bg-bgColor1 flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t-2 border-pointColor1">
+          <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-[275px]" />
+          <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-[275px]" />
         </div>
       </form>
-      <div style={{ position: 'fixed', bottom: '50px', right: '50px' }}>
+      <div style={{ position: 'fixed', bottom: '90px', right: '40px' }}>
         <PageUpBtn scrollPosition={scrollPosition} />
       </div>
     </main>
