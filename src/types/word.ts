@@ -4,3 +4,9 @@ export type Word = {
     top: number;
     left: number;
   }
+
+export enum Difficulty {
+    Easy = 1,
+    Medium,
+    Hard
+  }
