@@ -1,7 +1,7 @@
 import SubHeader from '@/components/common/SubHeader';
 import PostForm from '../(components)/PostForm';
 
-const page = () => {
+const PostPage = () => {
   return (
     <>
       <SubHeader text="커뮤니티" />
@@ -10,4 +10,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PostPage;
