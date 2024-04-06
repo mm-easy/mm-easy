@@ -29,7 +29,7 @@ const QuizTryPage = () => {
           <p className="p-4">English to Korean</p>
         </article>
         <article className="">
-          <header className="h-[8vh] leading-[7.5vh] flex border-solid border-b-2 border-pointColor1">
+          <header className="h-[8vh] flex leading-[7.5vh] border-solid border-b-2 border-pointColor1">
             <h2 className="w-[10%] text-center text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
               난이도
             </h2>
