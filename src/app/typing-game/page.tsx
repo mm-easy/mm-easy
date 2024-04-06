@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { wordList } from '@/utils/wordList';
+import { Word } from '@/types/word';
 
-type Word = {
-  id: number;
-  text: string;
-  top: number;
-  left: number;
-}
+const difficultySettings = {
+  1: { speed: 10, interval: 2000 },
+  2: { speed: 20, interval: 1000 },
+  3: { speed: 30, interval: 500 },
+};
+
+const maxDifficulty = Object.keys(difficultySettings).length; 
+
 
 const TypingGamePage = () => {
   const [words, setWords] = useState<Word[]>([]);
@@ -16,9 +19,12 @@ const TypingGamePage = () => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(5);
   const [gameStarted, setGameStarted] = useState(false);
+  const [difficulty, setDifficulty] = useState(1);
+  const [correctWordsCount, setCorrectWordsCount] = useState(0);
+  const gameAreaWidth = window.innerWidth;
   const maxLives = 5;
-  const gameAreaHeight = 600; // 게임 영역의 높이
-  const wordHeight = 30; // 단어의 높이
+  const gameAreaHeight = 600;
+  const wordHeight = 80; 
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -28,10 +34,10 @@ const TypingGamePage = () => {
           id: Date.now(),
           text: wordList[Math.floor(Math.random() * wordList.length)],
           top: 0,
-          left: Math.random() * (window.innerWidth - 100) - 50
+          left: Math.random() * (gameAreaWidth - 200),
         };
         setWords((prevWords) => [...prevWords, newWord]);
-      }, 4000);
+      }, 3000);
     }
     return () => clearInterval(interval);
   }, [gameStarted]);
@@ -68,14 +74,23 @@ const TypingGamePage = () => {
     setInput(e.target.value);
   };
 
+  useEffect(() => {
+    if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
+      setDifficulty(difficulty + 1); // 다음 난이도로 변경
+      setCorrectWordsCount(0); // 맞춘 단어 개수 초기화
+      alert(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
+    }
+  }, [correctWordsCount, difficulty]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const match = words.find(word => word.text === input);
-    if (match) {
-      setWords(prevWords => prevWords.filter(word => word.id !== match.id));
-      setScore(prevScore => prevScore + 100);
+    const wordIndex = words.findIndex((word) => word.text === input);
+    if (wordIndex !== -1) {
+      setWords(words.filter((_, index) => index !== wordIndex));
+      setScore(score + 10);
+      setCorrectWordsCount(correctWordsCount + 1); // 맞춘 단어의 개수 증가
+      setInput('');
     }
-    setInput('');
   };
 
   const startGame = () => {
@@ -89,53 +104,44 @@ const TypingGamePage = () => {
   const lifePercentage = (lives / maxLives) * 100;
 
   return (
-    <div className="min-h-screen flex flex-col bg-bgColor1">
-      <header className="flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="text-lg ml-4">점수: {score}</div>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+    <header className="flex justify-between items-center bg-white">
+    <div className="flex items-center">
+      <div className="mr-2">난이도</div>
+      <div>{difficulty}</div>
+      </div>
+      <div className="flex items-center">
+      <div className='mr-2'>점수</div>
+      <div>{score}</div>
+      </div>
+      <div className="flex items-center">
+        <div className="text-red-500 mr-2">생명</div>
+        <div className="w-64 bg-gray-200 h-10">
+          <div className="bg-red-500 h-10" style={{ width: `${lifePercentage}%` }}></div>
         </div>
-        <div className="flex">
-        <div className="w-80 bg-white h-10 border border-solid border-black">
-            <div className="bg-red-600 h-10" style={{ width: `${lifePercentage}%` }}></div>
-          </div>
-        </div>
-      </header>
+      </div>
+    </header>
+    <div className="flex-grow relative">
       {gameStarted ? (
-          <div className="w-full min-h-screen bg-white shadow-lg relative">
-          {words.map((word) => (
-            <div
-              key={word.id}
-              className="absolute bg-pointColor1 text-white p-3 text-lg"
-              style={{ top: `${word.top}px`, left: `${word.left}px` }}
-            >
+        <>
+          {words.map(word => (
+            <div key={word.id} className="absolute bg-pointColor1 text-white p-2 rounded" style={{ top: `${word.top}px`, left: `${word.left}px` }}>
               {word.text}
             </div>
           ))}
-          <div className="absolute bottom-0 w-full">
-            <form className="flex justify-center items-center bg-white p-4" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={input}
-                onChange={handleInput}
-                className="border border-solid border-pointColor1 p-4 w-1/2 text-lg"
-                placeholder="여기에 입력하세요..."
-              />
-              <button
-                type="submit"
-                className="bg-pointColor1 text-white p-4 ml-4 text-lg"
-              >
-                입력
-              </button>
-            </form>
-          </div>
-        </div>
+          <form onSubmit={handleSubmit} className="absolute bottom-0 left-0 right-0 p-4 bg-white">
+            <input type="text" value={input} onChange={handleInput} className="border border-pointColor1 rounded p-2 w-full" />
+            <button type="submit" className="mt-2 bg-pointColor1 text-white p-2 rounded w-full">입력</button>
+          </form>
+        </>
       ) : (
-        <div className="flex-grow flex items-center justify-center">
-          <button onClick={startGame} className="bg-blue-600 text-white text-lg py-2 px-6 rounded focus:outline-none">게임 시작</button>
+        <div className="flex items-center justify-center h-full">
+          <button onClick={startGame} className="bg-pointColor1 text-white p-4 rounded">게임 시작!</button>
         </div>
       )}
     </div>
-  );
+  </div>
+);
 };
 
 export default TypingGamePage;
