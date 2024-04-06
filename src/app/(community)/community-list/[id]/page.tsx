@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import SubHeader from '@/components/common/SubHeader';
 import Comment from '../../(components)/Comment';
 import CommunityMenu from '../../(components)/CommunityMenu';
@@ -8,15 +9,21 @@ import CommunityForm from '../../(components)/CommunityForm';
 import DOMPurify from 'dompurify';
 import Like from '../../(components)/Like';
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
+import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 
-import type { PostDetailDateType } from '@/types/posts';
+import type { Post, PostDetailDateType } from '@/types/posts';
+import { getPosts } from '@/api/posts';
+import { toast } from 'react-toastify';
 
 const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
+  const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
+
   const params = useParams();
+  const router = useRouter();
 
   /**해당 게시글 정보가져오기 */
   useEffect(() => {
@@ -32,8 +39,37 @@ const DetailPage = () => {
         throw error;
       }
     };
+    const nextPosts = async () => {
+      const allPost = await getPosts();
+      setNextBeforePost(allPost);
+    };
+
     postDetailDate();
+    nextPosts();
   }, []);
+
+  const beforePostBtn = (postId: string) => {
+    const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
+    console.log('nextBeforePost.length', nextBeforePost.length);
+    console.log(nowPostNum + 1);
+    if (nowPostNum + 1 >= nextBeforePost.length) {
+      toast.warning('첫 게시물 입니다!');
+      return;
+    } else {
+      router.push(`/community-list/${nextBeforePost[nowPostNum + 1].id}`);
+    }
+  };
+
+  const nextPostBtn = (postId: string) => {
+    const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
+    console.log(nowPostNum);
+    if (nowPostNum - 1 < 0) {
+      toast.warning('가장 최신글 입니다!');
+      return;
+    } else {
+      router.push(`/community-list/${nextBeforePost[nowPostNum - 1].id}`);
+    }
+  };
 
   return (
     <article>
@@ -82,6 +118,16 @@ const DetailPage = () => {
               <div className="border-solid border-t-2">
                 <span>댓글</span>
                 <Comment postId={params.id} />
+              </div>
+              <div className="flex justify-center item items-center">
+                <p onClick={() => nextPostBtn(post.id)}>
+                  <IoMdArrowDropleft />
+                </p>
+
+                <Link href="/community-list">목록으로</Link>
+                <p onClick={() => beforePostBtn(post.id)}>
+                  <IoMdArrowDropright />
+                </p>
               </div>
             </div>
           )}

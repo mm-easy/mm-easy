@@ -7,6 +7,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostDetailCommentType } from '@/types/posts';
+import Image from 'next/image';
 
 const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
@@ -101,8 +102,16 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
         {postCommentList?.map((prev) => {
           return (
             <div className="border-solid border-b-2" key={prev.id}>
+              <div className="flex justify-center m-5 w-10 h-10 rounded-full overflow-hidden border-2 border-solid border-pointColor1">
+                <Image
+                  src={prev.profiles?.avatar_img_url || '프로필이미지'}
+                  alt="프로필이미지"
+                  width={100}
+                  height={100}
+                  className="object-cover"
+                />
+              </div>
               <p>{prev.profiles?.nickname}</p>
-              <p>{prev.profiles?.avatar_img_url}</p>
               <time>{formatToLocaleDateTimeString(prev.created_at)}</time>
 
               {btnChange ? (
@@ -162,7 +171,6 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
       </div>
       <div className="mt-5">
         <form onSubmit={handleSubmitBtn}>
-          {profile?.avatar_img_url}
           {profile?.nickname}
           <Box maxWidth="w-full">
             <TextArea
