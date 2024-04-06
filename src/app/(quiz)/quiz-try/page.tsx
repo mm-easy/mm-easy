@@ -5,7 +5,7 @@ const QuizTryPage = () => {
   return (
     <>
       <SubHeader text="퀴즈 풀기" />
-      <main className="grid grid-cols-[20%_80%]">
+      <main className="grid grid-cols-[10%_90%]">
         <article className="h-[76vh] border-solid border-r-2 border-pointColor1">
           <section>
             <Image
