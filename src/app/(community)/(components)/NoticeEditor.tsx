@@ -13,6 +13,7 @@ interface NoticeEditorProps {
 const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   const quillRef = useRef<any | null>(null);
 
+  // 이미지 업로드
   const imageHandler = () => {
     try {
       //이미지를 저장할 input type=file DOM

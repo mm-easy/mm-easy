@@ -107,12 +107,6 @@ const PostForm = () => {
             <label htmlFor={item.id}>{item.label}</label>
           </div>
         ))}
-        {/* <select value={category} onChange={handleCategory}>
-          <option value="질문">질문</option>
-          <option value="잡담">잡담</option>
-          <option value="공부">공부</option>
-          <option value="일기">일기</option>
-        </select> */}
       </section>
       <div>
         <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
