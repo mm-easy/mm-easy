@@ -13,6 +13,7 @@ import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 import { generateFileName, generateImgFileName } from '@/utils/generateFileName';
 import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
+import { toast } from 'react-toastify';
 
 import { QuestionType, type Question, type Quiz, QuestionsToInsert } from '@/types/quizzes';
 
@@ -21,7 +22,9 @@ const QuizForm = () => {
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState('https://via.placeholder.com/144x144');
+  const [selectedImg, setSelectedImg] = useState(
+    'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
+  );
   const [file, setFile] = useState<File | null>(null);
 
   /** 퀴즈 등록 mutation */
@@ -47,7 +50,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://via.placeholder.com/570x160',
+      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
       correct_answer: ''
     },
     {
@@ -67,7 +70,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://via.placeholder.com/570x160',
+      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
       correct_answer: ''
     }
   ]);
@@ -133,19 +136,19 @@ const QuizForm = () => {
             }
           ],
           img_file: null,
-          img_url: 'https://via.placeholder.com/200x200',
+          img_url:
+            'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
           correct_answer: ''
         }
       ]);
     } else {
-      alert('최대 5개까지만 문제를 추가할 수 있습니다.');
+      toast.warning('최대 5개까지만 문제를 추가할 수 있습니다.');
       return;
     }
   };
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = async () => {
-    console.log('끼히히히', questions);
     if (!level) {
       alert('난이도를 선택해주세요.');
       return;
@@ -192,7 +195,9 @@ const QuizForm = () => {
         level,
         title,
         info,
-        thumbnail_img_url: imgUrl || 'https://via.placeholder.com/200x200'
+        thumbnail_img_url:
+          imgUrl ||
+          'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
       };
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
@@ -236,7 +241,7 @@ const QuizForm = () => {
                 alt="샘플이미지"
                 width={144}
                 height={144}
-                className="object-cover cursor-pointer"
+                className="w-full h-full object-cover cursor-pointer"
               />
               <input type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleChangeImg} />
             </div>
