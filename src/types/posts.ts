@@ -36,7 +36,7 @@ export type Post = {
   content: string;
   created_at: string;
   attached_img_url: string;
-  author_id: string;
+  authorId: string;
   category: string;
   nickname: string;
   profiles: UserProfile;

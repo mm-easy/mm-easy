@@ -2,8 +2,9 @@
 
 import CommunityForm from '../(components)/CommunityForm';
 import CommunityMenu from '../(components)/CommunityMenu';
-import { useState } from 'react';
 import SubHeader from '@/components/common/SubHeader';
+
+import { useState } from 'react';
 
 const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');

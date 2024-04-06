@@ -1,11 +1,12 @@
 'use client';
+import dynamic from 'next/dynamic';
 
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { insertPost } from '@/api/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
@@ -15,14 +16,14 @@ const PostForm = () => {
   const [content, setContent] = useState<string>('');
   const [category, setCategory] = useState('질문');
   const router = useRouter();
-  
+
   const categories = [
     { id: 'question', value: '질문', label: '질문' },
     { id: 'chat', value: '잡담', label: '잡담' },
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
-  
+
   const {
     data: profile,
     isLoading,
@@ -69,24 +70,17 @@ const PostForm = () => {
       return;
     }
 
-    const { data, error } = await supabase
-      .from('posts')
-      .insert([{ title, content, category, author_id: profile.id }])
-      .select('*');
-
-    console.log(profile);
-
-    if (error) {
-      console.error('게시물 추가 중 오류가 발생했습니다:', error.message);
-      alert('게시물 추가 중 오류가 발생했습니다.');
-    } else {
+    // post 등록
+    try {
+      const data = await insertPost(title, content, category, profile.id);
       alert('게시물이 등록되었습니다.');
       router.push('/community-list');
+      console.log(data);
+    } catch (error) {
+      alert('게시물 추가 중 오류가 발생했습니다.');
+      console.error(error);
     }
-
-    console.log(data);
   };
-
 
   return (
     <form onSubmit={handleNewPost}>
