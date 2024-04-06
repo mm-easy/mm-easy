@@ -197,6 +197,9 @@ const QuestionForm = ({
                           type="text"
                           className="w-4/5 px-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                           placeholder="선택지를 입력해 주세요."
+                          onInput={(e) => {
+                            handleMaxLength(e, 25);
+                          }}
                           onChange={(e) => {
                             e.preventDefault();
                             handleChangeOption(id, e.target.value, options, option.id);
@@ -228,6 +231,9 @@ const QuestionForm = ({
                     type="text"
                     className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
                     placeholder="정답을 입력해 주세요."
+                    onInput={(e) => {
+                      handleMaxLength(e, 25);
+                    }}
                     onChange={(e) => {
                       e.preventDefault();
                       handleChangeCorrectAnswer(id, e.target.value);
