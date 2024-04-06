@@ -10,7 +10,8 @@ const CommunityPage = () => {
 
   return (
     <article>
-      <SubHeader text="커뮤니티" />
+      {/* subheader 임시로 제거 */}
+      {/* <SubHeader text="커뮤니티" /> */}
       <div className="flex">
         <div>
           <CommunityMenu setSelectedCategory={setSelectedCategory} />
