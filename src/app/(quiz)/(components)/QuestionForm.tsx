@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Dispatch, useEffect, useRef, useState } from 'react';
+import { Dispatch, FormEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SetStateAction } from 'jotai';
 import checkboxImg from '@/assets/checkbox.png';
@@ -40,6 +40,15 @@ const QuestionForm = ({
         return question.id === id ? { ...question, title } : question;
       })
     );
+  };
+
+  /** 문제 타이틀 maxLength 제한 핸들러 */
+  const handleTitleMaxLength = (e: FormEvent<HTMLInputElement>) => {
+    const inputElement = e.target as HTMLInputElement;
+    const { value } = inputElement;
+    if (value.length > 30) {
+      inputElement.value = value.substr(0, 30);
+    }
   };
 
   /** 선택지 추가 핸들러 */
@@ -179,7 +188,7 @@ const QuestionForm = ({
             <section>
               {type === QuestionType.objective ? (
                 <div className="flex flex-col place-items-center gap-4">
-                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
+                  <InputQuestionTitle id={id} onInput={handleTitleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   {options.map((option) => {
                     return (
@@ -221,7 +230,7 @@ const QuestionForm = ({
                 </div>
               ) : (
                 <div className="flex flex-col place-items-center gap-4">
-                  <InputQuestionTitle id={id} onChange={handleChangeTitle} />
+                  <InputQuestionTitle id={id} onInput={handleTitleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   <input
                     type="text"
