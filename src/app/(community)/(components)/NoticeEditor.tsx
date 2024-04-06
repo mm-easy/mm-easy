@@ -22,7 +22,6 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
       input.setAttribute('accept', 'image/*');
       input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
       input.addEventListener('change', async () => {
-        console.log('온체인지');
         const file = input.files![0];
         const fileNewName = uuid();
         // file을 서버에 업로드
