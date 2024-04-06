@@ -1,12 +1,12 @@
 "use client"
-import { useState } from 'react';
+
 import Link from 'next/link';
+import SubHeader from '@/components/common/SubHeader';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth'; 
 import { FcGoogle } from "react-icons/fc";
 import { SiKakaotalk } from "react-icons/si";
-import SubHeader from '@/components/common/SubHeader';
-import { supabase } from '@/utils/supabase/supabase';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -34,15 +34,16 @@ const LoginPage = () => {
   return (
     <article>
       <SubHeader text="로그인" />
-    <div className="flex min-h-screen bg-bgColor1">
-    <div className="flex-1 flex items-center justify-center">
+    <div className="grid grid-cols-10 min-h-full bg-bgColor1">
+    <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
       <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
         {/* 고양이 예시 */}
       </div>
     </div>
-    <div className="flex-1 flex items-center bg-white justify-center">
+    <div className="col-span-6 flex items-center bg-white justify-center">
       <div className="w-full max-w-md p-8 bg-white">
         <form className="space-y-6" onSubmit={handleLogin}>
+          <div className="flex flex-col gap-2">
           <div>
             <label htmlFor="email" className="text-sm font-medium text-gray-700">
             </label>
@@ -74,6 +75,7 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)} 
               />
             </div>
+          </div>
           </div>
           {error && <div className="text-red-500">{error}</div>}
           <div className="flex mt-6 justify-between">

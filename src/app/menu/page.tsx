@@ -25,7 +25,7 @@ const MenuPage = () => {
           <p className="mt-4 text-pointColor1 text-2xl font-bold">커뮤니티</p>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <Link href="/" onClick={handleLinkClick} className="w-52 h-52 bg-pointColor1 rounded-full flex items-center justify-center cursor-pointer">
+          <Link href="/typing-game" onClick={handleLinkClick} className="w-52 h-52 bg-pointColor1 rounded-full flex items-center justify-center cursor-pointer">
             <p className="text-white text-2xl font-bold">타자 연습</p>
           </Link>
           <p className="mt-4 text-pointColor1 text-2xl font-bold">타자 연습</p>

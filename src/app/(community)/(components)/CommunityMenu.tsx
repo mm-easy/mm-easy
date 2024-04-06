@@ -5,7 +5,7 @@ import type { CommunityMenuProps, MenuItem } from '@/types/posts';
 const CommunityMenu = ({ setSelectedCategory }: CommunityMenuProps) => {
   const menuItems: MenuItem[] = [
     { key: 'all', label: '전체' },
-    { key: 'notice', label: '공지' },
+    // { key: 'notice', label: '공지' },
     { key: 'question', label: '질문' },
     { key: 'chat', label: '잡담' },
     { key: 'study', label: '공부' },
