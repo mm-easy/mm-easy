@@ -29,8 +29,10 @@ const Header = () => {
     const subscription = supabase.auth.onAuthStateChange(handleAuthStateChange);
 
     const checkAndUpdateAuthState = async () => {
-      const { data, error } = await supabase.auth.getUser();
-
+      if (!isLoggedIn) {
+        return;
+      }
+      const { data, error } = await supabase.auth.getUser();  
       if (error) {
       } else {
         if (data) {
@@ -50,6 +52,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     await logout();
+    setIsLoggedIn(false);
     toast.success('로그아웃되었습니다.');
   };
 

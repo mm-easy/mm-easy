@@ -8,12 +8,15 @@ import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostDetailCommentType } from '@/types/posts';
 import Image from 'next/image';
+import { BlueTextArea } from '@/components/common/BlueInput';
+import { BlueButton, SubmitButton } from '@/components/common/FormButtons';
 
 const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
   const [postCommentList, setPostCommentList] = useState<PostDetailCommentType[]>([]);
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
+  const [nowCommentId, setNowCommentId] = useState<string>('');
 
   const { getCurrentUserProfile } = useAuth();
 
@@ -101,7 +104,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="border-solid border-b-2" key={prev.id}>
+            <div className="flex border-solid border-b-2" key={prev.id}>
               <div className="flex justify-center m-5 w-10 h-10 rounded-full overflow-hidden border-2 border-solid border-pointColor1">
                 <Image
                   src={prev.profiles?.avatar_img_url || '프로필이미지'}
@@ -111,60 +114,58 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                   className="object-cover"
                 />
               </div>
-              <p>{prev.profiles?.nickname}</p>
-              <time>{formatToLocaleDateTimeString(prev.created_at)}</time>
+              <div className="flex flex-col justify-center text-blackColor">
+                <p>{prev.profiles?.nickname}</p>
+                {/* <time>{formatToLocaleDateTimeString(prev.created_at)}</time> */}
 
-              {btnChange ? (
-                <>
-                  <Box maxWidth="200px">
-                    <TextArea
-                      value={contentChange}
-                      onChange={(e) => setContentChange(e.target.value)}
-                      variant="classic"
-                      placeholder="Reply to comment…"
-                    />
-                  </Box>
-                </>
-              ) : (
-                <p>{prev.content}</p>
-              )}
-              {profile &&
-                (profile.id === prev.author_id ? (
-                  btnChange ? (
-                    <>
-                      <button type="submit" onClick={() => handleUpdateBtn(prev.id)}>
-                        수정완료
-                      </button>
-                      <button
-                        type="submit"
-                        onClick={() => {
-                          setBtnChange(!btnChange);
-                          setContentChange(prev.content);
-                        }}
-                      >
-                        취소
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        type="submit"
-                        onClick={() => {
-                          setBtnChange(!btnChange);
-                          setContentChange(prev.content);
-                        }}
-                      >
-                        수정
-                      </button>
-
-                      <button type="submit" onClick={() => handleDeleteBtn(prev.id)}>
-                        삭제
-                      </button>
-                    </>
-                  )
+                {btnChange && nowCommentId === prev.id ? (
+                  <>
+                    <Box maxWidth="200px">
+                      <TextArea
+                        value={contentChange}
+                        onChange={(e) => setContentChange(e.target.value)}
+                        variant="classic"
+                        placeholder="Reply to comment…"
+                      />
+                    </Box>
+                  </>
                 ) : (
-                  <></>
-                ))}
+                  <p>{prev.content}</p>
+                )}
+              </div>
+              <div className="ml-auto">
+                {profile &&
+                  (profile.id === prev.author_id ? (
+                    btnChange ? (
+                      <>
+                        <button onClick={() => handleUpdateBtn(prev.id)}>수정완료</button>|
+                        <button
+                          onClick={() => {
+                            setBtnChange(!btnChange);
+                            setContentChange(prev.content);
+                          }}
+                        >
+                          취소
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            setBtnChange(!btnChange);
+                            setContentChange(prev.content);
+                            setNowCommentId(prev.id);
+                          }}
+                        >
+                          수정
+                        </button>
+                        |<button onClick={() => handleDeleteBtn(prev.id)}>삭제</button>
+                      </>
+                    )
+                  ) : (
+                    <></>
+                  ))}
+              </div>
             </div>
           );
         })}
@@ -174,15 +175,24 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
           {profile?.nickname}
           <Box maxWidth="w-full">
             <TextArea
-              className="border-solid border-2 border-pointColor1"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               variant="classic"
-              placeholder="Reply to comment…"
+              placeholder="댓글을 남겨보세요"
             />
           </Box>
-          <button type="submit">등록</button>
+          <div className="flex justify-end">
+            <button
+              className="mt-2 rounded-md text-white border-solid p-2 w-16 border border-white bg-pointColor1"
+              type="submit"
+            >
+              등록
+            </button>
+          </div>
         </form>
+        {/* <BlueTextArea /> */}
+
+        {/* <SubmitButton /> */}
       </div>
     </div>
   );
