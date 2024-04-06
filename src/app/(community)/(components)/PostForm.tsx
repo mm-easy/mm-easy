@@ -36,10 +36,6 @@ const PostForm = () => {
     setCategory(e.target.value);
   };
 
-  const handleCategory = (e: ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
-  };
-
   const handleCancel = (e: FormEvent) => {
     e.preventDefault();
     router.push('/community-list');
@@ -95,8 +91,9 @@ const PostForm = () => {
     <form onSubmit={handleNewPost}>
       <section className="flex">
         {categories.map((item) => (
-          <div className='w-20' key={item.id}>
-            <input className=''
+          <div className="w-20" key={item.id}>
+            <input
+              className=""
               type="radio"
               id={item.id}
               name="category"
