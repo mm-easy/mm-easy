@@ -2,7 +2,6 @@
 import dynamic from 'next/dynamic';
 
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -36,23 +35,28 @@ const PostForm = () => {
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
+  //
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
+  //
+  const handleEditorChange = (content: string) => {
+    setContent(content);
+  };
+
+  // 카테고리 핸들러
   const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value);
   };
 
+  // 취소버튼 핸들러
   const handleCancel = (e: FormEvent) => {
     e.preventDefault();
     router.push('/community-list');
   };
 
-  const handleEditorChange = (content: string) => {
-    setContent(content);
-  };
-
+  // 새로운 post 추가 핸들러
   const handleNewPost = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

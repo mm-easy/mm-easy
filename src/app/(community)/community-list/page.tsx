@@ -23,7 +23,7 @@ const CommunityPage = () => {
           </div>
         </div>
         <div className="flex justify-center w-full">
-          <CommunityForm selectedCategory={selectedCategory} />
+          <CommunityForm selectedCategory={selectedCategory}  />
         </div>
       </div>
     </article>

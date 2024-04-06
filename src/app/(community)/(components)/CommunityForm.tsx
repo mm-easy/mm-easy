@@ -9,16 +9,20 @@ import type { CommunityFormProps, Post } from '@/types/posts';
 
 const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
   const router = useRouter();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const loadedPosts = await getPosts();
+      const offset = (currentPage - 1) * postsPerPage;
+      const loadedPosts = await getPosts(offset, postsPerPage);
       setPosts(loadedPosts);
     };
 
     fetchPosts();
-  }, []);
+  }, [currentPage, selectedCategory]);
+
 
   const navigateToDetailPost = (post: any) => {
     router.push(`/community-list/${post.id}`);
@@ -59,6 +63,14 @@ const CommunityForm = ({ selectedCategory }: CommunityFormProps) => {
           </tbody>
         </table>
       </div>
+      <div>
+          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+            이전
+          </button>
+          <button onClick={() => setCurrentPage(currentPage + 1)}>
+            다음
+          </button>
+        </div>
     </article>
   );
 };
