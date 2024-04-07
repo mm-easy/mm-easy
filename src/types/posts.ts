@@ -51,6 +51,10 @@ export type CommunityMenuProps = {
   setSelectedCategory: (category: string) => void;
 };
 
+export type CategorySelectorProps = {
+  onSelectCategory: (category: string) => void;
+};
+
 export type CommunityFormProps = {
   selectedCategory: string;
 };
