@@ -9,7 +9,6 @@ export const getPosts = async (offset = 0, limit = 10) => {
       .from('posts')
       .select(`*, profiles!inner(nickname)`)
       .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
 
     if (error) throw error;
     return posts || [];

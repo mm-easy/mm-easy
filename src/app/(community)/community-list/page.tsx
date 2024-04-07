@@ -7,7 +7,7 @@ import SubHeader from '@/components/common/SubHeader';
 import { useState } from 'react';
 
 const CommunityPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  // const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
   return (
     <article>
@@ -15,7 +15,7 @@ const CommunityPage = () => {
       {/* <SubHeader text="커뮤니티" /> */}
       <div className="flex">
         <div>
-          <CommunityMenu setSelectedCategory={setSelectedCategory} />
+          {/* <CommunityMenu setSelectedCategory={setSelectedCategory} /> */}
           <div className="flex justify-center pt-64">
             <button className="">
               <a href="/community-post">작성하기</a>
@@ -23,7 +23,7 @@ const CommunityPage = () => {
           </div>
         </div>
         <div className="flex justify-center w-full">
-          <CommunityForm selectedCategory={selectedCategory}  />
+        <CommunityForm />
         </div>
       </div>
     </article>
