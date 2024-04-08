@@ -161,12 +161,39 @@ const QuizForm = () => {
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = async () => {
     if (!level) {
-      alert('난이도를 선택해주세요.');
+      toast.warn('난이도를 선택해 주세요.');
       return;
     }
     if (!title || !info) {
-      alert('제목과 설명을 입력해주세요.');
+      toast.warn('제목과 설명을 입력해 주세요.');
       return;
+    }
+
+    for (const question of questions) {
+      const { title, type, correct_answer, options } = question;
+      const allAnswersAarFalse = options.every((option) => option.is_answer === false);
+
+      if (!title) {
+        toast.warn('제목을 입력해 주세요.');
+        return;
+      }
+      if (type === QuestionType.objective) {
+        for (const option of options) {
+          const { content } = option;
+          if (!content) {
+            toast.warn('선택지를 입력해 주세요.');
+            return;
+          }
+        }
+        if (allAnswersAarFalse) {
+          toast.warn('정답을 선택해 주세요.');
+          return;
+        }
+      }
+      if (!correct_answer) {
+        toast.warn('정답을 입력해 주세요.');
+        return;
+      }
     }
 
     // 퀴즈 썸네일 이미지를 스토리지에 업로드
