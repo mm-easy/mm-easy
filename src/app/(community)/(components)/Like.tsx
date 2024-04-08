@@ -89,7 +89,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
           onIcon={<AiFillHeart />}
           offIcon={<AiOutlineHeart />}
         />
-        <p className="ml-[5px]">{likeCount}</p>
+        <p className="ml-[5px]">좋아요 {likeCount}</p>
       </div>
     </div>
   );
