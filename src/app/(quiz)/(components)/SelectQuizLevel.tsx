@@ -2,6 +2,9 @@
 
 import Image from 'next/image';
 import QuizList from './QuizList';
+import Level1 from '@/assets/level1.png';
+import Level2 from '@/assets/level2.png';
+import Level3 from '@/assets/level3.png';
 import { BlueButton } from '@/components/common/FormButtons';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -47,32 +50,32 @@ const SelectQuizLevel = () => {
   return (
     <>
       <main className="w-full bg-pointColor1 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
-        <div className="mt-5 mr-1/4 ml-auto">
+        <div className="mt-5 mr-1/4 absolute top-20 left-3/4">
           <BlueButton text="퀴즈 만들기" onClick={handleMakeQuizBtn} width="w-36" />
         </div>
-        <div className="flex items-end gap-1 overflow-hidden">
+        <div className="flex items-end overflow-hidden">
           <Image
-            src="https://via.placeholder.com/350x240"
+            src={Level1}
             alt="초급"
             width={350}
             height={240}
-            className="object-none transform translate-y-[40%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
+            className="object-none transform translate-y-[50%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
             onClick={() => handleSelectLevel(1)}
           />
           <Image
-            src="https://via.placeholder.com/350x240"
+            src={Level2}
             alt="중급"
             width={350}
             height={240}
-            className="object-none transform translate-y-[40%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
+            className="object-none transform translate-y-[30%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
             onClick={() => handleSelectLevel(2)}
           />
           <Image
-            src="https://via.placeholder.com/350x240"
+            src={Level3}
             alt="고급"
             width={350}
             height={240}
-            className="object-none transform translate-y-[40%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
+            className="object-none transform translate-y-[60%] hover:translate-y-[10%] transition-transform duration-500 ease-in-out"
             onClick={() => handleSelectLevel(3)}
           />
         </div>
