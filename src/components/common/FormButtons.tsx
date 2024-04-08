@@ -39,3 +39,15 @@ export const BlueButton: React.FC<FormButtonProps> = ({ onClick, text, width }) 
     </button>
   );
 };
+
+export const WhiteButton: React.FC<FormButtonProps> = ({ onClick, text, width }) => {
+  return (
+    <button
+      type="submit"
+      onClick={onClick}
+      className={`rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width}`}
+    >
+      {text}
+    </button>
+  );
+};
