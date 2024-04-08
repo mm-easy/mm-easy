@@ -8,7 +8,7 @@ const QuizList = ({ quizLevelSelected }: { quizLevelSelected: Quiz[] }) => {
   return (
     <main className="p-5 flex flex-col gap-4 items-center">
       {quizLevelSelected.length === 0 && <div className="p-36">해당 난이도에 아직 등록된 퀴즈가 없습니다.</div>}
-      <div className="w-8/12 grid grid-cols-4 mt-5 place-items-center">
+      <div className="w-7/12 grid grid-cols-4 mt-5 place-items-center grid-flow-col">
         {quizLevelSelected.map((item) => (
           <div key={item.id} className="flex flex-col gap-3 mb-8">
             <div className="border-solid border border-pointColor1 rounded-md overflow-hidden w-[250px] h-[250px]">
