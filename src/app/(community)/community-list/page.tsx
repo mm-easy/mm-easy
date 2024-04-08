@@ -8,6 +8,7 @@ import CommunityForm from '../(components)/CommunityForm';
 import { Post } from '@/types/posts';
 import { useRouter } from 'next/navigation';
 import { BlueButton } from '@/components/common/FormButtons';
+import Menu from '../(components)/Menu';
 
 const CommunityPage = () => {
   const [totalList, setTotalList] = useState<Post[]>([]);
@@ -54,7 +55,8 @@ const CommunityPage = () => {
         <div className="">
           <CategorySelector onSelectCategory={setSelectedCategory} />
         </div>
-        <div className='flex justify-center pt-64 pb-12'>
+        <Menu />
+        <div className="flex justify-center pt-64 pb-12">
           <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
         </div>
       </div>

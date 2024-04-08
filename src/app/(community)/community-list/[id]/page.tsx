@@ -17,6 +17,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import type { Post, PostDetailDateType } from '@/types/posts';
 import { getPosts } from '@/api/posts';
 import { toast } from 'react-toastify';
+import Menu from '../../(components)/Menu';
 
 const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -75,6 +76,7 @@ const DetailPage = () => {
       <SubHeader text="커뮤니티" />
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
         {/* <CommunityMenu /> */}
+        <Menu />
         <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
           {post && post.profiles && (
             <div>
