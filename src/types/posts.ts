@@ -56,8 +56,14 @@ export type CategorySelectorProps = {
 };
 
 export type CommunityFormProps = {
-  selectedCategory: string;
+  currentItems: Post[];
+  setCurrentPage: (page: number) => void;
+  currentPage: number;
+  totalNum: number;
+  pageRange: number;
+  btnRange: number;
 };
+
 
 export type ToggleProps = {
   toggled: boolean;
