@@ -7,6 +7,11 @@ export type Quiz = {
   thumbnail_img_url: string | null;
 };
 
+/** 퀴즈 가져올 때 쓸 타입입니다. */
+export type GetQuiz = Quiz & {
+  created_at: string;
+};
+
 export type Option = {
   id: string;
   content: string;
