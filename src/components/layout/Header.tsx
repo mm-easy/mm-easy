@@ -32,7 +32,7 @@ const Header = () => {
       if (!isLoggedIn) {
         return;
       }
-      const { data, error } = await supabase.auth.getUser();  
+      const { data, error } = await supabase.auth.getUser();
       if (error) {
       } else {
         if (data) {
@@ -83,7 +83,6 @@ const Header = () => {
           </Link>
         )}
       </section>
-
       {isMenuOpen && <MenuPage />}
     </>
   );

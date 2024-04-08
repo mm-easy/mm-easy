@@ -1,6 +1,5 @@
 import { Post } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
-import { v4 as uuid } from 'uuid';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async (offset = 0, limit = 10) => {
@@ -8,7 +7,7 @@ export const getPosts = async (offset = 0, limit = 10) => {
     const { data: posts, error } = await supabase
       .from('posts')
       .select(`*, profiles!inner(nickname)`)
-      .order('created_at', { ascending: false })
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
     return posts || [];
@@ -20,7 +19,7 @@ export const getPosts = async (offset = 0, limit = 10) => {
 
 // posts 첨부 이미지를 스토리지에 upload
 export const uploadPostImageToStorage = async (file: File) => {
-  const fileNewName = uuid();
+  const fileNewName = crypto.randomUUID();
   const { data, error } = await supabase.storage.from('community-image').upload(`quill_image/${fileNewName}`, file);
 
   if (error) {
@@ -52,12 +51,8 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-
 export const updatePost = async (id: string, title: string, content: string, category: string) => {
-  const { data, error } = await supabase
-    .from('posts')
-    .update({ title, content, category })
-    .eq('id', id);
+  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', id);
 
   if (error) {
     console.error('게시물 수정 중 오류가 발생했습니다:', error.message);
