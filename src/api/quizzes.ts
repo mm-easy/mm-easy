@@ -89,3 +89,15 @@ export const getQuizzes = async () => {
     throw error;
   }
 };
+
+export const getQuiz = async (id: string | string[]) => {
+  try {
+    const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('퀴즈 데이터 받아오기 실패', error);
+    alert('일시적으로 퀴즈 데이터를 받아오지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
