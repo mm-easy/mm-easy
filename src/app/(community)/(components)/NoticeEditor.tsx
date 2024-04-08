@@ -1,8 +1,7 @@
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import { ReactElement, useMemo, useRef } from 'react';
-import { v4 as uuid } from 'uuid';
-import { supabase } from '@/utils/supabase/supabase';
+import { uploadPostImageToStorage } from '@/api/posts';
 
 
 interface NoticeEditorProps {
@@ -14,43 +13,28 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   const quillRef = useRef<any | null>(null);
 
   // 이미지 업로드
-  const imageHandler = () => {
-    try {
-      //이미지를 저장할 input type=file DOM
-      const input = document.createElement('input');
-      // 속성 써주기
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-      input.addEventListener('change', async () => {
-        const file = input.files![0];
-        const fileNewName = uuid();
-        // file을 서버에 업로드
-        const { data, error } = await supabase.storage
-          .from('community-image')
-          .upload(`quill_image/${fileNewName}`, file);
+  const imageHandler = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+  
+    input.onchange = async () => {
+      const file = input.files ? input.files[0] : null;
+      if (file) {
+        const { url, error } = await uploadPostImageToStorage(file);
         if (error) {
-          console.error('이미지 업로드 중 오류 발생:', error);
-        } else {
-          console.log('이미지가 성공적으로 업로드되었습니다:', data);
+          console.error('이미지 업로드 오류:', error);
+          return;
         }
-        // 업로드된 이미지의 URL을 요청
-        const response = supabase.storage.from('community-image').getPublicUrl(`quill_image/${fileNewName}`);
-
-        if (response.data) {
-          const postImageUrl = response.data.publicUrl;
+        if (url) {
           const editor = quillRef.current!.getEditor();
           const range = editor.getSelection();
-          // 이미지를 붙이고 커서를 이동
-          editor.insertEmbed(range.index, 'image', postImageUrl);
+          editor.insertEmbed(range.index, 'image', url);
           editor.setSelection(range.index + 1);
-        } else {
-          console.error('No public URL found in response data.');
         }
-      });
-    } catch (error) {
-      console.log('error', error);
-    }
+      }
+    };
   };
 
   const modules = useMemo(
