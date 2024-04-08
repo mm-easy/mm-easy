@@ -36,7 +36,7 @@ export type Post = {
   content: string;
   created_at: string;
   attached_img_url: string;
-  author_id: string;
+  authorId: string;
   category: string;
   nickname: string;
   profiles: UserProfile;
@@ -51,9 +51,19 @@ export type CommunityMenuProps = {
   setSelectedCategory: (category: string) => void;
 };
 
-export type CommunityFormProps = {
-  selectedCategory: string;
+export type CategorySelectorProps = {
+  onSelectCategory: (category: string) => void;
 };
+
+export type CommunityFormProps = {
+  currentItems: Post[];
+  setCurrentPage: (page: number) => void;
+  currentPage: number;
+  totalNum: number;
+  pageRange: number;
+  btnRange: number;
+};
+
 
 export type ToggleProps = {
   toggled: boolean;

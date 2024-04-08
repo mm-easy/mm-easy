@@ -39,5 +39,6 @@ export type Question = {
 
 export type QuestionsToInsert = Pick<Question, 'title' | 'correct_answer'> & {
   quiz_id: string;
-  type: string;
+  type: QuestionType;
+  img_url: string;
 };
