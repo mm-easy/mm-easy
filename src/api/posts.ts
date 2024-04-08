@@ -20,7 +20,7 @@ export const getPosts = async (offset = 0, limit = 10) => {
 
 // posts 첨부 이미지를 스토리지에 upload
 export const uploadPostImageToStorage = async (file: File) => {
-  const fileNewName = uuid();
+  const fileNewName = crypto.randomUUID()
   const { data, error } = await supabase.storage.from('community-image').upload(`quill_image/${fileNewName}`, file);
 
   if (error) {

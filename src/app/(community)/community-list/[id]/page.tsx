@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SubHeader from '@/components/common/SubHeader';
 import Comment from '../../(components)/Comment';
-import CommunityMenu from '../../(components)/CommunityMenu';
 import CommunityForm from '../../(components)/CommunityForm';
 import DOMPurify from 'dompurify';
 import Like from '../../(components)/Like';
@@ -70,6 +69,10 @@ const DetailPage = () => {
     }
   };
 
+  const navigateToPostPage = () => {
+    router.push('/community-post');
+  };
+
   return (
     <article>
       <SubHeader text="커뮤니티" />
@@ -100,7 +103,7 @@ const DetailPage = () => {
                 </div>
                 <div className="flex">
                   <div className="flex">
-                    <button>수정</button>
+                    <button onClick={navigateToPostPage}>수정</button>
                     <button>삭제</button>
                   </div>
                 </div>
