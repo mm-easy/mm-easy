@@ -18,7 +18,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 
 import { QuestionType, type Question } from '@/types/quizzes';
 import { handleMaxLength } from '@/utils/handleMaxLength';
-// import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
+import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -29,7 +29,7 @@ const QuizForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
 
-  // useConfirmPageLeave();
+  useConfirmPageLeave();
 
   useEffect(() => {
     const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
@@ -223,7 +223,7 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-12">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
       <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
         <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b-2 border-pointColor1">
           <div className="flex gap-10">
