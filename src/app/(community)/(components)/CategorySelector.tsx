@@ -18,7 +18,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory })
 
   return (
     <nav className='w-40 text-pointColor1 font-bold'>
-      <ul className="">
+      <ul>
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}

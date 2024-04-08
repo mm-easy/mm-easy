@@ -59,7 +59,7 @@ const CommunityPage = () => {
         </div>
       </div>
       <div className="flex w-full">
-        <div className="flex justify-center w-full px-32">
+        <div className="flex justify-center w-full px-24">
           <CommunityForm
             currentItems={currentItems}
             setCurrentPage={setCurrentPage}
