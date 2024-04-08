@@ -177,9 +177,9 @@ const QuestionForm = ({
               </button>
             </section>
             {/* 이미지, input 섹션 */}
-            <section>
+            <section className="flex flex-col place-items-center gap-4">
               {type === QuestionType.objective ? (
-                <div className="flex flex-col place-items-center gap-4">
+                <>
                   <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   {options.map((option) => {
@@ -225,9 +225,9 @@ const QuestionForm = ({
                   >
                     +
                   </button>
-                </div>
+                </>
               ) : (
-                <div className="flex flex-col place-items-center gap-4">
+                <>
                   <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
                   {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
                   <div className="w-full relative">
@@ -245,7 +245,7 @@ const QuestionForm = ({
                     />
                     <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length}/25</p>
                   </div>
-                </div>
+                </>
               )}
             </section>
           </article>
