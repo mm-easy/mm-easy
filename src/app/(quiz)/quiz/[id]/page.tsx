@@ -46,9 +46,6 @@ const QuizTryPage = () => {
     queryKey: ['questions']
   });
 
-  // console.log(quizData[0]);
-  console.log(questionsData);
-
   if (quizIsLoading) return <div>퀴즈 로드 중..</div>;
   if (quizIsError) return <div>퀴즈 로드 에러..</div>;
 
