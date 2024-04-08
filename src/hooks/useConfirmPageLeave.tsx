@@ -1,32 +1,30 @@
-// 'use client';
+'use client';
 
-// import { useRouter } from 'next/navigation';
-// import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-// const useConfirmPageLeave = () => {
-//   const router = useRouter();
+const useConfirmPageLeave = () => {
+  const router = useRouter();
 
-//   useEffect(() => {
-//     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-//       event.preventDefault();
-//       event.returnValue = ''; // 이 줄은 브라우저 호환성을 위해 필요합니다.
-//       return '변경된 내용이 있습니다. 정말로 페이지를 이동하시겠습니까?';
-//     };
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+      return '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+    };
 
-//     const handleRouteChangeStart = (url: string) => {
-//       if (!window.confirm('변경된 내용이 있습니다. 정말로 페이지를 이동하시겠습니까?')) {
-//         throw 'routeChange aborted.';
-//       }
-//     };
+    const handlePageUnload = () => {
+      if (!window.confirm('작성하던 내용이 모두 사라집니다. 계속하시겠습니까?')) return;
+    };
 
-//     window.addEventListener('beforeunload', handleBeforeUnload);
-//     router.events.on('routeChangeStart', handleRouteChangeStart);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('unload', handlePageUnload);
 
-//     return () => {
-//       window.removeEventListener('beforeunload', handleBeforeUnload);
-//       router.events.off('routeChangeStart', handleRouteChangeStart);
-//     };
-//   }, []);
-// };
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('unload', handlePageUnload);
+    };
+  }, []);
+};
 
-// export default useConfirmPageLeave;
+export default useConfirmPageLeave;
