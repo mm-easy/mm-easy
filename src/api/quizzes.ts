@@ -22,12 +22,14 @@ export const uploadThumbnailToStorage = async (file: File, fileName: string) => 
 export const uploadImageToStorage = async (imgFile: File | null, fileName: string) => {
   try {
     if (!imgFile) return;
-    const { data, error } = await supabase.storage.from('question-imgs').upload(fileName, imgFile);
+    const { data, error } = await supabase.storage.from('question-imgs').upload(fileName, imgFile, {
+      contentType: imgFile.type
+    });
     if (error) {
       alert('이미지 업로드 중 오류가 발생했습니다. 다시 시도하세요.');
       throw error;
     }
-    return data;
+    return data.path;
   } catch (error) {
     console.error('문제 이미지 업로드 에러 발생', error);
     return null;

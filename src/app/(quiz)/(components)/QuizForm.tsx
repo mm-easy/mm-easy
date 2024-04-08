@@ -14,20 +14,22 @@ import { generateFileName, generateImgFileName } from '@/utils/generateFileName'
 import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
 import { toast } from 'react-toastify';
+import { storageUrl } from '@/utils/supabase/storage';
 
-import { QuestionType, type Question, type Quiz, QuestionsToInsert } from '@/types/quizzes';
+import { QuestionType, type Question } from '@/types/quizzes';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState(
-    'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
-  );
+  const [selectedImg, setSelectedImg] = useState(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+
+  useConfirmPageLeave();
 
   useEffect(() => {
     const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
@@ -60,7 +62,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
       correct_answer: ''
     },
     {
@@ -80,7 +82,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
       correct_answer: ''
     }
   ]);
@@ -146,8 +148,7 @@ const QuizForm = () => {
             }
           ],
           img_file: null,
-          img_url:
-            'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+          img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
           correct_answer: ''
         }
       ]);
@@ -177,28 +178,6 @@ const QuizForm = () => {
         console.log('스토리지에 이미지 업로드 성공', imgUrl);
       }
 
-      // 문제에 첨부된 이미지들을 스토리지에 업로드
-      try {
-        const imgFileData = questions.map((question) => ({
-          id: question.id,
-          img_file: question.img_file
-        }));
-        for (const data of imgFileData) {
-          if (data.img_file) {
-            const formattedName = generateImgFileName(data.img_file, data.id);
-            const uploadResult = await uploadImageToStorage(data.img_file, formattedName);
-            if (uploadResult) {
-              console.log('이미지들 업로드 성공!', uploadResult);
-            } else {
-              console.error('이미지들 업로드 실패');
-            }
-          }
-        }
-      } catch (error) {
-        alert('일시적인 오류로 이미지 업로드에 실패했습니다. 다시 시도하세요.');
-        console.error;
-      }
-
       // newQuiz 구성하여 quizzes 테이블에 인서트
       const newQuiz = {
         creator_id: currentUser,
@@ -210,17 +189,25 @@ const QuizForm = () => {
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
 
-      // TRY 1.
-      // TODO: promise.all 로 비동기 병렬 처리하기.
+      // questions 요소 하나씩 돌아가며 데이터 처리
       questions.forEach(async (question) => {
+        // 첨부 이미지 있는 경우 스토리지에 업로드, 없는 경우 null
+        let img_url = null;
+        if (question.img_file) {
+          const formattedName = generateImgFileName(question.img_file, question.id);
+          img_url = await uploadImageToStorage(question.img_file, formattedName);
+        }
+
+        // newQuestion 구성하여 questions 테이블에 인서트
         const newQuestion = {
           quiz_id: insertQuizResult as string,
           title: question.title,
-          question_type: question.type,
-          correct_answer: question.correct_answer
+          type: question.type,
+          correct_answer: question.correct_answer,
+          img_url: img_url || 'tempThumbnail.png'
         };
 
-        // DB에 업로드된 리얼 question
+        // newOptions 구성하여 question_options 테이블에 인서트
         const insertQuestionResult = await insertQuestionsMutation.mutateAsync(newQuestion);
         const newOptions = question.options.map((option) => ({
           content: option.content,
@@ -236,7 +223,7 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-12">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
       <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
         <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b-2 border-pointColor1">
           <div className="flex gap-10">

@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface BlueInputProps {
-  value?: string;
+  value: string;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface BlueTextareaProps {
-  value?: string;
+  value: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
@@ -18,23 +18,30 @@ interface BlueLevelSelectProps {
 
 export const BlueInput: React.FC<BlueInputProps> = ({ value, onInput, onChange }) => {
   return (
-    <input
-      className="border border-solid border-pointColor1 w-96 p-2 rounded-md"
-      type="text"
-      value={value}
-      onInput={onInput}
-      onChange={onChange}
-    />
+    <div className="w-full relative text-pointColor1">
+      <input
+        className="border border-solid border-pointColor1 w-96 p-2 rounded-md"
+        type="text"
+        value={value}
+        onInput={onInput}
+        onChange={onChange}
+      />
+      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 25</p>
+    </div>
   );
 };
 
 export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) => {
   return (
-    <textarea
-      className="border border-solid border-pointColor1 w-[570px] p-2 h-24 rounded-md"
-      value={value}
-      onChange={onChange}
-    />
+    <div className="w-full relative text-pointColor1">
+      <textarea
+        className="border border-solid border-pointColor1 w-[570px] p-2 pr-20 h-24 rounded-md resize-none"
+        value={value}
+        onChange={onChange}
+        maxLength={80}
+      />
+      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 80</p>
+    </div>
   );
 };
 
