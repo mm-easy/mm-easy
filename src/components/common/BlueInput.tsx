@@ -18,7 +18,7 @@ interface BlueLevelSelectProps {
 
 export const BlueInput: React.FC<BlueInputProps> = ({ value, onInput, onChange }) => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative text-pointColor1">
       <input
         className="border border-solid border-pointColor1 w-96 p-2 rounded-md"
         type="text"
@@ -33,13 +33,14 @@ export const BlueInput: React.FC<BlueInputProps> = ({ value, onInput, onChange }
 
 export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative text-pointColor1">
       <textarea
-        className="border border-solid border-pointColor1 w-[570px] p-2 h-24 rounded-md"
+        className="border border-solid border-pointColor1 w-[570px] p-2 pr-20 h-24 rounded-md resize-none"
         value={value}
         onChange={onChange}
+        maxLength={80}
       />
-      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 150</p>
+      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 80</p>
     </div>
   );
 };
