@@ -12,9 +12,8 @@ const Options = ({ id: questionId }: { id: string | undefined }) => {
         return error;
       }
     },
-    queryKey: ['question_options']
+    queryKey: ['question_options', questionId]
   });
-  console.log(questionId);
 
   if (isLoading) return <div>옵션 로드 중..</div>;
   if (isError) return <div>옵션 로드 에러..</div>;
@@ -25,7 +24,6 @@ const Options = ({ id: questionId }: { id: string | undefined }) => {
     <section className="w-full flex flex-col gap-4">
       {options.map((option) => {
         const { id, content } = option;
-        console.log('id', id);
         return (
           <div key={id} className="pl-4 py-[9px] flex gap-4 border-solid border border-pointColor1 rounded-md">
             <input type="radio" name={questionId} />
