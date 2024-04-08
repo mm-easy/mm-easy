@@ -1,15 +1,17 @@
 'use client';
 
-import { getQuestions } from '@/api/questions';
-import { getQuiz } from '@/api/quizzes';
-import { GetQuiz } from '@/types/quizzes';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { getQuiz } from '@/api/quizzes';
+import { getQuestions } from '@/api/questions';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
+import { useState } from 'react';
 
 const QuizTryPage = () => {
   const { id } = useParams();
+  const [isImgError, setIsImgError] = useState(false);
 
   const {
     data: quizData,
@@ -24,12 +26,12 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['quiz']
+    queryKey: ['quizzes']
   });
   const {
-    data: questionData,
-    isLoading: questionIsLoading,
-    isError: questionIsError
+    data: questionsData,
+    isLoading: questionsIsLoading,
+    isError: questionsIsError
   } = useQuery({
     queryFn: async () => {
       try {
@@ -39,16 +41,22 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['question']
+    queryKey: ['questions']
   });
 
   // console.log(quizData[0]);
-  console.log(questionData);
+  console.log(questionsData);
 
   if (quizIsLoading) return <div>퀴즈 로드 중..</div>;
-  const quiz = quizData as GetQuiz[];
+  if (quizIsError) return <div>퀴즈 로드 에러..</div>;
 
-  const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quiz[0];
+  if (questionsIsLoading) return <div>퀴즈 로드 중..</div>;
+  if (questionsIsError) return <div>퀴즈 로드 에러..</div>;
+
+  const quizzes = quizData as GetQuiz[];
+  const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
+
+  const questions = questionsData as Question[];
 
   return (
     <>
@@ -90,7 +98,29 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className=""></article>
+        <article className="flex flex-col place-items-center gap-4">
+          {questions.map((question) => {
+            const { id, title, type, correct_answer } = question;
+            return (
+              <section key={id} className="w-[50vw] border-solid border border-pointColor1">
+                <h3>{title}</h3>
+                <Image
+                  src={
+                    isImgError
+                      ? `https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/thumbnail.jpg`
+                      : `https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${id}`
+                  }
+                  alt="문제 이미지"
+                  width={570}
+                  height={200}
+                  className="h-[200px] object-cover"
+                  onError={() => setIsImgError(true)}
+                />
+                <div>{type === QuestionType.objective ? <input type="text" /> : <input type="radio" />}</div>
+              </section>
+            );
+          })}
+        </article>
       </main>
     </>
   );

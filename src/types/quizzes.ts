@@ -39,5 +39,5 @@ export type Question = {
 
 export type QuestionsToInsert = Pick<Question, 'title' | 'correct_answer'> & {
   quiz_id: string;
-  question_type: QuestionType;
+  type: string;
 };

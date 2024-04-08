@@ -216,7 +216,7 @@ const QuizForm = () => {
         const newQuestion = {
           quiz_id: insertQuizResult as string,
           title: question.title,
-          question_type: question.type,
+          type: question.type,
           correct_answer: question.correct_answer
         };
 
