@@ -16,6 +16,7 @@ import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutation
 import { toast } from 'react-toastify';
 
 import { QuestionType, type Question, type Quiz, QuestionsToInsert } from '@/types/quizzes';
+import { handleMaxLength } from '@/utils/handleMaxLength';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -26,6 +27,15 @@ const QuizForm = () => {
     'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
   );
   const [file, setFile] = useState<File | null>(null);
+  const [currentUser, setCurrentUser] = useState('');
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
+    if (userDataString) {
+      const { user } = JSON.parse(userDataString);
+      setCurrentUser(user.email);
+    }
+  }, []);
 
   /** 퀴즈 등록 mutation */
   const insertQuizMutation = useSubmitQuiz();
@@ -191,13 +201,11 @@ const QuizForm = () => {
 
       // newQuiz 구성하여 quizzes 테이블에 인서트
       const newQuiz = {
-        creator_id: 'cocoa@naver.com',
+        creator_id: currentUser,
         level,
         title,
         info,
-        thumbnail_img_url:
-          imgUrl ||
-          'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
+        thumbnail_img_url: imgUrl || 'tempThumbnail.png'
       };
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
@@ -252,7 +260,11 @@ const QuizForm = () => {
               </div>
               <div className="flex flex-col gap-1">
                 <p className="text-xs text-pointColor1">퀴즈 제목</p>
-                <BlueInput value={title} onChange={(e) => setTitle(e.target.value)} />
+                <BlueInput
+                  value={title}
+                  onInput={(e) => handleMaxLength(e, 15)}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
               </div>
             </div>
           </div>
