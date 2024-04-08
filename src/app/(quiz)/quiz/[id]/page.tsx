@@ -8,6 +8,7 @@ import { getQuestions } from '@/api/questions';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
 import { useState } from 'react';
+import Options from './Options';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -28,6 +29,7 @@ const QuizTryPage = () => {
     },
     queryKey: ['quizzes']
   });
+
   const {
     data: questionsData,
     isLoading: questionsIsLoading,
@@ -76,7 +78,7 @@ const QuizTryPage = () => {
         <h3 className="pl-[2%]">{title}</h3>
       </header>
       <main className="grid grid-cols-[10%_90%]">
-        <article className="h-[76vh] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+        <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           <section>
             <Image
               src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
@@ -85,7 +87,7 @@ const QuizTryPage = () => {
               height={144}
               className="w-full h-[144px] object-cover"
             />
-            <section className="p-4 flex flex-col gap-3 border-solid border-y-2 border-pointColor1">
+            <section className="p-4 flex flex-col gap-4">
               <div>
                 <h4>작성자</h4>
                 <p>{creator_id}</p>
@@ -98,12 +100,12 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="flex flex-col place-items-center gap-4">
+        <article className="py-8 flex flex-col place-items-center gap-4">
           {questions.map((question) => {
-            const { id, title, type, correct_answer } = question;
+            const { id, title, type } = question;
             return (
-              <section key={id} className="w-[50vw] border-solid border border-pointColor1">
-                <h3>{title}</h3>
+              <section key={id} className="w-[50vw] flex flex-col gap-4">
+                <h3>{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                 <Image
                   src={
                     isImgError
@@ -116,10 +118,22 @@ const QuizTryPage = () => {
                   className="h-[200px] object-cover"
                   onError={() => setIsImgError(true)}
                 />
-                <div>{type === QuestionType.objective ? <input type="text" /> : <input type="radio" />}</div>
+                <div>
+                  {type === QuestionType.objective ? (
+                    <Options id={id} />
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                      />
+                    </>
+                  )}
+                </div>
               </section>
             );
           })}
+          <button>제출하기</button>
         </article>
       </main>
     </>
