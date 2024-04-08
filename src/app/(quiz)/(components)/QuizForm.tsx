@@ -49,6 +49,9 @@ const QuizForm = () => {
       id: crypto.randomUUID(),
       type: QuestionType.objective,
       title: '',
+      img_file: null,
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
+      correct_answer: '',
       options: [
         {
           id: crypto.randomUUID(),
@@ -60,15 +63,15 @@ const QuizForm = () => {
           content: '',
           is_answer: false
         }
-      ],
-      img_file: null,
-      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
-      correct_answer: ''
+      ]
     },
     {
       id: crypto.randomUUID(),
       type: QuestionType.objective,
       title: '',
+      img_file: null,
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
+      correct_answer: '',
       options: [
         {
           id: crypto.randomUUID(),
@@ -80,10 +83,7 @@ const QuizForm = () => {
           content: '',
           is_answer: false
         }
-      ],
-      img_file: null,
-      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
-      correct_answer: ''
+      ]
     }
   ]);
 
@@ -192,24 +192,25 @@ const QuizForm = () => {
       // questions 요소 하나씩 돌아가며 데이터 처리
       questions.forEach(async (question) => {
         // 첨부 이미지 있는 경우 스토리지에 업로드, 없는 경우 null
+        const { id, title, type, img_file, correct_answer, options } = question;
         let img_url = null;
-        if (question.img_file) {
-          const formattedName = generateImgFileName(question.img_file, question.id);
-          img_url = await uploadImageToStorage(question.img_file, formattedName);
+        if (img_file) {
+          const formattedName = generateImgFileName(img_file, id);
+          img_url = await uploadImageToStorage(img_file, formattedName);
         }
 
         // newQuestion 구성하여 questions 테이블에 인서트
         const newQuestion = {
           quiz_id: insertQuizResult as string,
-          title: question.title,
-          type: question.type,
-          correct_answer: question.correct_answer,
+          title: title,
+          type: type,
+          correct_answer: correct_answer,
           img_url: img_url || 'tempThumbnail.png'
         };
 
         // newOptions 구성하여 question_options 테이블에 인서트
         const insertQuestionResult = await insertQuestionsMutation.mutateAsync(newQuestion);
-        const newOptions = question.options.map((option) => ({
+        const newOptions = options.map((option) => ({
           content: option.content,
           is_answer: option.is_answer,
           question_id: insertQuestionResult
