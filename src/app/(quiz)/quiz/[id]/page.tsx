@@ -9,10 +9,10 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
 import { useState } from 'react';
 import Options from './Options';
+import { handleMaxLength } from '@/utils/handleMaxLength';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  const [isImgError, setIsImgError] = useState(false);
 
   const {
     data: quizData,
@@ -85,9 +85,9 @@ const QuizTryPage = () => {
               alt="샘플 이미지"
               width={144}
               height={144}
-              className="w-full h-[144px] object-cover"
+              className="w-full h-[144px] object-cover border-solid border-b-2 border-pointColor1"
             />
-            <section className="p-4 flex flex-col gap-4">
+            <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
               <div>
                 <h4>작성자</h4>
                 <p>{creator_id}</p>
@@ -100,40 +100,37 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="py-8 flex flex-col place-items-center gap-4">
+        <article className="py-8 flex flex-col place-items-center gap-10">
           {questions.map((question) => {
-            const { id, title, type } = question;
+            const { id, title, type, img_url } = question;
             return (
-              <section key={id} className="w-[50vw] flex flex-col gap-4">
-                <h3>{`${questions.indexOf(question) + 1}. ${title}`}</h3>
+              <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
+                <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                 <Image
-                  src={
-                    isImgError
-                      ? `https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/thumbnail.jpg`
-                      : `https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${id}`
-                  }
+                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
                   alt="문제 이미지"
                   width={570}
                   height={200}
-                  className="h-[200px] object-cover"
-                  onError={() => setIsImgError(true)}
+                  className="h-[200px] object-cover rounded-md"
                 />
-                <div>
-                  {type === QuestionType.objective ? (
-                    <Options id={id} />
-                  ) : (
-                    <>
-                      <input
-                        type="text"
-                        className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
-                      />
-                    </>
-                  )}
-                </div>
+                {type === QuestionType.objective ? (
+                  <Options id={id} />
+                ) : (
+                  <div className="w-full relative">
+                    <input
+                      type="text"
+                      className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                      onChange={(e) => handleMaxLength(e, 25)}
+                    />
+                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">0/25</p>
+                  </div>
+                )}
               </section>
             );
           })}
-          <button>제출하기</button>
+          <button className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md">
+            제출하기
+          </button>
         </article>
       </main>
     </>

@@ -22,7 +22,7 @@ const Options = ({ id: questionId }: { id: string | undefined }) => {
   const options = data as Option[];
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="w-full flex flex-col gap-4">
       {options.map((option) => {
         const { id, content } = option;
         return (
