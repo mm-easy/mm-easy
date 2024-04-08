@@ -27,7 +27,7 @@ const QuizList = ({ quizLevelSelected }: { quizLevelSelected: Quiz[] }) => {
                 />
               </div>
               <p className="mb-4">{item.info}</p>
-              <Link href="/">
+              <Link href={`/quiz/${item.id}`}>
                 <div className="text-white bg-pointColor1 rounded-md p-2 text-center">퀴즈 풀기</div>
               </Link>
             </div>

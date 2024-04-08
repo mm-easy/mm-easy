@@ -14,20 +14,22 @@ import { generateFileName, generateImgFileName } from '@/utils/generateFileName'
 import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
 import { toast } from 'react-toastify';
+import { storageUrl } from '@/utils/supabase/storage';
 
-import { QuestionType, type Question, type Quiz, QuestionsToInsert } from '@/types/quizzes';
+import { QuestionType, type Question } from '@/types/quizzes';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState(
-    'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png'
-  );
+  const [selectedImg, setSelectedImg] = useState(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+
+  useConfirmPageLeave();
 
   useEffect(() => {
     const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
@@ -60,7 +62,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
       correct_answer: ''
     },
     {
@@ -80,7 +82,7 @@ const QuizForm = () => {
         }
       ],
       img_file: null,
-      img_url: 'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
       correct_answer: ''
     }
   ]);
@@ -146,8 +148,7 @@ const QuizForm = () => {
             }
           ],
           img_file: null,
-          img_url:
-            'https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/tempThumbnail.png',
+          img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
           correct_answer: ''
         }
       ]);
@@ -222,7 +223,7 @@ const QuizForm = () => {
   };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center pb-12">
+    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
       <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
         <div className="p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b-2 border-pointColor1">
           <div className="flex gap-10">
