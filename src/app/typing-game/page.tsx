@@ -5,9 +5,9 @@ import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 
 const difficultySettings: { [key: number]: { speed: number; interval: number } } = {
-  1: { speed: 10, interval: 2000 },
-  2: { speed: 20, interval: 1000 },
-  3: { speed: 30, interval: 500 }
+  1: { speed: 20, interval: 2000 },
+  2: { speed: 30, interval: 2000 },
+  3: { speed: 40, interval: 2000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length; 
@@ -20,28 +20,32 @@ const TypingGamePage = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [difficulty, setDifficulty] = useState(1);
   const [correctWordsCount, setCorrectWordsCount] = useState(0);
-  const gameAreaWidth = window.innerWidth;
+  const [gameAreaWidth, setGameAreaWidth] = useState(0);
+  const [gameAreaHeight, setGameAreaHeight] = useState(550);
   const maxLives = 5;
-  const gameAreaHeight = 600;
   const wordHeight = 80;
 
-useEffect(() => {
-  let interval: NodeJS.Timeout;
-  if (gameStarted) {
-    interval = setInterval(() => {
-      const difficultyKey = difficulty as keyof typeof wordLists; 
-      const currentWordList = wordLists[difficultyKey]; 
-      const newWord = {
-        id: Date.now(),
-        text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
-        top: 0,
-        left: Math.random() * (gameAreaWidth - 200),
-      };
-      setWords((prevWords) => [...prevWords, newWord]);
-    }, difficultySettings[difficulty].interval);
-  }
-  return () => clearInterval(interval);
-}, [gameStarted, difficulty]);
+  useEffect(() => {
+    setGameAreaWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (gameStarted) {
+      interval = setInterval(() => {
+        const difficultyKey = difficulty as keyof typeof wordLists; 
+        const currentWordList = wordLists[difficultyKey]; 
+        const newWord = {
+          id: Date.now(),
+          text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
+          top: 0,
+          left: Math.random() * (gameAreaWidth - 200),
+        };
+        setWords((prevWords) => [...prevWords, newWord]);
+      }, difficultySettings[difficulty].interval);
+    }
+    return () => clearInterval(interval);
+  }, [gameStarted, difficulty]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -79,6 +83,8 @@ useEffect(() => {
     if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
       setDifficulty(difficulty + 1); // 다음 난이도로 변경
       setCorrectWordsCount(0); // 맞춘 단어 개수 초기화
+      setWords([])
+      setLives(5);
       alert(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
     }
   }, [correctWordsCount, difficulty]);
@@ -89,9 +95,9 @@ useEffect(() => {
     if (wordIndex !== -1) {
       setWords(words.filter((_, index) => index !== wordIndex));
       setScore(score + 10);
-      setCorrectWordsCount(correctWordsCount + 1); // 맞춘 단어의 개수 증가
-      setInput('');
+      setCorrectWordsCount(correctWordsCount + 1);
     }
+    setInput('');
   };
 
   const startGame = () => {
@@ -139,7 +145,7 @@ useEffect(() => {
             ))}
             <form
               onSubmit={handleSubmit}
-              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-white"
+              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 border border-solid border-pointColor2 bg-white"
             >
               <input
                 type="text"
