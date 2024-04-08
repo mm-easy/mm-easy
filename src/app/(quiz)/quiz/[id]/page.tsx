@@ -75,7 +75,7 @@ const QuizTryPage = () => {
               alt="샘플 이미지"
               width={144}
               height={144}
-              className="w-full"
+              className="w-full h-[144px] object-cover"
             />
             <section className="p-4 flex flex-col gap-3 border-solid border-y-2 border-pointColor1">
               <div>
