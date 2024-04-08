@@ -1,52 +1,53 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import SubHeader from '@/components/common/SubHeader';
-import Comment from '../../(components)/Comment';
-import CommunityMenu from '../../(components)/CommunityMenu';
-import CommunityForm from '../../(components)/CommunityForm';
 import DOMPurify from 'dompurify';
-import Like from '../../(components)/Like';
+import CommunityMenu from './CommunityMenu';
+import Comment from './Comment';
+import Like from './Like';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
-import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 
 import type { Post, PostDetailDateType } from '@/types/posts';
-import { getPosts } from '@/api/posts';
-import { toast } from 'react-toastify';
-import Menu from '../../(components)/Menu';
 
-const DetailPage = () => {
+const DetailPost = () => {
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
 
-  const params = useParams();
+  type Params = {
+    category: string;
+    id: string;
+  };
+
+  const params = useParams<Params>();
+  const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
 
   /**해당 게시글 정보가져오기 */
   useEffect(() => {
+    let data;
+    let nextPosts;
     const postDetailDate = async () => {
-      try {
-        const { data: post, error } = await supabase
-          .from('posts')
-          .select(`*, profiles!inner(nickname,avatar_img_url)`)
-          .eq('id', params.id);
-        if (error) throw error;
-        setPost(post![0]);
-      } catch (error) {
-        throw error;
+      if (categoryNow === '전체') {
+        data = await getPostDetail(params.id);
+        nextPosts = await getPosts();
+      } else {
+        data = await getPostCategoryDetail(categoryNow, params.id);
+        nextPosts = await getFilterPosts(categoryNow);
       }
+      setPost(data);
+      setNextBeforePost(nextPosts);
     };
-    const nextPosts = async () => {
-      const allPost = await getPosts();
-      setNextBeforePost(allPost);
-    };
+    // const nextPosts = async () => {
+    //   const allPost = await getPosts();
+    //   setNextBeforePost(allPost);
+    // };
 
     postDetailDate();
-    nextPosts();
+    // nextPosts();
   }, []);
 
   const beforePostBtn = (postId: string) => {
@@ -56,7 +57,7 @@ const DetailPage = () => {
       toast.warning('첫 게시물 입니다!');
       return;
     } else {
-      router.push(`/community-list/${nextBeforePost[nowPostNum + 1].id}`);
+      router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum + 1].id}`);
     }
   };
 
@@ -67,16 +68,14 @@ const DetailPage = () => {
       toast.warning('가장 최신글 입니다!');
       return;
     } else {
-      router.push(`/community-list/${nextBeforePost[nowPostNum - 1].id}`);
+      router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
     }
   };
 
   return (
     <article>
-      <SubHeader text="커뮤니티" />
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
-        {/* <CommunityMenu /> */}
-        <Menu />
+        <CommunityMenu />
         <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
           {post && post.profiles && (
             <div>
@@ -137,4 +136,4 @@ const DetailPage = () => {
   );
 };
 
-export default DetailPage;
+export default DetailPost;
