@@ -33,7 +33,6 @@ const LoginPage = () => {
 
   return (
     <article>
-      <SubHeader text="로그인" />
     <div className="grid grid-cols-10 min-h-full bg-bgColor1">
     <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
       <div className="w-80 h-80 bg-gray-400 rounded-full flex items-center justify-center">
