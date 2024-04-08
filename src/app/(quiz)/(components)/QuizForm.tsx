@@ -177,28 +177,6 @@ const QuizForm = () => {
         console.log('스토리지에 이미지 업로드 성공', imgUrl);
       }
 
-      // 문제에 첨부된 이미지들을 스토리지에 업로드
-      try {
-        const imgFileData = questions.map((question) => ({
-          id: question.id,
-          img_file: question.img_file
-        }));
-        for (const data of imgFileData) {
-          if (data.img_file) {
-            const formattedName = generateImgFileName(data.img_file, data.id);
-            const uploadResult = await uploadImageToStorage(data.img_file, formattedName);
-            if (uploadResult) {
-              console.log('이미지들 업로드 성공!', uploadResult);
-            } else {
-              console.error('이미지들 업로드 실패');
-            }
-          }
-        }
-      } catch (error) {
-        alert('일시적인 오류로 이미지 업로드에 실패했습니다. 다시 시도하세요.');
-        console.error;
-      }
-
       // newQuiz 구성하여 quizzes 테이블에 인서트
       const newQuiz = {
         creator_id: currentUser,
@@ -210,17 +188,25 @@ const QuizForm = () => {
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
 
-      // TRY 1.
-      // TODO: promise.all 로 비동기 병렬 처리하기.
+      // questions 요소 하나씩 돌아가며 데이터 처리
       questions.forEach(async (question) => {
+        // 첨부 이미지 있는 경우 스토리지에 업로드, 없는 경우 null
+        let img_url = null;
+        if (question.img_file) {
+          const formattedName = generateImgFileName(question.img_file, question.id);
+          img_url = await uploadImageToStorage(question.img_file, formattedName);
+        }
+
+        // newQuestion 구성하여 questions 테이블에 인서트
         const newQuestion = {
           quiz_id: insertQuizResult as string,
           title: question.title,
-          question_type: question.type,
-          correct_answer: question.correct_answer
+          type: question.type,
+          correct_answer: question.correct_answer,
+          img_url: img_url || 'tempThumbnail.png'
         };
 
-        // DB에 업로드된 리얼 question
+        // newOptions 구성하여 question_options 테이블에 인서트
         const insertQuestionResult = await insertQuestionsMutation.mutateAsync(newQuestion);
         const newOptions = question.options.map((option) => ({
           content: option.content,
