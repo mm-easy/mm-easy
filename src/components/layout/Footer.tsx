@@ -8,7 +8,7 @@ const Footer = () => {
         <Link href="https://github.com/mm-easy/mm-easy" target="\_blank">
           ➡️ github
         </Link>
-        <Link href="https://www.instagram.com/" target="\_blank">
+        <Link href="https://www.instagram.com/mm_easy_official" target="\_blank">
           ➡️ insta
         </Link>
       </div>
