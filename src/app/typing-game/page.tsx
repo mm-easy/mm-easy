@@ -106,7 +106,12 @@ const TypingGamePage = () => {
     setInput('');
     setScore(0);
     setLives(maxLives);
-    setDifficulty(1);
+  };
+
+  const handleDifficultyChange = (newDifficulty: number) => {
+    if (newDifficulty >= 1 && newDifficulty <= maxDifficulty) {
+      setDifficulty(newDifficulty);
+    }
   };
 
   const lifePercentage = (lives / maxLives) * 60;
@@ -160,7 +165,21 @@ const TypingGamePage = () => {
             </form>
           </>
         ) : (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className='mb-2 text-lg text-pointColor1'>난이도를 선택해주세요!</p>
+             <div className="flex mb-4 items-center justify-center">
+            {Array.from({ length: maxDifficulty }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handleDifficultyChange(index + 1)}
+              className={`text-pointColor2 mx-1 ${
+                difficulty === index + 1 ? 'bg-pointColor1 text-white' : 'bg-bgColor1'
+              } p-1 rounded-md`}
+            >
+              {index + 1}
+            </button>
+             ))}
+             </div>
             <button onClick={startGame} className="bg-pointColor1 text-white p-4 rounded">
               게임 시작!
             </button>
