@@ -4,22 +4,22 @@ import QuestionForm from './QuestionForm';
 import Image from 'next/image';
 import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
+import UnloadImgBtn from './UnloadImg';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { BlueInput, BlueLevelSelect, BlueTextArea } from '@/components/common/BlueInput';
+import { BlueInput, BlueLevelSelect } from '@/components/common/BlueInput';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 import { generateFileName, generateImgFileName } from '@/utils/generateFileName';
 import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
 import { toast } from 'react-toastify';
 import { storageUrl } from '@/utils/supabase/storage';
+import { handleMaxLength } from '@/utils/handleMaxLength';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import { handleMaxLength } from '@/utils/handleMaxLength';
-import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
-import UnloadImgBtn from './UnloadImg';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -90,7 +90,6 @@ const QuizForm = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   /** 스크롤 이동 추적 */
   useEffect(() => {
