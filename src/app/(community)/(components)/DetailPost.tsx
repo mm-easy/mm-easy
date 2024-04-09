@@ -3,6 +3,7 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
+import CategorySelector from './CategorySelector';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
@@ -11,9 +12,8 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 
 import type { Post, PostDetailDateType } from '@/types/posts';
-import { User } from '@supabase/supabase-js';
-import CategorySelector from './CategorySelector';
 import { supabase } from '@/utils/supabase/supabase';
+import { User } from '@supabase/supabase-js';
 
 const DetailPost = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -44,13 +44,8 @@ const DetailPost = () => {
       setPost(data);
       setNextBeforePost(nextPosts);
     };
-    // const nextPosts = async () => {
-    //   const allPost = await getPosts();
-    //   setNextBeforePost(allPost);
-    // };
 
     postDetailDate();
-    // nextPosts();
   }, []);
 
   useEffect(() => {
@@ -97,8 +92,7 @@ const DetailPost = () => {
   return (
     <article>
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
-        {/* <CommunityMenu /> */}
-        <CategorySelector />
+        <CategorySelector categoryNow={categoryNow} />
         <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
           {post && post.profiles && (
             <div>
@@ -149,7 +143,7 @@ const DetailPost = () => {
                 <button onClick={() => nextPostBtn(post.id)}>
                   <IoMdArrowDropleft />
                 </button>
-                <Link href="/community-list">목록으로</Link>
+                <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
                 <button onClick={() => beforePostBtn(post.id)}>
                   <IoMdArrowDropright />
                 </button>

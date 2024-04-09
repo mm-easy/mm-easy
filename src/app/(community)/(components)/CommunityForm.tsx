@@ -1,10 +1,11 @@
 // CommunityForm.tsx
 'use client';
 
-import { CommunityFormProps } from '@/types/posts';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+
+import type { CommunityFormProps } from '@/types/posts';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
