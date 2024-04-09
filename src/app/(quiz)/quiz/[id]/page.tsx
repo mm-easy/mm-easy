@@ -114,15 +114,15 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} />
-      <main className="grid grid-cols-[10%_90%]">
+      <main className="grid grid-cols-[16%_84%]">
         <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           <section>
             <Image
               src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
               alt="샘플 이미지"
-              width={144}
-              height={144}
-              className="w-full h-[144px] object-cover border-solid border-b-2 border-pointColor1"
+              width={230}
+              height={230}
+              className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
               <div>
