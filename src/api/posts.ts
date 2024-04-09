@@ -50,13 +50,15 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-export const updatePost = async (id: string, title: string, content: string, category: string) => {
-  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', id);
 
-  if (error) {
-    console.error('게시물 수정 중 오류가 발생했습니다:', error.message);
-    throw new Error(error.message);
+export const fetchPost = async (id: string | undefined) => {
+  try {
+    const { data: posts, error } = await supabase.from('posts').select('*').eq("postId", id);
+    if (error) throw error;
+    console.log(posts);
+    return posts![0];
+  } catch (error) {
+    console.error();
+    throw error;
   }
-
-  return data;
 };

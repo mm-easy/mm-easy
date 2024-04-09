@@ -16,10 +16,12 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import type { Post, PostDetailDateType } from '@/types/posts';
 import { getPosts } from '@/api/posts';
 import { toast } from 'react-toastify';
+import { User } from '@supabase/supabase-js';
 
 const DetailPage = () => {
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
+  const [currentUser, setCurrentUser] = useState<{ user: User } | null>(null);
 
   const params = useParams();
   const router = useRouter();
@@ -47,6 +49,21 @@ const DetailPage = () => {
     nextPosts();
   }, []);
 
+  useEffect(() => {
+    // 현재 로그인한 사용자 정보 가져오기
+    const fetchUser = async () => {
+      const { data: user, error } = await supabase.auth.getUser();
+      if (error) {
+        // 오류 처리
+        console.error('Error fetching user:', error);
+      } else {
+        setCurrentUser(user);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
 
@@ -69,8 +86,8 @@ const DetailPage = () => {
     }
   };
 
-  const navigateToPostPage = () => {
-    router.push('/community-post');
+  const navigateToPostPage = (postId: string) => {
+    router.push(`/community-list/${postId}/edit`);
   };
 
   return (
@@ -103,7 +120,10 @@ const DetailPage = () => {
                 </div>
                 <div className="flex">
                   <div className="flex">
-                    <button onClick={navigateToPostPage}>수정</button>
+                    {/* 사용자 확인 후 조건부 렌더링 */}
+                    {currentUser && post && currentUser.user.id === post.author_id && (
+                      <button onClick={() => navigateToPostPage(post.id)}>수정</button>
+                    )}
                     <button>삭제</button>
                   </div>
                 </div>

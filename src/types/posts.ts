@@ -64,6 +64,14 @@ export type CommunityFormProps = {
   btnRange: number;
 };
 
+export type CommunityEditFormProps = {
+  postId: string;
+  prevTitle: string;
+  prevContent: string;
+  prevCategory: string
+  prevImageUrls: string[];
+};
+
 
 export type ToggleProps = {
   toggled: boolean;
