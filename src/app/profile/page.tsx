@@ -4,10 +4,10 @@ import MyProfile from './MyProfile';
 const ProfilePage = () => {
   return (
     <main>
-      <div className="h-[44vh]">
+      <div className="h-[47vh]">
         <MyProfile />
       </div>
-      <div className="h-[40vh]">
+      <div className="h-[37vh]">
         <MyLevelAndScore />
       </div>
     </main>
