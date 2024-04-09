@@ -9,7 +9,7 @@ const Options = ({
 }: {
   id: string | undefined;
   resultMode: boolean;
-  onChange: (id: string | undefined, answer: string) => void;
+  onChange: (id: string | undefined, answer: string | boolean) => void;
 }) => {
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
@@ -38,7 +38,7 @@ const Options = ({
               type="radio"
               disabled={resultMode}
               name={questionId}
-              onChange={() => onChange(questionId, String(is_answer))}
+              onChange={() => onChange(questionId, is_answer)}
             />
             <p>{content}</p>
           </div>

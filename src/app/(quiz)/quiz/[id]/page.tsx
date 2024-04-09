@@ -16,7 +16,7 @@ import { SiAnswer } from 'react-icons/si';
 
 type Answer = {
   id: string | undefined;
-  answer: string;
+  answer: string | boolean;
 };
 
 const QuizTryPage = () => {
@@ -70,7 +70,7 @@ const QuizTryPage = () => {
 
   const questions = questionsData as Question[];
 
-  const handleGetAnswer = (id: string | undefined, answer: string) => {
+  const handleGetAnswer = (id: string | undefined, answer: string | boolean) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
 
@@ -92,7 +92,7 @@ const QuizTryPage = () => {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
           if (question?.type === QuestionType.objective) {
-            if (!!usersAnswer.answer) countCorrect++;
+            if (usersAnswer.answer) countCorrect++;
           } else {
             if (usersAnswer.answer === question?.correct_answer) countCorrect++;
           }
