@@ -76,15 +76,13 @@ const Home = () => {
           <div key={quiz.id} className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4">
             <p className="font-bold text-lg mt-4 mb-3">{quiz.title}</p>
             <div className="flex flex-col gap-3">
-              <div className="border-solid border border-pointColor1 rounded-md overflow-hidden w-[250px] h-[250px]">
                 <Image
                   src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${quiz.thumbnail_img_url}`}
                   alt="퀴즈 썸네일"
                   width={250}
                   height={250}
-                  className="w-full h-full object-cover"
+                  className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
                 />
-              </div>
               <p className="mb-4">{quiz.info}</p>
               <Link href={`/quiz/${quiz.id}`}>
                 <div className="text-white bg-pointColor1 rounded-md p-2 text-center">퀴즈 풀기</div>
@@ -115,7 +113,9 @@ const Home = () => {
           <div className="w-1/2 p-4 border-r border-solid border-pointColor1">
             <div className='flex justify-between'>
             <h2 className="text-lg font-bold">유저가 쓴 글</h2>
-            <h2 className="font-semibold text-pointColor1">더보기</h2>
+            <Link href={`/community-list`} className="font-semibold text-pointColor1">
+            더보기
+            </Link>
             </div>
             <div>
               {posts?.map((post, index) => (
@@ -131,7 +131,9 @@ const Home = () => {
           <div className="w-1/2 p-4">
           <div className='flex justify-between'>
           <h2 className="text-lg font-bold">유저가 쓴 글</h2>
-          <h2 className="font-semibold text-pointColor1">더보기</h2>
+          <Link href={`/community-list`} className="font-semibold text-pointColor1">
+          더보기
+          </Link>
           </div>
           <div>
               {posts?.map((post, index) => (
