@@ -11,6 +11,8 @@ import SelectQuestionType from './SelectQuestionType';
 import InputQuestionTitle from './InputQuestionTitle';
 import InputQuestionImg from './InputQuestionImg';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import UnloadImgBtn from './UnloadImg';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const QuestionForm = ({
   questions,
@@ -148,10 +150,22 @@ const QuestionForm = ({
     }
   };
 
+  /** 첨부한 이미지 삭제하기 */
+  const handleRemoveImg = (e: React.MouseEvent<HTMLSpanElement>, id: string | undefined) => {
+    e.stopPropagation();
+    setQuestions((prev) =>
+      prev.map((question) => {
+        return question.id === id
+          ? { ...question, img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`, img_file: null }
+          : question;
+      })
+    );
+  };
+
   return (
     <main className="pt-8 text-pointColor1">
       {questions.map((question) => {
-        const { id, type, options, title, img_url, correct_answer } = question;
+        const { id, type, options, title, img_url, img_file, correct_answer } = question;
         return (
           /** 유형, 휴지통 섹션 */
           <article key={id} className="w-[570px] mx-auto pb-12 flex flex-col gap-4">
@@ -181,7 +195,12 @@ const QuestionForm = ({
               {type === QuestionType.objective ? (
                 <>
                   <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
-                  {loaded && <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />}
+                  {loaded && (
+                    <div className="relative w-full">
+                      <InputQuestionImg id={id} img_url={img_url} onChange={handleChangeImg} />
+                      {img_file && <UnloadImgBtn onClick={(e) => handleRemoveImg(e, id)} />}
+                    </div>
+                  )}
                   {options.map((option) => {
                     return (
                       <div key={option.id} className="w-full flex place-items-center justify-between">
