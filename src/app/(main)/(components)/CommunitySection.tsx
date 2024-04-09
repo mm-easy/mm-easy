@@ -4,12 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 const CommunitySection = () => {
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ['recentPosts'],
+    queryFn: getRecentPosts,
+    staleTime: 1000 * 60 * 5
+  });
 
-    const { data: posts, isLoading } = useQuery({
-        queryKey: ['recentPosts'],
-        queryFn: getRecentPosts, 
-        staleTime: 1000 * 60 * 5,
-      });
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
 
       if (isLoading) {
         return <div>로딩중..</div>; 
@@ -35,9 +38,10 @@ const CommunitySection = () => {
                 <Link href={`/community-list/전체/${post.id}`}>  
                     <h2 className="text-lg font-bold">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
-                </Link>
+                  </Link>
+                </div>
+              ))}
             </div>
-            ))}
         </div>
         </div>
         <div className="w-1/2 p-8">
@@ -53,15 +57,14 @@ const CommunitySection = () => {
                 <Link href={`/community-list/전체/${post.id}`} className=''>  
                     <h2 className="text-lg font-bold">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
-                </Link>
+                  </Link>
+                </div>
+              ))}
             </div>
-            ))}
-        </div>
-        </div>
-        </div>
-        </section>
+          </div>
+      </section>
     </>
-    )
+  );
 };
 
 export default CommunitySection;
