@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
 import CategorySelector from './CategorySelector';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
