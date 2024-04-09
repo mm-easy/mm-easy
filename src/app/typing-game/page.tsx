@@ -1,8 +1,13 @@
 'use client';
 
+import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect } from 'react';
 import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
+
+import type { User } from '@/types/users';
 
 const difficultySettings: { [key: number]: { speed: number; interval: number } } = {
   1: { speed: 20, interval: 5000 },
@@ -15,6 +20,7 @@ const difficultySettings: { [key: number]: { speed: number; interval: number } }
 const maxDifficulty = Object.keys(difficultySettings).length; 
 
 const TypingGamePage = () => {
+  const { getCurrentUserProfile } = useAuth();
   const [words, setWords] = useState<Word[]>([]);
   const [input, setInput] = useState('');
   const [score, setScore] = useState(0);
@@ -24,8 +30,18 @@ const TypingGamePage = () => {
   const [correctWordsCount, setCorrectWordsCount] = useState(0);
   const [gameAreaWidth, setGameAreaWidth] = useState(0);
   const [gameAreaHeight, setGameAreaHeight] = useState(550);
+  const [user, setUser] = useState<User | null>(null);
   const maxLives = 5;
   const wordHeight = 80;
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userProfile = await getCurrentUserProfile();
+      setUser(userProfile);
+    };
+  
+    fetchUserProfile();
+  }, []);
 
   useEffect(() => {
     setGameAreaWidth(window.innerWidth);
@@ -70,12 +86,15 @@ const TypingGamePage = () => {
     return () => clearInterval(interval);
   }, [words, gameStarted]);
 
-  useEffect(() => {
-    if (lives <= 0) {
-      alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
-      setGameStarted(false);
+ useEffect(() => {
+  if (lives <= 0) {
+    alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+    if (user) { 
+      addGameScore(score); 
     }
-  }, [lives, score]);
+    setGameStarted(false);
+  }
+}, [lives, score, user]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -116,6 +135,41 @@ const TypingGamePage = () => {
     }
   };
 
+  const addGameScore = async (finalScore: number) => {
+    if (!user) {
+      console.error('로그인한 유저가 없어, 점수를 저장할 수 없습니다.');
+      return;
+    }
+  
+    try {
+      // 1. 현재 점수 가져오기
+      const { data: existingScores, error: fetchError } = await supabase
+        .from('game_tries')
+        .select('score')
+        .eq('user_id', user.id)
+        .single();
+  
+      if (fetchError && !existingScores) {
+        const { error: insertError } = await supabase
+          .from('game_tries')
+          .insert([{ user_id: user.id, score: finalScore }]);
+        if (insertError) throw insertError;
+        console.log('새 점수가 저장되었습니다!');
+      } else {
+        
+        const newTotalScore = existingScores.score + finalScore;
+        const { error: updateError } = await supabase
+          .from('game_tries')
+          .update({ score: newTotalScore })
+          .eq('user_id', user.id);
+        if (updateError) throw updateError;
+        console.log('점수가 업데이트되었습니다!');
+      }
+    } catch (error) {
+      console.error('점수 저장 중 오류 발생:', error);
+    }
+  };
+  
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
