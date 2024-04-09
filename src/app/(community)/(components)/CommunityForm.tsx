@@ -1,10 +1,11 @@
 // CommunityForm.tsx
 'use client';
 
-import { CommunityFormProps } from '@/types/posts';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+
+import type { CommunityFormProps } from '@/types/posts';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
@@ -13,12 +14,17 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   totalNum,
   pageRange,
   btnRange,
+  category
 }) => {
   const router = useRouter();
 
   const navigateToDetailPost = (post: { id: string }): void => {
-    router.push(`/community-list/${post.id}`);
-};
+    if (category === null) {
+      router.push(`/community-list/전체/${post.id}`);
+    } else {
+      router.push(`/community-list/${category}/${post.id}`);
+    }
+  };
 
   const truncateTitle = (title: string): string => {
     return title.length > 20 ? title.substring(0, 32) + ' ...' : title;
@@ -36,9 +42,9 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
               <th className="p-4 w-40">구분</th>
-              <th className='w-60'>닉네임</th>
-              <th className='w-4/6'>제목</th>
-              <th className='w-60'>날짜</th>
+              <th className="w-60">닉네임</th>
+              <th className="w-4/6">제목</th>
+              <th className="w-60">날짜</th>
             </tr>
           </thead>
           <tbody>

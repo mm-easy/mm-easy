@@ -10,7 +10,11 @@ const MenuPage = () => {
   };
 
   return (
+<<<<<<< HEAD
+    <div className="flex justify-center bg-bgColor1 z-50 fixed inset-0 items-center mt-16 h-screen">
+=======
     <div className="flex justify-center bg-bgColor1 z-50 fixed inset-0 items-center mt-[8vh] h-screen">
+>>>>>>> e64ce93ec91bf68764973062ad6cd296af684d05
       <div className="grid grid-rows-2 grid-cols-3 gap-x-24 gap-y-12 p-20 pt-2 w-140 h-140">
         <div className="flex flex-col justify-center items-center">
           <Link
