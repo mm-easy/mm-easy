@@ -5,11 +5,15 @@ import Link from 'next/link';
 
 const CommunitySection = () => {
 
-    const { data: posts } = useQuery({
+    const { data: posts, isLoading } = useQuery({
         queryKey: ['recentPosts'],
         queryFn: getRecentPosts, 
         staleTime: 1000 * 60 * 5,
       });
+
+      if (isLoading) {
+        return <div>로딩중..</div>; 
+      }
 
     return (
         <>
@@ -21,14 +25,14 @@ const CommunitySection = () => {
         <div className="w-1/2 p-4 border-r border-solid border-pointColor1">
         <div className='flex justify-between'>
         <h2 className="text-lg font-bold">유저가 쓴 글</h2>
-        <Link href={`/community-list`} className="font-semibold text-pointColor1">
+        <Link href={`/community-list?category=전체`} className="font-semibold text-pointColor1">
         더보기
         </Link>
         </div>
         <div>
             {posts?.map((post, index) => (
             <div key={post.id} className={`py-4 ${index !== posts.length ? 'border-b' : ''} border-solid border-pointColor1`}>
-                <Link href={`/community-list/${post.id}`}>  
+                <Link href={`//community-list/전체/${post.id}`}>  
                     <h2 className="text-lg font-bold">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
                 </Link>

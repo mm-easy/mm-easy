@@ -7,11 +7,15 @@ import type { Quiz } from '@/types/quizzes';
 
 const QuizSection = () => {
 
-        const { data: quiz , error } = useQuery<Quiz[]>({
+        const { data: quiz , isLoading } = useQuery<Quiz[]>({
             queryKey: ['recentQuiz'],
             queryFn: getRecentQuizzes, 
             staleTime: 1000 * 60 * 5,
           });
+
+          if (isLoading) {
+            return <div>로딩중..</div>; 
+          }
 
     return (
         <>
