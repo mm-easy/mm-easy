@@ -3,7 +3,7 @@ import { CategorySelectorProps } from '@/types/posts';
 import { useRouter } from 'next/navigation';
 
 const CategorySelector = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const router = useRouter();
 
   const categoryMenu: Record<string, string> = {

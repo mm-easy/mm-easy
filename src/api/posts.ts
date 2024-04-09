@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase/supabase';
+import { redirect } from 'next/navigation';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async (offset = 0, limit = 10) => {
@@ -50,15 +51,15 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-export const updatePost = async (id: string, title: string, content: string, category: string) => {
-  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', id);
+export const updateCommunityPost = async (postId: string, title: string, content: string,  ) => {
+  const { data, error } = await supabase
+    .from('posts')
+    .update({ title, content,  })
+    .eq('id', postId)
+    .select();
 
-  if (error) {
-    console.error('게시물 수정 중 오류가 발생했습니다:', error.message);
-    throw new Error(error.message);
+  if (data && !error) {
   }
-
-  return data;
 };
 
 export const getFilterPosts = async (category: string | null) => {

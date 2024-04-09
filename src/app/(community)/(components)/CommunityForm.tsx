@@ -18,7 +18,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const router = useRouter();
 
   const navigateToDetailPost = (post: { id: string }): void => {
-    router.push(`/community-list/${category}/${post.id}`);
+    if (category === null) {
+      router.push(`/community-list/전체/${post.id}`);
+    } else {
+      router.push(`/community-list/${category}/${post.id}`);
+    }
   };
 
   const truncateTitle = (title: string): string => {

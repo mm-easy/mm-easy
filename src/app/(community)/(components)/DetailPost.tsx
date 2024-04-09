@@ -91,7 +91,7 @@ const DetailPost = () => {
   };
 
   const navigateToPostPage = (postId: string) => {
-    router.push(`/community-list/${postId}/edit`);
+    router.push(`/community-list/${categoryNow}/${postId}/edit`);
   };
 
   return (

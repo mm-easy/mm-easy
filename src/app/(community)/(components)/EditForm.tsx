@@ -3,9 +3,9 @@ import dynamic from 'next/dynamic';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { insertPost } from '@/api/posts';
+import { insertPost, updateCommunityPost } from '@/api/posts';
 import { CommunityEditFormProps } from '@/types/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
@@ -16,7 +16,14 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
   const [content, setContent] = useState<string>(prevContent);
   const [category, setCategory] = useState(prevCategory);
   // const [imageUrls, setImageUrls] = useState<string[]>([...prevImageUrls]);
+
+  type Params = {
+    category: string;
+    id: string;
+  };
   const router = useRouter();
+  const params = useParams<Params>();
+  const categoryNow = decodeURIComponent(params.category);
 
   const categories = [
     { id: 'question', value: '질문', label: '질문' },
@@ -58,38 +65,19 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
     router.push('/community-list');
   };
 
-  // 새로운 post 추가 핸들러
-  const handleNewPost = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!profile) {
-      alert('사용자 정보가 없습니다.');
-      return;
-    }
-
-    if (!title.trim()) {
-      alert('제목을 입력해주세요.');
-      return;
-    }
-    if (!content.trim()) {
-      alert('내용을 입력해주세요.');
-      return;
-    }
-
-    // post 등록
-    try {
-      const data = await insertPost(title, content, category, profile.id);
-      alert('게시물이 등록되었습니다.');
-      router.push('/community-list');
-      console.log(data);
-    } catch (error) {
-      alert('게시물 추가 중 오류가 발생했습니다.');
-      console.error(error);
-    }
+  const navigateToCreatedPost = (postId: string) => {
+    router.push(`/community-list/${categoryNow}/${postId}`);
   };
 
+  
+
   return (
-    <form onSubmit={handleNewPost}>
+    <form onSubmit={async (e) => {
+      e.preventDefault();
+      await updateCommunityPost(postId, title, content);
+      alert('수정이 완료되었습니다.');
+      navigateToCreatedPost(postId);
+    }}>
       <section className="flex">
         {categories.map((item) => (
           <div className="w-20" key={item.id}>
