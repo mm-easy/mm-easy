@@ -1,5 +1,6 @@
 import { getRecentQuizzes } from '@/api/quizzes';
 import { useQuery } from '@tanstack/react-query';
+import QuestionEx from './QuestionEx';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,7 +13,7 @@ const QuizSection = () => {
             queryFn: getRecentQuizzes, 
             staleTime: 1000 * 60 * 5,
           });
-
+        
           if (isLoading) {
             return <div>로딩중..</div>; 
           }
@@ -20,7 +21,7 @@ const QuizSection = () => {
     return (
         <>
         <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-b border-solid border-pointColor1">
-        최근 올라온 퀴즈
+        <p className="ml-4">최근 올라온 퀴즈</p>
         </div>
         <section className="">
         <div className="grid grid-cols-4 gap-2 p-4">
@@ -35,7 +36,7 @@ const QuizSection = () => {
                 height={250}
                 className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
             />
-            <p className="mb-4">{quiz.info}</p>
+            <QuestionEx id={quiz.id}/>
             <Link href={`/quiz/${quiz.id}`}>
             <div className="text-white bg-pointColor1 rounded-md p-2 text-center">퀴즈 풀기</div>
             </Link>
