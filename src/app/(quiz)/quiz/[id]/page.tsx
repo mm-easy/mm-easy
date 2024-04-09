@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 
 const QuizTryPage = () => {
   const { id } = useParams();
+  const [resultMode, setResultMode] = useState(false);
 
   const {
     data: quizData,
@@ -59,6 +60,7 @@ const QuizTryPage = () => {
 
   let questions = questionsData as Question[];
 
+  /** 선택형 채점 */
   const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
     if (is_correct) {
       checkRightAnswer(id);
@@ -67,6 +69,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 주관형 채점 */
   const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
     if (usersAnswer === correct_answer) {
       checkRightAnswer(id);
@@ -77,14 +80,40 @@ const QuizTryPage = () => {
 
   const checkRightAnswer = (id: string | undefined) => {
     questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
-    console.log('정답', questions);
-    toast.warn('정답');
   };
 
   const checkWrongAnswer = (id: string | undefined) => {
     questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
-    console.log('오답', questions);
-    toast.warn('오답');
+  };
+
+  const handleResultMode = () => {
+    let questionsHasNotAnswer = false;
+
+    if (!resultMode) {
+      // 풀기 모드에서 제출하기 버튼을 눌렀을 때
+      console.log(questions);
+      for (const question of questions) {
+        // 모든 문제에 답이 제출됐는지 확인
+        if (!question.hasOwnProperty('is_correct')) {
+          questionsHasNotAnswer = true; // 답이 없다면 true
+          break;
+        }
+      }
+
+      if (questionsHasNotAnswer) {
+        toast.warn('모든 문제를 풀어줘!');
+      } else {
+        setResultMode(true);
+      }
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
+    }
   };
 
   return (
@@ -114,6 +143,7 @@ const QuizTryPage = () => {
           <p className="p-4">{info}</p>
         </article>
         <article className="py-8 flex flex-col place-items-center gap-10">
+          {resultMode && <h1>🎉 0개 중에 0개 맞았습니다! 🎉</h1>}
           {questions.map((question) => {
             const { id, title, type, img_url, correct_answer } = question;
             return (
@@ -144,8 +174,11 @@ const QuizTryPage = () => {
               </section>
             );
           })}
-          <button className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md">
-            제출하기
+          <button
+            className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
+            onClick={handleResultMode}
+          >
+            {resultMode ? '다시 풀기' : '제출하기'}
           </button>
         </article>
       </main>
