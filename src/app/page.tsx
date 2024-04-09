@@ -1,14 +1,9 @@
 'use client';
 import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getRecentPosts } from '@/api/posts';
 import { supabase } from '@/utils/supabase/supabase';
-import { getRecentQuizzes } from '@/api/quizzes';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import Link from 'next/link';
+import QuizSection from './(main)/(components)/quizSection';
+import CommunitySection from './(main)/(components)/CommunitySection';
 import Image from 'next/image';
-
-import type { Quiz } from '@/types/quizzes';
 
 const Home = () => {
 
@@ -43,18 +38,6 @@ const Home = () => {
       saveUserProfile();
     }, []);
 
-    const { data: posts } = useQuery({
-      queryKey: ['recentPosts'],
-      queryFn: getRecentPosts, 
-      staleTime: 1000 * 60 * 5,
-    });
-
-    const { data: quiz , error } = useQuery<Quiz[]>({
-      queryKey: ['recentQuiz'],
-      queryFn: getRecentQuizzes, 
-      staleTime: 1000 * 60 * 5,
-    });
-
   return (
     <div className="min-h-screen">
       <header className="w-full h-400 relative"> 
@@ -67,31 +50,7 @@ const Home = () => {
         unoptimized 
       />
     </header>
-    <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-b border-solid border-pointColor1">
-          최근 올라온 퀴즈
-        </div>
-      <section className="">
-        <div className="grid grid-cols-4 gap-2 p-4">
-        {quiz?.map((quiz) => (
-          <div key={quiz.id} className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4">
-            <p className="font-bold text-lg mt-4 mb-3">{quiz.title}</p>
-            <div className="flex flex-col gap-3">
-                <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${quiz.thumbnail_img_url}`}
-                  alt="퀴즈 썸네일"
-                  width={250}
-                  height={250}
-                  className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
-                />
-              <p className="mb-4">{quiz.info}</p>
-              <Link href={`/quiz/${quiz.id}`}>
-                <div className="text-white bg-pointColor1 rounded-md p-2 text-center">퀴즈 풀기</div>
-              </Link>
-            </div>
-          </div>
-        ))}
-        </div>
-      </section>
+    <QuizSection/>
       <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-y border-solid border-pointColor1">
           랭킹
         </div>
@@ -105,49 +64,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-        <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-y border-solid border-pointColor1">
-          최근 올라온 글
-        </div>
-        <section className="">
-        <div className="flex">
-          <div className="w-1/2 p-4 border-r border-solid border-pointColor1">
-            <div className='flex justify-between'>
-            <h2 className="text-lg font-bold">유저가 쓴 글</h2>
-            <Link href={`/community-list`} className="font-semibold text-pointColor1">
-            더보기
-            </Link>
-            </div>
-            <div>
-              {posts?.map((post, index) => (
-                <div key={post.id} className={`py-4 ${index !== posts.length ? 'border-b' : ''} border-solid border-pointColor1`}>
-                  <Link href={`/community-list/${post.id}`}>  
-                      <h2 className="text-lg font-bold">{post.title}</h2>
-                      <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
-                  </Link>
-                </div>
-              ))}
-          </div>
-          </div>
-          <div className="w-1/2 p-4">
-          <div className='flex justify-between'>
-          <h2 className="text-lg font-bold">유저가 쓴 글</h2>
-          <Link href={`/community-list`} className="font-semibold text-pointColor1">
-          더보기
-          </Link>
-          </div>
-          <div>
-              {posts?.map((post, index) => (
-                <div key={post.id} className={`py-4 ${index !== posts.length ? 'border-b' : ''} border-solid border-pointColor1`}>
-                  <Link href={`/community-list/${post.id}`}>  
-                      <h2 className="text-lg font-bold">{post.title}</h2>
-                      <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
-                  </Link>
-                </div>
-              ))}
-          </div>
-          </div>
-        </div>
-      </section>
+      <CommunitySection />
     </div>
   );
 };
