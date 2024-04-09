@@ -58,31 +58,32 @@ const QuizTryPage = () => {
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   let questions = questionsData as Question[];
-  // const copyOfQuestions = questions;
 
   const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
     if (is_correct) {
-      checkRightAnswer();
+      checkRightAnswer(id);
     } else {
-      checkWrongAnswer();
+      checkWrongAnswer(id);
     }
   };
 
   const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
     if (usersAnswer === correct_answer) {
-      checkRightAnswer();
+      checkRightAnswer(id);
     } else {
-      checkWrongAnswer();
+      checkWrongAnswer(id);
     }
   };
 
-  const checkRightAnswer = () => {
+  const checkRightAnswer = (id: string | undefined) => {
     questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
+    console.log('정답', questions);
     toast.warn('정답');
   };
 
-  const checkWrongAnswer = () => {
+  const checkWrongAnswer = (id: string | undefined) => {
     questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
+    console.log('오답', questions);
     toast.warn('오답');
   };
 
