@@ -83,6 +83,8 @@ const PostForm = () => {
     } catch (error) {
       alert('게시물 추가 중 오류가 발생했습니다.');
       console.error(error);
+
+      console.log("내용은 =>",content)
     }
   };
 

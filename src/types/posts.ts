@@ -1,6 +1,7 @@
 type UserProfile = {
   nickname: string;
   avatar_img_url: string;
+  id: string;
 };
 
 export type PostDetailDateType = {
@@ -79,4 +80,12 @@ export type ToggleProps = {
   onToggle: (toggled: boolean) => void;
   onIcon: React.ReactNode;
   offIcon: React.ReactNode;
+};
+
+export type FormButtonProps = {
+  text: string;
+  width?: string;
+  postId: string;
+  categoryNow?: string;
+  redirectUrl: string;
 };

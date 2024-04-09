@@ -17,6 +17,14 @@ export const getPosts = async (offset = 0, limit = 10) => {
   }
 };
 
+// posts 테이블에서 게시글 삭제하기
+export const removeCommunityPost = async (postId: string) => {
+  const { error } = await supabase.from('posts').delete().eq('id', postId);
+  if (error) {
+    console.error(`Failed to delete data from Supabase - ${error.message}`);
+  }
+};
+
 // posts 첨부 이미지를 스토리지에 upload
 export const uploadPostImageToStorage = async (file: File) => {
   const fileNewName = crypto.randomUUID();
@@ -51,12 +59,9 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-export const updateCommunityPost = async (postId: string, title: string, content: string, ) => {
-  const { data, error } = await supabase
-    .from('posts')
-    .update({ title, content })
-    .eq('id', postId)
-    .select();
+// post를 업데이트
+export const updateCommunityPost = async (postId: string, title: string, content: string, category: string) => {
+  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', postId).select();
 
   if (data && !error) {
   }
@@ -108,10 +113,9 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
   }
 };
 
-
 export const fetchPost = async (id: string | undefined) => {
   try {
-    const { data: posts, error } = await supabase.from('posts').select('*').eq("postId", id);
+    const { data: posts, error } = await supabase.from('posts').select('*').eq('postId', id);
     if (error) throw error;
     console.log(posts);
     return posts![0];

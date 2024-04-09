@@ -12,18 +12,25 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 
 import type { Post, PostDetailDateType } from '@/types/posts';
-import { supabase } from '@/utils/supabase/supabase';
-import { User } from '@supabase/supabase-js';
+import { PostDeleteButton } from '@/components/common/PostDeleteButton';
+import { PostEditButton } from '@/components/common/PostEditButton';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
 
 const DetailPost = () => {
+  const { getCurrentUserProfile } = useAuth();
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
-  const [currentUser, setCurrentUser] = useState<{ user: User } | null>(null);
 
   type Params = {
     category: string;
     id: string;
   };
+
+  const { data: profile } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getCurrentUserProfile
+  });
 
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
@@ -45,6 +52,7 @@ const DetailPost = () => {
       setNextBeforePost(nextPosts);
     };
 
+    
     postDetailDate();
   }, []);
 
@@ -70,9 +78,8 @@ const DetailPost = () => {
     }
   };
 
-  const navigateToPostPage = (postId: string) => {
-    router.push(`/community-list/${categoryNow}/${postId}/edit`);
-  };
+
+
 
   return (
     <article>
@@ -102,10 +109,20 @@ const DetailPost = () => {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className="flex">
-                    <button onClick={() => navigateToPostPage(post.id)}>수정</button>
-                    <button>삭제</button>
-                  </div>
+                  {profile && post.author_id === profile.id && (
+                    <div className="flex">
+                      <PostEditButton
+                        text="수정"
+                        postId={post.id}
+                        redirectUrl={`/community-list/${categoryNow}/${post.id}/edit`}
+                      />
+                      <PostDeleteButton
+                        text="삭제"
+                        postId={post.id}
+                        redirectUrl={`/community-list?category=${categoryNow}`}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <p

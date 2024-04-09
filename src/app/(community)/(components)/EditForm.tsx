@@ -10,7 +10,7 @@ import { CommunityEditFormProps } from '@/types/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
-const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls }: CommunityEditFormProps) => {
+const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEditFormProps) => {
   const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState(prevTitle);
   const [content, setContent] = useState<string>(prevContent);
@@ -26,6 +26,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
     category: string;
     id: string;
   };
+
   const router = useRouter();
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
@@ -49,12 +50,12 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
-  //
+  // 게시글 제목 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  //
+  // 에디터 내용
   const handleEditorChange = (content: string) => {
     setContent(content);
   };
@@ -79,7 +80,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
   return (
     <form onSubmit={async (e) => {
       e.preventDefault();
-      await updateCommunityPost(postId, title, content);
+      await updateCommunityPost( postId, title, content, category);
       alert('수정이 완료되었습니다.');
       navigateToCreatedPost(postId);
     }}>
