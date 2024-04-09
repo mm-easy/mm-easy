@@ -249,6 +249,8 @@ const QuizForm = () => {
                 <p className="text-xs text-pointColor1">퀴즈 제목</p>
                 <BlueInput
                   value={title}
+                  width="w-[385px]"
+                  maxNum={15}
                   onInput={(e) => handleMaxLength(e, 15)}
                   onChange={(e) => setTitle(e.target.value)}
                 />
@@ -257,7 +259,13 @@ const QuizForm = () => {
           </div>
           <div className="flex flex-col gap-1 w-auto">
             <p className="text-xs text-pointColor1">퀴즈 설명</p>
-            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
+            <BlueInput
+              value={info}
+              width="w-[570px]"
+              maxNum={30}
+              onInput={(e) => handleMaxLength(e, 30)}
+              onChange={(e) => setInfo(e.target.value)}
+            />
           </div>
         </div>
         <QuestionForm questions={questions} setQuestions={setQuestions} />

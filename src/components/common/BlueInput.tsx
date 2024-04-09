@@ -2,6 +2,8 @@ import React from 'react';
 
 interface BlueInputProps {
   value: string;
+  width?: string;
+  maxNum?: number;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -16,17 +18,19 @@ interface BlueLevelSelectProps {
   onChange: (value: number) => void;
 }
 
-export const BlueInput: React.FC<BlueInputProps> = ({ value, onInput, onChange }) => {
+export const BlueInput: React.FC<BlueInputProps> = ({ value, width, maxNum, onInput, onChange }) => {
   return (
     <div className="w-full relative text-pointColor1">
       <input
-        className="border border-solid border-pointColor1 w-96 p-2 rounded-md"
+        className={`border border-solid border-pointColor1 p-2 rounded-md ${width}`}
         type="text"
         value={value}
         onInput={onInput}
         onChange={onChange}
       />
-      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 25</p>
+      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">
+        {value.length} / {maxNum}
+      </p>
     </div>
   );
 };
