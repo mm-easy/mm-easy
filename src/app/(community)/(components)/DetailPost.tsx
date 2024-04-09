@@ -15,17 +15,12 @@ import { PostEditButton } from '@/components/common/PostEditButton';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 
-import type { Post, PostDetailDateType } from '@/types/posts';
+import type { Params, Post, PostDetailDateType } from '@/types/posts';
 
 const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
-
-  type Params = {
-    category: string;
-    id: string;
-  };
 
   const { data: profile } = useQuery({
     queryKey: ['userProfile'],

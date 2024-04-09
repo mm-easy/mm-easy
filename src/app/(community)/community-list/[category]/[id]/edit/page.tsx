@@ -3,39 +3,50 @@
 import EditForm from '@/app/(community)/(components)/EditForm';
 import { supabase } from '@/utils/supabase/supabase';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
+
 
 import type { Post } from '@/types/posts';
+import { fetchPost } from '@/api/posts';
 
 const EditPage = ({ params }: { params: { id: string } }) => {
+  const { getCurrentUserProfile } = useAuth();
   const postId = params.id;
-  const [post, setPost] = useState<Post | null>(null);
+  
+    const { data: userProfile, isLoading: isProfileLoading } = useQuery({
+      queryKey: ['userProfile'],
+      queryFn: getCurrentUserProfile
+    });
 
-  useEffect(() => {
-    const fetchPost = async () => {
+  const {
+    data: post,
+    isLoading,
+    isError
+  } = useQuery({
+    queryFn: async () => {
       try {
-        const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
-
-        if (error) throw error;
-        setPost(posts[0]);
+        const data = await fetchPost(postId);
+        return data;
       } catch (error) {
-        console.error(error);
+        return error;
       }
-    };
+    },
+    queryKey: ['posts']
+  });
 
-    fetchPost();
-  }, [postId]);
-
-  if (!post) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  const { title, content, imageUrl, category, author_id } = post;
 
   return (
     <div>
       <EditForm
         postId={postId}
-        prevTitle={post.title}
-        prevContent={post.content}
-        prevImageUrls={post.imageUrl}
-        prevCategory={post.category}
-        prevAuthorId={post.author_id}
+        prevTitle={title}
+        prevContent={content}
+        prevImageUrls={imageUrl}
+        prevCategory={category}
+        prevAuthorId={author_id}
       />
     </div>
   );

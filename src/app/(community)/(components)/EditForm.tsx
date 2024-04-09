@@ -30,19 +30,18 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
 
   useEffect(() => {
     if (isProfileLoading) {
-      // 사용자 정보 로딩 중인 경우, 아직 아무것도 하지 않음
       return;
     }
   
     if (!userProfile) {
-      // 사용자 정보가 없으면 로그인 페이지로 리다이렉트
+      // 사용자 정보가 없으면 로그인 페이지로 이동
       router.push('/login');
       toast('로그인 후 이용해 주세요');
       return;
     }
   
     if (userProfile.id !== prevAuthorId) {
-      // 사용자가 게시글의 작성자가 아닌 경우, 리다이렉트
+      // 사용자가 게시글의 작성자가 아닌 경우 게시글 리스트로 ㅇ
       router.push('/community-list?category=전체');
       toast('접근할 수 없는 게시글 입니다.');
     } else {

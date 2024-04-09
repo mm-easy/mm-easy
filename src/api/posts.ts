@@ -25,7 +25,7 @@ export const getRecentPosts = async () => {
 
   if (error) throw error;
   return posts || [];
-}
+};
 
 // posts 테이블에서 게시글 삭제하기
 export const removeCommunityPost = async (postId: string) => {
@@ -125,7 +125,7 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
 
 export const fetchPost = async (id: string | undefined) => {
   try {
-    const { data: posts, error } = await supabase.from('posts').select('*').eq('postId', id);
+    const { data: posts, error } = await supabase.from('posts').select('*').eq('id', id);
     if (error) throw error;
     console.log(posts);
     return posts![0];
