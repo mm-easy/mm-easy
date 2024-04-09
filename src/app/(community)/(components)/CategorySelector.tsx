@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('');
 
   const router = useRouter();
 
@@ -13,6 +13,10 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     공부: '공부',
     일기: '일기'
   };
+
+  useEffect(() => {
+    setSelectedCategory(categoryNow);
+  }, [categoryNow]);
 
   const handleSelectCategory = (category: string) => {
     setSelectedCategory(category);

@@ -19,6 +19,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { QuestionType, type Question } from '@/types/quizzes';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
+import UnloadImgBtn from './UnloadImg';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -250,6 +251,16 @@ const QuizForm = () => {
     }
   };
 
+  /** 첨부한 이미지 삭제하기 */
+  const handleRemoveImg = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    setFile(null);
+    setSelectedImg(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
       <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
@@ -257,7 +268,7 @@ const QuizForm = () => {
           <div className="flex gap-10">
             <div
               onClick={handleClickImg}
-              className="bg-gray-200 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
+              className="relative bg-gray-200 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
             >
               <Image
                 src={selectedImg}
@@ -266,6 +277,7 @@ const QuizForm = () => {
                 height={144}
                 className="w-full h-full object-cover cursor-pointer"
               />
+              {file && <UnloadImgBtn onClick={handleRemoveImg} />}
               <input type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleChangeImg} />
             </div>
             <div className="flex flex-col justify-between">
@@ -277,6 +289,8 @@ const QuizForm = () => {
                 <p className="text-xs text-pointColor1">퀴즈 제목</p>
                 <BlueInput
                   value={title}
+                  width="w-[385px]"
+                  maxNum={15}
                   onInput={(e) => handleMaxLength(e, 15)}
                   onChange={(e) => setTitle(e.target.value)}
                 />
@@ -285,7 +299,13 @@ const QuizForm = () => {
           </div>
           <div className="flex flex-col gap-1 w-auto">
             <p className="text-xs text-pointColor1">퀴즈 설명</p>
-            <BlueTextArea value={info} onChange={(e) => setInfo(e.target.value)} />
+            <BlueInput
+              value={info}
+              width="w-[570px]"
+              maxNum={30}
+              onInput={(e) => handleMaxLength(e, 30)}
+              onChange={(e) => setInfo(e.target.value)}
+            />
           </div>
         </div>
         <QuestionForm questions={questions} setQuestions={setQuestions} />
