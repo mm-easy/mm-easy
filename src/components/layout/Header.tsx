@@ -12,7 +12,7 @@ import { supabase } from '@/utils/supabase/supabase';
 // import MenuPage from '@/app/menu/page';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
+  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const { logout } = useAuth();
 
