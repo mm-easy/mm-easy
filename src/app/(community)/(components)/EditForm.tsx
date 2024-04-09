@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { insertPost, updateCommunityPost } from '@/api/posts';
 import { CommunityEditFormProps } from '@/types/posts';
 
@@ -15,7 +15,12 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevImageUrls 
   const [title, setTitle] = useState(prevTitle);
   const [content, setContent] = useState<string>(prevContent);
   const [category, setCategory] = useState(prevCategory);
-  // const [imageUrls, setImageUrls] = useState<string[]>([...prevImageUrls]);
+
+   useEffect(() => {
+    setTitle(prevTitle);
+    setContent(prevContent);
+    setCategory(prevCategory);
+  }, [prevTitle, prevContent, prevCategory, postId]);
 
   type Params = {
     category: string;

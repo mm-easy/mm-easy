@@ -40,6 +40,7 @@ export type Post = {
   category: string;
   nickname: string;
   profiles: UserProfile;
+  imageUrl: string[];
 };
 
 export type MenuItem = {
@@ -69,7 +70,7 @@ export type CommunityEditFormProps = {
   postId: string;
   prevTitle: string;
   prevContent: string;
-  prevCategory: string
+  prevCategory: string;
   prevImageUrls: string[];
 };
 

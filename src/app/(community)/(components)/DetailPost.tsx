@@ -48,21 +48,6 @@ const DetailPost = () => {
     postDetailDate();
   }, []);
 
-  useEffect(() => {
-    // 현재 로그인한 사용자 정보 가져오기
-    const fetchUser = async () => {
-      const { data: user, error } = await supabase.auth.getUser();
-      if (error) {
-        // 오류 처리
-        console.error('Error fetching user:', error);
-      } else {
-        setCurrentUser(user);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
 
@@ -118,10 +103,7 @@ const DetailPost = () => {
                 </div>
                 <div className="flex">
                   <div className="flex">
-                    {/* 사용자 확인 후 조건부 렌더링 */}
-                    {currentUser && post && currentUser.user.id === post.author_id && (
-                      <button onClick={() => navigateToPostPage(post.id)}>수정</button>
-                    )}
+                    <button onClick={() => navigateToPostPage(post.id)}>수정</button>
                     <button>삭제</button>
                   </div>
                 </div>

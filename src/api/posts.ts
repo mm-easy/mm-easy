@@ -51,10 +51,10 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-export const updateCommunityPost = async (postId: string, title: string, content: string,  ) => {
+export const updateCommunityPost = async (postId: string, title: string, content: string, ) => {
   const { data, error } = await supabase
     .from('posts')
-    .update({ title, content,  })
+    .update({ title, content })
     .eq('id', postId)
     .select();
 
