@@ -13,10 +13,18 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 import Header from './Header';
 import { toast } from 'react-toastify';
 
+type Answer = {
+  id: string | undefined;
+  answer: string;
+};
+
 const QuizTryPage = () => {
   const { id } = useParams();
+  // const [objectiveAnswer, setObjectiveAnswer] = useState('');
+  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
   const [score, setScore] = useState(0);
+  console.log(usersAnswers);
 
   const {
     data: quizData,
@@ -59,33 +67,44 @@ const QuizTryPage = () => {
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
-  let questions = questionsData as GetQuestions[];
+  const questions = questionsData as GetQuestions[];
+
+  const handleGetAnswer = (id: string | undefined, answer: string) => {
+    const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
+    const newAnswers = [...usersAnswers];
+
+    idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
+
+    setUsersAnswers(newAnswers);
+  };
 
   /** 선택형 채점 */
-  const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
-    if (is_correct) {
-      checkRightAnswer(id);
-    } else {
-      checkWrongAnswer(id);
-    }
-  };
+  // const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
+  //   if (is_correct) {
+  //     checkRightAnswer(id);
+  //   } else {
+  //     checkWrongAnswer(id);
+  //   }
+  // };
 
-  /** 주관형 채점 */
-  const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
-    if (usersAnswer === correct_answer) {
-      checkRightAnswer(id);
-    } else {
-      checkWrongAnswer(id);
-    }
-  };
+  // /** 주관형 채점 */
+  // const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
+  //   if (usersAnswer === correct_answer) {
+  //     checkRightAnswer(id);
+  //   } else {
+  //     checkWrongAnswer(id);
+  //   }
+  // };
 
-  const checkRightAnswer = (id: string | undefined) => {
-    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
-  };
+  // const checkRightAnswer = (id: string | undefined) => {
+  //   questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
+  //   toast.warn('정답');
+  // };
 
-  const checkWrongAnswer = (id: string | undefined) => {
-    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
-  };
+  // const checkWrongAnswer = (id: string | undefined) => {
+  //   questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
+  //   toast.warn('오답');
+  // };
 
   const handleResultMode = () => {
     let questionsHasNotAnswer = false;
@@ -149,9 +168,9 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="py-8 flex flex-col place-items-center gap-10">
+        <article className="pt-12 pb-20 flex flex-col place-items-center gap-10">
           {resultMode && (
-            <h1>
+            <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
             </h1>
           )}
@@ -168,7 +187,7 @@ const QuizTryPage = () => {
                   className="h-[200px] object-cover rounded-md"
                 />
                 {type === QuestionType.objective ? (
-                  <Options id={id} onChange={handleGradeSubjectiveAnswer} />
+                  <Options id={id} resultMode={resultMode} onChange={handleGetAnswer} />
                 ) : (
                   <div className="w-full relative">
                     <input
@@ -176,10 +195,12 @@ const QuizTryPage = () => {
                       className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                       onChange={(e) => {
                         handleMaxLength(e, 25);
-                        handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                        handleGetAnswer(id, e.target.value);
+                        // handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                        // setObjectiveAnswer(e.target.value);
                       }}
                     />
-                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">0/25</p>
+                    {/* <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{objectiveAnswer.length}/25</p> */}
                   </div>
                 )}
               </section>
