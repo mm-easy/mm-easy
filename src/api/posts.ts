@@ -17,6 +17,17 @@ export const getPosts = async (offset = 0, limit = 10) => {
   }
 };
 
+export const getRecentPosts = async () => {
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
+    .limit(3); // 3개의 게시글만 가져옴
+
+  if (error) throw error;
+  return posts || [];
+};
+
 // posts 첨부 이미지를 스토리지에 upload
 export const uploadPostImageToStorage = async (file: File) => {
   const fileNewName = crypto.randomUUID();
