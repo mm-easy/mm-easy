@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
-import { useEffect, useState } from 'react';
+import CategorySelector from './CategorySelector';
 import { toast } from 'react-toastify';
 import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
@@ -11,7 +12,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 
 import type { Post, PostDetailDateType } from '@/types/posts';
-import CategorySelector from './CategorySelector';
 
 const DetailPost = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -41,13 +41,8 @@ const DetailPost = () => {
       setPost(data);
       setNextBeforePost(nextPosts);
     };
-    // const nextPosts = async () => {
-    //   const allPost = await getPosts();
-    //   setNextBeforePost(allPost);
-    // };
 
     postDetailDate();
-    // nextPosts();
   }, []);
 
   const beforePostBtn = (postId: string) => {
@@ -75,7 +70,6 @@ const DetailPost = () => {
   return (
     <article>
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
-        {/* <CommunityMenu /> */}
         <CategorySelector />
         <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
           {post && post.profiles && (

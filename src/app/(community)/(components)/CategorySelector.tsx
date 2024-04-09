@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CategorySelectorProps } from '@/types/posts';
 import { useRouter } from 'next/navigation';
 
 const CategorySelector = () => {
@@ -15,7 +14,6 @@ const CategorySelector = () => {
   };
 
   const handleSelectCategory = (category: string) => {
-    // onSelectCategory(categoryMenu[category]);
     setSelectedCategory(category);
     router.push(`/community-list?category=${categoryMenu[category]}`);
   };

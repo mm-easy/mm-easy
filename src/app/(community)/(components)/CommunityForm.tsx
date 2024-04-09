@@ -1,10 +1,11 @@
 // CommunityForm.tsx
 'use client';
 
-import { CommunityFormProps } from '@/types/posts';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+
+import type { CommunityFormProps } from '@/types/posts';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
@@ -18,7 +19,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const router = useRouter();
 
   const navigateToDetailPost = (post: { id: string }): void => {
-    router.push(`/community-list/${category}/${post.id}`);
+    if (category === null) {
+      router.push(`/community-list/전체/${post.id}`);
+    } else {
+      router.push(`/community-list/${category}/${post.id}`);
+    }
   };
 
   const truncateTitle = (title: string): string => {

@@ -1,21 +1,21 @@
 // CommunityPage.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getFilterPosts, getPosts } from '@/api/posts';
 import CategorySelector from '../(components)/CategorySelector';
 import CommunityForm from '../(components)/CommunityForm';
-import { Post } from '@/types/posts';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getFilterPosts, getPosts } from '@/api/posts';
 import { BlueButton } from '@/components/common/FormButtons';
-import { supabase } from '@/utils/supabase/supabase';
+
+import type { Post } from '@/types/posts';
 
 const CommunityPage = () => {
-  const [totalList, setTotalList] = useState<Post[]>([]);
+  // const [totalList, setTotalList] = useState<Post[]>([]);
 
-  const [selectedCategory, setSelectedCategory] = useState('');
+  // const [selectedCategory, setSelectedCategory] = useState('');
 
-  const [filteredList, setFilteredList] = useState<Post[]>([]);
+  // const [filteredList, setFilteredList] = useState<Post[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
