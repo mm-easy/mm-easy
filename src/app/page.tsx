@@ -2,6 +2,11 @@
 
 import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
+import QuizSection from './(main)/(components)/QuizSection';
+import CommunitySection from './(main)/(components)/CommunitySection';
+import MainLogo from './(main)/(components)/MainLogo';
+import RankingSection from './(main)/(components)/RankingSection';
+
 const Home = () => {
   useEffect(() => {
     const saveUserProfile = async () => {
@@ -30,10 +35,15 @@ const Home = () => {
     };
     saveUserProfile();
   }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center pt-16">
-      <h1>MM-Easy</h1>
+    <div className="min-h-screen">
+    <MainLogo />
+    <QuizSection/>
+    <RankingSection />
+    <CommunitySection />
     </div>
   );
 };
+
 export default Home;

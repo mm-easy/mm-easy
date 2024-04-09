@@ -17,6 +17,17 @@ export const getPosts = async (offset = 0, limit = 10) => {
   }
 };
 
+export const getRecentPosts = async () => {
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
+    .limit(3); // 3개의 게시글만 가져옴
+
+  if (error) throw error;
+  return posts || [];
+}
+
 // posts 테이블에서 게시글 삭제하기
 export const removeCommunityPost = async (postId: string) => {
   const { error } = await supabase.from('posts').delete().eq('id', postId);
