@@ -9,32 +9,32 @@ import { Post } from '@/types/posts';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BlueButton } from '@/components/common/FormButtons';
 import { supabase } from '@/utils/supabase/supabase';
-import CommunityMenu from '../(components)/CommunityMenu';
 
 const CommunityPage = () => {
-  // const [totalList, setTotalList] = useState<Post[]>([]);
+  const [totalList, setTotalList] = useState<Post[]>([]);
 
-  // const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
-  // const [filteredList, setFilteredList] = useState<Post[]>([]);
+  const [filteredList, setFilteredList] = useState<Post[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
 
   const [post, setPost] = useState<Post[]>([]);
   const params = useSearchParams();
+
   const category = params.get('category');
-  // console.log('params', params);
 
   useEffect(() => {
     const postNow = async () => {
       let data;
       try {
-        if (category === '전체') {
+        if (category === '전체' || category === null) {
           data = await getPosts();
         } else {
           data = await getFilterPosts(category);
         }
+        setCurrentPage(1);
         setPost(data);
       } catch (error) {
         console.error('포스트를 가져오는 중 오류 발생:', error);
@@ -62,11 +62,11 @@ const CommunityPage = () => {
   // }, []);
 
   // useEffect(() => {
-  //   setFilteredList(
-  //     selectedCategory === '' ? totalList : totalList.filter((item) => item.category === selectedCategory)
-  //   );
-  //   setCurrentPage(1); // 카테고리 변경 시 페이지를 1로 재설정
-  // }, [selectedCategory, totalList]);
+  //   // setFilteredList(
+  //   //   selectedCategory === '' ? totalList : totalList.filter((item) => item.category === selectedCategory)
+  //   // );
+  //   // 카테고리 변경 시 페이지를 1로 재설정
+  // }, [selectedCategory]);
 
   const navigateToPostPage = () => {
     router.push('/community-post');
@@ -81,8 +81,8 @@ const CommunityPage = () => {
     <article className="flex">
       <div className="">
         <div className="">
-          {/* <CategorySelector onSelectCategory={setSelectedCategory} /> */}
-          <CommunityMenu />
+          <CategorySelector />
+          {/* <CommunityMenu /> */}
         </div>
         <div className="flex justify-center pt-64 pb-12">
           <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
