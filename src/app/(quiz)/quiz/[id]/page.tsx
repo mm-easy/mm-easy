@@ -12,6 +12,7 @@ import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import Header from './Header';
 import { toast } from 'react-toastify';
+import { SiAnswer } from 'react-icons/si';
 
 type Answer = {
   id: string | undefined;
@@ -107,27 +108,20 @@ const QuizTryPage = () => {
   // };
 
   const handleResultMode = () => {
-    let questionsHasNotAnswer = false;
-
     if (!resultMode) {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
-      console.log(questions);
-      for (const question of questions) {
+      if (questions.length !== usersAnswers.length) {
         // 모든 문제에 답이 제출됐는지 확인
-        if (!question.hasOwnProperty('is_correct')) {
-          questionsHasNotAnswer = true; // 답이 없다면 true
-          break;
-        }
-      }
-
-      if (questionsHasNotAnswer) {
         toast.warn('모든 문제를 풀어줘!');
       } else {
         let countCorrect = 0;
 
-        for (const question of questions) {
-          if (question.is_correct) countCorrect++;
+        for (const usersAnswer of usersAnswers) {
+          const question = questions.find((question) => question.id === usersAnswer.id);
+
+          if (question && usersAnswer.answer === question.correct_answer) countCorrect++;
         }
+
         setResultMode(true);
         setScore(countCorrect);
       }
