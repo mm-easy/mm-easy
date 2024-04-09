@@ -6,7 +6,9 @@ export type Word = {
   }
 
 export enum Difficulty {
-    Easy = 1,
+    VeryEasy = 1,
+    Easy,
     Medium,
-    Hard
+    Hard,
+    VeryHard,
   }
