@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const CategorySelector = () => {
+const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+
   const router = useRouter();
 
   const categoryMenu: Record<string, string> = {
@@ -25,7 +26,7 @@ const CategorySelector = () => {
           <li
             key={category}
             className={`p-5 pl-6 border-x border-b border-solid border-pointColor1 cursor-pointer ${
-              selectedCategory === category ? 'bg-pointColor1 text-white' : 'bg-white'
+              selectedCategory === category || categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
           >

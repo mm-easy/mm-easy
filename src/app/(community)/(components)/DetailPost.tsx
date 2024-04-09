@@ -70,7 +70,7 @@ const DetailPost = () => {
   return (
     <article>
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
-        <CategorySelector />
+        <CategorySelector categoryNow={categoryNow} />
         <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
           {post && post.profiles && (
             <div>
@@ -118,7 +118,7 @@ const DetailPost = () => {
                 <button onClick={() => nextPostBtn(post.id)}>
                   <IoMdArrowDropleft />
                 </button>
-                <Link href="/community-list">목록으로</Link>
+                <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
                 <button onClick={() => beforePostBtn(post.id)}>
                   <IoMdArrowDropright />
                 </button>

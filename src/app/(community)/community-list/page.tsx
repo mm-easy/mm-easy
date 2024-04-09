@@ -53,7 +53,7 @@ const CommunityPage = () => {
     <article className="flex">
       <div className="">
         <div className="">
-          <CategorySelector />
+          <CategorySelector categoryNow={category} />
         </div>
         <div className="flex justify-center pt-64 pb-12">
           <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
