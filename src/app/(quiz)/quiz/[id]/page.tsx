@@ -10,6 +10,8 @@ import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
 import { useState } from 'react';
 import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import Header from './Header';
+import { toast } from 'react-toastify';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -55,25 +57,38 @@ const QuizTryPage = () => {
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
-  const questions = questionsData as Question[];
+  let questions = questionsData as Question[];
+  // const copyOfQuestions = questions;
+
+  const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
+    if (is_correct) {
+      checkRightAnswer();
+    } else {
+      checkWrongAnswer();
+    }
+  };
+
+  const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
+    if (usersAnswer === correct_answer) {
+      checkRightAnswer();
+    } else {
+      checkWrongAnswer();
+    }
+  };
+
+  const checkRightAnswer = () => {
+    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
+    toast.warn('정답');
+  };
+
+  const checkWrongAnswer = () => {
+    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
+    toast.warn('오답');
+  };
 
   return (
     <>
-      <header className="h-[8vh] flex leading-[7.5vh] border-solid border-b-2 border-pointColor1">
-        <h2 className="w-[10%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
-          퀴즈 풀기
-        </h2>
-        <h2 className="w-[8%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
-          난이도
-        </h2>
-        <h3 className="w-[8%] text-center border-solid border-r-2 border-pointColor1">
-          {level === 1 ? '순한맛' : level === 2 ? '중간맛' : '매운맛'}
-        </h3>
-        <h2 className="w-[8%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
-          제목
-        </h2>
-        <h3 className="pl-[2%]">{title}</h3>
-      </header>
+      <Header level={level} title={title} />
       <main className="grid grid-cols-[10%_90%]">
         <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           <section>
@@ -99,7 +114,7 @@ const QuizTryPage = () => {
         </article>
         <article className="py-8 flex flex-col place-items-center gap-10">
           {questions.map((question) => {
-            const { id, title, type, img_url } = question;
+            const { id, title, type, img_url, correct_answer } = question;
             return (
               <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
                 <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
@@ -111,13 +126,16 @@ const QuizTryPage = () => {
                   className="h-[200px] object-cover rounded-md"
                 />
                 {type === QuestionType.objective ? (
-                  <Options id={id} />
+                  <Options id={id} onChange={handleGradeSubjectiveAnswer} />
                 ) : (
                   <div className="w-full relative">
                     <input
                       type="text"
                       className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
-                      onChange={(e) => handleMaxLength(e, 25)}
+                      onChange={(e) => {
+                        handleMaxLength(e, 25);
+                        handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                      }}
                     />
                     <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">0/25</p>
                   </div>
