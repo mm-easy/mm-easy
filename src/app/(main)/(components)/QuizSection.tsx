@@ -21,7 +21,7 @@ const QuizSection = () => {
     return (
         <>
         <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-b border-solid border-pointColor1">
-        최근 올라온 퀴즈
+        <p className="ml-4">최근 올라온 퀴즈</p>
         </div>
         <section className="">
         <div className="grid grid-cols-4 gap-2 p-4">
