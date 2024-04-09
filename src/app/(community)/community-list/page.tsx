@@ -72,7 +72,7 @@ const CommunityPage = () => {
           <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
         </div>
       </div>
-      <div className="flex w-full">
+      <div className="flex w-full border-l border-solid  border-pointColor1">
         <div className="flex justify-center w-full px-24">
           <CommunityForm
             currentItems={currentItems}

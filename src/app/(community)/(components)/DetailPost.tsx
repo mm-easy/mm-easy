@@ -69,7 +69,6 @@ const DetailPost = () => {
 
   const nextPostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
-    console.log(nowPostNum);
     if (nowPostNum - 1 < 0) {
       toast.warning('가장 최신글 입니다!');
       return;
@@ -80,29 +79,31 @@ const DetailPost = () => {
 
   return (
     <article>
-      <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">
-        <CategorySelector categoryNow={categoryNow} />
-        <div className="py-10 bg-white px-20 border-2 border-solid border-t-0 border-r-0 border-pointColor1 w-full">
+      <div className="flex bg-bgColor1 text-pointColor1">
+        <div>
+          <CategorySelector categoryNow={categoryNow} />
+        </div>
+        <div className="py-10 px-20 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
                 <p>{post.category}</p>
               </div>
-              <h1 className="text-2xl font-bolder">{post.title}</h1>
-              <div className="flex border-solid border-b-2 justify-between ">
+              <h1 className="text-2xl font-bolder font-bold text-blackColor ">{post.title}</h1>
+              <div className="flex border-solid border-b justify-between ">
                 <div className="flex">
-                  <div className="m-5 w-70 h-70 rounded-full overflow-hidden border-2 border-solid border-pointColor1">
+                  <div className="w-50 h-50 m-3 ml-0 rounded-full overflow-hidden">
                     <Image
                       src={post.profiles.avatar_img_url}
                       alt="프로필이미지"
-                      width={70}
-                      height={70}
+                      width={50}
+                      height={50}
                       className="object-cover"
                     />
                   </div>
                   <div className="flex flex-col justify-center text-blackColor">
                     <p>{post.profiles.nickname}</p>
-                    <time>{formatToLocaleDateTimeString(post.created_at)}</time>
+                    <time className="text-sm">{formatToLocaleDateTimeString(post.created_at)}</time>
                   </div>
                 </div>
                 <div className="flex">
@@ -123,7 +124,7 @@ const DetailPost = () => {
                 </div>
               </div>
               <p
-                className="ql-editor m-5 text-blackColor"
+                className="my-5 ql-editor text-blackColor"
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
               ></p>
               <div className="flex items-center">
@@ -131,7 +132,7 @@ const DetailPost = () => {
                   <Like postId={params.id} />
                 </div>
               </div>
-              <div className="border-solid border-t-2">
+              <div className="border-solid border-t">
                 <span>댓글</span>
                 <Comment postId={params.id} />
               </div>
