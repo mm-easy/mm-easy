@@ -12,12 +12,10 @@ const QuestionEx = ({id}:{id:string|undefined}) => {
         return error;
       }
     },
-    queryKey: ['questions',id]
+    queryKey: ['questions', id]
   });
 
   if(isLoading){return <div>로딩 중..</div>}
-
-  console.log(data)
 
   const question = data as Question[];
   const {title} = question[0]
@@ -27,4 +25,4 @@ const QuestionEx = ({id}:{id:string|undefined}) => {
   )
 }
 
-export default QuestionEx
+export default QuestionEx;

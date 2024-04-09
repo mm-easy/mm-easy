@@ -13,7 +13,6 @@ const QuizSection = () => {
             queryFn: getRecentQuizzes, 
             staleTime: 1000 * 60 * 5,
           });
-
         
           if (isLoading) {
             return <div>로딩중..</div>; 
