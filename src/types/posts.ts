@@ -62,8 +62,8 @@ export type CommunityFormProps = {
   totalNum: number;
   pageRange: number;
   btnRange: number;
+  category: string | null;
 };
-
 
 export type ToggleProps = {
   toggled: boolean;
