@@ -7,7 +7,9 @@ import { Word } from '@/types/word';
 const difficultySettings: { [key: number]: { speed: number; interval: number } } = {
   1: { speed: 20, interval: 2000 },
   2: { speed: 30, interval: 2000 },
-  3: { speed: 40, interval: 2000 }
+  3: { speed: 40, interval: 2000 },
+  4: { speed: 50, interval: 2000 },
+  5: { speed: 60, interval: 1000 },
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length; 
