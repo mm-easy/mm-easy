@@ -1,12 +1,12 @@
 'use client';
+
 import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
-import QuizSection from './(main)/(components)/quizSection';
+import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
 import Image from 'next/image';
 
 const Home = () => {
-
   useEffect(() => {
     const saveUserProfile = async () => {
       const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
@@ -17,27 +17,23 @@ const Home = () => {
           const id = user.id;
           const email = user.email;
           const nickname = email.split('@')[0];
-
           try {
-            const { error } = await supabase 
-            .from('profiles')
-            .upsert([
-              { id, email, nickname, avatar_img_url: "https://via.placeholder.com/150" }
-            ], {
-              onConflict: "id"
-            });
+            const { error } = await supabase
+              .from('profiles')
+              .upsert([{ id, email, nickname, avatar_img_url: 'https://via.placeholder.com/150' }], {
+                onConflict: 'id'
+              });
             if (error) {
               console.error('프로필 정보 저장 실패:', error.message);
             }
-            } catch (error) {
+          } catch (error) {
             console.error(error);
-            }
           }
         }
-  };
-      saveUserProfile();
-    }, []);
-
+      }
+    };
+    saveUserProfile();
+  }, []);
   return (
     <div className="min-h-screen">
       <header className="w-full h-400 relative"> 
@@ -68,5 +64,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

@@ -1,5 +1,5 @@
-import { Post } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
+import { redirect } from 'next/navigation';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async (offset = 0, limit = 10) => {
@@ -26,6 +26,14 @@ export const getRecentPosts = async () => {
 
   if (error) throw error;
   return posts || [];
+}
+
+// posts 테이블에서 게시글 삭제하기
+export const removeCommunityPost = async (postId: string) => {
+  const { error } = await supabase.from('posts').delete().eq('id', postId);
+  if (error) {
+    console.error(`Failed to delete data from Supabase - ${error.message}`);
+  }
 };
 
 // posts 첨부 이미지를 스토리지에 upload
@@ -62,13 +70,68 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
-export const updatePost = async (id: string, title: string, content: string, category: string) => {
-  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', id);
+// post를 업데이트
+export const updateCommunityPost = async (postId: string, title: string, content: string, category: string) => {
+  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', postId).select();
 
-  if (error) {
-    console.error('게시물 수정 중 오류가 발생했습니다:', error.message);
-    throw new Error(error.message);
+  if (data && !error) {
   }
+};
 
-  return data;
+export const getFilterPosts = async (category: string | null) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname)`)
+      .eq('category', category)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    return posts || [];
+  } catch (error) {
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
+  }
+};
+
+export const getPostDetail = async (postId: string) => {
+  try {
+    const { data: post, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .eq('id', postId);
+    if (error) throw error;
+
+    return post![0] || [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPostCategoryDetail = async (categoryNow: string | null, postId: string) => {
+  try {
+    const { data: post, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .eq('category', categoryNow)
+      .eq('id', postId);
+    if (error) throw error;
+
+    return post![0] || [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchPost = async (id: string | undefined) => {
+  try {
+    const { data: posts, error } = await supabase.from('posts').select('*').eq('postId', id);
+    if (error) throw error;
+    console.log(posts);
+    return posts![0];
+  } catch (error) {
+    console.error();
+    throw error;
+  }
 };

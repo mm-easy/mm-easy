@@ -76,7 +76,7 @@ const Header = () => {
           <nav className="flex gap-14">
             <Link href="/quiz-list">퀴즈</Link>
             <Link href="/typing-game">타자 연습</Link>
-            <Link href="/community-list">커뮤니티</Link>
+            <Link href="/community-list?category=전체">커뮤니티</Link>
             <Link href="/about">서비스 소개</Link>
           </nav>
           {isLoggedIn ? (

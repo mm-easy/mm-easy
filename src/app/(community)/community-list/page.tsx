@@ -1,60 +1,74 @@
 // CommunityPage.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getPosts } from '@/api/posts';
 import CategorySelector from '../(components)/CategorySelector';
 import CommunityForm from '../(components)/CommunityForm';
-import { Post } from '@/types/posts';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getFilterPosts, getPosts } from '@/api/posts';
 import { BlueButton } from '@/components/common/FormButtons';
 
+import type { Post } from '@/types/posts';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'react-toastify';
+
 const CommunityPage = () => {
-  const [totalList, setTotalList] = useState<Post[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [filteredList, setFilteredList] = useState<Post[]>([]);
+  const { getCurrentUserProfile } = useAuth();
+  const [post, setPost] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
   const router = useRouter();
+  const params = useSearchParams();
+  const category = params.get('category');
+
+  const { data: profile } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getCurrentUserProfile
+  });
+
+  useEffect(() => {
+    const postNow = async () => {
+      let data;
+      try {
+        if (category === '전체' || category === null) {
+          data = await getPosts();
+        } else {
+          data = await getFilterPosts(category);
+        }
+        setCurrentPage(1);
+        setPost(data);
+      } catch (error) {
+        console.error('포스트를 가져오는 중 오류 발생:', error);
+        return [];
+      }
+    };
+    postNow();
+  }, [category]);
 
   const pageRange = 2; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
-  const totalNum = filteredList.length; // 총 데이터 수
-
-  const fetchData = async () => {
-    try {
-      const data = await getPosts();
-      setTotalList(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    setFilteredList(
-      selectedCategory === '' ? totalList : totalList.filter((item) => item.category === selectedCategory)
-    );
-    setCurrentPage(1); // 카테고리 변경 시 페이지를 1로 재설정
-  }, [selectedCategory, totalList]);
+  const totalNum = post.length; // 총 데이터 수
 
   const navigateToPostPage = () => {
-    router.push('/community-post');
+    if (!profile) {
+      toast.warn('게시물을 작성하려면 로그인 해주세요.');
+    } else {
+      router.push('/community-post');
+    }
   };
 
   const indexOfLastItem = currentPage * pageRange;
   const indexOfFirstItem = indexOfLastItem - pageRange;
-  const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = post.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <article className="flex">
       <div className="">
         <div className="">
-          <CategorySelector onSelectCategory={setSelectedCategory} />
+          <CategorySelector categoryNow={category} />
         </div>
-        <div className='flex justify-center pt-64 pb-12'>
+        <div className="flex justify-center pt-64 pb-12">
           <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
         </div>
       </div>
@@ -67,6 +81,7 @@ const CommunityPage = () => {
             totalNum={totalNum}
             pageRange={pageRange}
             btnRange={btnRange}
+            category={category}
           />
         </div>
       </div>

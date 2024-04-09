@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
@@ -7,9 +8,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostDetailCommentType } from '@/types/posts';
-import Image from 'next/image';
-import { BlueTextArea } from '@/components/common/BlueInput';
-import { BlueButton, SubmitButton } from '@/components/common/FormButtons';
 
 const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
   const [content, setContent] = useState('');
@@ -190,9 +188,6 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
             </button>
           </div>
         </form>
-        {/* <BlueTextArea /> */}
-
-        {/* <SubmitButton /> */}
       </div>
     </div>
   );
