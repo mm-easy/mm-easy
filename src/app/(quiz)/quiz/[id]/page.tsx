@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
+import { GetQuestions, QuestionType, type GetQuiz } from '@/types/quizzes';
 import { useState } from 'react';
 import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 const QuizTryPage = () => {
   const { id } = useParams();
   const [resultMode, setResultMode] = useState(false);
+  const [score, setScore] = useState(0);
 
   const {
     data: quizData,
@@ -58,7 +59,7 @@ const QuizTryPage = () => {
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
-  let questions = questionsData as Question[];
+  let questions = questionsData as GetQuestions[];
 
   /** 선택형 채점 */
   const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
@@ -103,7 +104,13 @@ const QuizTryPage = () => {
       if (questionsHasNotAnswer) {
         toast.warn('모든 문제를 풀어줘!');
       } else {
+        let countCorrect = 0;
+
+        for (const question of questions) {
+          if (question.is_correct) countCorrect++;
+        }
         setResultMode(true);
+        setScore(countCorrect);
       }
 
       window.scrollTo({
@@ -143,7 +150,11 @@ const QuizTryPage = () => {
           <p className="p-4">{info}</p>
         </article>
         <article className="py-8 flex flex-col place-items-center gap-10">
-          {resultMode && <h1>🎉 0개 중에 0개 맞았습니다! 🎉</h1>}
+          {resultMode && (
+            <h1>
+              🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
+            </h1>
+          )}
           {questions.map((question) => {
             const { id, title, type, img_url, correct_answer } = question;
             return (
