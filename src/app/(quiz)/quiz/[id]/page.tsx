@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { GetQuestions, QuestionType, type GetQuiz } from '@/types/quizzes';
+import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
 import { useState } from 'react';
 import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
@@ -68,7 +68,7 @@ const QuizTryPage = () => {
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
-  const questions = questionsData as GetQuestions[];
+  const questions = questionsData as Question[];
 
   const handleGetAnswer = (id: string | undefined, answer: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
@@ -78,34 +78,6 @@ const QuizTryPage = () => {
 
     setUsersAnswers(newAnswers);
   };
-
-  /** 선택형 채점 */
-  // const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
-  //   if (is_correct) {
-  //     checkRightAnswer(id);
-  //   } else {
-  //     checkWrongAnswer(id);
-  //   }
-  // };
-
-  // /** 주관형 채점 */
-  // const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
-  //   if (usersAnswer === correct_answer) {
-  //     checkRightAnswer(id);
-  //   } else {
-  //     checkWrongAnswer(id);
-  //   }
-  // };
-
-  // const checkRightAnswer = (id: string | undefined) => {
-  //   questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
-  //   toast.warn('정답');
-  // };
-
-  // const checkWrongAnswer = (id: string | undefined) => {
-  //   questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
-  //   toast.warn('오답');
-  // };
 
   const handleResultMode = () => {
     if (!resultMode) {
@@ -119,9 +91,12 @@ const QuizTryPage = () => {
         for (const usersAnswer of usersAnswers) {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
-          if (question && usersAnswer.answer === question.correct_answer) countCorrect++;
+          if (question?.type === QuestionType.objective) {
+            if (!!usersAnswer.answer) countCorrect++;
+          } else {
+            if (usersAnswer.answer === question?.correct_answer) countCorrect++;
+          }
         }
-
         setResultMode(true);
         setScore(countCorrect);
       }

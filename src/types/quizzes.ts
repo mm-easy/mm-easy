@@ -37,10 +37,6 @@ export type Question = {
   options: Option[];
 };
 
-export type GetQuestions = Question & {
-  is_correct: boolean | null;
-};
-
 export type QuestionsToInsert = Pick<Question, 'title' | 'correct_answer'> & {
   quiz_id: string;
   type: QuestionType;

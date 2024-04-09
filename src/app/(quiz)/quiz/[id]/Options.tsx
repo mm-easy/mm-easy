@@ -31,14 +31,14 @@ const Options = ({
   return (
     <section className="w-full flex flex-col gap-4">
       {options.map((option) => {
-        const { id, content } = option;
+        const { id, content, is_answer } = option;
         return (
           <div key={id} className="pl-4 py-[9px] flex gap-4 border-solid border border-pointColor1 rounded-md">
             <input
               type="radio"
               disabled={resultMode}
               name={questionId}
-              onChange={() => onChange(questionId, content)}
+              onChange={() => onChange(questionId, String(is_answer))}
             />
             <p>{content}</p>
           </div>
