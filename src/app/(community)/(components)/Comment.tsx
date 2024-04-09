@@ -87,7 +87,8 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
         const { data: comments, error } = await supabase
           .from('comments')
           .select(`*, profiles!inner(nickname,avatar_img_url)`)
-          .eq('post_id', postId);
+          .eq('post_id', postId)
+          .order('created_at', { ascending: false });
         if (error) throw error;
         setPostCommentList(comments);
       } catch (error) {
@@ -102,13 +103,13 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="flex border-solid border-b-2" key={prev.id}>
-              <div className="flex justify-center m-5 w-10 h-10 rounded-full overflow-hidden border-2 border-solid border-pointColor1">
+            <div className="flex border-solid border-b border-pointColor3" key={prev.id}>
+              <div className="w-50 h-50 m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
                   src={prev.profiles?.avatar_img_url || '프로필이미지'}
                   alt="프로필이미지"
-                  width={100}
-                  height={100}
+                  width={50}
+                  height={50}
                   className="object-cover"
                 />
               </div>
@@ -118,12 +119,13 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
 
                 {btnChange && nowCommentId === prev.id ? (
                   <>
-                    <Box maxWidth="200px">
+                    <Box maxWidth="w-full">
                       <TextArea
                         value={contentChange}
                         onChange={(e) => setContentChange(e.target.value)}
                         variant="classic"
                         placeholder="Reply to comment…"
+                        // className="w-48"
                       />
                     </Box>
                   </>
@@ -170,7 +172,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
       </div>
       <div className="mt-5">
         <form onSubmit={handleSubmitBtn}>
-          {profile?.nickname}
+          <span className="text-blackColor">{profile?.nickname}</span>
           <Box maxWidth="w-full">
             <TextArea
               value={content}
@@ -181,7 +183,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
           </Box>
           <div className="flex justify-end">
             <button
-              className="mt-2 rounded-md text-white border-solid p-2 w-16 border border-white bg-pointColor1"
+              className=" w-16 mt-2 p-2 rounded-md text-white border-solid border border-white bg-pointColor1"
               type="submit"
             >
               등록
