@@ -145,6 +145,7 @@ const QuizTryPage = () => {
           )}
           {questions.map((question) => {
             const { id, title, type, img_url, correct_answer } = question;
+            const usersAnswer = usersAnswers.find((answer) => answer.id === id);
             return (
               <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
                 <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
@@ -159,17 +160,27 @@ const QuizTryPage = () => {
                   <Options id={id} resultMode={resultMode} onChange={handleGetAnswer} />
                 ) : (
                   <div className="w-full relative">
-                    <input
-                      type="text"
-                      className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
-                      onChange={(e) => {
-                        handleMaxLength(e, 25);
-                        handleGetAnswer(id, e.target.value);
-                        // handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
-                        // setObjectiveAnswer(e.target.value);
-                      }}
-                    />
-                    {/* <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{objectiveAnswer.length}/25</p> */}
+                    {resultMode ? (
+                      <p
+                        className={`w-full pl-4 py-[9px] border-solid border ${usersAnswer?.answer === correct_answer ? ' border-pointColor1' : 'border-pointColor2'} rounded-md`}
+                      >
+                        {usersAnswer?.answer}
+                      </p>
+                    ) : (
+                      <>
+                        <input
+                          type="text"
+                          className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                          onChange={(e) => {
+                            handleMaxLength(e, 25);
+                            handleGetAnswer(id, e.target.value);
+                            // handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                            // setObjectiveAnswer(e.target.value);
+                          }}
+                        />
+                        {/* <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{objectiveAnswer.length}/25</p> */}
+                      </>
+                    )}
                   </div>
                 )}
               </section>
