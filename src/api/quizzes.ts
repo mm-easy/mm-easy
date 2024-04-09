@@ -92,6 +92,19 @@ export const getQuizzes = async () => {
   }
 };
 
+export const getRecentQuizzes = async () => {
+  try {
+    const { data, error } = await supabase.from('quizzes').select('*').limit(4);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('퀴즈 목록 받아오기 실패', error);
+    alert('일시적으로 퀴즈 목록을 받아오지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
+
 export const getQuiz = async (id: string | string[]) => {
   try {
     const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
