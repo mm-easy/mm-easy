@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { CategorySelectorProps } from '@/types/posts';
+import { useRouter } from 'next/navigation';
 
-const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory }) => {
+const CategorySelector = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const router = useRouter();
+
   const categoryMenu: Record<string, string> = {
-    전체: '',
+    전체: '전체',
     질문: '질문',
     잡담: '잡담',
     공부: '공부',
@@ -12,8 +15,9 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ onSelectCategory })
   };
 
   const handleSelectCategory = (category: string) => {
-    onSelectCategory(categoryMenu[category]);
+    // onSelectCategory(categoryMenu[category]);
     setSelectedCategory(category);
+    router.push(`/community-list?category=${categoryMenu[category]}`);
   };
 
   return (

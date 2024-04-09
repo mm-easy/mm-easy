@@ -13,12 +13,13 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   totalNum,
   pageRange,
   btnRange,
+  category
 }) => {
   const router = useRouter();
 
   const navigateToDetailPost = (post: { id: string }): void => {
-    router.push(`/community-list/${post.id}`);
-};
+    router.push(`/community-list/${category}/${post.id}`);
+  };
 
   const truncateTitle = (title: string): string => {
     return title.length > 20 ? title.substring(0, 32) + ' ...' : title;
@@ -36,9 +37,9 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
               <th className="p-4 w-40">구분</th>
-              <th className='w-60'>닉네임</th>
-              <th className='w-4/6'>제목</th>
-              <th className='w-60'>날짜</th>
+              <th className="w-60">닉네임</th>
+              <th className="w-4/6">제목</th>
+              <th className="w-60">날짜</th>
             </tr>
           </thead>
           <tbody>

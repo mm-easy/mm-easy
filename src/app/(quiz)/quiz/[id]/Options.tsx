@@ -12,9 +12,8 @@ const Options = ({ id: questionId }: { id: string | undefined }) => {
         return error;
       }
     },
-    queryKey: ['question_options']
+    queryKey: ['question_options', questionId]
   });
-  console.log(data);
 
   if (isLoading) return <div>옵션 로드 중..</div>;
   if (isError) return <div>옵션 로드 에러..</div>;

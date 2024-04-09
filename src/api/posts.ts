@@ -50,6 +50,63 @@ export const insertPost = async (title: string, content: string, category: strin
   return data;
 };
 
+export const updatePost = async (id: string, title: string, content: string, category: string) => {
+  const { data, error } = await supabase.from('posts').update({ title, content, category }).eq('id', id);
+
+  if (error) {
+    console.error('게시물 수정 중 오류가 발생했습니다:', error.message);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export const getFilterPosts = async (category: string | null) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname)`)
+      .eq('category', category)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    return posts || [];
+  } catch (error) {
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
+  }
+};
+
+export const getPostDetail = async (postId: string) => {
+  try {
+    const { data: post, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .eq('id', postId);
+    if (error) throw error;
+
+    return post![0] || [];
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getPostCategoryDetail = async (categoryNow: string | null, postId: string) => {
+  try {
+    const { data: post, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .eq('category', categoryNow)
+      .eq('id', postId);
+    if (error) throw error;
+
+    return post![0] || [];
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const fetchPost = async (id: string | undefined) => {
   try {

@@ -62,6 +62,7 @@ export type CommunityFormProps = {
   totalNum: number;
   pageRange: number;
   btnRange: number;
+  category: string | null;
 };
 
 export type CommunityEditFormProps = {
@@ -71,7 +72,6 @@ export type CommunityEditFormProps = {
   prevCategory: string
   prevImageUrls: string[];
 };
-
 
 export type ToggleProps = {
   toggled: boolean;
