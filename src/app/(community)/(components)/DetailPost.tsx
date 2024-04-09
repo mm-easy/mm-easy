@@ -78,9 +78,6 @@ const DetailPost = () => {
     }
   };
 
-
-
-
   return (
     <article>
       <div className="flex bg-bgColor1 justify-center text-pointColor1 pb-12">

@@ -83,6 +83,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEdi
       await updateCommunityPost( postId, title, content, category);
       alert('수정이 완료되었습니다.');
       navigateToCreatedPost(postId);
+      console.log("content => ",content)
     }}>
       <section className="flex">
         {categories.map((item) => (

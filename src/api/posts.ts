@@ -56,7 +56,7 @@ export const insertPost = async (title: string, content: string, category: strin
     throw new Error(error.message);
   }
 
-  return data;
+  return data[0].id;
 };
 
 // post를 업데이트

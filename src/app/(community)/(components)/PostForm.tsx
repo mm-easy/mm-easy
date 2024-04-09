@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { insertPost } from '@/api/posts';
 
+
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
 const PostForm = () => {
@@ -53,7 +54,7 @@ const PostForm = () => {
   // 취소버튼 핸들러
   const handleCancel = (e: FormEvent) => {
     e.preventDefault();
-    router.push('/community-list');
+    router.push('/community-list?category=전체');
   };
 
   // 새로운 post 추가 핸들러
@@ -76,17 +77,15 @@ const PostForm = () => {
 
     // post 등록
     try {
-      const data = await insertPost(title, content, category, profile.id);
+      const newPost  = await insertPost(title, content, category, profile.id);
       alert('게시물이 등록되었습니다.');
-      router.push('/community-list');
-      console.log(data);
+      router.push(`/community-list/${category}/${newPost}`)
     } catch (error) {
       alert('게시물 추가 중 오류가 발생했습니다.');
       console.error(error);
-
-      console.log("내용은 =>",content)
     }
   };
+
 
   return (
     <form onSubmit={handleNewPost}>
