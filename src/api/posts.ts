@@ -1,5 +1,4 @@
 import { supabase } from '@/utils/supabase/supabase';
-import { redirect } from 'next/navigation';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async (offset = 0, limit = 10) => {

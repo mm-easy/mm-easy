@@ -85,6 +85,7 @@ export type ToggleProps = {
 export type FormButtonProps = {
   text: string;
   width?: string;
+  height?: string;
   postId: string;
   categoryNow?: string;
   redirectUrl: string;

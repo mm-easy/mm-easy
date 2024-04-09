@@ -7,6 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { insertPost, updateCommunityPost } from '@/api/posts';
 import { CommunityEditFormProps } from '@/types/posts';
+import { toast } from 'react-toastify';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
@@ -81,7 +82,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEdi
     <form onSubmit={async (e) => {
       e.preventDefault();
       await updateCommunityPost( postId, title, content, category);
-      alert('수정이 완료되었습니다.');
+      toast('수정이 완료되었습니다.');
       navigateToCreatedPost(postId);
       console.log("content => ",content)
     }}>

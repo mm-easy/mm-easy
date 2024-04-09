@@ -103,7 +103,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="flex border-solid border-b border-pointColor3" key={prev.id}>
+            <div className="pt-8 flex border-solid border-b border-pointColor3" key={prev.id}>
               <div className="w-50 h-50 m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
                   src={prev.profiles?.avatar_img_url || '프로필이미지'}
@@ -118,17 +118,15 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                 {/* <time>{formatToLocaleDateTimeString(prev.created_at)}</time> */}
 
                 {btnChange && nowCommentId === prev.id ? (
-                  <>
-                    <Box maxWidth="w-full">
-                      <TextArea
-                        value={contentChange}
-                        onChange={(e) => setContentChange(e.target.value)}
-                        variant="classic"
-                        placeholder="Reply to comment…"
-                        // className="w-48"
-                      />
-                    </Box>
-                  </>
+                  <div>
+                    <textarea
+                      className="resize-none focus:outline-none border-solid border border-pointColor3 "
+                      value={contentChange}
+                      onChange={(e) => setContentChange(e.target.value)}
+                      placeholder="Reply to comment…"
+
+                    />
+                  </div>
                 ) : (
                   <p>{prev.content}</p>
                 )}
@@ -138,8 +136,8 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                   (profile.id === prev.author_id ? (
                     btnChange ? (
                       <>
-                        <button onClick={() => handleUpdateBtn(prev.id)}>수정완료</button>|
-                        <button
+                        <button className='pr-2' onClick={() => handleUpdateBtn(prev.id)}>수정완료</button>|
+                        <button className='pl-2'
                           onClick={() => {
                             setBtnChange(!btnChange);
                             setContentChange(prev.content);
@@ -151,6 +149,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                     ) : (
                       <>
                         <button
+                          className="pr-2"
                           onClick={() => {
                             setBtnChange(!btnChange);
                             setContentChange(prev.content);
@@ -159,7 +158,10 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                         >
                           수정
                         </button>
-                        |<button onClick={() => handleDeleteBtn(prev.id)}>삭제</button>
+                        |
+                        <button className="pl-2" onClick={() => handleDeleteBtn(prev.id)}>
+                          삭제
+                        </button>
                       </>
                     )
                   ) : (
@@ -170,17 +172,21 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
           );
         })}
       </div>
-      <div className="mt-5">
+      <div className="mt-8">
         <form onSubmit={handleSubmitBtn}>
-          <span className="text-blackColor">{profile?.nickname}</span>
-          <Box maxWidth="w-full">
-            <TextArea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              variant="classic"
-              placeholder="댓글을 남겨보세요"
-            />
-          </Box>
+          <div className="border-solid border border-pointColor3">
+            <div className="p-4">
+              <span className="text-blackColor font-bold">{profile?.nickname}</span>
+              <div>
+                <textarea
+                  className="resize-none pt-3 w-full focus:outline-none"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="댓글을 남겨보세요"
+                />
+              </div>
+            </div>
+          </div>
           <div className="flex justify-end">
             <button
               className=" w-16 mt-2 p-2 rounded-md text-white border-solid border border-white bg-pointColor1"

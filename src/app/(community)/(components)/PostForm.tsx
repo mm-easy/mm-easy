@@ -3,10 +3,11 @@ import dynamic from 'next/dynamic';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { insertPost } from '@/api/posts';
-
+import CategorySelector from './CategorySelector';
+import { toast } from 'react-toastify';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
@@ -23,6 +24,14 @@ const PostForm = () => {
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
+
+  type Params = {
+    category: string;
+    id: string;
+  };
+
+  const params = useParams<Params>();
+  const categoryNow = decodeURIComponent(params.category);
 
   const {
     data: profile,
@@ -62,60 +71,69 @@ const PostForm = () => {
     e.preventDefault();
 
     if (!profile) {
-      alert('사용자 정보가 없습니다.');
+      toast('사용자 정보가 없습니다.');
       return;
     }
 
     if (!title.trim()) {
-      alert('제목을 입력해주세요.');
+      toast('제목을 입력해주세요.');
       return;
     }
     if (!content.trim()) {
-      alert('내용을 입력해주세요.');
+      toast('내용을 입력해주세요.');
       return;
     }
 
     // post 등록
     try {
-      const newPost  = await insertPost(title, content, category, profile.id);
-      alert('게시물이 등록되었습니다.');
-      router.push(`/community-list/${category}/${newPost}`)
+      const newPost = await insertPost(title, content, category, profile.id);
+      toast('게시물이 등록되었습니다.');
+      router.push(`/community-list/${category}/${newPost}`);
     } catch (error) {
-      alert('게시물 추가 중 오류가 발생했습니다.');
+      toast('게시물 추가 중 오류가 발생했습니다.');
       console.error(error);
     }
   };
 
-
   return (
-    <form onSubmit={handleNewPost}>
-      <section className="flex">
-        {categories.map((item) => (
-          <div className="w-20" key={item.id}>
-            <input
-              className=""
-              type="radio"
-              id={item.id}
-              name="category"
-              value={item.value}
-              checked={category === item.value}
-              onChange={handleCategoryChange}
-            />
-            <label htmlFor={item.id}>{item.label}</label>
-          </div>
-        ))}
-      </section>
+    <article className="flex">
       <div>
-        <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
+        <CategorySelector categoryNow={categoryNow} />
       </div>
-      <div>
-        <NoticeEditor value={content} onChange={handleEditorChange} />
-      </div>
-      <div>
-        <button onClick={handleCancel}>취소</button>
-        <button type="submit">작성</button>
-      </div>
-    </form>
+      <form onSubmit={handleNewPost} className='p-20'>
+        <section className="flex">
+          {categories.map((item) => (
+            <div className='' key={item.id}>
+              <input
+                className="hidden"
+                type="radio"
+                id={item.id}
+                name="category"
+                value={item.value}
+                checked={category === item.value}
+                onChange={handleCategoryChange}
+              />
+              <label
+                htmlFor={item.id}
+                className={`text-lg px-8 cursor-pointer ${category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'}`}
+              >
+                {item.label}
+              </label>
+            </div>
+          ))}
+        </section>
+        <div>
+          <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
+        </div>
+        <div>
+          <NoticeEditor value={content} onChange={handleEditorChange} />
+        </div>
+        <div>
+          <button onClick={handleCancel}>취소</button>
+          <button type="submit">작성</button>
+        </div>
+      </form>
+    </article>
   );
 };
 
