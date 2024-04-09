@@ -12,9 +12,20 @@ import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import Header from './Header';
 import { toast } from 'react-toastify';
+import { SiAnswer } from 'react-icons/si';
+
+type Answer = {
+  id: string | undefined;
+  answer: string | boolean;
+};
 
 const QuizTryPage = () => {
   const { id } = useParams();
+  // const [objectiveAnswer, setObjectiveAnswer] = useState('');
+  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
+  const [resultMode, setResultMode] = useState(false);
+  const [score, setScore] = useState(0);
+  console.log(usersAnswers);
 
   const {
     data: quizData,
@@ -57,34 +68,47 @@ const QuizTryPage = () => {
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
-  let questions = questionsData as Question[];
+  const questions = questionsData as Question[];
 
-  const handleGradeSubjectiveAnswer = (id: string | undefined, is_correct: boolean) => {
-    if (is_correct) {
-      checkRightAnswer(id);
+  const handleGetAnswer = (id: string | undefined, answer: string | boolean) => {
+    const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
+    const newAnswers = [...usersAnswers];
+
+    idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
+
+    setUsersAnswers(newAnswers);
+  };
+
+  const handleResultMode = () => {
+    if (!resultMode) {
+      // 풀기 모드에서 제출하기 버튼을 눌렀을 때
+      if (questions.length !== usersAnswers.length) {
+        // 모든 문제에 답이 제출됐는지 확인
+        toast.warn('모든 문제를 풀어줘!');
+      } else {
+        let countCorrect = 0;
+
+        for (const usersAnswer of usersAnswers) {
+          const question = questions.find((question) => question.id === usersAnswer.id);
+
+          if (question?.type === QuestionType.objective) {
+            if (usersAnswer.answer) countCorrect++;
+          } else {
+            if (usersAnswer.answer === question?.correct_answer) countCorrect++;
+          }
+        }
+        setResultMode(true);
+        setScore(countCorrect);
+      }
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
     } else {
-      checkWrongAnswer(id);
+      window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
     }
-  };
-
-  const handleGradeobjectiveAnswer = (id: string | undefined, usersAnswer: string, correct_answer: string) => {
-    if (usersAnswer === correct_answer) {
-      checkRightAnswer(id);
-    } else {
-      checkWrongAnswer(id);
-    }
-  };
-
-  const checkRightAnswer = (id: string | undefined) => {
-    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: true } : question));
-    console.log('정답', questions);
-    toast.warn('정답');
-  };
-
-  const checkWrongAnswer = (id: string | undefined) => {
-    questions = questions.map((question) => (question.id === id ? { ...question, is_correct: false } : question));
-    console.log('오답', questions);
-    toast.warn('오답');
   };
 
   return (
@@ -113,7 +137,12 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="py-8 flex flex-col place-items-center gap-10">
+        <article className="pt-12 pb-20 flex flex-col place-items-center gap-10">
+          {resultMode && (
+            <h1 className="text-2xl">
+              🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
+            </h1>
+          )}
           {questions.map((question) => {
             const { id, title, type, img_url, correct_answer } = question;
             return (
@@ -127,7 +156,7 @@ const QuizTryPage = () => {
                   className="h-[200px] object-cover rounded-md"
                 />
                 {type === QuestionType.objective ? (
-                  <Options id={id} onChange={handleGradeSubjectiveAnswer} />
+                  <Options id={id} resultMode={resultMode} onChange={handleGetAnswer} />
                 ) : (
                   <div className="w-full relative">
                     <input
@@ -135,17 +164,22 @@ const QuizTryPage = () => {
                       className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                       onChange={(e) => {
                         handleMaxLength(e, 25);
-                        handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                        handleGetAnswer(id, e.target.value);
+                        // handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
+                        // setObjectiveAnswer(e.target.value);
                       }}
                     />
-                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">0/25</p>
+                    {/* <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{objectiveAnswer.length}/25</p> */}
                   </div>
                 )}
               </section>
             );
           })}
-          <button className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md">
-            제출하기
+          <button
+            className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
+            onClick={handleResultMode}
+          >
+            {resultMode ? '다시 풀기' : '제출하기'}
           </button>
         </article>
       </main>
