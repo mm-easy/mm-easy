@@ -1,6 +1,7 @@
 type UserProfile = {
   nickname: string;
   avatar_img_url: string;
+  id: string;
 };
 
 export type PostDetailDateType = {
@@ -40,6 +41,7 @@ export type Post = {
   category: string;
   nickname: string;
   profiles: UserProfile;
+  imageUrl: string[];
 };
 
 export type MenuItem = {
@@ -65,9 +67,25 @@ export type CommunityFormProps = {
   category: string | null;
 };
 
+export type CommunityEditFormProps = {
+  postId: string;
+  prevTitle: string;
+  prevContent: string;
+  prevCategory: string;
+  prevImageUrls: string[];
+};
+
 export type ToggleProps = {
   toggled: boolean;
   onToggle: (toggled: boolean) => void;
   onIcon: React.ReactNode;
   offIcon: React.ReactNode;
+};
+
+export type FormButtonProps = {
+  text: string;
+  width?: string;
+  postId: string;
+  categoryNow?: string;
+  redirectUrl: string;
 };
