@@ -5,32 +5,57 @@ import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { insertPost, updateCommunityPost } from '@/api/posts';
-import { CommunityEditFormProps } from '@/types/posts';
+import { updateCommunityPost } from '@/api/posts';
 import { toast } from 'react-toastify';
+
+import type { CommunityEditFormProps, Params } from '@/types/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
-const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEditFormProps) => {
+const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }: CommunityEditFormProps) => {
   const { getCurrentUserProfile } = useAuth();
   const [title, setTitle] = useState(prevTitle);
   const [content, setContent] = useState<string>(prevContent);
   const [category, setCategory] = useState(prevCategory);
+  const router = useRouter();
+  const params = useParams<Params>();
+  const categoryNow = decodeURIComponent(params.category);
+  const [loaded, setLoaded] = useState(false);
 
-   useEffect(() => {
+  // 게시글 정보 가져오기 (작성자 정보 포함)
+  const { data: userProfile, isLoading: isProfileLoading } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getCurrentUserProfile
+  });
+
+  useEffect(() => {
+    if (isProfileLoading) {
+      // 사용자 정보 로딩 중인 경우, 아직 아무것도 하지 않음
+      return;
+    }
+  
+    if (!userProfile) {
+      // 사용자 정보가 없으면 로그인 페이지로 리다이렉트
+      router.push('/login');
+      toast('로그인 후 이용해 주세요');
+      return;
+    }
+  
+    if (userProfile.id !== prevAuthorId) {
+      // 사용자가 게시글의 작성자가 아닌 경우, 리다이렉트
+      router.push('/community-list?category=전체');
+      toast('접근할 수 없는 게시글 입니다.');
+    } else {
+      // 사용자가 게시글의 작성자인 경우에만 loaded를 true로 설정
+      setLoaded(true);
+    }
+  }, [userProfile, prevAuthorId, isProfileLoading, router]);
+
+  useEffect(() => {
     setTitle(prevTitle);
     setContent(prevContent);
     setCategory(prevCategory);
   }, [prevTitle, prevContent, prevCategory, postId]);
-
-  type Params = {
-    category: string;
-    id: string;
-  };
-
-  const router = useRouter();
-  const params = useParams<Params>();
-  const categoryNow = decodeURIComponent(params.category);
 
   const categories = [
     { id: 'question', value: '질문', label: '질문' },
@@ -39,19 +64,8 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEdi
     { id: 'diary', value: '일기', label: '일기' }
   ];
 
-  const {
-    data: profile,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
 
-  if (isLoading) return <div>Loading profile...</div>;
-  if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
-
-  // 게시글 제목 
+  // 게시글 제목
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -76,16 +90,20 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory }: CommunityEdi
     router.push(`/community-list/${categoryNow}/${postId}`);
   };
 
-  
+  if (!loaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <form onSubmit={async (e) => {
-      e.preventDefault();
-      await updateCommunityPost( postId, title, content, category);
-      toast('수정이 완료되었습니다.');
-      navigateToCreatedPost(postId);
-      console.log("content => ",content)
-    }}>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await updateCommunityPost(postId, title, content, category);
+        toast('수정이 완료되었습니다.');
+        navigateToCreatedPost(postId);
+        console.log('content => ', content);
+      }}
+    >
       <section className="flex">
         {categories.map((item) => (
           <div className="w-20" key={item.id}>

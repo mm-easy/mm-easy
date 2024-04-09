@@ -37,7 +37,7 @@ export type Post = {
   content: string;
   created_at: string;
   attached_img_url: string;
-  authorId: string;
+  author_id: string;
   category: string;
   nickname: string;
   profiles: UserProfile;
@@ -73,6 +73,7 @@ export type CommunityEditFormProps = {
   prevContent: string;
   prevCategory: string;
   prevImageUrls: string[];
+  prevAuthorId: string;
 };
 
 export type ToggleProps = {
@@ -89,4 +90,9 @@ export type FormButtonProps = {
   postId: string;
   categoryNow?: string;
   redirectUrl: string;
+};
+
+export type Params = {
+  category: string;
+  id: string;
 };

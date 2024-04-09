@@ -1,13 +1,15 @@
 'use client';
 import dynamic from 'next/dynamic';
 
+import CategorySelector from './CategorySelector';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { insertPost } from '@/api/posts';
-import CategorySelector from './CategorySelector';
 import { toast } from 'react-toastify';
+
+import type { Params } from '@/types/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
@@ -24,11 +26,6 @@ const PostForm = () => {
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
-
-  type Params = {
-    category: string;
-    id: string;
-  };
 
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);

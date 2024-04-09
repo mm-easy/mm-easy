@@ -32,7 +32,7 @@ const CommunitySection = () => {
         <div>
             {posts?.map((post, index) => (
             <div key={post.id} className={`py-4 ${index !== posts.length ? 'border-b' : ''} border-solid border-pointColor1`}>
-                <Link href={`//community-list/전체/${post.id}`}>  
+                <Link href={`/community-list/전체/${post.id}`}>  
                     <h2 className="text-lg font-bold">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
                 </Link>

@@ -1,9 +1,10 @@
-'use client'
+'use client';
 
-import EditForm from "@/app/(community)/(components)/EditForm";
-import { Post } from "@/types/posts";
-import { supabase } from "@/utils/supabase/supabase";
-import { useEffect, useState } from "react";
+import EditForm from '@/app/(community)/(components)/EditForm';
+import { supabase } from '@/utils/supabase/supabase';
+import { useEffect, useState } from 'react';
+
+import type { Post } from '@/types/posts';
 
 const EditPage = ({ params }: { params: { id: string } }) => {
   const postId = params.id;
@@ -12,10 +13,7 @@ const EditPage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const { data: posts, error } = await supabase
-          .from('posts')
-          .select('*')
-          .eq('id', postId);
+        const { data: posts, error } = await supabase.from('posts').select('*').eq('id', postId);
 
         if (error) throw error;
         setPost(posts[0]);
@@ -31,13 +29,16 @@ const EditPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <EditForm  postId={postId}
+      <EditForm
+        postId={postId}
         prevTitle={post.title}
         prevContent={post.content}
         prevImageUrls={post.imageUrl}
-        prevCategory={post.category}/>
+        prevCategory={post.category}
+        prevAuthorId={post.author_id}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default EditPage
+export default EditPage;

@@ -10,12 +10,12 @@ import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
-
-import type { Post, PostDetailDateType } from '@/types/posts';
 import { PostDeleteButton } from '@/components/common/PostDeleteButton';
 import { PostEditButton } from '@/components/common/PostEditButton';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
+
+import type { Post, PostDetailDateType } from '@/types/posts';
 
 const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();

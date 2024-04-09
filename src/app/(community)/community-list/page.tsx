@@ -7,11 +7,11 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getFilterPosts, getPosts } from '@/api/posts';
 import { BlueButton } from '@/components/common/FormButtons';
-
-import type { Post } from '@/types/posts';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+
+import type { Post } from '@/types/posts';
 
 const CommunityPage = () => {
   const { getCurrentUserProfile } = useAuth();
