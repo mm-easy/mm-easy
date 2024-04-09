@@ -28,14 +28,22 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
           return;
         }
         if (url) {
-          const editor = quillRef.current!.getEditor();
+          const editor = quillRef.current.getEditor();
           const range = editor.getSelection();
-          editor.insertEmbed(range.index, 'image', url);
-          editor.setSelection(range.index + 1);
+          if (range) {
+            editor.insertEmbed(range.index, 'image', url);
+            editor.setSelection(range.index + 1);
+          } else {
+            // range가 null일 경우, 에디터의 끝에 이미지 삽입
+            const length = editor.getLength();
+            editor.insertEmbed(length, 'image', url);
+            editor.setSelection(length + 1);
+          }
         }
       }
     };
   };
+  
 
   const modules = useMemo(
     () => ({
