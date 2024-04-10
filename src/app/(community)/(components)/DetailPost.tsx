@@ -33,7 +33,6 @@ const DetailPost = () => {
       try {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
-          console.log('no');
           return;
         } else {
           setIsLoggedIn(true);
