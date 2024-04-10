@@ -11,6 +11,9 @@ import Footer from './(main)/(components)/Footer';
 const Home = () => {
   useEffect(() => {
     const saveUserProfile = async () => {
+      const getSession = await supabase.auth.getSession();
+      console.log('세션가져오기', getSession);
+
       const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
       if (userDataString) {
         const userData = JSON.parse(userDataString);

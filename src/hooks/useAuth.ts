@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { supabase } from '../utils/supabase/supabase';
 
 import type { User } from '@/types/users';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/store/store';
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
   const signUp = async (email: string, password: string) => {
     setLoading(true);
@@ -57,6 +60,7 @@ export const useAuth = () => {
         throw new Error(error?.message || '로그인 실패');
       }
       setLoading(false);
+      setIsLoggedIn(true);
       return true;
     } catch (error) {
       setLoading(false);
@@ -68,11 +72,13 @@ export const useAuth = () => {
 
   const logout = async () => {
     setLoading(true);
+    localStorage.clear();
     const { error } = await supabase.auth.signOut();
     if (error) {
       setError(error.message);
     } else {
       setError(null);
+      setIsLoggedIn(false);
     }
     setLoading(false);
   };
@@ -148,10 +154,13 @@ export const useAuth = () => {
     setLoading(true);
 
     const { data: userData, error: getUserError } = await supabase.auth.getUser();
-    if (getUserError || !userData.user) {
-      setError(getUserError?.message || '로그인한 사용자가 없습니다.');
-      setLoading(false);
-      return null;
+    if (getUserError) {
+      throw new Error(getUserError.message || '사용자 정보를 가져올 수 없습니다.');
+    }
+
+    if (!userData) {
+      console.log('로그인한 사용자 없음');
+      throw new Error('로그인한 사용자가 없습니다.');
     }
 
     try {
@@ -161,7 +170,7 @@ export const useAuth = () => {
         .eq('id', userData.user.id)
         .single();
 
-      if (profileError) throw profileError;
+      if (profileError) throw new Error(profileError.message || '프로필 정보를 가져올 수 없습니다.');
 
       setLoading(false);
       return profile as User;

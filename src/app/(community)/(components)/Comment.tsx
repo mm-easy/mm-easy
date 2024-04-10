@@ -2,9 +2,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { Box, TextArea } from '@radix-ui/themes';
 import { useAuth } from '@/hooks/useAuth';
-import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostDetailCommentType } from '@/types/posts';
@@ -124,7 +122,6 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                       value={contentChange}
                       onChange={(e) => setContentChange(e.target.value)}
                       placeholder="Reply to comment…"
-
                     />
                   </div>
                 ) : (
@@ -136,8 +133,12 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                   (profile.id === prev.author_id ? (
                     btnChange ? (
                       <>
-                        <button className='pr-2' onClick={() => handleUpdateBtn(prev.id)}>수정완료</button>|
-                        <button className='pl-2'
+                        <button className="pr-2" onClick={() => handleUpdateBtn(prev.id)}>
+                          수정완료
+                        </button>
+                        |
+                        <button
+                          className="pl-2"
                           onClick={() => {
                             setBtnChange(!btnChange);
                             setContentChange(prev.content);
