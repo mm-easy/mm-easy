@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ArrowCircle from '@/assets/arrow_circle_right_FILL1_wght400_GRAD0_opsz24.svg';
 
 interface PageUpBtnProps {
   scrollPosition: number;
@@ -33,7 +33,9 @@ const PageUpBtn = ({ scrollPosition }: PageUpBtnProps) => {
   return (
     <>
       {isVisible && (
-        <Image src="https://via.placeholder.com/40x40" alt="" width={40} height={40} onClick={handlePageUp} />
+        <div className="cursor-pointer origin-center rotate-[270deg]">
+          <ArrowCircle width={40} height={40} onClick={handlePageUp} fill="#2B84ED" />
+        </div>
       )}
     </>
   );
