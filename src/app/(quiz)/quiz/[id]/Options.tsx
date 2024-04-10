@@ -1,14 +1,17 @@
-import { getOptions } from '@/api/question_options';
-import { Option } from '@/types/quizzes';
 import { useQuery } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { getOptions } from '@/api/question_options';
+import type { Answer, Option } from '@/types/quizzes';
 
 const Options = ({
   id: questionId,
+  resultMode,
+  usersAnswer,
   onChange
 }: {
   id: string | undefined;
-  onChange: (id: string | undefined, is_correct: boolean) => void;
+  resultMode: boolean;
+  usersAnswer: Answer | undefined;
+  onChange: (id: string | undefined, answer: string | boolean, option_id?: string) => void;
 }) => {
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
@@ -32,8 +35,16 @@ const Options = ({
       {options.map((option) => {
         const { id, content, is_answer } = option;
         return (
-          <div key={id} className="pl-4 py-[9px] flex gap-4 border-solid border border-pointColor1 rounded-md">
-            <input type="radio" name={questionId} onChange={() => onChange(questionId, is_answer)} />
+          <div
+            key={id}
+            className={`pl-4 py-[9px] flex gap-4 border-solid border ${resultMode && usersAnswer?.option_id === id ? (is_answer ? 'border-pointColor1 bg-bgColor2' : 'border-pointColor2 bg-bgColor3') : 'border-pointColor1'} rounded-md`}
+          >
+            <input
+              type="radio"
+              disabled={resultMode}
+              name={questionId}
+              onChange={() => onChange(questionId, is_answer, id)}
+            />
             <p>{content}</p>
           </div>
         );

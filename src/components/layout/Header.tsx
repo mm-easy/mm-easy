@@ -13,7 +13,7 @@ import { User } from '@/types/users';
 // import MenuPage from '@/app/menu/page';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
+  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { logout, getCurrentUserProfile } = useAuth();
@@ -102,10 +102,10 @@ const Header = () => {
         {/* <button onClick={toggleMenuModal}>
           <GiHamburgerMenu className="text-pointColor1" />
         </button> */}
-        <Link href="/" className="w-[10%] text-center">
+        <Link href="/" className="w-[16%] text-center">
           LOGO
         </Link>
-        <section className="w-[90%] flex justify-between px-10">
+        <section className="w-[84%] flex justify-between px-10">
           <nav className="flex gap-14">
             <Link href="/quiz-list">퀴즈</Link>
             <Link href="/typing-game">타자 연습</Link>

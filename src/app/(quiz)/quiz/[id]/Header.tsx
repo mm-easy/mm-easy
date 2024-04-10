@@ -1,7 +1,7 @@
 const Header = ({ level, title }: { level: number; title: string }) => {
   return (
     <header className="h-[8vh] flex leading-[7.5vh] border-solid border-b-2 border-pointColor1">
-      <h2 className="w-[10%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
+      <h2 className="w-[16%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
         퀴즈 풀기
       </h2>
       <h2 className="w-[8%] text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
