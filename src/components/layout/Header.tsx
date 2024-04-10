@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { NewLifecycle, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
 import { useAtom } from 'jotai';
@@ -42,6 +42,9 @@ const Header = () => {
       if (isLoggedIn) {
         const userProfile = await getCurrentUserProfile();
         console.log('로그인한 자의 프로필..', userProfile);
+        setCurrentUser(userProfile); // 사용자 프로필 정보를 상태에 저장
+      } else {
+        setCurrentUser(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
       }
     };
 
@@ -88,70 +91,52 @@ const Header = () => {
     toast.success('로그아웃되었습니다.');
   };
 
-  // const toggleMenuModal = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
-
-  // const handleLinkClick = () => {
-  //   setIsMenuOpen(false);
-  // };
-
   return (
     <>
-      <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-        {/* <button onClick={toggleMenuModal}>
-          <GiHamburgerMenu className="text-pointColor1" />
-        </button> */}
-        <Link href="/" className="w-[16%] text-center">
-          LOGO
-        </Link>
-        <section className="w-[84%] flex justify-between px-10">
-          <nav className="flex gap-14">
-            <Link href="/quiz-list">퀴즈</Link>
-            <Link href="/typing-game">타자 연습</Link>
-            <Link href="/community-list?category=전체">커뮤니티</Link>
-            <Link href="/about">서비스 소개</Link>
-          </nav>
-          {isLoggedIn ? (
-            <button onClick={handleLogout}>로그아웃</button>
-          ) : (
-            <Link href="/login">
-              <button>로그인</button>
-            </Link>
-          )}
-        <Dropdown placement="bottom-end">
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        </section>
-      </header>
-      {/* {isMenuOpen && <MenuPage />} */}
-    </>
-  );
+    <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
+      <Link href="/" className="w-[16%] text-center">
+        LOGO
+      </Link>
+      <section className="w-[84%] flex justify-between px-10">
+        <nav className="flex gap-14">
+          <Link href="/quiz-list">퀴즈</Link>
+          <Link href="/typing-game">타자 연습</Link>
+          <Link href="/community-list?category=전체">커뮤니티</Link>
+          <Link href="/about">서비스 소개</Link>
+        </nav>
+        {isLoggedIn ? (
+          <div className="flex items-center gap-4">
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  as="button"
+                  className="transition-transform"
+                  color="secondary"
+                  name={currentUser?.nickname}
+                  size="md"
+                  src={currentUser?.avatar_img_url}
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile" className="h-14 gap-2">
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{currentUser?.email || 'User email'}</p> 
+                </DropdownItem>
+                <DropdownItem key="logout" color="danger" onClick={handleLogout}>
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        ) : (
+          <Link href="/login">
+            <button>로그인</button>
+          </Link>
+        )}
+      </section>
+    </header>
+  </>
+);
 };
 
 export default Header;
