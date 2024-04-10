@@ -6,6 +6,7 @@ import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
 import MainLogo from './(main)/(components)/MainLogo';
 import RankingSection from './(main)/(components)/RankingSection';
+import Footer from './(main)/(components)/Footer';
 
 const Home = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const Home = () => {
     <QuizSection/>
     <RankingSection />
     <CommunitySection />
+    <Footer />
     </div>
   );
 };
