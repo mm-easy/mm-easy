@@ -1,4 +1,4 @@
-import { Option, OptionsToInsert, Question, QuestionsToInsert, Quiz } from '@/types/quizzes';
+import { Option, OptionsToInsert, Question, QuestionsToInsert, Quiz, QuizRank } from '@/types/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 
 /** quiz 썸네일을 스토리지에 upload */
@@ -113,6 +113,18 @@ export const getQuiz = async (id: string | string[]) => {
   } catch (error) {
     console.error('퀴즈 데이터 받아오기 실패', error);
     alert('일시적으로 퀴즈 데이터를 받아오지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
+export const getQuizRank = async (): Promise<QuizRank[]> => {
+  try {
+    const { data, error } = await supabase.rpc('get_quiz_ranking_with_details').limit(3);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('퀴즈 데이터 받아오기 실패', error);
+    // alert('일시적으로 퀴즈 데이터를 받아오지 못했습니다. 다시 시도하세요.');
     throw error;
   }
 };

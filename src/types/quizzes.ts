@@ -48,3 +48,10 @@ export type Answer = {
   answer: string | boolean;
   option_id?: string;
 };
+
+export type QuizRank = {
+  creator_id: string;
+  avatar_img_url: string;
+  quiz_count: number;
+  nickname: string;
+}
