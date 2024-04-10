@@ -1,11 +1,16 @@
 'use client';
 import dynamic from 'next/dynamic';
 
+import CategorySelector from './CategorySelector';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { insertPost } from '@/api/posts';
+import { toast } from 'react-toastify';
+import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
+
+import type { Params } from '@/types/posts';
 
 const NoticeEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
 
@@ -22,6 +27,9 @@ const PostForm = () => {
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
+
+  const params = useParams<Params>();
+  const categoryNow = decodeURIComponent(params.category);
 
   const {
     data: profile,
@@ -51,9 +59,15 @@ const PostForm = () => {
   };
 
   // 취소버튼 핸들러
-  const handleCancel = (e: FormEvent) => {
-    e.preventDefault();
-    router.push('/community-list');
+  const handleCancel = (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    const confirmLeave = confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?');
+    if (confirmLeave) {
+      // 사용자가 '예'를 선택한 경우
+      router.push('/community-list?category=전체');
+    } else {
+      // 사용자가 '아니오'를 선택한 경우, 아무 동작도 하지 않음
+    }
   };
 
   // 새로운 post 추가 핸들러
@@ -61,62 +75,77 @@ const PostForm = () => {
     e.preventDefault();
 
     if (!profile) {
-      alert('사용자 정보가 없습니다.');
+      toast('사용자 정보가 없습니다.');
       return;
     }
 
     if (!title.trim()) {
-      alert('제목을 입력해주세요.');
+      toast('제목을 입력해주세요.');
       return;
     }
     if (!content.trim()) {
-      alert('내용을 입력해주세요.');
+      toast('내용을 입력해주세요.');
       return;
     }
 
     // post 등록
     try {
-      const data = await insertPost(title, content, category, profile.id);
-      alert('게시물이 등록되었습니다.');
-      router.push('/community-list');
-      console.log(data);
+      const newPost = await insertPost(title, content, category, profile.id);
+      toast('게시물이 등록되었습니다.');
+      router.push(`/community-list/${category}/${newPost}`);
     } catch (error) {
-      alert('게시물 추가 중 오류가 발생했습니다.');
+      toast('게시물 추가 중 오류가 발생했습니다.');
       console.error(error);
-
-      console.log("내용은 =>",content)
     }
   };
 
   return (
-    <form onSubmit={handleNewPost}>
-      <section className="flex">
-        {categories.map((item) => (
-          <div className="w-20" key={item.id}>
-            <input
-              className=""
-              type="radio"
-              id={item.id}
-              name="category"
-              value={item.value}
-              checked={category === item.value}
-              onChange={handleCategoryChange}
-            />
-            <label htmlFor={item.id}>{item.label}</label>
-          </div>
-        ))}
-      </section>
+    <main className="grid grid-cols-[16%_84%]">
       <div>
-        <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
+        <CategorySelector categoryNow={categoryNow} />
       </div>
-      <div>
-        <NoticeEditor value={content} onChange={handleEditorChange} />
-      </div>
-      <div>
-        <button onClick={handleCancel}>취소</button>
-        <button type="submit">작성</button>
-      </div>
-    </form>
+      <form onSubmit={handleNewPost} className="py-16 px-48 border-l-2 border-solid  border-pointColor1">
+        <section className="flex border-b border-pointColor1 border-solid">
+          {categories.map((item) => (
+            <div key={item.id}>
+              <input
+                className="hidden"
+                type="radio"
+                id={item.id}
+                name="category"
+                value={item.value}
+                checked={category === item.value}
+                onChange={handleCategoryChange}
+              />
+              <label
+                htmlFor={item.id}
+                className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
+                  category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'
+                }`}
+              >
+                {item.label}
+              </label>
+            </div>
+          ))}
+        </section>
+        <div>
+          <input
+            className="focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
+            type="text"
+            value={title}
+            onChange={handleTitle}
+            placeholder=" 제목을 입력하세요."
+          />
+        </div>
+        <div>
+          <NoticeEditor value={content} onChange={handleEditorChange} />
+        </div>
+        <div className="pt-14 flex justify-center gap-5 font-bold">
+          <CancelButton text="취소" onClick={handleCancel} width="w-[15%]" border="border-2" />
+          <SubmitButton text="완료" width="w-[15%]" />
+        </div>
+      </form>
+    </main>
   );
 };
 
