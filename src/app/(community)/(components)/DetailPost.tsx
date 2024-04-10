@@ -6,20 +6,18 @@ import Like from './Like';
 import CategorySelector from './CategorySelector';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
+import { isLoggedInAtom } from '@/store/store';
 import { PostDeleteButton } from '@/components/common/PostDeleteButton';
 import { PostEditButton } from '@/components/common/PostEditButton';
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/utils/supabase/supabase';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
-import { isLoggedInAtom } from '@/store/store';
-import { User } from '@/types/users';
-import { useAtom } from 'jotai';
-import { supabase } from '@/utils/supabase/supabase';
+import type { User } from '@/types/users';
 
 const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();

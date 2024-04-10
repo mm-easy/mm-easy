@@ -1,12 +1,10 @@
 import LikeToggleButton from './LikeToggleButton';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { AiFillHeart } from 'react-icons/ai';
-import { useQuery } from '@tanstack/react-query';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { supabase } from '@/utils/supabase/supabase';
-import { useAuth } from '@/hooks/useAuth';
-import { LikeProps } from '@/types/posts';
+
+import type { LikeProps } from '@/types/posts';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
@@ -45,7 +43,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
     }
 
     if (likes) {
-      await removeLikedUser(postId, userId);
+      await removeLikedUser(userId);
       setLikes(false);
       setLikeCount(likeCount - 1);
     } else {
@@ -65,7 +63,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   };
 
   /**좋아요 삭제*/
-  const removeLikedUser = async (postId: string | string[], userId: string) => {
+  const removeLikedUser = async (userId: string) => {
     const { error } = await supabase.from('likes').delete().eq('user_id', userId);
 
     if (error) {

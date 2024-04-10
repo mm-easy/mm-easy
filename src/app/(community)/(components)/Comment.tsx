@@ -1,13 +1,9 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
-import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { isLoggedInAtom } from '@/store/store';
-import { User } from '@/types/users';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
@@ -15,8 +11,6 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  // const [profile, setProfile] = useState<User | null>();
 
   /**댓글 작성 */
   const handleSubmitBtn = async (e: React.FormEvent) => {
