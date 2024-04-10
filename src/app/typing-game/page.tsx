@@ -173,8 +173,8 @@ const TypingGamePage = () => {
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
-    <div className="flex flex-col bg-gray-100">
-      <header className="h-[8vh] flex leading-[7.5vh] font-bold border-solid border-b-2 border-pointColor1">
+    <div className="flex flex-col">
+      <header className="h-[8vh] flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1">
         <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           난이도
         </h2>
@@ -222,22 +222,22 @@ const TypingGamePage = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <p className='mb-2 text-lg text-pointColor1'>난이도를 선택해주세요!</p>
+            <p className='mb-6 font-bold text-2xl text-pointColor1'>난이도를 선택해주세요!</p>
              <div className="flex mb-4 items-center justify-center">
             {Array.from({ length: maxDifficulty }, (_, index) => (
             <button
               key={index + 1}
               onClick={() => handleDifficultyChange(index + 1)}
-              className={`text-pointColor2 mx-1 ${
-                difficulty === index + 1 ? 'bg-pointColor1 text-white' : 'bg-bgColor1'
-              } p-1 rounded-md`}
+              className={`text-pointColor1 mx-3 mb-6 ${
+                difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid'
+              } p-2 text-lg w-12 rounded-md`}
             >
               {index + 1}
             </button>
              ))}
              </div>
-            <button onClick={startGame} className="bg-pointColor1 text-white p-4 rounded">
-              게임 시작!
+            <button onClick={startGame} className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded">
+              시작하기
             </button>
           </div>
         )}
