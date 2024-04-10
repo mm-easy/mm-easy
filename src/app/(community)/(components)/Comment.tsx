@@ -189,7 +189,7 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
           </div>
           <div className="flex justify-end">
             <button
-              className=" w-16 mt-2 p-2 rounded-md text-white border-solid border border-white bg-pointColor1"
+              className="w-20 h-12 mt-4 p-2 font-bold rounded-md text-white border-solid border border-white bg-pointColor1"
               type="submit"
             >
               등록

@@ -77,7 +77,7 @@ const DetailPost = () => {
         <CategorySelector categoryNow={categoryNow} />
       </div>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div className="py-12 px-28 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
+        <div className="py-16 px-48 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
@@ -138,13 +138,13 @@ const DetailPost = () => {
                 <span className="text-lg font-bold">댓글</span>
                 <Comment postId={params.id} />
               </div>
-              <div className="flex justify-center item items-center">
+              <div className="pt-10 flex justify-center item items-center text-xl font-bold gap-10">
                 <button onClick={() => nextPostBtn(post.id)}>
-                  <IoMdArrowDropleft />
+                &#9664;
                 </button>
                 <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
                 <button onClick={() => beforePostBtn(post.id)}>
-                  <IoMdArrowDropright />
+                &#9654;
                 </button>
               </div>
             </div>
