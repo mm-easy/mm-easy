@@ -13,6 +13,7 @@ import InputQuestionImg from './InputQuestionImg';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import UnloadImgBtn from './UnloadImg';
 import { storageUrl } from '@/utils/supabase/storage';
+import { BlueInput } from '@/components/common/BlueInput';
 
 const QuestionForm = ({
   questions,
@@ -215,7 +216,7 @@ const QuestionForm = ({
                         <div className="w-4/5 relative">
                           <input
                             type="text"
-                            className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                            className="w-full pl-4 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
                             placeholder="선택지를 입력해 주세요."
                             onInput={(e) => {
                               handleMaxLength(e, 25);
@@ -252,7 +253,7 @@ const QuestionForm = ({
                   <div className="w-full relative">
                     <input
                       type="text"
-                      className="w-full px-4 py-2 border-solid border border-pointColor1 rounded-md"
+                      className="w-full px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
                       placeholder="정답을 입력해 주세요."
                       onInput={(e) => {
                         handleMaxLength(e, 25);

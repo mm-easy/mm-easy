@@ -22,7 +22,7 @@ export const BlueInput: React.FC<BlueInputProps> = ({ value, width, maxNum, onIn
   return (
     <div className="w-full relative text-pointColor1">
       <input
-        className={`border border-solid border-pointColor1 p-2 rounded-md ${width}`}
+        className={`border border-solid text-blackColor border-pointColor1 pl-4 py-[9px] rounded-md ${width}`}
         type="text"
         value={value}
         onInput={onInput}
