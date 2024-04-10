@@ -67,7 +67,7 @@ const CommunityPage = () => {
       <section>
         <CategorySelector categoryNow={category} />
         <div className="flex justify-center pt-64 pb-12 text-xl font-bold">
-          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height='h-16' border='border-2' />
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
       <section className="flex w-full border-l-2 border-solid  border-pointColor1">
