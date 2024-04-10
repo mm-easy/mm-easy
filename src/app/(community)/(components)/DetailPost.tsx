@@ -48,11 +48,11 @@ const DetailPost = () => {
         data = await getPostCategoryDetail(categoryNow, params.id);
         nextPosts = await getFilterPosts(categoryNow);
       }
+
       setPost(data);
       setNextBeforePost(nextPosts);
     };
 
-    
     postDetailDate();
   }, []);
 
@@ -76,9 +76,6 @@ const DetailPost = () => {
       router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
     }
   };
-
-
-
 
   return (
     <article>

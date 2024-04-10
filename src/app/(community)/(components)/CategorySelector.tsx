@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getFilterPosts } from '@/api/posts';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
+  const [postNum, setPostNum] = useState<Record<string, number>>({});
 
   const router = useRouter();
 
@@ -14,14 +16,26 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     일기: '일기'
   };
 
-  useEffect(() => {
-    setSelectedCategory(categoryNow);
-  }, [categoryNow]);
-
   const handleSelectCategory = (category: string) => {
     setSelectedCategory(category);
     router.push(`/community-list?category=${categoryMenu[category]}`);
   };
+
+  useEffect(() => {
+    setSelectedCategory(categoryNow);
+  }, [categoryNow]);
+
+  useEffect(() => {
+    const fetchPostNumbers = async () => {
+      const nums: Record<string, number> = {};
+      for (const category of Object.keys(categoryMenu)) {
+        const categoryPosts = await getFilterPosts(categoryMenu[category]);
+        nums[category] = categoryPosts.length;
+      }
+      setPostNum(nums);
+    };
+    fetchPostNumbers();
+  }, []);
 
   return (
     <nav className="w-40 text-pointColor1 font-bold">
@@ -34,7 +48,10 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
             }`}
             onClick={() => handleSelectCategory(category)}
           >
-            <button className="w-full text-left">{category}</button>
+            <button className="w-full text-left">
+              {category}
+              {category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
+            </button>
           </li>
         ))}
       </ul>

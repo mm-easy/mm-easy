@@ -89,3 +89,8 @@ export type FormButtonProps = {
   categoryNow?: string;
   redirectUrl: string;
 };
+
+export type CategoryMenuProps = {
+  categoryNow: string | null;
+  postNum: string | null;
+};
