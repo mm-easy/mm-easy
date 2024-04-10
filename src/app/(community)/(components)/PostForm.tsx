@@ -100,7 +100,7 @@ const PostForm = () => {
   };
 
   return (
-    <article className="grid grid-cols-[16%_84%]">
+    <main className="grid grid-cols-[16%_84%]">
       <div>
         <CategorySelector categoryNow={categoryNow} />
       </div>
@@ -119,7 +119,7 @@ const PostForm = () => {
               />
               <label
                 htmlFor={item.id}
-                className={`rounded-tl-lg rounded-tr-lg text-lg px-6 cursor-pointer  ${
+                className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
                   category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'
                 }`}
               >
@@ -145,7 +145,7 @@ const PostForm = () => {
           <SubmitButton text="완료" width="w-[15%]" />
         </div>
       </form>
-    </article>
+    </main>
   );
 };
 

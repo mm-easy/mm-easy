@@ -71,7 +71,7 @@ const CommunityPage = () => {
         </div>
       </section>
       <section className="flex w-full border-l-2 border-solid  border-pointColor1">
-        <div className="flex justify-center w-full py-20 px-48">
+        <div className="flex justify-center w-full py-16 px-48">
           <CommunityForm
             currentItems={currentItems}
             setCurrentPage={setCurrentPage}
