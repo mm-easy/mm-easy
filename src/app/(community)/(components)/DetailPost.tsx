@@ -20,66 +20,16 @@ import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
 
 const DetailPost = () => {
-  const { getCurrentUserProfile } = useAuth();
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [profile, setProfile] = useState<User | null>();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const getSession = await supabase.auth.getSession();
-        if (!getSession.data.session) {
-          return;
-        } else {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  /** 로그인이 되어 있다면 프로필 가져오기 */
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-        setProfile(userProfile);
-      } else {
-        setProfile(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
-      }
-    };
-
-    fetchData();
-  }, [isLoggedIn]);
-
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
 
-  /**해당 게시글 정보가져오기 */
-  useEffect(() => {
-    let data;
-    let nextPosts;
-    const postDetailDate = async () => {
-      if (categoryNow === '전체') {
-        data = await getPostDetail(params.id);
-        nextPosts = await getPosts();
-      } else {
-        data = await getPostCategoryDetail(categoryNow, params.id);
-        nextPosts = await getFilterPosts(categoryNow);
-      }
-
-      setPost(data);
-      setNextBeforePost(nextPosts);
-    };
-
-    postDetailDate();
-  }, []);
+  const { getCurrentUserProfile } = useAuth();
 
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
@@ -101,6 +51,53 @@ const DetailPost = () => {
       router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
     }
   };
+
+  /**해당 게시글 정보가져오기 */
+  useEffect(() => {
+    let data;
+    let nextPosts;
+    const postDetailDate = async () => {
+      if (categoryNow === '전체') {
+        data = await getPostDetail(params.id);
+        nextPosts = await getPosts();
+      } else {
+        data = await getPostCategoryDetail(categoryNow, params.id);
+        nextPosts = await getFilterPosts(categoryNow);
+      }
+
+      setPost(data);
+      setNextBeforePost(nextPosts);
+    };
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchData();
+    postDetailDate();
+  }, []);
+
+  /** 로그인이 되어 있다면 프로필 가져오기 */
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        setProfile(userProfile);
+      } else {
+        setProfile(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
 
   return (
     <article className="grid grid-cols-[16%_84%]">
