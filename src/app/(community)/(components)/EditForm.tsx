@@ -86,7 +86,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
     const confirmLeave = confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?');
     if (confirmLeave) {
       // 사용자가 '예'를 선택한 경우
-      router.push('/community-list?category=전체');
+      router.push(`/community-list/${categoryNow}/${postId}`);
     } else {
       // 사용자가 '아니오'를 선택한 경우, 아무 동작도 하지 않음
     }
