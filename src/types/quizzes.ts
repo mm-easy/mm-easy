@@ -42,3 +42,9 @@ export type QuestionsToInsert = Pick<Question, 'title' | 'correct_answer'> & {
   type: QuestionType;
   img_url: string;
 };
+
+export type Answer = {
+  id: string | undefined;
+  answer: string | boolean;
+  option_id?: string;
+};

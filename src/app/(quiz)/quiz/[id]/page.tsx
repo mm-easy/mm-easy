@@ -1,23 +1,19 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { QuestionType, type GetQuiz, type Question } from '@/types/quizzes';
-import { useState } from 'react';
-import Options from './Options';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 import Header from './Header';
-import { toast } from 'react-toastify';
-import { SiAnswer } from 'react-icons/si';
+import Options from './Options';
 
-type Answer = {
-  id: string | undefined;
-  answer: string | boolean;
-};
+import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -70,12 +66,18 @@ const QuizTryPage = () => {
 
   const questions = questionsData as Question[];
 
-  const handleGetAnswer = (id: string | undefined, answer: string | boolean) => {
+  const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
 
-    idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
-
+    if (option_id) {
+      idx !== -1
+        ? (newAnswers[idx] = { ...newAnswers[idx], answer, option_id })
+        : newAnswers.push({ id, answer, option_id });
+    } else {
+      idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
+    }
+    console.log(usersAnswers);
     setUsersAnswers(newAnswers);
   };
 
@@ -92,6 +94,8 @@ const QuizTryPage = () => {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
           if (question?.type === QuestionType.objective) {
+            const options = questions.find((question) => question.id === usersAnswer.id);
+
             if (usersAnswer.answer) countCorrect++;
           } else {
             if (usersAnswer.answer === question?.correct_answer) countCorrect++;
@@ -114,15 +118,15 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} />
-      <main className="grid grid-cols-[10%_90%]">
+      <main className="grid grid-cols-[16%_84%]">
         <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           <section>
             <Image
               src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
               alt="샘플 이미지"
-              width={144}
-              height={144}
-              className="w-full h-[144px] object-cover border-solid border-b-2 border-pointColor1"
+              width={230}
+              height={230}
+              className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
               <div>
@@ -157,12 +161,12 @@ const QuizTryPage = () => {
                   className="h-[200px] object-cover rounded-md"
                 />
                 {type === QuestionType.objective ? (
-                  <Options id={id} resultMode={resultMode} onChange={handleGetAnswer} />
+                  <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
                 ) : (
                   <div className="w-full relative">
                     {resultMode ? (
                       <p
-                        className={`w-full pl-4 py-[9px] border-solid border ${usersAnswer?.answer === correct_answer ? ' border-pointColor1' : 'border-pointColor2'} rounded-md`}
+                        className={`w-full pl-4 py-[9px] border-solid border ${usersAnswer?.answer === correct_answer ? ' border-pointColor1 bg-bgColor2' : 'border-pointColor2 bg-bgColor3'} rounded-md`}
                       >
                         {usersAnswer?.answer}
                       </p>
