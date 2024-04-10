@@ -17,7 +17,7 @@ const CommunitySection = () => {
   return (
     <>
       <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-y border-solid border-pointColor1">
-      <p className="ml-4">최근 올라온 글</p>
+        <p className="ml-4">최근 올라온 글</p>
       </div>
       <section className="">
         <div className="flex">

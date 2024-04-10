@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { NewLifecycle, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
 import { useAtom } from 'jotai';
@@ -9,13 +9,46 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 // import { GiHamburgerMenu } from 'react-icons/gi';
 import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
+import { User } from '@/types/users';
 // import MenuPage from '@/app/menu/page';
 
 const Header = () => {
   // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const { logout } = useAuth();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { logout, getCurrentUserProfile } = useAuth();
 
+  /** 현재 로그인되어 있는지 확인 */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  /** 로그인이 되어 있다면 프로필 가져오기 */
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        console.log('로그인한 자의 프로필..', userProfile);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
+
+  /** 소셜 로그인 처리 */
   useEffect(() => {
     const handleAuthStateChange = (event: AuthChangeEvent) => {
       if (event === 'SIGNED_IN') {
