@@ -26,6 +26,10 @@ const ProfilePage = () => {
         if (!getSession.data.session) {
           alert('로그인이 필요한 페이지입니다.');
           router.replace('/login');
+        } else {
+          const userProfile = await getCurrentUserProfile();
+          setCurrentUser((prev) => userProfile);
+          console.log('끼이잉', currentUser);
         }
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
@@ -33,25 +37,16 @@ const ProfilePage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn]);
 
-  /** 로그인이 되어 있다면 프로필 가져오기 */
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-        setCurrentUser(userProfile);
-        console.log('끼이잉', currentUser);
-      }
-    };
-
-    fetchData();
-  }, []);
+  if (!currentUser) {
+    return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
+  }
 
   return (
     <main>
       <div className="h-[47vh]">
-        <MyProfile />
+        <MyProfile currentUser={currentUser} />
       </div>
       <div className="h-[37vh]">
         <MyLevelAndScore />
@@ -61,3 +56,16 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+// /** 로그인이 되어 있다면 프로필 가져오기 */
+// useEffect(() => {
+//   const fetchData = async () => {
+//     if (isLoggedIn) {
+//       const userProfile = await getCurrentUserProfile();
+//       setCurrentUser(userProfile);
+//       console.log('끼이잉', currentUser);
+//     }
+//   };
+
+//   fetchData();
+// }, []);
