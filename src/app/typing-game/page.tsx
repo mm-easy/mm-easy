@@ -152,7 +152,7 @@ const TypingGamePage = () => {
       if (fetchError && !existingScores) {
         const { error: insertError } = await supabase
           .from('game_tries')
-          .insert([{ user_id: user.id, nickname: user.nickname, score: finalScore }]);
+          .insert([{ user_id: user.id, nickname: user.nickname, score: finalScore, avatar_img_url: user.avatar_img_url }]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
