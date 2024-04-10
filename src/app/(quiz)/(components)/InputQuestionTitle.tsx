@@ -15,7 +15,7 @@ const InputQuestionTitle = ({
     <div className="w-full relative">
       <input
         type="text"
-        className="w-full pl-4 py-2 border-solid border border-pointColor1 rounded-md"
+        className="w-full pl-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
         placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
         onInput={(e) => onInput(e, 30)}
         onChange={(e) => {
