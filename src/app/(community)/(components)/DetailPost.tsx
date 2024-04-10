@@ -77,7 +77,7 @@ const DetailPost = () => {
         <CategorySelector categoryNow={categoryNow} />
       </div>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div className="py-16 px-48 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
+        <div className="py-16 px-48 border-l-2 border-solid w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">

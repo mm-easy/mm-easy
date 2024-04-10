@@ -43,7 +43,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
     }
 
     if (userProfile.id !== prevAuthorId) {
-      // 사용자가 게시글의 작성자가 아닌 경우 게시글 리스트로 ㅇ
+      // 사용자가 게시글의 작성자가 아닌 경우 게시글 리스트로 이동
       router.push('/community-list?category=전체');
       toast('접근할 수 없는 게시글 입니다.');
     } else {
