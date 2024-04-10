@@ -20,6 +20,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 
 import { QuestionType, type Question } from '@/types/quizzes';
+import { useAuth } from '@/hooks/useAuth';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -32,12 +33,19 @@ const QuizForm = () => {
 
   useConfirmPageLeave();
 
+  const { getCurrentUserProfile } = useAuth();
   useEffect(() => {
-    const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
-    if (userDataString) {
-      const { user } = JSON.parse(userDataString);
-      setCurrentUser(user.email);
-    }
+    const fetchData = async () => {
+      try {
+        const userProfile = await getCurrentUserProfile();
+        if (!userProfile) return;
+        setCurrentUser(userProfile.email);
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   /** 퀴즈 등록 mutation */
