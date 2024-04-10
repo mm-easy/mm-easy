@@ -189,10 +189,11 @@ const QuizForm = () => {
           toast.warn('정답을 선택해 주세요.');
           return;
         }
-      }
-      if (!correct_answer) {
-        toast.warn('정답을 입력해 주세요.');
-        return;
+      } else {
+        if (!correct_answer) {
+          toast.warn('정답을 입력해 주세요.');
+          return;
+        }
       }
     }
 
