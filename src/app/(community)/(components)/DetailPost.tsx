@@ -10,22 +10,17 @@ import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
 import { useParams, useRouter } from 'next/navigation';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
-
-import type { Post, PostDetailDateType } from '@/types/posts';
 import { PostDeleteButton } from '@/components/common/PostDeleteButton';
 import { PostEditButton } from '@/components/common/PostEditButton';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 
+import type { Params, Post, PostDetailDateType } from '@/types/posts';
+
 const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
-
-  type Params = {
-    category: string;
-    id: string;
-  };
 
   const { data: profile } = useQuery({
     queryKey: ['userProfile'],
@@ -78,18 +73,18 @@ const DetailPost = () => {
   };
 
   return (
-    <article>
+    <article className="grid grid-cols-[16%_84%]">
+      <div>
+        <CategorySelector categoryNow={categoryNow} />
+      </div>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div>
-          <CategorySelector categoryNow={categoryNow} />
-        </div>
-        <div className="py-10 px-20 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
+        <div className="py-16 px-48 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
-                <p>{post.category}</p>
+                <p className="text-lg font-bold">{post.category}</p>
               </div>
-              <h1 className="text-2xl font-bolder font-bold text-blackColor ">{post.title}</h1>
+              <h1 className="text-3xl font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
                 <div className="flex">
                   <div className="w-50 h-50 m-3 ml-0 rounded-full overflow-hidden">
@@ -106,19 +101,27 @@ const DetailPost = () => {
                     <time className="text-sm">{formatToLocaleDateTimeString(post.created_at)}</time>
                   </div>
                 </div>
-                <div className="flex">
+                <div className="flex items-center">
                   {profile && post.author_id === profile.id && (
                     <div className="flex">
-                      <PostEditButton
-                        text="수정"
-                        postId={post.id}
-                        redirectUrl={`/community-list/${categoryNow}/${post.id}/edit`}
-                      />
-                      <PostDeleteButton
-                        text="삭제"
-                        postId={post.id}
-                        redirectUrl={`/community-list?category=${categoryNow}`}
-                      />
+                      <div>
+                        <PostEditButton
+                          text="수정"
+                          postId={post.id}
+                          redirectUrl={`/community-list/${categoryNow}/${post.id}/edit`}
+                          width="w-20"
+                          height="h-12"
+                        />
+                      </div>
+                      <div className="pl-3">
+                        <PostDeleteButton
+                          text="삭제"
+                          redirectUrl={`/community-list?category=${categoryNow}`}
+                          postId={post.id}
+                          width="w-20"
+                          height="h-12"
+                        />
+                      </div>
                     </div>
                   )}
                 </div>
@@ -127,22 +130,22 @@ const DetailPost = () => {
                 className="my-5 ql-editor text-blackColor"
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
               ></p>
-              <div className="flex items-center">
+              <div className="flex items-center pt-4">
                 <div className="flex ml-auto items-center">
                   <Like postId={params.id} />
                 </div>
               </div>
-              <div className="border-solid border-t">
-                <span>댓글</span>
+              <div className="border-solid border-t pt-3">
+                <span className="text-lg font-bold">댓글</span>
                 <Comment postId={params.id} />
               </div>
-              <div className="flex justify-center item items-center">
+              <div className="pt-10 flex justify-center item items-center text-xl font-bold gap-10">
                 <button onClick={() => nextPostBtn(post.id)}>
-                  <IoMdArrowDropleft />
+                &#9664;
                 </button>
                 <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
                 <button onClick={() => beforePostBtn(post.id)}>
-                  <IoMdArrowDropright />
+                &#9654;
                 </button>
               </div>
             </div>

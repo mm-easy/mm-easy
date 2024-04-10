@@ -15,6 +15,8 @@
     "@supabase/supabase-js": "^2.41.1",
     "@tanstack/react-query": "^5.28.9",
     "@types/uuid": "^9.0.8",
+    "@xeger/quill-image-actions": "^0.7.2",
+    "@xeger/quill-image-formats": "^0.7.2",
     "dompurify": "^3.0.11",
     "jotai": "^2.7.1",
     "next": "14.1.4",

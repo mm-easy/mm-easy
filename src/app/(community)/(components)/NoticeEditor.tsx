@@ -1,8 +1,12 @@
-import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
+import ReactQuill, { Quill } from 'react-quill';
 import { ReactElement, useMemo, useRef } from 'react';
 import { uploadPostImageToStorage } from '@/api/posts';
+import { ImageActions } from '@xeger/quill-image-actions';
+import { ImageFormats } from '@xeger/quill-image-formats';
 
+Quill.register('modules/imageActions', ImageActions);
+Quill.register('modules/imageFormats', ImageFormats);
 
 interface NoticeEditorProps {
   value: string;
@@ -18,7 +22,7 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();
-  
+
     input.onchange = async () => {
       const file = input.files ? input.files[0] : null;
       if (file) {
@@ -43,10 +47,11 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
       }
     };
   };
-  
 
   const modules = useMemo(
     () => ({
+      imageActions: {},
+      imageFormats: {},
       toolbar: {
         container: [
           [{ header: [1, 2, false] }],
@@ -64,6 +69,9 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   );
 
   const formats = [
+    'float',
+    'height',
+    'width',
     'header',
     'bold',
     'italic',
@@ -81,15 +89,18 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   ];
 
   return (
-    <ReactQuill
-      ref={quillRef}
-      theme="snow"
-      value={value}
-      onChange={onChange}
-      modules={modules}
-      formats={formats}
-      placeholder="내용을 입력해 주세요."
-    />
+    <div style={{ height: '650px' }}>
+      <ReactQuill
+        ref={quillRef}
+        theme="snow"
+        value={value}
+        onChange={onChange}
+        modules={modules}
+        formats={formats}
+        placeholder="내용을 입력해 주세요."
+        style={{ height: '600px' }}
+      />
+    </div>
   );
 };
 

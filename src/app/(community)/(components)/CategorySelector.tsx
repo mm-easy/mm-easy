@@ -38,17 +38,17 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   }, []);
 
   return (
-    <nav className="w-40 text-pointColor1 font-bold">
+    <nav className="text-pointColor1 font-bold">
       <ul>
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}
-            className={`p-5 pl-6 border-b border-solid border-pointColor1 cursor-pointer ${
+            className={`p-8 pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
               selectedCategory === category || categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
           >
-            <button className="w-full text-left">
+            <button className="text-2xl w-full text-left">
               {category}
               {category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
             </button>
