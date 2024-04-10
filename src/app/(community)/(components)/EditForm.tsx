@@ -128,7 +128,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
                 onChange={handleCategoryChange}
               />
               <label
-                className={`font-bold rounded-tl-lg rounded-tr-lg text-l px-6 pt-1 cursor-pointer  ${
+                className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
                   category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'
                 }`}
                 htmlFor={item.id}
