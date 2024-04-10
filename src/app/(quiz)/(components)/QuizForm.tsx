@@ -250,12 +250,14 @@ const QuizForm = () => {
 
         // newOptions 구성하여 question_options 테이블에 인서트
         const insertQuestionResult = await insertQuestionsMutation.mutateAsync(newQuestion);
-        const newOptions = options.map((option) => ({
-          content: option.content,
-          is_answer: option.is_answer,
-          question_id: insertQuestionResult
-        }));
-        await insertOptionsMutation.mutateAsync(newOptions);
+        if (type === QuestionType.objective) {
+          const newOptions = options.map((option) => ({
+            content: option.content,
+            is_answer: option.is_answer,
+            question_id: insertQuestionResult
+          }));
+          await insertOptionsMutation.mutateAsync(newOptions);
+        }
         router.replace('/quiz-list');
       });
     } catch (error) {

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.2.10",
     "@radix-ui/themes": "^3.0.1",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/ssr": "^0.1.0",
@@ -18,6 +19,7 @@
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
     "dompurify": "^3.0.11",
+    "framer-motion": "^11.0.27",
     "jotai": "^2.7.1",
     "next": "14.1.4",
     "react": "^18",
@@ -27,6 +29,7 @@
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
