@@ -14,6 +14,7 @@ const config: Config = {
         bgColor3: '#FFF0EF',
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
+        pointColor3: '#D9D9D9',
         blackColor: '#2e2e2e'
       }
     },
