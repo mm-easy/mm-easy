@@ -38,24 +38,24 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   return (
     <article className="w-full ">
       <div className="bg-white p-4 w-full">
-        <table className="w-full">
+        <table className="w-full text-xl">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="p-4 w-40">구분</th>
-              <th className="w-60">닉네임</th>
-              <th className="w-4/6">제목</th>
-              <th className="w-60">날짜</th>
+              <th className="p-4 w-[15%]">구분</th>
+              <th className="w-[18%]">닉네임</th>
+              <th className="w-[52%]">제목</th>
+              <th className="w-[15%]">날짜</th>
             </tr>
           </thead>
           <tbody>
             {currentItems?.map((item, idx) => {
               return (
                 <tr
-                  className="bg-white cursor-pointer border-y border-solid border-pointColor1"
+                  className="bg-white cursor-pointer border-y border-solid border-pointColor3"
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}
                 >
-                  <td className="p-3 w-24">{item['category']}</td>
+                  <td className="p-4 w-24">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
                   <td>{truncateTitle(item['title'])}</td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
@@ -67,16 +67,28 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
       </div>
 
       <section className="flex justify-center my-[30px] px-20 w-full">
-        <nav className="flex gap-5">
-          {currentSet > 1 && <button onClick={() => setCurrentPage(startPage - 1)}>&lt;</button>}
+        <nav className="text-xl flex gap-10">
+          {currentSet > 1 && (
+            <button className="text-pointColor1" onClick={() => setCurrentPage(startPage - 1)}>
+              &#9664;
+            </button>
+          )}
           {Array.from({ length: btnRange }, (_, i) => startPage + i)
             .filter((page) => page <= Math.ceil(totalNum / pageRange))
             .map((page) => (
-              <button key={page} onClick={() => setCurrentPage(page)} className="text-[16px] font-bold">
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`text-[16px] font-bold ${currentPage === page ? 'text-pointColor1' : ''}`}
+              >
                 {page}
               </button>
             ))}
-          {totalSet > currentSet && <button onClick={() => setCurrentPage(endPage + 1)}>&gt;</button>}
+          {totalSet > currentSet && (
+            <button className="text-pointColor1" onClick={() => setCurrentPage(endPage + 1)}>
+              &#9654;
+            </button>
+          )}
         </nav>
       </section>
     </article>

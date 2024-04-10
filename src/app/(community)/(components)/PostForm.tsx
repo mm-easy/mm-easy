@@ -8,6 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { insertPost } from '@/api/posts';
 import { toast } from 'react-toastify';
+import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
 import type { Params } from '@/types/posts';
 
@@ -58,9 +59,15 @@ const PostForm = () => {
   };
 
   // 취소버튼 핸들러
-  const handleCancel = (e: FormEvent) => {
-    e.preventDefault();
-    router.push('/community-list?category=전체');
+  const handleCancel = (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    const confirmLeave = confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?');
+    if (confirmLeave) {
+      // 사용자가 '예'를 선택한 경우
+      router.push('/community-list?category=전체');
+    } else {
+      // 사용자가 '아니오'를 선택한 경우, 아무 동작도 하지 않음
+    }
   };
 
   // 새로운 post 추가 핸들러
@@ -93,14 +100,14 @@ const PostForm = () => {
   };
 
   return (
-    <article className="flex">
+    <article className="grid grid-cols-[16%_84%]">
       <div>
         <CategorySelector categoryNow={categoryNow} />
       </div>
-      <form onSubmit={handleNewPost} className='p-20'>
-        <section className="flex">
+      <form onSubmit={handleNewPost} className="py-16 px-48 border-l-2 border-solid  border-pointColor1">
+        <section className="flex border-b border-pointColor1 border-solid">
           {categories.map((item) => (
-            <div className='' key={item.id}>
+            <div key={item.id}>
               <input
                 className="hidden"
                 type="radio"
@@ -112,7 +119,9 @@ const PostForm = () => {
               />
               <label
                 htmlFor={item.id}
-                className={`text-lg px-8 cursor-pointer ${category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'}`}
+                className={`rounded-tl-lg rounded-tr-lg text-lg px-6 cursor-pointer  ${
+                  category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'
+                }`}
               >
                 {item.label}
               </label>
@@ -120,14 +129,20 @@ const PostForm = () => {
           ))}
         </section>
         <div>
-          <input type="text" value={title} onChange={handleTitle} placeholder=" 제목을 입력해 주세요." />
+          <input
+            className="focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
+            type="text"
+            value={title}
+            onChange={handleTitle}
+            placeholder=" 제목을 입력하세요."
+          />
         </div>
         <div>
           <NoticeEditor value={content} onChange={handleEditorChange} />
         </div>
-        <div>
-          <button onClick={handleCancel}>취소</button>
-          <button type="submit">작성</button>
+        <div className="pt-14 flex justify-center gap-5 font-bold">
+          <CancelButton text="취소" onClick={handleCancel} width="w-[15%]" border="border-2" />
+          <SubmitButton text="완료" width="w-[15%]" />
         </div>
       </form>
     </article>

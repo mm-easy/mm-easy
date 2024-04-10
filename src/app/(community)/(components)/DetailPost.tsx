@@ -72,16 +72,16 @@ const DetailPost = () => {
   };
 
   return (
-    <article>
+    <article className="grid grid-cols-[16%_84%]">
+      <div>
+        <CategorySelector categoryNow={categoryNow} />
+      </div>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div>
-          <CategorySelector categoryNow={categoryNow} />
-        </div>
-        <div className="py-10 px-20 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
+        <div className="py-12 px-28 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
-                <p className='text-lg font-bold'>{post.category}</p>
+                <p className="text-lg font-bold">{post.category}</p>
               </div>
               <h1 className="text-3xl font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
@@ -102,7 +102,7 @@ const DetailPost = () => {
                 </div>
                 <div className="flex items-center">
                   {profile && post.author_id === profile.id && (
-                    <div className='flex'>
+                    <div className="flex">
                       <div>
                         <PostEditButton
                           text="수정"
@@ -112,7 +112,7 @@ const DetailPost = () => {
                           height="h-12"
                         />
                       </div>
-                      <div className='pl-3'>
+                      <div className="pl-3">
                         <PostDeleteButton
                           text="삭제"
                           redirectUrl={`/community-list?category=${categoryNow}`}

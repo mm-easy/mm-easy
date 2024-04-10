@@ -6,7 +6,7 @@ import CommunityForm from '../(components)/CommunityForm';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getFilterPosts, getPosts } from '@/api/posts';
-import { BlueButton } from '@/components/common/FormButtons';
+import { CancelButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -46,7 +46,7 @@ const CommunityPage = () => {
     postNow();
   }, [category]);
 
-  const pageRange = 2; // 페이지당 보여줄 게시물 수
+  const pageRange = 10; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
   const totalNum = post.length; // 총 데이터 수
 
@@ -63,17 +63,15 @@ const CommunityPage = () => {
   const currentItems = post.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <article className="flex">
-      <div className="">
-        <div className="">
-          <CategorySelector categoryNow={category} />
+    <main className="grid grid-cols-[16%_84%]">
+      <section>
+        <CategorySelector categoryNow={category} />
+        <div className="flex justify-center pt-64 pb-12 text-xl font-bold">
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height='h-16' border='border-2' />
         </div>
-        <div className="flex justify-center pt-64 pb-12">
-          <BlueButton text="작성하기" onClick={navigateToPostPage} width="w-28" />
-        </div>
-      </div>
-      <div className="flex w-full border-l border-solid  border-pointColor1">
-        <div className="flex justify-center w-full px-24">
+      </section>
+      <section className="flex w-full border-l-2 border-solid  border-pointColor1">
+        <div className="flex justify-center w-full py-20 px-48">
           <CommunityForm
             currentItems={currentItems}
             setCurrentPage={setCurrentPage}
@@ -84,8 +82,8 @@ const CommunityPage = () => {
             category={category}
           />
         </div>
-      </div>
-    </article>
+      </section>
+    </main>
   );
 };
 
