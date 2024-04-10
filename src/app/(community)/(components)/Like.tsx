@@ -82,15 +82,15 @@ const Like = ({ postId }: { postId: string | string[] }) => {
 
   return (
     <div className="flex w-full justify-between">
-      <div className="flex">
+      <div className="flex pt-[2px]">
         <LikeToggleButton
           toggled={likes ?? false}
           onToggle={handleLikeToggle}
           onIcon={<AiFillHeart />}
           offIcon={<AiOutlineHeart />}
         />
-        <p className="ml-[5px]">좋아요 {likeCount}</p>
       </div>
+        <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
     </div>
   );
 };

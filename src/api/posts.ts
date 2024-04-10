@@ -1,5 +1,4 @@
 import { supabase } from '@/utils/supabase/supabase';
-import { redirect } from 'next/navigation';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async (offset = 0, limit = 10) => {
@@ -26,7 +25,7 @@ export const getRecentPosts = async () => {
 
   if (error) throw error;
   return posts || [];
-}
+};
 
 // posts 테이블에서 게시글 삭제하기
 export const removeCommunityPost = async (postId: string) => {
@@ -67,7 +66,7 @@ export const insertPost = async (title: string, content: string, category: strin
     throw new Error(error.message);
   }
 
-  return data;
+  return data[0].id;
 };
 
 // post를 업데이트
@@ -126,7 +125,7 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
 
 export const fetchPost = async (id: string | undefined) => {
   try {
-    const { data: posts, error } = await supabase.from('posts').select('*').eq('postId', id);
+    const { data: posts, error } = await supabase.from('posts').select('*').eq('id', id);
     if (error) throw error;
     console.log(posts);
     return posts![0];
