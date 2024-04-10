@@ -13,7 +13,6 @@ import InputQuestionImg from './InputQuestionImg';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import UnloadImgBtn from './UnloadImg';
 import { storageUrl } from '@/utils/supabase/storage';
-import { BlueInput } from '@/components/common/BlueInput';
 
 const QuestionForm = ({
   questions,
