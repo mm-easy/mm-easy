@@ -159,6 +159,7 @@ export const useAuth = () => {
     }
 
     if (!userData) {
+      console.log('로그인한 사용자 없음');
       throw new Error('로그인한 사용자가 없습니다.');
     }
 
