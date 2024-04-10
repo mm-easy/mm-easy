@@ -49,6 +49,8 @@ const DetailPost = () => {
       if (isLoggedIn) {
         const userProfile = await getCurrentUserProfile();
         setProfile(userProfile);
+      } else {
+        setProfile(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
       }
     };
 
