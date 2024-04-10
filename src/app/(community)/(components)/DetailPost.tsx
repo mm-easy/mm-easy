@@ -16,16 +16,47 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
+import { isLoggedInAtom } from '@/store/store';
+import { User } from '@/types/users';
+import { useAtom } from 'jotai';
+import { supabase } from '@/utils/supabase/supabase';
 
 const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();
   const [post, setPost] = useState<PostDetailDateType>();
   const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [profile, setProfile] = useState<User | null>();
 
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          console.log('no');
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  /** 로그인이 되어 있다면 프로필 가져오기 */
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        setProfile(userProfile);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
 
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
@@ -78,7 +109,7 @@ const DetailPost = () => {
         <CategorySelector categoryNow={categoryNow} />
       </div>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div className="py-16 px-48 border border-solid border-t-0 border-r-0 border-b-0 w-full border-pointColor1 bg-white">
+        <div className="py-16 px-48 border-l-2 border-solid w-full border-pointColor1 bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
@@ -132,21 +163,17 @@ const DetailPost = () => {
               ></p>
               <div className="flex items-center pt-4">
                 <div className="flex ml-auto items-center">
-                  <Like postId={params.id} />
+                  <Like postId={params.id} profile={profile} />
                 </div>
               </div>
               <div className="border-solid border-t pt-3">
                 <span className="text-lg font-bold">댓글</span>
-                <Comment postId={params.id} />
+                <Comment postId={params.id} profile={profile} />
               </div>
               <div className="pt-10 flex justify-center item items-center text-xl font-bold gap-10">
-                <button onClick={() => nextPostBtn(post.id)}>
-                &#9664;
-                </button>
+                <button onClick={() => nextPostBtn(post.id)}>&#9664;</button>
                 <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
-                <button onClick={() => beforePostBtn(post.id)}>
-                &#9654;
-                </button>
+                <button onClick={() => beforePostBtn(post.id)}>&#9654;</button>
               </div>
             </div>
           )}

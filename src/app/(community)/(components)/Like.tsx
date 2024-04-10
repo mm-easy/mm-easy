@@ -6,18 +6,11 @@ import { AiFillHeart } from 'react-icons/ai';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
+import { LikeProps } from '@/types/posts';
 
-const Like = ({ postId }: { postId: string | string[] }) => {
+const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
   const [likeCount, setLikeCount] = useState<number>(0);
-
-  /**현재 로그인된 유저 정보 가져오기*/
-  const { getCurrentUserProfile } = useAuth();
-
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
 
   const userId = profile?.id;
 
@@ -90,7 +83,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
           offIcon={<AiOutlineHeart />}
         />
       </div>
-        <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
+      <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
     </div>
   );
 };

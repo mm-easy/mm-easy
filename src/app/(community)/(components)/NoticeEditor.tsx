@@ -69,7 +69,7 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   );
 
   const formats = [
-    'float',
+    // 'float',
     'height',
     'width',
     'header',

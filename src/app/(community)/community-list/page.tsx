@@ -10,11 +10,15 @@ import { CancelButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/store/store'; 
 
 import type { Post } from '@/types/posts';
+import { supabase } from '@/utils/supabase/supabase';
 
 const CommunityPage = () => {
   const { getCurrentUserProfile } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [post, setPost] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -22,10 +26,42 @@ const CommunityPage = () => {
   const params = useSearchParams();
   const category = params.get('category');
 
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  /** 로그인이 되어 있다면 프로필 가져오기 */
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        console.log('로그인한 자의 프로필..', userProfile);
+      }
+    };
+
+    fetchData();
+  }, [isLoggedIn]);
+  
+  const navigateToPostPage = () => {
+    if (!isLoggedIn) {
+      toast.warn('게시물을 작성하려면 로그인 해주세요.');
+    } else {
+      router.push('/community-post');
+    }
+  };
 
   useEffect(() => {
     const postNow = async () => {
@@ -46,17 +82,17 @@ const CommunityPage = () => {
     postNow();
   }, [category]);
 
-  const pageRange = 2; // 페이지당 보여줄 게시물 수
+  const pageRange = 10; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
   const totalNum = post.length; // 총 데이터 수
 
-  const navigateToPostPage = () => {
-    if (!profile) {
-      toast.warn('게시물을 작성하려면 로그인 해주세요.');
-    } else {
-      router.push('/community-post');
-    }
-  };
+  // const navigateToPostPage = () => {
+  //   if (!profile) {
+  //     toast.warn('게시물을 작성하려면 로그인 해주세요.');
+  //   } else {
+  //     router.push('/community-post');
+  //   }
+  // };
 
   const indexOfLastItem = currentPage * pageRange;
   const indexOfFirstItem = indexOfLastItem - pageRange;
@@ -67,7 +103,7 @@ const CommunityPage = () => {
       <section>
         <CategorySelector categoryNow={category} />
         <div className="flex justify-center pt-64 pb-12 text-xl font-bold">
-          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height='h-16' border='border-2' />
         </div>
       </section>
       <section className="flex w-full border-l-2 border-solid  border-pointColor1">
