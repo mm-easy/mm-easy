@@ -37,6 +37,7 @@ const MyActivity = () => {
           if (userProfile && userProfile.email) {
             const fetchedQuizzes = await fetchUserQuizzes(userProfile.email);
             setQuizzes(fetchedQuizzes || []);
+            console.log(fetchedQuizzes)
           }
         } catch (error) {
           console.error('퀴즈 불러오기 실패:', error);
@@ -49,6 +50,9 @@ const MyActivity = () => {
 
   return (
     <main>
+      <div>
+        <p>나의 활동</p>
+      </div>
       <nav>
         <ul>
           <li>내가 만든 퀴즈</li>
