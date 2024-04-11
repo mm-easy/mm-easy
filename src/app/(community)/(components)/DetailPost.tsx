@@ -12,14 +12,15 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { useQuery } from '@tanstack/react-query';
-import { PostDeleteButton } from '@/components/common/PostDeleteButton';
-import { PostEditButton } from '@/components/common/PostEditButton';
+
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import { PostEditButton } from '@/components/common/EditButton';
+import { PostDeleteButton } from '@/components/common/DeleteButton';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
