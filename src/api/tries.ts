@@ -12,7 +12,7 @@ export const insertQuizTry = async (quizTries: QuizTry) => {
   }
 };
 
-export const updateQuizScore = async (userId: string, quizId: string | string[], score: number) => {
+export const updateQuizScore = async (userId: string | null, quizId: string | string[], score: number) => {
   try {
     const { error } = await supabase.from('quiz_tries').update({ score }).eq('user_id', userId).eq('quiz_id', quizId);
     if (error) throw error;

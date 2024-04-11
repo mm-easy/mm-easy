@@ -25,8 +25,11 @@ const QuizTryPage = () => {
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
   const [score, setScore] = useState(0);
-  const [currentUser, setCurrentUser] = useState('');
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const { getCurrentUserProfile } = useAuth();
+
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
 
@@ -34,16 +37,27 @@ const QuizTryPage = () => {
     const fetchData = async () => {
       try {
         const getSession = await supabase.auth.getSession();
-        if (!getSession.data.session) return;
-        const userProfile = await getCurrentUserProfile();
-        if (!userProfile) return;
-        setCurrentUser(userProfile.email);
+        if (!getSession.data.session) {
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
       }
     };
     fetchData();
-  }, [getCurrentUserProfile]);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        if (userProfile) setCurrentUserEmail(userProfile.email);
+      }
+    };
+    fetchData();
+  }, [isLoggedIn]);
 
   const {
     data: quizData,
@@ -135,7 +149,7 @@ const QuizTryPage = () => {
   const handleInsertQuizTry = async (countCorrect: number) => {
     try {
       const quizTry = {
-        user_id: currentUser,
+        user_id: currentUserEmail,
         quiz_id: id,
         score: level * countCorrect * 100
       };
@@ -143,14 +157,14 @@ const QuizTryPage = () => {
       const { data: quizTryData } = await supabase
         .from('quiz_tries')
         .select('*')
-        .eq('user_id', currentUser)
+        .eq('user_id', currentUserEmail)
         .eq('quiz_id', id);
 
       if (quizTryData?.length !== 0) {
         updateQuizMutation.mutate(quizTry);
         return;
       }
-      if (currentUser) {
+      if (currentUserEmail) {
         insertQuizMutation.mutate(quizTry);
       }
     } catch (error) {
