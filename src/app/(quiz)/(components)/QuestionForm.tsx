@@ -255,14 +255,14 @@ const QuestionForm = ({
                       className="w-full px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
                       placeholder="정답을 입력해 주세요."
                       onInput={(e) => {
-                        handleMaxLength(e, 25);
+                        handleMaxLength(e, 30);
                       }}
                       onChange={(e) => {
                         e.preventDefault();
                         handleChangeCorrectAnswer(id, e.target.value);
                       }}
                     />
-                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length}/25</p>
+                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length}/30</p>
                   </div>
                 </>
               )}
