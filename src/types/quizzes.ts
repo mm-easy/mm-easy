@@ -50,8 +50,8 @@ export type Answer = {
 };
 
 export type QuizTry = {
+  user_id: string | null;
   quiz_id: string | string[];
-  user_id: string;
   score: number;
 };
 
