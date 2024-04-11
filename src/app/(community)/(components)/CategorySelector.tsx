@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
@@ -36,10 +36,6 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     setSelectedCategory(category);
     router.push(`/community-list?category=${categoryMenu[category]}`);
   };
-
-  useEffect(() => {
-    setSelectedCategory(categoryNow);
-  }, [categoryNow]);
 
   return (
     <nav className="text-pointColor1 font-bold">
