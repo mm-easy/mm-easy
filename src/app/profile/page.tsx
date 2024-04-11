@@ -49,7 +49,7 @@ const ProfilePage = () => {
         <MyProfile currentUser={currentUser} />
       </div>
       <div className="h-[37vh]">
-        <MyLevelAndScore />
+        <MyLevelAndScore currentUser={currentUser} />
       </div>
     </main>
   );
