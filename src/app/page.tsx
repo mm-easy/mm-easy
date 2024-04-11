@@ -14,8 +14,8 @@ const Home = () => {
       const { data: session } = await supabase.auth.getSession();
       if (session) {
         const user = session.session?.user;
-        if (user) { 
-          const id = user.id
+        if (user) {
+          const id = user.id;
           const email = user.email ?? '';
           const nickname = email.split('@')[0];
           try {
@@ -38,11 +38,11 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-    <MainLogo />
-    <QuizSection/>
-    <RankingSection />
-    <CommunitySection />
-    <Footer />
+      <MainLogo />
+      <QuizSection />
+      <RankingSection />
+      <CommunitySection />
+      <Footer />
     </div>
   );
 };

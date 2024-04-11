@@ -14,6 +14,7 @@ import Header from './Header';
 import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
+import Creator from './Creator';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -55,11 +56,8 @@ const QuizTryPage = () => {
     queryKey: ['questions']
   });
 
-  if (quizIsLoading) return <div>퀴즈 로드 중..</div>;
-  if (quizIsError) return <div>퀴즈 로드 에러..</div>;
-
-  if (questionsIsLoading) return <div>퀴즈 로드 중..</div>;
-  if (questionsIsError) return <div>퀴즈 로드 에러..</div>;
+  if (quizIsLoading || questionsIsLoading) return <div>로드 중..</div>;
+  if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as GetQuiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
@@ -129,10 +127,7 @@ const QuizTryPage = () => {
               className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
-              <div>
-                <h4>작성자</h4>
-                <p>{creator_id}</p>
-              </div>
+              <Creator creator={creator_id} />
               <div>
                 <h4>등록일</h4>
                 <p>{formatToLocaleDateTimeString(created_at)}</p>
