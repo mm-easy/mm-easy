@@ -1,19 +1,17 @@
 import { supabase } from '@/utils/supabase/supabase';
 
-export const getGameScore = async () => {
+import type { TypeingGame } from '@/types/game';
+
+export const getGameScore = async (): Promise<TypeingGame[]> => {
   try {
-    let { data: gameScore, error } = await supabase
-      .from('game_tries')
-      .select('*, user_id')
-      .order('score', { ascending: false })
-      .limit(3);
+    let { data: gameScore, error } = await supabase.rpc('get_game_tries_with_details').limit(3);
 
     if (error) throw error;
 
     return gameScore;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 };
 
