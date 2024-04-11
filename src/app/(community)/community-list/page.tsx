@@ -86,14 +86,6 @@ const CommunityPage = () => {
   const btnRange = 5; // 보여질 페이지 버튼의 개수
   const totalNum = post.length; // 총 데이터 수
 
-  // const navigateToPostPage = () => {
-  //   if (!profile) {
-  //     toast.warn('게시물을 작성하려면 로그인 해주세요.');
-  //   } else {
-  //     router.push('/community-post');
-  //   }
-  // };
-
   const indexOfLastItem = currentPage * pageRange;
   const indexOfFirstItem = indexOfLastItem - pageRange;
   const currentItems = post.slice(indexOfFirstItem, indexOfLastItem);
