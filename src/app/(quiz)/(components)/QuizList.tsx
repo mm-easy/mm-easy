@@ -4,9 +4,22 @@ import Image from 'next/image';
 
 import { Quiz } from '@/types/quizzes';
 import { useRouter } from 'next/navigation';
+import RecommendLoginModal from '@/components/common/RecommendLoginModal';
+import { useState } from 'react';
 
-const QuizList = ({ quizLevelSelected }: { quizLevelSelected: Quiz[] }) => {
+const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[]; currentUser: string }) => {
   const router = useRouter();
+  const [quizId, setQuizId] = useState<string | undefined>('');
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = (id: string | undefined) => {
+    setQuizId(id);
+    if (!currentUser) {
+      setShowModal(true);
+    } else {
+      handleMoveQuizTry(id);
+    }
+  };
 
   const handleMoveQuizTry = (id: string | undefined) => {
     router.push(`/quiz/${id}`);
@@ -20,7 +33,9 @@ const QuizList = ({ quizLevelSelected }: { quizLevelSelected: Quiz[] }) => {
           <div
             key={item.id}
             className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 min-w-[250px] cursor-pointer"
-            onClick={() => handleMoveQuizTry(item.id)}
+            onClick={() => {
+              handleShowModal(item.id);
+            }}
           >
             <p className="font-bold text-lg mt-4 mb-3">{item.title}</p>
             <div className="flex flex-col gap-3">
@@ -37,6 +52,7 @@ const QuizList = ({ quizLevelSelected }: { quizLevelSelected: Quiz[] }) => {
             </div>
           </div>
         ))}
+        {showModal && <RecommendLoginModal id={quizId} proceedWithoutLogin={handleMoveQuizTry} />}
       </div>
     </main>
   );

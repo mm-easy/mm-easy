@@ -113,7 +113,7 @@ const SelectQuizLevel = () => {
           />
         </div>
       </main>
-      <QuizList quizLevelSelected={quizLevelSelected} />
+      <QuizList quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
     </>
   );
 };
