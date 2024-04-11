@@ -134,3 +134,19 @@ export const fetchPost = async (id: string | undefined) => {
     throw error;
   }
 };
+
+export const getMyActivityPosts = async (userId:string) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname)`)
+      .eq('author_id', userId) // 'author_id'와 사용자의 ID를 비교
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return posts || [];
+  } catch (error) {
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
+  }
+};
