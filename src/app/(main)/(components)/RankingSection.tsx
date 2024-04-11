@@ -1,6 +1,7 @@
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
@@ -41,7 +42,7 @@ const RankingSection = () => {
                   {quizRank.avatar_img_url && (
                     <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={quizRank.avatar_img_url}
+                        src={`${profileStorageUrl}/${quizRank.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
