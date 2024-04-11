@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
@@ -70,7 +71,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
             <div className="pt-8 flex border-solid border-b border-pointColor3" key={prev.id}>
               <div className="w-50 h-50 m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
-                  src={prev.profiles?.avatar_img_url || '프로필이미지'}
+                  src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url}`}
                   alt="프로필이미지"
                   width={50}
                   height={50}
