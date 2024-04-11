@@ -6,3 +6,5 @@ export type User = {
   nickname: string;
   avatar_img_url: string;
 };
+
+export type ProfileToUpdate = Omit<User, 'email' | 'id'>;
