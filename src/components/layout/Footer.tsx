@@ -1,15 +1,18 @@
 import Link from 'next/link';
+import GithubIcon from '@/assets/github_icon.png';
+import InstagramIcon from '@/assets/instagram_icon.png';
+import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <section className="h-[8vh] px-4 flex justify-between items-center text-center text-sm text-white bg-pointColor1">
+    <section className="h-[8vh] px-8 flex justify-between items-center text-center text-sm text-white bg-pointColor1">
       <p>뭔말이지? Project. All rights reserved @ Coding zizon</p>
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <Link href="https://github.com/mm-easy/mm-easy" target="\_blank">
-          ➡️ github
+          <Image src={GithubIcon} alt="깃허브 아이콘" width={20} height={20} />
         </Link>
         <Link href="https://www.instagram.com/mm_easy_official" target="\_blank">
-          ➡️ insta
+          <Image src={InstagramIcon} alt="인스타그램 아이콘" width={20} height={20} />
         </Link>
       </div>
     </section>
