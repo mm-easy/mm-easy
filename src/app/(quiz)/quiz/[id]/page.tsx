@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -10,19 +10,40 @@ import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAuth } from '@/hooks/useAuth';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
 import Header from './Header';
+import Creator from './Creator';
 import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
-import Creator from './Creator';
+import { errorMonitor } from 'events';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  // const [objectiveAnswer, setObjectiveAnswer] = useState('');
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
   const [score, setScore] = useState(0);
-  console.log(usersAnswers);
+  const [currentUser, setCurrentUser] = useState('');
+  const { getCurrentUserProfile } = useAuth();
+  const insertQuizMutation = useSubmitQuizTry();
+  const updateQuizMutation = useUpdateQuizTry();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return;
+        const userProfile = await getCurrentUserProfile();
+        if (!userProfile) return;
+        setCurrentUser(userProfile.email);
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+    fetchData();
+  }, [getCurrentUserProfile]);
 
   const {
     data: quizData,
@@ -75,7 +96,6 @@ const QuizTryPage = () => {
     } else {
       idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
     }
-    console.log(usersAnswers);
     setUsersAnswers(newAnswers);
   };
 
@@ -92,8 +112,6 @@ const QuizTryPage = () => {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
           if (question?.type === QuestionType.objective) {
-            const options = questions.find((question) => question.id === usersAnswer.id);
-
             if (usersAnswer.answer) countCorrect++;
           } else {
             if (usersAnswer.answer === question?.correct_answer) countCorrect++;
@@ -101,6 +119,7 @@ const QuizTryPage = () => {
         }
         setResultMode(true);
         setScore(countCorrect);
+        handleInsertQuizTry(countCorrect);
       }
 
       window.scrollTo({
@@ -110,6 +129,32 @@ const QuizTryPage = () => {
       });
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
+    }
+  };
+
+  const handleInsertQuizTry = async (countCorrect: number) => {
+    try {
+      const quizTry = {
+        user_id: currentUser,
+        quiz_id: id,
+        score: level * countCorrect * 100
+      };
+
+      const { data: quizTryData } = await supabase
+        .from('quiz_tries')
+        .select('*')
+        .eq('user_id', currentUser)
+        .eq('quiz_id', id);
+
+      if (quizTryData?.length !== 0) {
+        updateQuizMutation.mutate(quizTry);
+        return;
+      }
+      if (currentUser) {
+        insertQuizMutation.mutate(quizTry);
+      }
+    } catch (error) {
+      console.log('퀴즈 점수 저장/업데이트 실패', errorMonitor);
     }
   };
 
