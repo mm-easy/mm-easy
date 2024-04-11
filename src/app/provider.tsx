@@ -9,7 +9,7 @@ const QueryProvider = ({ children }: React.PropsWithChildren) => {
 
   return (
     <NextUIProvider>
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   </NextUIProvider>
   );
 };
