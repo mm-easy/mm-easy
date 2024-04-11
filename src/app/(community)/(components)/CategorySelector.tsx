@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
+import { useQuery } from '@tanstack/react-query';
+import { Post } from '@/types/posts';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
@@ -24,6 +26,22 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   useEffect(() => {
     setSelectedCategory(categoryNow);
   }, [categoryNow]);
+
+  // const { data: postNum } = useQuery<string, number>({
+  //   queryFn: async () => {
+  //     try {
+  //       const nums: Record<string, number> = {};
+  //       for (const category of Object.keys(categoryMenu)) {
+  //         const categoryPosts = await getFilterPosts(categoryMenu[category]);
+  //         nums[category] = categoryPosts.length;
+  //       }
+  //       return nums;
+  //     } catch (error) {
+  //       return [];
+  //     }
+  //   },
+  //   queryKey: ['comments']
+  // });
 
   useEffect(() => {
     const fetchPostNumbers = async () => {

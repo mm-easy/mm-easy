@@ -12,6 +12,18 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
 
   const userId = profile?.id;
 
+  // const { data: nowLike,error } = useQuery<LikeType>({
+  //   queryFn: async () => {
+  //     try {
+  //       const data = await getLike({ postId, userId });
+  //       return data;
+  //     } catch (error) {
+  //       return;
+  //     }
+  //   },
+  //   queryKey: ['like']
+  // });
+
   /**현재 게시글에 좋아요 상태 불러오기*/
   useEffect(() => {
     const likedStatus = async () => {
