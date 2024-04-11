@@ -49,7 +49,7 @@ export type Answer = {
   option_id?: string;
 };
 
-export type QuizScore = {
+export type QuizTry = {
   quiz_id: string | string[];
   user_id: string;
   score: number;

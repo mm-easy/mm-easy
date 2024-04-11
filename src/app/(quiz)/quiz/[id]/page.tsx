@@ -12,12 +12,13 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitQuizScore } from './mutation';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
+import { errorMonitor } from 'events';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -26,6 +27,8 @@ const QuizTryPage = () => {
   const [score, setScore] = useState(0);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
+  const insertQuizMutation = useSubmitQuizTry();
+  const updateQuizMutation = useUpdateQuizTry();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +44,6 @@ const QuizTryPage = () => {
     };
     fetchData();
   }, [getCurrentUserProfile]);
-
-  const insertQuizMutation = useSubmitQuizScore();
 
   const {
     data: quizData,
@@ -95,7 +96,6 @@ const QuizTryPage = () => {
     } else {
       idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
     }
-    console.log(usersAnswers);
     setUsersAnswers(newAnswers);
   };
 
@@ -119,16 +119,7 @@ const QuizTryPage = () => {
         }
         setResultMode(true);
         setScore(countCorrect);
-
-        const score = {
-          user_id: currentUser,
-          quiz_id: id,
-          score: level * countCorrect * 100
-        };
-
-        if (currentUser) {
-          insertQuizMutation.mutateAsync(score);
-        }
+        handleInsertQuizTry(countCorrect);
       }
 
       window.scrollTo({
@@ -138,6 +129,32 @@ const QuizTryPage = () => {
       });
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
+    }
+  };
+
+  const handleInsertQuizTry = async (countCorrect: number) => {
+    try {
+      const quizTry = {
+        user_id: currentUser,
+        quiz_id: id,
+        score: level * countCorrect * 100
+      };
+
+      const { data: quizTryData } = await supabase
+        .from('quiz_tries')
+        .select('*')
+        .eq('user_id', currentUser)
+        .eq('quiz_id', id);
+
+      if (quizTryData?.length !== 0) {
+        updateQuizMutation.mutate(quizTry);
+        return;
+      }
+      if (currentUser) {
+        insertQuizMutation.mutate(quizTry);
+      }
+    } catch (error) {
+      console.log('퀴즈 점수 저장/업데이트 실패', errorMonitor);
     }
   };
 
