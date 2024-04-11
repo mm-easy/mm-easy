@@ -19,15 +19,13 @@ const Creator = ({ creator }: { creator: string }) => {
   if (isError) return <div>error..</div>;
 
   const profile = data as User[];
-  console.log(profile);
 
   const { nickname } = profile[0];
 
   return (
     <div>
       <h4>작성자</h4>
-      {/* <p>{nickname}</p> */}
-      <p>nickname</p>
+      <p>{nickname}</p>
     </div>
   );
 };
