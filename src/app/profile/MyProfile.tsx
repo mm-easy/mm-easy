@@ -7,11 +7,10 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 import { generateFileName } from '@/utils/generateFileName';
 import { uploadAvatarToStorage } from '@/api/users';
 import { toast } from 'react-toastify';
-
-import type { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useUpdateProfile } from './mutations';
-import { IoMdReturnLeft } from 'react-icons/io';
+
+import type { User } from '@/types/users';
 
 const MyProfile = ({ currentUser }: { currentUser: User }) => {
   const [isEditing, setIsEditing] = useState(false);
