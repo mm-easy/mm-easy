@@ -226,7 +226,7 @@ const QuizTryPage = () => {
                     alt="문제 이미지"
                     width={570}
                     height={200}
-                    className="h-[200px] object-cover rounded-md"
+                    className="h-[200px] mb-2 object-cover rounded-md"
                   />
                 ) : (
                   <></>
