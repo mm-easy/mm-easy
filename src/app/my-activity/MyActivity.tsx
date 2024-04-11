@@ -112,6 +112,12 @@ const MyActivity = () => {
   {
     isQuizError && <div>퀴즈를 불러오는 중 오류가 발생했습니다.</div>;
   }
+  {
+    isCommentLoading && <div>로딩 중...</div>;
+  }
+  {
+    isCommentError && <div>댓글을 불러오는 중 오류가 발생했습니다.</div>;
+  }
 
   return (
     <main>

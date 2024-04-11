@@ -18,6 +18,7 @@ import { supabase } from '@/utils/supabase/supabase';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const DetailPost = () => {
   const [post, setPost] = useState<PostDetailDateType>();
@@ -116,7 +117,7 @@ const DetailPost = () => {
                 <div className="flex">
                   <div className="w-50 h-50 m-3 ml-0 rounded-full overflow-hidden">
                     <Image
-                      src={post.profiles.avatar_img_url}
+                      src={`${profileStorageUrl}/${post.profiles.avatar_img_url}`}
                       alt="프로필이미지"
                       width={50}
                       height={50}
