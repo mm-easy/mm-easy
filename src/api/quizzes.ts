@@ -104,7 +104,6 @@ export const getRecentQuizzes = async () => {
   }
 };
 
-
 export const getQuiz = async (id: string | string[]) => {
   try {
     const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
@@ -128,6 +127,12 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
     throw error;
   }
 };
+
+// export const getQuizCount = async () => {
+//   const { count, error } = await supabase.from('quizzes').select('*', { count: 'exact' });
+//   if (error) throw error;
+//   return count;
+// };
 
 export const fetchUserQuizzes = async (email : string) => {
   try {
