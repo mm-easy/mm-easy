@@ -24,13 +24,17 @@ const SignUpPage = () => {
       toast.error('비밀번호는 최소 6자 이상이어야 합니다.');
       return;
     }
-    try {
-      await signUp(email, password);
-      toast.success('회원가입에 성공했습니다!'); 
-      router.push('/login');
-    } catch (error) {
+    const signUpResult = await signUp(email, password);
+
+    if (signUpResult && signUpResult.error) {
+      toast.error(signUpResult.errorMessage);
+      return;
     }
+    
+    toast.success('회원가입에 성공했습니다! 로그인 페이지로 이동합니다.');
+    router.push('/login');
   };
+  
 
   return (
     <article className="flex flex-col min-h-screen">
