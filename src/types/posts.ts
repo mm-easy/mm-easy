@@ -91,7 +91,7 @@ export type FormButtonProps = {
   height?: string;
   postId: string;
   categoryNow?: string;
-  redirectUrl: string;
+  redirectUrl?: string;
 };
 
 export type Params = {

@@ -3,6 +3,7 @@
 import { getMyActivityComment } from '@/api/comments';
 import { getMyActivityPosts } from '@/api/posts';
 import { fetchUserQuizzes } from '@/api/quizzes';
+import { PostDeleteButton } from '@/components/common/PostDeleteButton';
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
@@ -78,7 +79,6 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-
   const {
     data: userComment,
     isLoading: isCommentLoading,
@@ -122,7 +122,7 @@ const MyActivity = () => {
   return (
     <main>
       <div className="flex justify-center">
-        <p className='text-2xl'>나의 활동</p>
+        <p className="text-2xl">나의 활동</p>
       </div>
       <nav className="flex justify-center">
         <ul className="flex justify-center text-2xl">
@@ -132,9 +132,9 @@ const MyActivity = () => {
         </ul>
       </nav>
       {activeTab === 'quizzes' && (
-        <div className='flex justify-center w-full py-16 px-48'>
-          <table className='w-full text-lg'>
-            <thead className='text-left'>
+        <div className="flex justify-center w-full py-16 px-48">
+          <table className="w-full text-lg">
+            <thead className="text-left">
               <tr>
                 <th>제목</th>
                 <th>완료수</th>
@@ -166,6 +166,7 @@ const MyActivity = () => {
                 <div className="text-lg" key={index}>
                   <h3>{post.title}</h3>
                   <p>{formatToLocaleDateTimeString(post.created_at)}</p>
+                  <PostDeleteButton text="삭제" postId={post.id} width="w-20" height="h-12" />
                 </div>
               ))
             : !isPostLoading && <div>게시글이 없습니다.</div>}

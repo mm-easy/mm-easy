@@ -5,7 +5,9 @@ export const PostEditButton: React.FC<FormButtonProps> = ({ text, width, height,
   const router = useRouter();
 
   const handleEditClick = () => {
-    router.push(redirectUrl);
+    if (redirectUrl) {
+      router.replace(redirectUrl);
+    }
   };
 
   return (
