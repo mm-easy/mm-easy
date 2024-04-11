@@ -11,15 +11,15 @@ import { useAtom } from 'jotai';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
+import { useQuery } from '@tanstack/react-query';
 import { PostDeleteButton } from '@/components/common/PostDeleteButton';
 import { PostEditButton } from '@/components/common/PostEditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { useQuery } from '@tanstack/react-query';
-import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -48,7 +48,7 @@ const DetailPost = () => {
         return;
       }
     },
-    queryKey: ['post']
+    queryKey: ['posts']
   });
 
   const { data: nextBeforePost = [] } = useQuery<Post[]>({
@@ -92,20 +92,6 @@ const DetailPost = () => {
   };
 
   useEffect(() => {
-    // let data;
-    // let nextPosts;
-    // const postDetailDate = async () => {
-    //   if (categoryNow === '전체') {
-    //     data = await getPostDetail(params.id);
-    //     nextPosts = await getPosts();
-    //   } else {
-    //     data = await getPostCategoryDetail(categoryNow, params.id);
-    //     nextPosts = await getFilterPosts(categoryNow);
-    //   }
-
-    //   setPost(data);
-    //   setNextBeforePost(nextPosts);
-    // };
     const fetchData = async () => {
       try {
         const getSession = await supabase.auth.getSession();
@@ -120,7 +106,6 @@ const DetailPost = () => {
     };
 
     fetchData();
-    // postDetailDate();
   }, []);
 
   /** 로그인이 되어 있다면 프로필 가져오기 */
