@@ -4,7 +4,7 @@ export const getGameScore = async () => {
   try {
     let { data: gameScore, error } = await supabase
       .from('game_tries')
-      .select('*')
+      .select('*, user_id')
       .order('score', { ascending: false })
       .limit(3);
 
