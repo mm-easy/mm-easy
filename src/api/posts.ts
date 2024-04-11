@@ -134,3 +134,17 @@ export const fetchPost = async (id: string | undefined) => {
     throw error;
   }
 };
+
+export const getComment = async (postId: string | string[] | undefined) => {
+  try {
+    const { data: comments, error } = await supabase
+      .from('comments')
+      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .eq('post_id', postId)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return comments || [];
+  } catch (error) {
+    throw error;
+  }
+};

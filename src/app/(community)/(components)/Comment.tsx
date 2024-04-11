@@ -4,13 +4,80 @@ import { toast } from 'react-toastify';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getComment } from '@/api/posts';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
-  const [postCommentList, setPostCommentList] = useState<PostDetailCommentType[]>([]);
+  // const [postCommentList, setPostCommentList] = useState<PostDetailCommentType[]>([]);
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
+
+  const queryClient = useQueryClient();
+
+  const { data: postCommentList } = useQuery<PostDetailCommentType[]>({
+    queryFn: async () => {
+      try {
+        const data = await getComment(postId);
+        return data;
+      } catch (error) {
+        return [];
+      }
+    },
+    queryKey: ['comments']
+  });
+
+  const insertCommentUpdateMuitation = useMutation({
+    mutationFn: async (id: string) => {
+      try {
+        const result = await supabase.from('comments').update({ content: contentChange }).eq('id', id).select();
+        if (result) {
+          toast.success('수정 되었습니다.');
+          return result;
+        }
+      } catch {
+        toast.error('수정 하는데 문제가 발생했습니다.');
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    }
+  });
+
+  // export const useSubmitQuiz = () => {
+  //   const queryClient = useQueryClient();
+
+  //   const insertQuizMutation = useMutation({
+  //     mutationFn: async (newQuiz: Quiz) => {
+  //       try {
+  //         const result = await insertQuizToTable(newQuiz);
+  //         return result;
+  //       } catch (error) {
+  //         console.error('퀴즈 등록 실패', error);
+  //         throw error;
+  //       }
+  //     },
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+  //     }
+  //   });
+
+  //   return insertQuizMutation;
+  // };
+
+  // export const insertQuizToTable = async (newQuiz: Quiz) => {
+  //   try {
+  //     const { data, error } = await supabase.from('quizzes').insert([newQuiz]).select('*');
+  //     if (error) throw error;
+  //     const quizId = data?.[0].id;
+  //     return quizId;
+  //   } catch (error) {
+  //     console.error('게시글 등록 실패', error);
+  //     alert('일시적인 오류 발생');
+  //     throw error;
+  //   }
+  // };
 
   /**댓글 작성 */
   const handleSubmitBtn = async (e: React.FormEvent) => {
@@ -21,7 +88,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       return;
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('comments')
       .insert([{ author_id: profile.id, post_id: postId, content }])
       .select();
@@ -38,13 +105,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const handleUpdateBtn = async (id: string) => {
     const nowReal = window.confirm('댓글을 수정하시겠습니까?');
     if (nowReal) {
-      try {
-        await supabase.from('comments').update({ content: contentChange }).eq('id', id).select();
-        toast.success('수정 되었습니다.');
-        setBtnChange(!btnChange);
-      } catch {
-        toast.error('수정 하는데 문제가 발생했습니다.');
-      }
+      setBtnChange(!btnChange);
     } else {
       return;
     }
@@ -56,9 +117,9 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     if (nowReal) {
       try {
         await supabase.from('comments').delete().eq('id', id);
-        setPostCommentList((commentNow) => {
-          return commentNow?.filter((element) => element.id !== id);
-        });
+        // setPostCommentList((commentNow) => {
+        //   return commentNow?.filter((element) => element.id !== id);
+        // });
         toast.success('삭제 되었습니다.');
       } catch {
         toast.error('삭제 하는데 문제가 발생했습니다.');
@@ -68,23 +129,23 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     }
   };
 
-  /**게시글에 맞는 댓글 가져오기*/
-  useEffect(() => {
-    const commentList = async () => {
-      try {
-        const { data: comments, error } = await supabase
-          .from('comments')
-          .select(`*, profiles!inner(nickname,avatar_img_url)`)
-          .eq('post_id', postId)
-          .order('created_at', { ascending: false });
-        if (error) throw error;
-        setPostCommentList(comments);
-      } catch (error) {
-        throw error;
-      }
-    };
-    commentList();
-  }, [content, btnChange]);
+  // /**게시글에 맞는 댓글 가져오기*/
+  // useEffect(() => {
+  //   const commentList = async () => {
+  //     try {
+  //       const { data: comments, error } = await supabase
+  //         .from('comments')
+  //         .select(`*, profiles!inner(nickname,avatar_img_url)`)
+  //         .eq('post_id', postId)
+  //         .order('created_at', { ascending: false });
+  //       if (error) throw error;
+  //       setPostCommentList(comments);
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   };
+  //   commentList();
+  // }, [content, btnChange]);
 
   return (
     <div>
@@ -103,7 +164,6 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
               </div>
               <div className="flex flex-col justify-center text-blackColor">
                 <p>{prev.profiles?.nickname}</p>
-                {/* <time>{formatToLocaleDateTimeString(prev.created_at)}</time> */}
 
                 {btnChange && nowCommentId === prev.id ? (
                   <div>
