@@ -5,26 +5,43 @@ import CategorySelector from '../(components)/CategorySelector';
 import CommunityForm from '../(components)/CommunityForm';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
 import { getFilterPosts, getPosts } from '@/api/posts';
 import { CancelButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
-import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
-import { isLoggedInAtom } from '@/store/store'; 
-
-import type { Post } from '@/types/posts';
+import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
 
+import type { Post } from '@/types/posts';
+
 const CommunityPage = () => {
-  const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const [post, setPost] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
   const params = useSearchParams();
   const category = params.get('category');
+
+  const { data: post = [] } = useQuery<Post[]>({
+    queryFn: async () => {
+      try {
+        let nextPosts;
+        if (category === '전체' || category === null) {
+          nextPosts = await getPosts();
+        } else {
+          nextPosts = await getFilterPosts(category);
+        }
+        setCurrentPage(1);
+        return nextPosts;
+      } catch (error) {
+        return [];
+      }
+    },
+    queryKey: ['postPage', category]
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +71,7 @@ const CommunityPage = () => {
 
     fetchData();
   }, [isLoggedIn]);
-  
+
   const navigateToPostPage = () => {
     if (!isLoggedIn) {
       toast.warn('게시물을 작성하려면 로그인 해주세요.');
@@ -62,25 +79,6 @@ const CommunityPage = () => {
       router.push('/community-post');
     }
   };
-
-  useEffect(() => {
-    const postNow = async () => {
-      let data;
-      try {
-        if (category === '전체' || category === null) {
-          data = await getPosts();
-        } else {
-          data = await getFilterPosts(category);
-        }
-        setCurrentPage(1);
-        setPost(data);
-      } catch (error) {
-        console.error('포스트를 가져오는 중 오류 발생:', error);
-        return [];
-      }
-    };
-    postNow();
-  }, [category]);
 
   const pageRange = 10; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
@@ -95,7 +93,7 @@ const CommunityPage = () => {
       <section>
         <CategorySelector categoryNow={category} />
         <div className="flex justify-center pt-64 pb-12 text-xl font-bold">
-          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height='h-16' border='border-2' />
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
       <section className="flex w-full border-l-2 border-solid  border-pointColor1">
