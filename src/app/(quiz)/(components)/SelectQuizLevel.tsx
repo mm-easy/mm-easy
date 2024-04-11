@@ -6,20 +6,44 @@ import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
 import { WhiteButton } from '@/components/common/FormButtons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getQuizzes } from '@/api/quizzes';
 
 import type { Quiz } from '@/types/quizzes';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const SelectQuizLevel = () => {
+  const router = useRouter();
   const [quizLevelSelected, setQuizLevelSelected] = useState<Quiz[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
-  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState('');
+  const { getCurrentUserProfile } = useAuth();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return;
+        const userProfile = await getCurrentUserProfile();
+        if (!userProfile) return;
+        setCurrentUser(userProfile.email);
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+    fetchData();
+  }, [getCurrentUserProfile]);
 
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
+    if (!currentUser) {
+      toast.warn('로그인이 필요합니다.');
+      return;
+    }
     router.push('/quiz-form');
   };
 
@@ -89,7 +113,7 @@ const SelectQuizLevel = () => {
           />
         </div>
       </main>
-      <QuizList quizLevelSelected={quizLevelSelected} />
+      <QuizList quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
     </>
   );
 };
