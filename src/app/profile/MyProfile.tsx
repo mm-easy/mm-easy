@@ -5,11 +5,13 @@ import { useRef, useState } from 'react';
 import { BlueInput } from '@/components/common/BlueInput';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { generateFileName } from '@/utils/generateFileName';
-import { updateProfile, uploadAvatarToStorage } from '@/api/users';
+import { uploadAvatarToStorage } from '@/api/users';
 import { toast } from 'react-toastify';
 
 import type { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
+import { useUpdateProfile } from './mutations';
+import { IoMdReturnLeft } from 'react-icons/io';
 
 const MyProfile = ({ currentUser }: { currentUser: User }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,13 +20,17 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
   const [selectedImg, setSelectedImg] = useState(`${profileStorageUrl}/${currentUser.avatar_img_url}`);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const updateProfileMutation = useUpdateProfile();
+
+  /** 수정 모달에서 취소하기 버튼 클릭 시 */
   const handleCancelBtn = () => {
     if (!window.confirm('프로필 수정을 취소하시겠습니까?')) return;
     setFile(null);
-    setSelectedImg(currentUser.avatar_img_url);
+    setSelectedImg(`${profileStorageUrl}/${currentUser.avatar_img_url}`);
     setIsEditing(false);
   };
 
+  /** 수정 모달에서 이미지 클릭하여 파일 첨부하기 */
   const handleClickImg = () => {
     fileInputRef.current?.click();
   };
@@ -41,19 +47,25 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
     }
   };
 
+  /** 수정 모달에서 수정완료 버튼 클릭 시 */
   const handleSubmitBtn = async () => {
     try {
-      let imgUrl = selectedImg;
+      let imgUrl = currentUser.avatar_img_url;
       if (file) {
         const fileName = generateFileName(file);
         imgUrl = (await uploadAvatarToStorage(file, fileName)) as string;
+      }
+      if (!nickname) {
+        toast.warning('닉네임을 입력해주세요.');
+        return;
       }
       const newProfile = {
         nickname,
         avatar_img_url: imgUrl
       };
-
-      await updateProfile(currentUser.id, newProfile);
+      await updateProfileMutation.mutateAsync({ id: currentUser.id, newProfile: newProfile });
+      toast.success('프로필이 수정되었습니다.');
+      setIsEditing(false);
     } catch (error) {
       toast.error('이미지 업로드 중 오류발생! 다시 시도하세요.');
     }
@@ -64,7 +76,7 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
       <div className="flex gap-20 mt-5">
         <div className="w-[230px] h-[230px]">
           <Image
-            src={currentUser.avatar_img_url}
+            src={`${profileStorageUrl}/${currentUser.avatar_img_url}`}
             alt="사용자 프로필"
             width={250}
             height={250}
