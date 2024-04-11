@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase/supabase';
 
 // posts 테이블에서 게시글 가져오기
-export const getPosts = async (offset = 0, limit = 10) => {
+export const getPosts = async () => {
   try {
     const { data: posts, error } = await supabase
       .from('posts')
@@ -131,20 +131,6 @@ export const fetchPost = async (id: string | undefined) => {
     return posts![0];
   } catch (error) {
     console.error();
-    throw error;
-  }
-};
-
-export const getComment = async (postId: string | string[] | undefined) => {
-  try {
-    const { data: comments, error } = await supabase
-      .from('comments')
-      .select(`*, profiles!inner(nickname,avatar_img_url)`)
-      .eq('post_id', postId)
-      .order('created_at', { ascending: false });
-    if (error) throw error;
-    return comments || [];
-  } catch (error) {
     throw error;
   }
 };

@@ -21,8 +21,6 @@ import type { User } from '@/types/users';
 import { useQuery } from '@tanstack/react-query';
 
 const DetailPost = () => {
-  // const [post, setPost] = useState<PostDetailDateType>();
-  const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [profile, setProfile] = useState<User | null>();
 
@@ -50,6 +48,23 @@ const DetailPost = () => {
       }
     },
     queryKey: ['post']
+  });
+
+  const { data: nextBeforePost = [] } = useQuery<Post[]>({
+    queryFn: async () => {
+      try {
+        let nextPosts;
+        if (categoryNow === '전체') {
+          nextPosts = await getPosts();
+        } else {
+          nextPosts = await getFilterPosts(categoryNow);
+        }
+        return nextPosts;
+      } catch (error) {
+        return [];
+      }
+    },
+    queryKey: ['postPage']
   });
 
   /** 이전글 가기 */
