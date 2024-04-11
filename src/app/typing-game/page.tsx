@@ -6,8 +6,6 @@ import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/utils/supabase/supabase';
-import { useAtom } from 'jotai';
-import { isLoggedInAtom } from '@/store/store'; 
 
 import type { User } from '@/types/users';
 
@@ -33,20 +31,17 @@ const TypingGamePage = () => {
   const [gameAreaWidth, setGameAreaWidth] = useState(0);
   const [gameAreaHeight, setGameAreaHeight] = useState(550);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const maxLives = 5;
   const wordHeight = 80;
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-        setUser(userProfile);
-      }
+      const userProfile = await getCurrentUserProfile();
+      setUser(userProfile);
     };
-
+  
     fetchUserProfile();
-  }, [isLoggedIn]);
+  }, []);
 
   useEffect(() => {
     setGameAreaWidth(window.innerWidth);

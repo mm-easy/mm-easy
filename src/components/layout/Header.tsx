@@ -11,6 +11,7 @@ import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { User } from '@/types/users';
 
+
 const Header = () => {
   // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -98,7 +99,7 @@ const Header = () => {
       </Link>
       <section className="w-[84%] flex justify-between px-10">
         <nav className="flex gap-14">
-          <Link href="/quiz-list" className="">퀴즈</Link>
+          <Link href="/quiz-list">퀴즈</Link>
           <Link href="/typing-game">타자 연습</Link>
           <Link href="/community-list?category=전체">커뮤니티</Link>
           <Link href="/about">서비스 소개</Link>
@@ -120,9 +121,6 @@ const Header = () => {
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{currentUser?.email}</p> 
-                </DropdownItem>
-                <DropdownItem as={Link} href='/profile'>
-                  내 프로필
                 </DropdownItem>
                 <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                   Log Out
