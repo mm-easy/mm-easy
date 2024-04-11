@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
-import { getQuizCount, getQuizzes } from '@/api/quizzes';
+import { getQuizzes } from '@/api/quizzes';
 
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';

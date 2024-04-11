@@ -128,8 +128,8 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
   }
 };
 
-export const getQuizCount = async () => {
-  const { count, error } = await supabase.from('quizzes').select('*', { count: 'exact' });
-  if (error) throw error;
-  return count;
-};
+// export const getQuizCount = async () => {
+//   const { count, error } = await supabase.from('quizzes').select('*', { count: 'exact' });
+//   if (error) throw error;
+//   return count;
+// };

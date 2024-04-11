@@ -1,21 +1,27 @@
 'use client';
 
 import Image from 'next/image';
-
-import type { User } from '@/types/users';
 import { useRef, useState } from 'react';
 import { BlueInput } from '@/components/common/BlueInput';
 import { handleMaxLength } from '@/utils/handleMaxLength';
+import { generateFileName } from '@/utils/generateFileName';
+import { updateProfile, uploadAvatarToStorage } from '@/api/users';
+import { toast } from 'react-toastify';
+
+import type { User } from '@/types/users';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const MyProfile = ({ currentUser }: { currentUser: User }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(currentUser.nickname);
   const [file, setFile] = useState<File | null>(null);
-  const [selectedImg, setSelectedImg] = useState(currentUser.avatar_img_url);
+  const [selectedImg, setSelectedImg] = useState(`${profileStorageUrl}/${currentUser.avatar_img_url}`);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleCancelBtn = () => {
     if (!window.confirm('프로필 수정을 취소하시겠습니까?')) return;
+    setFile(null);
+    setSelectedImg(currentUser.avatar_img_url);
     setIsEditing(false);
   };
 
@@ -35,6 +41,23 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
     }
   };
 
+  const handleSubmitBtn = async () => {
+    try {
+      let imgUrl = selectedImg;
+      if (file) {
+        const fileName = generateFileName(file);
+        imgUrl = (await uploadAvatarToStorage(file, fileName)) as string;
+      }
+      const newProfile = {
+        nickname,
+        avatar_img_url: imgUrl
+      };
+
+      await updateProfile(currentUser.id, newProfile);
+    } catch (error) {
+      toast.error('이미지 업로드 중 오류발생! 다시 시도하세요.');
+    }
+  };
   return (
     <main className="w-full h-full flex flex-col items-center">
       <div className="mt-10 text-center text-pointColor1 text-xl font-semibold">프로필</div>
@@ -69,7 +92,13 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white border-solid border-2 border-pointColor1 p-6 rounded-md flex flex-col w-[330px]">
             <h2 className="font-bold text-xl mb-4">프로필 수정</h2>
-            <form className="flex flex-col gap-5 justify-center items-center">
+            <form
+              className="flex flex-col gap-5 justify-center items-center"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmitBtn();
+              }}
+            >
               <div className="flex justify-center items-center w-[200px] h-[200px]">
                 <Image
                   src={selectedImg}
