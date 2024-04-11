@@ -116,3 +116,25 @@ export type PostCommentProps = {
   postId: string | string[] | undefined;
   profile: User | null | undefined;
 };
+
+export type InsertComment = {
+  postId: string | string[] | undefined;
+  profile: User | null | undefined;
+  content: string;
+};
+
+export type UpdateCommentParams = {
+  contentChange: string;
+  id: string;
+};
+
+export type LikeParams = {
+  postId: string;
+  userId: string | undefined;
+};
+
+export type LikeType = {
+  id: string;
+  user_id: string | undefined;
+  post_id: string;
+};

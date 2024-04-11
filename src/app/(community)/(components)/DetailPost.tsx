@@ -11,18 +11,18 @@ import { useAtom } from 'jotai';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { PostDeleteButton } from '@/components/common/DeleteButton';
-import { PostEditButton } from '@/components/common/EditButton';
+import { useQuery } from '@tanstack/react-query';
+import { PostDeleteButton } from '@/components/common/PostDeleteButton';
+import { PostEditButton } from '@/components/common/PostEditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const DetailPost = () => {
-  const [post, setPost] = useState<PostDetailDateType>();
-  const [nextBeforePost, setNextBeforePost] = useState<Post[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [profile, setProfile] = useState<User | null>();
 
@@ -32,6 +32,44 @@ const DetailPost = () => {
 
   const { getCurrentUserProfile } = useAuth();
 
+  const { data: post } = useQuery<PostDetailDateType>({
+    queryFn: async () => {
+      try {
+        let data;
+        let nextPosts;
+        if (categoryNow === '전체') {
+          data = await getPostDetail(params.id);
+          nextPosts = await getPosts();
+        } else {
+          data = await getPostCategoryDetail(categoryNow, params.id);
+          nextPosts = await getFilterPosts(categoryNow);
+        }
+        return data;
+      } catch (error) {
+        return;
+      }
+    },
+    queryKey: ['posts']
+  });
+
+  const { data: nextBeforePost = [] } = useQuery<Post[]>({
+    queryFn: async () => {
+      try {
+        let nextPosts;
+        if (categoryNow === '전체') {
+          nextPosts = await getPosts();
+        } else {
+          nextPosts = await getFilterPosts(categoryNow);
+        }
+        return nextPosts;
+      } catch (error) {
+        return [];
+      }
+    },
+    queryKey: ['postPage']
+  });
+
+  /** 이전글 가기 */
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
 
@@ -43,6 +81,7 @@ const DetailPost = () => {
     }
   };
 
+  /** 다음글 가기 */
   const nextPostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
     if (nowPostNum - 1 < 0) {
@@ -53,22 +92,7 @@ const DetailPost = () => {
     }
   };
 
-  /**해당 게시글 정보가져오기 */
   useEffect(() => {
-    let data;
-    let nextPosts;
-    const postDetailDate = async () => {
-      if (categoryNow === '전체') {
-        data = await getPostDetail(params.id);
-        nextPosts = await getPosts();
-      } else {
-        data = await getPostCategoryDetail(categoryNow, params.id);
-        nextPosts = await getFilterPosts(categoryNow);
-      }
-
-      setPost(data);
-      setNextBeforePost(nextPosts);
-    };
     const fetchData = async () => {
       try {
         const getSession = await supabase.auth.getSession();
@@ -83,7 +107,6 @@ const DetailPost = () => {
     };
 
     fetchData();
-    postDetailDate();
   }, []);
 
   /** 로그인이 되어 있다면 프로필 가져오기 */
