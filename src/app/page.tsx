@@ -11,16 +11,12 @@ import Footer from './(main)/(components)/Footer';
 const Home = () => {
   useEffect(() => {
     const saveUserProfile = async () => {
-      const getSession = await supabase.auth.getSession();
-      console.log('세션가져오기', getSession);
-
-      const userDataString = localStorage.getItem('sb-icnlbuaakhminucvvzcj-auth-token');
-      if (userDataString) {
-        const userData = JSON.parse(userDataString);
-        if (userData) {
-          const user = userData.user;
-          const id = user.id;
-          const email = user.email;
+      const { data: session } = await supabase.auth.getSession();
+      if (session) {
+        const user = session.session?.user;
+        if (user) { 
+          const id = user.id
+          const email = user.email ?? '';
           const nickname = email.split('@')[0];
           try {
             const { error } = await supabase
@@ -42,11 +38,11 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      <MainLogo />
-      <QuizSection />
-      <RankingSection />
-      <CommunitySection />
-      <Footer />
+    <MainLogo />
+    <QuizSection/>
+    <RankingSection />
+    <CommunitySection />
+    <Footer />
     </div>
   );
 };

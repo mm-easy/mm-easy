@@ -43,7 +43,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
     }
 
     if (userProfile.id !== prevAuthorId) {
-      // 사용자가 게시글의 작성자가 아닌 경우 게시글 리스트로 ㅇ
+      // 사용자가 게시글의 작성자가 아닌 경우 게시글 리스트로 이동
       router.push('/community-list?category=전체');
       toast('접근할 수 없는 게시글 입니다.');
     } else {
@@ -86,7 +86,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
     const confirmLeave = confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?');
     if (confirmLeave) {
       // 사용자가 '예'를 선택한 경우
-      router.push('/community-list?category=전체');
+      router.push(`/community-list/${categoryNow}/${postId}`);
     } else {
       // 사용자가 '아니오'를 선택한 경우, 아무 동작도 하지 않음
     }
@@ -128,7 +128,7 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
                 onChange={handleCategoryChange}
               />
               <label
-                className={`font-bold rounded-tl-lg rounded-tr-lg text-l px-6 pt-1 cursor-pointer  ${
+                className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
                   category === item.value ? 'bg-pointColor1 text-white' : 'bg-white'
                 }`}
                 htmlFor={item.id}

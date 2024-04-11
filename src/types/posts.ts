@@ -1,3 +1,5 @@
+import { User } from './users';
+
 type UserProfile = {
   nickname: string;
   avatar_img_url: string;
@@ -95,4 +97,14 @@ export type FormButtonProps = {
 export type Params = {
   category: string;
   id: string;
+};
+
+export type LikeProps = {
+  postId: string;
+  profile: User | null | undefined;
+};
+
+export type PostCommentProps = {
+  postId: string | string[] | undefined;
+  profile: User | null | undefined;
 };

@@ -1,23 +1,14 @@
 import LikeToggleButton from './LikeToggleButton';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { AiFillHeart } from 'react-icons/ai';
-import { useQuery } from '@tanstack/react-query';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { supabase } from '@/utils/supabase/supabase';
-import { useAuth } from '@/hooks/useAuth';
 
-const Like = ({ postId }: { postId: string | string[] }) => {
+import type { LikeProps } from '@/types/posts';
+
+const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
   const [likeCount, setLikeCount] = useState<number>(0);
-
-  /**현재 로그인된 유저 정보 가져오기*/
-  const { getCurrentUserProfile } = useAuth();
-
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
 
   const userId = profile?.id;
 
@@ -52,7 +43,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
     }
 
     if (likes) {
-      await removeLikedUser(postId, userId);
+      await removeLikedUser(userId);
       setLikes(false);
       setLikeCount(likeCount - 1);
     } else {
@@ -72,7 +63,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
   };
 
   /**좋아요 삭제*/
-  const removeLikedUser = async (postId: string | string[], userId: string) => {
+  const removeLikedUser = async (userId: string) => {
     const { error } = await supabase.from('likes').delete().eq('user_id', userId);
 
     if (error) {
@@ -90,7 +81,7 @@ const Like = ({ postId }: { postId: string | string[] }) => {
           offIcon={<AiOutlineHeart />}
         />
       </div>
-        <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
+      <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
     </div>
   );
 };

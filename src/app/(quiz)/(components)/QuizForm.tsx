@@ -21,6 +21,7 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 
 import { QuestionType, type Question } from '@/types/quizzes';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/utils/supabase/supabase';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -30,13 +31,16 @@ const QuizForm = () => {
   const [selectedImg, setSelectedImg] = useState(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+  const { getCurrentUserProfile } = useAuth();
 
   useConfirmPageLeave();
 
-  const { getCurrentUserProfile } = useAuth();
+  /** 로그인한 유저의 정보를 불러옴 */
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return;
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
         setCurrentUser(userProfile.email);

@@ -1,41 +1,52 @@
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
 import MyLevelAndScore from './MyLevelAndScore';
 import MyProfile from './MyProfile';
+
+import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
-import { User } from '@/types/users';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/store/store';
+
+import type { User } from '@/types/users';
 
 const ProfilePage = () => {
   const [currentUser, setCurrentUser] = useState<User | null>();
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const userProfile = await getCurrentUserProfile();
-  //       if (!userProfile) {
-  //         alert('로그인이 필요한 페이지입니다.');
-  //         router.replace('/');
-  //         return;
-  //       }
-  //       setCurrentUser(userProfile);
-  //       console.log('우우우', userProfile);
-  //       console.log('이이이', currentUser);
-  //     } catch (error) {
-  //       console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
-  //     }
-  //   };
+  /** 현재 로그인되어 있는지 확인 */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          alert('로그인이 필요한 페이지입니다.');
+          router.replace('/login');
+        } else {
+          const userProfile = await getCurrentUserProfile();
+          setCurrentUser((prev) => userProfile);
+          console.log('끼이잉', currentUser);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, [isLoggedIn]);
+
+  if (!currentUser) {
+    return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
+  }
 
   return (
     <main>
       <div className="h-[47vh]">
-        <MyProfile />
+        <MyProfile currentUser={currentUser} />
       </div>
       <div className="h-[37vh]">
         <MyLevelAndScore />
@@ -45,3 +56,16 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+// /** 로그인이 되어 있다면 프로필 가져오기 */
+// useEffect(() => {
+//   const fetchData = async () => {
+//     if (isLoggedIn) {
+//       const userProfile = await getCurrentUserProfile();
+//       setCurrentUser(userProfile);
+//       console.log('끼이잉', currentUser);
+//     }
+//   };
+
+//   fetchData();
+// }, []);
