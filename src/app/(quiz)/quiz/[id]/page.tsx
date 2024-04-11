@@ -19,19 +19,32 @@ import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
 import { errorMonitor } from 'events';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
+  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
 
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const { getCurrentUserProfile } = useAuth();
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -255,6 +268,7 @@ const QuizTryPage = () => {
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
         </article>
+        <PageUpBtn scrollPosition={scrollPosition} />
       </main>
     </>
   );
