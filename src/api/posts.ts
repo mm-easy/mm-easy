@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase/supabase';
 
 // posts 테이블에서 게시글 가져오기
-export const getPosts = async (offset = 0, limit = 10) => {
+export const getPosts = async () => {
   try {
     const { data: posts, error } = await supabase
       .from('posts')
@@ -132,5 +132,21 @@ export const fetchPost = async (id: string | undefined) => {
   } catch (error) {
     console.error();
     throw error;
+  }
+};
+
+export const getMyActivityPosts = async (userId:string) => {
+  try {
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`*, profiles!inner(nickname)`)
+      .eq('author_id', userId) // 'author_id'와 사용자의 ID를 비교
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return posts || [];
+  } catch (error) {
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
   }
 };
