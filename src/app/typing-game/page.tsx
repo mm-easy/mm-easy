@@ -6,7 +6,7 @@ import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
-import { isLoggedInAtom } from '@/store/store'; 
+import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 
 import type { User } from '@/types/users';
@@ -16,10 +16,10 @@ const difficultySettings: { [key: number]: { speed: number; interval: number } }
   2: { speed: 30, interval: 4000 },
   3: { speed: 40, interval: 3000 },
   4: { speed: 50, interval: 2000 },
-  5: { speed: 60, interval: 1000 },
+  5: { speed: 60, interval: 1000 }
 };
 
-const maxDifficulty = Object.keys(difficultySettings).length; 
+const maxDifficulty = Object.keys(difficultySettings).length;
 
 const TypingGamePage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -58,13 +58,13 @@ const TypingGamePage = () => {
     let interval: NodeJS.Timeout;
     if (gameStarted) {
       interval = setInterval(() => {
-        const difficultyKey = difficulty as keyof typeof wordLists; 
-        const currentWordList = wordLists[difficultyKey]; 
+        const difficultyKey = difficulty as keyof typeof wordLists;
+        const currentWordList = wordLists[difficultyKey];
         const newWord = {
           id: Date.now(),
           text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
           top: 0,
-          left: Math.random() * (gameAreaWidth - 200),
+          left: Math.random() * (gameAreaWidth - 200)
         };
         setWords((prevWords) => [...prevWords, newWord]);
       }, difficultySettings[difficulty].interval);
@@ -93,15 +93,15 @@ const TypingGamePage = () => {
     return () => clearInterval(interval);
   }, [words, gameStarted]);
 
- useEffect(() => {
-  if (lives <= 0) {
-    alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
-    if (user) { 
-      addGameScore(score); 
+  useEffect(() => {
+    if (lives <= 0) {
+      alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+      if (user) {
+        addGameScore(score);
+      }
+      setGameStarted(false);
     }
-    setGameStarted(false);
-  }
-}, [lives, score, user]);
+  }, [lives, score, user]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -111,7 +111,7 @@ const TypingGamePage = () => {
     if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
       setDifficulty(difficulty + 1); // 다음 난이도로 변경
       setCorrectWordsCount(0); // 맞춘 단어 개수 초기화
-      setWords([])
+      setWords([]);
       setLives(5);
       alert(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
     }
@@ -130,13 +130,13 @@ const TypingGamePage = () => {
 
   const startGame = () => {
     if (!isLoggedIn) {
-      setShowLoginModal(true); 
+      setShowLoginModal(true);
     } else {
-    setGameStarted(true);
-    setWords([]);
-    setInput('');
-    setScore(0);
-    setLives(maxLives);
+      setGameStarted(true);
+      setWords([]);
+      setInput('');
+      setScore(0);
+      setLives(maxLives);
     }
   };
 
@@ -164,7 +164,7 @@ const TypingGamePage = () => {
       console.error('로그인한 유저가 없어, 점수를 저장할 수 없습니다.');
       return;
     }
-  
+
     try {
       // 1. 현재 점수 가져오기
       const { data: existingScores, error: fetchError } = await supabase
@@ -172,15 +172,16 @@ const TypingGamePage = () => {
         .select('score')
         .eq('user_id', user.id)
         .single();
-  
+
       if (fetchError && !existingScores) {
         const { error: insertError } = await supabase
           .from('game_tries')
-          .insert([{ user_id: user.id, nickname: user.nickname, score: finalScore, avatar_img_url: user.avatar_img_url }]);
+          .insert([
+            { user_id: user.id, nickname: user.nickname, score: finalScore, avatar_img_url: user.avatar_img_url }
+          ]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
-        
         const newTotalScore = existingScores.score + finalScore;
         const { error: updateError } = await supabase
           .from('game_tries')
@@ -193,7 +194,7 @@ const TypingGamePage = () => {
       console.error('점수 저장 중 오류 발생:', error);
     }
   };
-  
+
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
@@ -246,20 +247,20 @@ const TypingGamePage = () => {
           </>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <p className='mb-6 font-bold text-2xl text-pointColor1'>난이도를 선택해주세요!</p>
-             <div className="flex mb-4 items-center justify-center">
-            {Array.from({ length: maxDifficulty }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handleDifficultyChange(index + 1)}
-              className={`text-pointColor1 mx-3 mb-6 ${
-                difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid'
-              } p-2 text-lg w-12 rounded-md`}
-            >
-              {index + 1}
-            </button>
-             ))}
-             </div>
+            <p className="mb-6 font-bold text-2xl text-pointColor1">난이도를 선택해주세요!</p>
+            <div className="flex mb-4 items-center justify-center">
+              {Array.from({ length: maxDifficulty }, (_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => handleDifficultyChange(index + 1)}
+                  className={`text-pointColor1 mx-3 mb-6 ${
+                    difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid'
+                  } p-2 text-lg w-12 rounded-md`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
             <button onClick={startGame} className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded">
               시작하기
             </button>
@@ -272,16 +273,10 @@ const TypingGamePage = () => {
             <h2 className="font-bold text-xl mb-4">로그인이 필요합니다</h2>
             <p className="mb-4">로그인하지 않으면 점수가 저장되지 않습니다.</p>
             <div className="flex justify-around">
-              <button
-                onClick={goToLogin}
-                className="bg-pointColor1 text-white font-bold py-2 px-4 rounded"
-              >
+              <button onClick={goToLogin} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
                 로그인 하러가기
               </button>
-              <button
-                onClick={proceedWithoutLogin}
-                className="bg-gray-300 text-black font-bold py-2 px-4 rounded"
-              >
+              <button onClick={proceedWithoutLogin} className="bg-gray-300 text-black font-bold py-2 px-4 rounded">
                 그냥 진행하기
               </button>
             </div>
