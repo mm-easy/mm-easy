@@ -1,5 +1,5 @@
 import { getDeleteComment, getInsertComment, getUpdateComment } from '@/api/comment';
-import { getLike } from '@/api/likes';
+import { deleteLike, getLike, insertLike } from '@/api/likes';
 import { InsertComment, LikeParams, UpdateCommentParams } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -71,17 +71,16 @@ export const useDeleteComment = () => {
   return insertCommentDeleteMuitation;
 };
 
-/**좋아요 가져오기 */
-export const useGetLike = () => {
+/** 좋아요 만들기 */
+export const useinsertLike = () => {
   const queryClient = useQueryClient();
 
-  const getPostLike = useMutation({
-    mutationFn: async ({ postId, userId }: LikeParams) => {
+  const insertLikeMuitation = useMutation({
+    mutationFn: async ({ userId, postId }: LikeParams) => {
       try {
-        const result = await getLike({ postId, userId });
-        return result;
+        await insertLike({ userId, postId });
       } catch (error) {
-        toast.error('좋아요에 문제가 생겼습니다.');
+        toast.error('좋아요에 오류가 생겼습니다.');
         throw error;
       }
     },
@@ -89,5 +88,25 @@ export const useGetLike = () => {
       queryClient.invalidateQueries({ queryKey: ['like'] });
     }
   });
-  return getPostLike;
+  return insertLikeMuitation;
+};
+
+/** 좋아요 삭제 */
+export const useDeleteLike = () => {
+  const queryClient = useQueryClient();
+
+  const insertLikeMuitation = useMutation({
+    mutationFn: async ({ userId, postId }: LikeParams) => {
+      try {
+        await deleteLike({ userId, postId });
+      } catch (error) {
+        toast.error('좋아요에 오류가 생겼습니다.');
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['like'] });
+    }
+  });
+  return insertLikeMuitation;
 };
