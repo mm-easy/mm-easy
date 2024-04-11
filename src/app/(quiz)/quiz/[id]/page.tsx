@@ -85,7 +85,7 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['quizzes']
+    queryKey: ['quizzes', id]
   });
 
   const {
