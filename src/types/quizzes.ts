@@ -1,16 +1,11 @@
 export type Quiz = {
   id?: string;
   creator_id: string;
-  created_at: string
+  created_at?: string;
   level: number;
   title: string;
   info: string;
   thumbnail_img_url: string | null;
-};
-
-/** 퀴즈 가져올 때 쓸 타입입니다. */
-export type GetQuiz = Quiz & {
-  created_at: string;
 };
 
 export type Option = {
@@ -54,6 +49,14 @@ export type QuizTry = {
   user_id: string | null;
   quiz_id: string | string[];
   score: number;
+};
+
+export type QuizTryRank = {
+  user_id: string | null;
+  quiz_id: string | string[];
+  score: number;
+  nickname: string;
+  avatar_img_url: string;
 };
 
 export type QuizRank = {
