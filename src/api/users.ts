@@ -1,6 +1,18 @@
 import { supabase } from '@/utils/supabase/supabase';
 
-import type { ProfileToUpdate } from '@/types/users';
+import type { ProfileToUpdate, User } from '@/types/users';
+
+/** 아이디를 기준으로 유저 1명의 정보 가져오기 */
+export const getUser = async (id: string): Promise<User | null> => {
+  try {
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', id).single();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('사용자 정보 불러오기 에러 발생', error);
+    return null;
+  }
+};
 
 /** 프로필 이미지를 스토리지에 upload */
 export const uploadAvatarToStorage = async (file: File, fileName: string) => {
@@ -19,6 +31,7 @@ export const uploadAvatarToStorage = async (file: File, fileName: string) => {
   }
 };
 
+/** 프로필 업데이트 */
 export const updateProfile = async (id: string, newProfile: ProfileToUpdate) => {
   try {
     const { data, error } = await supabase

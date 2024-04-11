@@ -23,7 +23,6 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
         if (!quizData || !myGameScoreData) return;
         setQuizzes(quizData);
         setMyGameScore(myGameScoreData);
-        console.log('이이이', myGameScoreData);
       } catch (error) {
         console.error('데이터 가져오기 에러', error);
       }
