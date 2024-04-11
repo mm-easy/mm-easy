@@ -50,9 +50,15 @@ export type Answer = {
   option_id?: string;
 };
 
+export type QuizTry = {
+  user_id: string | null;
+  quiz_id: string | string[];
+  score: number;
+};
+
 export type QuizRank = {
   creator_id: string;
   avatar_img_url: string;
   quiz_count: number;
   nickname: string;
-}
+};

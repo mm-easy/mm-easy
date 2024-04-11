@@ -18,6 +18,19 @@ const Home = () => {
           const id = user.id;
           const email = user.email ?? '';
           const nickname = email.split('@')[0];
+
+          const { data: existingProfile, error } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('email',email)
+          .single()
+
+          if (error) {
+            console.error('프로필 조회 중 에러 발생', error.message)
+            return;
+          }
+
+          if (!existingProfile) {
           try {
             const { error } = await supabase
               .from('profiles')
@@ -31,6 +44,7 @@ const Home = () => {
             console.error(error);
           }
         }
+      }
       }
     };
     saveUserProfile();

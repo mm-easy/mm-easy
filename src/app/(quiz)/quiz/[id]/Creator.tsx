@@ -19,7 +19,6 @@ const Creator = ({ creator }: { creator: string }) => {
   if (isError) return <div>error..</div>;
 
   const profile = data as User[];
-  console.log(profile);
 
   const { nickname } = profile[0];
 

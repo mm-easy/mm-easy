@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -10,19 +10,54 @@ import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAuth } from '@/hooks/useAuth';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
 import Header from './Header';
+import Creator from './Creator';
 import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
-import Creator from './Creator';
+import { errorMonitor } from 'events';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  // const [objectiveAnswer, setObjectiveAnswer] = useState('');
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
   const [score, setScore] = useState(0);
-  console.log(usersAnswers);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
+  const { getCurrentUserProfile } = useAuth();
+
+  const insertQuizMutation = useSubmitQuizTry();
+  const updateQuizMutation = useUpdateQuizTry();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          return;
+        } else {
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isLoggedIn) {
+        const userProfile = await getCurrentUserProfile();
+        if (userProfile) setCurrentUserEmail(userProfile.email);
+      }
+    };
+    fetchData();
+  }, [isLoggedIn]);
 
   const {
     data: quizData,
@@ -75,7 +110,6 @@ const QuizTryPage = () => {
     } else {
       idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
     }
-    console.log(usersAnswers);
     setUsersAnswers(newAnswers);
   };
 
@@ -92,8 +126,6 @@ const QuizTryPage = () => {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
           if (question?.type === QuestionType.objective) {
-            const options = questions.find((question) => question.id === usersAnswer.id);
-
             if (usersAnswer.answer) countCorrect++;
           } else {
             if (usersAnswer.answer === question?.correct_answer) countCorrect++;
@@ -101,6 +133,7 @@ const QuizTryPage = () => {
         }
         setResultMode(true);
         setScore(countCorrect);
+        handleInsertQuizTry(countCorrect);
       }
 
       window.scrollTo({
@@ -110,6 +143,32 @@ const QuizTryPage = () => {
       });
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
+    }
+  };
+
+  const handleInsertQuizTry = async (countCorrect: number) => {
+    try {
+      const quizTry = {
+        user_id: currentUserEmail,
+        quiz_id: id,
+        score: level * countCorrect * 100
+      };
+
+      const { data: quizTryData } = await supabase
+        .from('quiz_tries')
+        .select('*')
+        .eq('user_id', currentUserEmail)
+        .eq('quiz_id', id);
+
+      if (quizTryData?.length !== 0) {
+        updateQuizMutation.mutate(quizTry);
+        return;
+      }
+      if (currentUserEmail) {
+        insertQuizMutation.mutate(quizTry);
+      }
+    } catch (error) {
+      console.log('퀴즈 점수 저장/업데이트 실패', errorMonitor);
     }
   };
 
@@ -148,13 +207,17 @@ const QuizTryPage = () => {
             return (
               <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
                 <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
-                <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
-                  alt="문제 이미지"
-                  width={570}
-                  height={200}
-                  className="h-[200px] object-cover rounded-md"
-                />
+                {img_url !== 'tempThumbnail.png' ? (
+                  <Image
+                    src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
+                    alt="문제 이미지"
+                    width={570}
+                    height={200}
+                    className="h-[200px] object-cover rounded-md"
+                  />
+                ) : (
+                  <></>
+                )}
                 {type === QuestionType.objective ? (
                   <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
                 ) : (
