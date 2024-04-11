@@ -6,10 +6,11 @@ import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
 import { useAtom } from 'jotai';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
+import { DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
 import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { User } from '@/types/users';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const Header = () => {
   // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
@@ -92,53 +93,54 @@ const Header = () => {
 
   return (
     <>
-    <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] text-center">
-        LOGO
-      </Link>
-      <section className="w-[84%] flex justify-between px-10">
-        <nav className="flex gap-14">
-          <Link href="/quiz-list" className="">퀴즈</Link>
-          <Link href="/typing-game">타자 연습</Link>
-          <Link href="/community-list?category=전체">커뮤니티</Link>
-          <Link href="/about">서비스 소개</Link>
-        </nav>
-        {isLoggedIn ? (
-          <div className="flex items-center gap-4">
-            <Dropdown placement="bottom-end">
-              <DropdownTrigger>
-                <Avatar
-                  as="button"
-                  className="transition-transform"
-                  color="secondary"
-                  name={currentUser?.nickname}
-                  size="md"
-                  src={currentUser?.avatar_img_url}
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem key="profile" className="h-14 gap-2">
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{currentUser?.email}</p> 
-                </DropdownItem>
-                <DropdownItem as={Link} href='/profile'>
-                  내 프로필
-                </DropdownItem>
-                <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        ) : (
-          <Link href="/login">
-            <button>로그인</button>
-          </Link>
-        )}
-      </section>
-    </header>
-  </>
-);
+      <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
+        <Link href="/" className="w-[16%] text-center">
+          LOGO
+        </Link>
+        <section className="w-[84%] flex justify-between px-10">
+          <nav className="flex gap-14">
+            <Link href="/quiz-list" className="">
+              퀴즈
+            </Link>
+            <Link href="/typing-game">타자 연습</Link>
+            <Link href="/community-list?category=전체">커뮤니티</Link>
+            <Link href="/about">서비스 소개</Link>
+          </nav>
+          {isLoggedIn ? (
+            <div className="flex items-center gap-4">
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Avatar
+                    as="button"
+                    className="transition-transform"
+                    name={currentUser?.nickname}
+                    size="md"
+                    src={`${profileStorageUrl}/${currentUser?.avatar_img_url}`}
+                  />
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{currentUser?.email}</p>
+                  </DropdownItem>
+                  <DropdownItem as={Link} href="/profile">
+                    내 프로필
+                  </DropdownItem>
+                  <DropdownItem key="logout" color="danger" onClick={handleLogout}>
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          ) : (
+            <Link href="/login">
+              <button>로그인</button>
+            </Link>
+          )}
+        </section>
+      </header>
+    </>
+  );
 };
 
 export default Header;
