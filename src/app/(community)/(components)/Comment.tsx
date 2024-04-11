@@ -1,28 +1,16 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
-import { Box, TextArea } from '@radix-ui/themes';
-import { useAuth } from '@/hooks/useAuth';
-import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 
-import type { PostDetailCommentType } from '@/types/posts';
+import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
 
-const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
+const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
   const [postCommentList, setPostCommentList] = useState<PostDetailCommentType[]>([]);
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
-
-  const { getCurrentUserProfile } = useAuth();
-
-  /**현재 유저 정보 가져오기 */
-  const { data: profile } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getCurrentUserProfile
-  });
 
   /**댓글 작성 */
   const handleSubmitBtn = async (e: React.FormEvent) => {
@@ -124,7 +112,6 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                       value={contentChange}
                       onChange={(e) => setContentChange(e.target.value)}
                       placeholder="Reply to comment…"
-
                     />
                   </div>
                 ) : (
@@ -136,8 +123,12 @@ const Comment = ({ postId }: { postId: string | string[] | undefined }) => {
                   (profile.id === prev.author_id ? (
                     btnChange ? (
                       <>
-                        <button className='pr-2' onClick={() => handleUpdateBtn(prev.id)}>수정완료</button>|
-                        <button className='pl-2'
+                        <button className="pr-2" onClick={() => handleUpdateBtn(prev.id)}>
+                          수정완료
+                        </button>
+                        |
+                        <button
+                          className="pl-2"
                           onClick={() => {
                             setBtnChange(!btnChange);
                             setContentChange(prev.content);

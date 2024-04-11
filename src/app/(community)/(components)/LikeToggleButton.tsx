@@ -1,4 +1,4 @@
-import { ToggleProps } from '@/types/posts';
+import type { ToggleProps } from '@/types/posts';
 
 const LikeToggleButton = ({ toggled, onToggle, onIcon, offIcon }: ToggleProps) => {
   return (
