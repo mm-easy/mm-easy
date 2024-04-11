@@ -4,7 +4,9 @@ import { toast } from 'react-toastify';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { supabase } from '@/utils/supabase/supabase';
 
-import type { LikeProps } from '@/types/posts';
+import type { LikeProps, LikeType } from '@/types/posts';
+import { getLike } from '@/api/likes';
+import { useQuery } from '@tanstack/react-query';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const [likes, setLikes] = useState<boolean | null>(null);
@@ -12,17 +14,17 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
 
   const userId = profile?.id;
 
-  // const { data: nowLike,error } = useQuery<LikeType>({
-  //   queryFn: async () => {
-  //     try {
-  //       const data = await getLike({ postId, userId });
-  //       return data;
-  //     } catch (error) {
-  //       return;
-  //     }
-  //   },
-  //   queryKey: ['like']
-  // });
+  const { data: nowLike } = useQuery<boolean>({
+    queryFn: async () => {
+      try {
+        const data = await getLike({ postId, userId });
+        return data;
+      } catch (error) {
+        return;
+      }
+    },
+    queryKey: ['like']
+  });
 
   /**현재 게시글에 좋아요 상태 불러오기*/
   useEffect(() => {
