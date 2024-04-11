@@ -17,7 +17,7 @@ import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
 
-import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
+import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
 import { errorMonitor } from 'events';
 import PageUpBtn from '@/components/common/PageUpBtn';
 
@@ -107,7 +107,7 @@ const QuizTryPage = () => {
   if (quizIsLoading || questionsIsLoading) return <div>로드 중..</div>;
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
-  const quizzes = quizData as GetQuiz[];
+  const quizzes = quizData as Quiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
