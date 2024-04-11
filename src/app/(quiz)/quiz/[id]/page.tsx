@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -10,19 +10,39 @@ import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { supabase } from '@/utils/supabase/supabase';
+import { useAuth } from '@/hooks/useAuth';
+import { useSubmitQuizScore } from './mutation';
 import Header from './Header';
+import Creator from './Creator';
 import Options from './Options';
 
 import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
-import Creator from './Creator';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  // const [objectiveAnswer, setObjectiveAnswer] = useState('');
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
   const [score, setScore] = useState(0);
-  console.log(usersAnswers);
+  const [currentUser, setCurrentUser] = useState('');
+  const { getCurrentUserProfile } = useAuth();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return;
+        const userProfile = await getCurrentUserProfile();
+        if (!userProfile) return;
+        setCurrentUser(userProfile.email);
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+    fetchData();
+  }, [getCurrentUserProfile]);
+
+  const insertQuizMutation = useSubmitQuizScore();
 
   const {
     data: quizData,
@@ -92,8 +112,6 @@ const QuizTryPage = () => {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
           if (question?.type === QuestionType.objective) {
-            const options = questions.find((question) => question.id === usersAnswer.id);
-
             if (usersAnswer.answer) countCorrect++;
           } else {
             if (usersAnswer.answer === question?.correct_answer) countCorrect++;
@@ -101,6 +119,16 @@ const QuizTryPage = () => {
         }
         setResultMode(true);
         setScore(countCorrect);
+
+        const score = {
+          user_id: currentUser,
+          quiz_id: id,
+          score: level * countCorrect * 100
+        };
+
+        if (currentUser) {
+          insertQuizMutation.mutateAsync(score);
+        }
       }
 
       window.scrollTo({
