@@ -108,3 +108,14 @@ export type PostCommentProps = {
   postId: string | string[] | undefined;
   profile: User | null | undefined;
 };
+
+export type InsertComment = {
+  postId: string | string[] | undefined;
+  profile: User | null | undefined;
+  content: string;
+};
+
+export type UpdateCommentParams = {
+  contentChange: string;
+  id: string;
+};

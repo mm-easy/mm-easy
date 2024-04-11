@@ -1,18 +1,6 @@
 import { supabase } from '@/utils/supabase/supabase';
 import type { ProfileToUpdate, User } from '@/types/users';
 
-export const getUsers = async () => {
-  try {
-    const { data: profiles, error } = await supabase.from('profiles').select('*');
-
-    if (error) throw error;
-    return profiles || [];
-  } catch (error) {
-    console.error('포스트를 가져오는 중 오류 발생:', error);
-    return [];
-  }
-};
-
 /** 아이디를 기준으로 유저 1명의 정보 가져오기 */
 export const getUser = async (id: string): Promise<User | null> => {
   try {
@@ -57,5 +45,18 @@ export const updateProfile = async (id: string, newProfile: ProfileToUpdate) => 
   } catch (error) {
     console.error('프로필 업데이트 중 에러 발생', error);
     return null;
+  }
+};
+
+/** 유저 전부 가져오기*/
+export const getUsers = async () => {
+  try {
+    const { data: profiles, error } = await supabase.from('profiles').select('*');
+
+    if (error) throw error;
+    return profiles || [];
+  } catch (error) {
+    console.error('포스트를 가져오는 중 오류 발생:', error);
+    return [];
   }
 };
