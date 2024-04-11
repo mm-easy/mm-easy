@@ -207,13 +207,17 @@ const QuizTryPage = () => {
             return (
               <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
                 <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
-                <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
-                  alt="문제 이미지"
-                  width={570}
-                  height={200}
-                  className="h-[200px] object-cover rounded-md"
-                />
+                {img_url !== 'tempThumbnail.png' ? (
+                  <Image
+                    src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
+                    alt="문제 이미지"
+                    width={570}
+                    height={200}
+                    className="h-[200px] object-cover rounded-md"
+                  />
+                ) : (
+                  <></>
+                )}
                 {type === QuestionType.objective ? (
                   <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
                 ) : (
