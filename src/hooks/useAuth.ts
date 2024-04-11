@@ -20,6 +20,25 @@ export const useAuth = () => {
       return;
     }
 
+    /** 중복 이메일 검사 */
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', email)
+      .single();
+
+      if (existingUserError) {
+        setError('사용자 정보를 검사하는 데 실패했습니다.');
+        setLoading(false);
+        return { error: true, errorMessage: '사용자 정보를 검사하는 데 실패했습니다.' };
+    }
+
+    if (existingUser) {
+        setError('이미 사용 중인 이메일 주소입니다.');
+        setLoading(false);
+        return { error: true, errorMessage: '이미 사용 중인 이메일 주소입니다.' };
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password

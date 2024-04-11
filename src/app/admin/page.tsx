@@ -1,8 +1,8 @@
 const AdminPage = () => {
   return ( 
-  <article className="w-full p-40">
-  <div className="bg-white p-4 w-full">
-    <table className="w-full text-xl">
+  <article className="w-full p-40 bg-bgColor2">
+  <div className="p-4 w-full bg-bgColor2">
+    <table className="w-full text-xl bg-bgColor2">
       <thead className="text-left">
         <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
           <th className="p-4 w-[15%]">구분</th>
@@ -16,7 +16,7 @@ const AdminPage = () => {
         {/* {currentItems?.map((item, idx) => { */}
           {/* return ( */}
             <tr
-              className="bg-white cursor-pointer border-y border-solid border-pointColor3"
+              className="bg-bg-bgColor2 cursor-pointer"
               // key={idx}
               // onClick={() => navigateToDetailPost(item)}
             >
