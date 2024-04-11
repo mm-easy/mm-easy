@@ -4,10 +4,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect } from 'react';
 import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
-import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
+import { useRouter } from 'next/navigation';
 
 import type { User } from '@/types/users';
 
@@ -34,6 +34,8 @@ const TypingGamePage = () => {
   const [gameAreaHeight, setGameAreaHeight] = useState(550);
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
 
@@ -127,11 +129,28 @@ const TypingGamePage = () => {
   };
 
   const startGame = () => {
+    if (!isLoggedIn) {
+      setShowLoginModal(true);
+    } else {
+      setGameStarted(true);
+      setWords([]);
+      setInput('');
+      setScore(0);
+      setLives(maxLives);
+    }
+  };
+
+  const proceedWithoutLogin = () => {
+    setShowLoginModal(false);
     setGameStarted(true);
     setWords([]);
     setInput('');
     setScore(0);
     setLives(maxLives);
+  };
+
+  const goToLogin = () => {
+    router.push('/login');
   };
 
   const handleDifficultyChange = (newDifficulty: number) => {
@@ -248,6 +267,22 @@ const TypingGamePage = () => {
           </div>
         )}
       </div>
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-md">
+            <h2 className="font-bold text-xl mb-4">로그인이 필요합니다</h2>
+            <p className="mb-4">로그인하지 않으면 점수가 저장되지 않습니다.</p>
+            <div className="flex justify-around">
+              <button onClick={goToLogin} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
+                로그인 하러가기
+              </button>
+              <button onClick={proceedWithoutLogin} className="bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                그냥 진행하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
