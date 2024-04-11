@@ -17,21 +17,34 @@ import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
 
-import { QuestionType, type GetQuiz, type Question, type Answer } from '@/types/quizzes';
+import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
 import { errorMonitor } from 'events';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizTryPage = () => {
   const { id } = useParams();
-  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [resultMode, setResultMode] = useState(false);
+  const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
 
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const { getCurrentUserProfile } = useAuth();
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,7 +107,7 @@ const QuizTryPage = () => {
   if (quizIsLoading || questionsIsLoading) return <div>로드 중..</div>;
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
-  const quizzes = quizData as GetQuiz[];
+  const quizzes = quizData as Quiz[];
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
@@ -175,8 +188,8 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} />
-      <main className="grid grid-cols-[16%_84%]">
-        <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+      <main className="grid grid-cols-[16%_84%] bg-bgColor1">
+        <article className="h-[76vh] text-pointColor1">
           <section>
             <Image
               src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
@@ -195,7 +208,7 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="pt-12 pb-20 flex flex-col place-items-center gap-10">
+        <article className="pt-12 pb-20 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
@@ -213,7 +226,7 @@ const QuizTryPage = () => {
                     alt="문제 이미지"
                     width={570}
                     height={200}
-                    className="h-[200px] object-cover rounded-md"
+                    className="h-[200px] mb-2 object-cover rounded-md"
                   />
                 ) : (
                   <></>
@@ -255,6 +268,7 @@ const QuizTryPage = () => {
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
         </article>
+        <PageUpBtn scrollPosition={scrollPosition} />
       </main>
     </>
   );
