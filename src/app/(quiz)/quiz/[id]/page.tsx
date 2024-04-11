@@ -175,8 +175,8 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} />
-      <main className="grid grid-cols-[16%_84%]">
-        <article className="bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+      <main className="grid grid-cols-[16%_84%] bg-bgColor1">
+        <article className="h-[76vh] text-pointColor1">
           <section>
             <Image
               src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
@@ -195,7 +195,7 @@ const QuizTryPage = () => {
           </section>
           <p className="p-4">{info}</p>
         </article>
-        <article className="pt-12 pb-20 flex flex-col place-items-center gap-10">
+        <article className="pt-12 pb-20 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
