@@ -17,7 +17,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
-        queryClient.invalidateQueries({ queryKey: ['userPosts'] });; // 게시글 목록 쿼리 무효화
+        queryClient.invalidateQueries({ queryKey: ['userPosts'] });
       } catch (error) {
         throw error;
       }
@@ -47,7 +47,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
-        queryClient.invalidateQueries({ queryKey: ['userComments'] });;
+        queryClient.invalidateQueries({ queryKey: ['userComments'] });
       } catch (error) {
         throw error;
       }
