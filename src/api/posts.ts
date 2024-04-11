@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/supabase/supabase';
 
 // posts 테이블에서 게시글 가져오기
-export const getPosts = async (offset = 0, limit = 10) => {
+export const getPosts = async () => {
   try {
     const { data: posts, error } = await supabase
       .from('posts')

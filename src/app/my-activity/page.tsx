@@ -1,8 +1,11 @@
+// import MyActivity from "./MyActivity";
 
-const MyActivity = () => {
-  return (
-    <div>page</div>
-  )
-}
+// const MyActivityPage = () => {
+//   return (
+//     <div>
+//       <MyActivity />
+//     </div>
+//   );
+// };
 
-export default MyActivity
+// export default MyActivityPage;

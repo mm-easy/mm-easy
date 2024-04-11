@@ -128,3 +128,17 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
     throw error;
   }
 };
+
+export const fetchUserQuizzes = async (userId : string) => {
+  try {
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select('*')
+      .eq('creator_id', userId);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('사용자 퀴즈 불러오기 실패', error);
+  }
+};
