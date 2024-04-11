@@ -1,9 +1,10 @@
+import { handleDeleteBtn } from '@/api/comments';
 import { removeCommunityPost } from '@/api/posts';
-import { FormButtonProps } from '@/types/posts';
+import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export const PostDeleteButton: React.FC<FormButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
+export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
   const router = useRouter();
 
   const handleDeleteClick = async () => {
@@ -31,13 +32,14 @@ export const PostDeleteButton: React.FC<FormButtonProps> = ({ text, width, heigh
   );
 };
 
-export const PostDeleteButton: React.FC<FormButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
+
+export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width, height, userId, redirectUrl }) => {
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    if (window.confirm('정말 해당 게시글을 삭제하시겠습니까?')) {
+    if (window.confirm('정말 해당 댓글을 삭제하시겠습니까?')) {
       try {
-        await removeCommunityPost(postId);
+        await handleDeleteBtn(userId);
         toast("게시글이 삭제되었습니다.")
         if (redirectUrl) {
           router.replace(redirectUrl);

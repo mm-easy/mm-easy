@@ -11,8 +11,8 @@ import { useAtom } from 'jotai';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { PostDeleteButton } from '@/components/common/PostDeleteButton';
-import { PostEditButton } from '@/components/common/PostEditButton';
+import { PostDeleteButton } from '@/components/common/DeleteButton';
+import { PostEditButton } from '@/components/common/EditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 

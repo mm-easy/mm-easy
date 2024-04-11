@@ -16,9 +16,9 @@ export const getMyActivityComment = async (userId: string) => {
   }
 };
 
-const handleDeleteBtn = async (userId: string) => {
+export const handleDeleteBtn = async (userId: string) => {
   try {
-    const { data: comments, error } = await supabase.from('comments').delete().eq('author_id', userId);
+    const { data: comments, error } = await supabase.from('comments').delete().eq('id', userId);
 
     if (error) throw error;
     return comments || [];

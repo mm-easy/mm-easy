@@ -85,12 +85,20 @@ export type ToggleProps = {
   offIcon: React.ReactNode;
 };
 
-export type FormButtonProps = {
+export type FormPostButtonProps = {
   text: string;
   width?: string;
   height?: string;
   postId: string;
   categoryNow?: string;
+  redirectUrl?: string;
+};
+
+export type FormCommentButtonProps = {
+  text: string;
+  width?: string;
+  height?: string;
+  userId: string;
   redirectUrl?: string;
 };
 

@@ -3,7 +3,7 @@
 import { getMyActivityComment } from '@/api/comments';
 import { getMyActivityPosts } from '@/api/posts';
 import { fetchUserQuizzes } from '@/api/quizzes';
-import { PostDeleteButton } from '@/components/common/PostDeleteButton';
+import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
@@ -100,6 +100,10 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  const navigateToQuiz = (puizId: string) => {
+    router.push(`/quiz/${puizId}`);
+  };
+
   {
     isPostLoading && <div>로딩 중...</div>;
   }
@@ -148,6 +152,7 @@ const MyActivity = () => {
                       <td>{quiz.title}</td>
                       <td>푼 횟수가 들어가요</td>
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
+                      <button onClick={() => navigateToQuiz(quiz.id)}>다시 풀러가기</button>
                     </tr>
                   ))
                 : !isQuizLoading && (
@@ -179,6 +184,7 @@ const MyActivity = () => {
                 <div className="text-lg" key={index}>
                   <h3>{comment.content}</h3>
                   <p>{formatToLocaleDateTimeString(comment.created_at)}</p>
+                  <CommentDeleteBtn text="삭제" userId={comment.id} width="w-20" height="h-12" />
                 </div>
               ))
             : !isPostLoading && <div>댓글이 없습니다.</div>}
