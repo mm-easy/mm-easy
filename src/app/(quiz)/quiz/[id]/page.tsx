@@ -85,7 +85,7 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['quizzes']
+    queryKey: ['quizzes', id]
   });
 
   const {
@@ -124,6 +124,16 @@ const QuizTryPage = () => {
       idx !== -1 ? (newAnswers[idx] = { ...newAnswers[idx], answer }) : newAnswers.push({ id, answer });
     }
     setUsersAnswers(newAnswers);
+  };
+
+  const handleGetLength = (id: string | undefined) => {
+    const usersAnswer = usersAnswers.find((answer) => answer.id === id)?.answer;
+
+    if (usersAnswer && typeof usersAnswer === 'string') {
+      return usersAnswer.length;
+    } else {
+      return 0;
+    }
   };
 
   const handleResultMode = () => {
@@ -247,13 +257,13 @@ const QuizTryPage = () => {
                           type="text"
                           className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                           onChange={(e) => {
-                            handleMaxLength(e, 25);
+                            handleMaxLength(e, 30);
                             handleGetAnswer(id, e.target.value);
-                            // handleGradeobjectiveAnswer(id, e.target.value, correct_answer);
-                            // setObjectiveAnswer(e.target.value);
                           }}
                         />
-                        {/* <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{objectiveAnswer.length}/25</p> */}
+                        <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
+                          {handleGetLength(id)}/30
+                        </p>
                       </>
                     )}
                   </div>

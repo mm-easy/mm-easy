@@ -2,14 +2,33 @@ import { supabase } from '@/utils/supabase/supabase';
 
 import type { LikeParams } from '@/types/posts';
 
-export const getLike = async ({ postId, userId }: LikeParams) => {
+/** 좋아요 가져오기 */
+export const getLike = async (postId: string) => {
   try {
-    const { data: likedUser, error } = await supabase.from('likes').select('*').eq('post_id', postId);
-
-    const likedUserNow = likedUser?.some((prev) => prev.user_id === userId);
+    const { data, error } = await supabase.from('likes').select('*').eq('post_id', postId);
 
     if (error) throw error;
-    return likedUserNow;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/** 좋아요 하기 */
+export const insertLike = async ({ userId, postId }: LikeParams) => {
+  try {
+    const { error } = await supabase.from('likes').insert({ user_id: userId, post_id: postId }).select();
+    if (error) throw error;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/** 좋아요 지우기 */
+export const deleteLike = async ({ userId, postId }: LikeParams) => {
+  try {
+    const { error } = await supabase.from('likes').delete().eq('user_id', userId).eq('post_id', postId);
+    if (error) throw error;
   } catch (error) {
     throw error;
   }
