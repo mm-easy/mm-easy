@@ -1,5 +1,6 @@
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
+import { getTopQuizScores } from '@/api/tries';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
@@ -14,7 +15,12 @@ const RankingSection = () => {
     queryFn: getQuizRank
   });
 
-  if (isLoadingGameScores || isLoadingQuizRank) {
+  const { data: quizScoreRank, isLoading: isLoadingQuizScoreRank } = useQuery({
+    queryKey: ['topQuizScores'],
+    queryFn: getTopQuizScores
+  });
+
+  if (isLoadingGameScores || isLoadingQuizRank || isLoadingQuizScoreRank) {
     return <div>Loading...</div>;
   }
 
@@ -54,23 +60,23 @@ const RankingSection = () => {
             <div className="flex">
               <h2 className="mb-4 text-lg font-bold">이번주 퀴즈 마스터</h2>
             </div>
-            {gameScores &&
-              gameScores.map((score, index) => (
+            {quizScoreRank &&
+              quizScoreRank.map((quizScoreRank, index) => (
                 <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
-                  {score.avatar_img_url && (
+                  {quizScoreRank.avatar_img_url && (
                     <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={score.avatar_img_url}
+                        src={quizScoreRank.avatar_img_url}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
                         className="object-cover"
                       />
                     </div>
-                  )}
+                   )}
                   <div className="flex flex-col">
-                    <h3 className="text-xl font-medium mb-1">{score.nickname}</h3>
-                    <h2 className="text-pointColor1">점수: {score.score}</h2>
+                    <h3 className="text-xl font-medium mb-1">{quizScoreRank.nickname}</h3>
+                    <h2 className="text-pointColor1">점수: {quizScoreRank.score}</h2>
                   </div>
                 </div>
               ))}

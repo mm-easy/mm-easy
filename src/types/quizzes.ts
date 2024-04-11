@@ -55,6 +55,14 @@ export type QuizTry = {
   score: number;
 };
 
+export type QuizTryRank = {
+  user_id: string | null;
+  quiz_id: string | string[];
+  score: number;
+  nickname: string;
+  avatar_img_url: string;
+};
+
 export type QuizRank = {
   creator_id: string;
   avatar_img_url: string;
