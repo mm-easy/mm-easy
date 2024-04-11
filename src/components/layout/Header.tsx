@@ -113,7 +113,6 @@ const Header = () => {
                   <Avatar
                     as="button"
                     className="transition-transform"
-                    color="secondary"
                     name={currentUser?.nickname}
                     size="md"
                     src={`${profileStorageUrl}/${currentUser?.avatar_img_url}`}

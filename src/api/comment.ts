@@ -1,7 +1,8 @@
-import { InsertComment } from '@/types/posts';
 import { supabase } from '@/utils/supabase/supabase';
-import { toast } from 'react-toastify';
 
+import type { InsertComment, UpdateCommentParams } from '@/types/posts';
+
+/** 댓글가져오기 */
 export const getComment = async (postId: string | string[] | undefined) => {
   try {
     const { data: comments, error } = await supabase
@@ -16,6 +17,7 @@ export const getComment = async (postId: string | string[] | undefined) => {
   }
 };
 
+/** 댓글만들기 */
 export const getInsertComment = async ({ profile, postId, content }: InsertComment) => {
   try {
     const { error } = await supabase
@@ -29,6 +31,18 @@ export const getInsertComment = async ({ profile, postId, content }: InsertComme
   }
 };
 
+/** 댓글수정 */
+export const getUpdateComment = async ({ contentChange, id }: UpdateCommentParams) => {
+  try {
+    const { error } = await supabase.from('comments').update({ content: contentChange }).eq('id', id).select();
+
+    if (error) throw error;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/** 댓글삭제 */
 export const getDeleteComment = async (id: string) => {
   try {
     const { error } = await supabase.from('comments').delete().eq('id', id);

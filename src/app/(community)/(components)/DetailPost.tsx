@@ -52,7 +52,6 @@ const DetailPost = () => {
     }
   };
 
-  /**해당 게시글 정보가져오기 */
   useEffect(() => {
     let data;
     let nextPosts;

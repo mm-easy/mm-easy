@@ -26,7 +26,8 @@ const Creator = ({ creator }: { creator: string }) => {
   return (
     <div>
       <h4>작성자</h4>
-      <p>{nickname}</p>
+      {/* <p>{nickname}</p> */}
+      <p>nickname</p>
     </div>
   );
 };
