@@ -67,18 +67,27 @@ const SelectQuizLevel = () => {
   if (!data) return;
 
   /** 클릭하여 퀴즈 레벨 필터링 */
-  const handleSelectLevel = (level: number) => {
-    const filteredQuizzes = data.filter((item) => item.level === level);
-    setQuizLevelSelected(filteredQuizzes);
+  const handleSelectLevel = (level: number | null) => {
+    if (level === null) {
+      setQuizLevelSelected(data);
+    } else {
+      const filteredQuizzes = data.filter((item) => item.level === level);
+      setQuizLevelSelected(filteredQuizzes);
+    }
     setSelectedLevel(level);
   };
 
   return (
     <>
       <main className="w-full bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
-        <div className="mt-5 text-pointColor1 text-2xl font-bold absolute top-20">난이도를 골라보세요!</div>
+        <div className="mt-5 absolute top-20 flex flex-col items-center">
+          <p className="text-pointColor1 text-3xl font-bold">난이도를 골라보세요!</p>
+          <p className="text-pointColor1 text-lg font-bold mt-5 cursor-pointer" onClick={() => handleSelectLevel(null)}>
+            전체보기
+          </p>
+        </div>
         <div className="mt-5 mr-1/4 absolute top-20 left-3/4">
-          <WhiteButton text="퀴즈 만들기" onClick={handleMakeQuizBtn} width="w-36" />
+          <WhiteButton text="퀴즈 만들기" onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
         <div className="flex items-end overflow-hidden mt-20">
           <Image
@@ -87,7 +96,11 @@ const SelectQuizLevel = () => {
             width={350}
             height={240}
             className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 1 ? 'translate-y-[10%] z-10' : 'z-0 translate-y-[50%] hover:translate-y-[10%]'
+              selectedLevel === 1
+                ? 'translate-y-[10%] z-10'
+                : selectedLevel === null
+                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
+                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
             }`}
             onClick={() => handleSelectLevel(1)}
           />
@@ -97,7 +110,11 @@ const SelectQuizLevel = () => {
             width={350}
             height={240}
             className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 2 ? 'translate-y-[10%] z-10' : 'z-0 translate-y-[30%] hover:translate-y-[10%]'
+              selectedLevel === 2
+                ? 'translate-y-[20%] z-10'
+                : selectedLevel === null
+                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
+                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
             }`}
             onClick={() => handleSelectLevel(2)}
           />
@@ -107,7 +124,11 @@ const SelectQuizLevel = () => {
             width={350}
             height={240}
             className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 3 ? 'translate-y-[10%] z-10' : 'z-0 translate-y-[60%] hover:translate-y-[10%]'
+              selectedLevel === 3
+                ? 'translate-y-[10%] z-10'
+                : selectedLevel === null
+                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
+                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
             }`}
             onClick={() => handleSelectLevel(3)}
           />
