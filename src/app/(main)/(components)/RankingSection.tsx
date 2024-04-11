@@ -67,7 +67,7 @@ const RankingSection = () => {
                   {quizScoreRank.avatar_img_url && (
                     <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={quizScoreRank.avatar_img_url}
+                        src={`${profileStorageUrl}/${quizScoreRank.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
@@ -92,7 +92,7 @@ const RankingSection = () => {
                   {score.avatar_img_url && (
                     <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={score.avatar_img_url}
+                        src={`${profileStorageUrl}/${score.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}

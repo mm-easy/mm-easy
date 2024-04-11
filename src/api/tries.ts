@@ -33,7 +33,7 @@ export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
 
   } catch (error) {
     console.log('퀴즈 점수 가져오기 실패:', error);
-    alert('퀴즈 점수를 가져오지 못했습니다. 다시 시도하세요.');
+    // alert('퀴즈 점수를 가져오지 못했습니다. 다시 시도하세요.');
     throw error;
   }
 };
