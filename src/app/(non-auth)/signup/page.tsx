@@ -59,7 +59,7 @@ const SignUpPage = () => {
                         alt="로그인 이미지"
                         width={80}
                         height={80}
-                        // className="w-full h-full object-cover"
+                        // className="w-full h-full object-fit"
                         /> 
                       ) : (
                         <Image
@@ -67,7 +67,7 @@ const SignUpPage = () => {
                         alt="로그인 이미지"
                         width={80}
                         height={80}
-                        // className="w-full h-full object-cover"
+                        // className="w-full h-full object-fit"
                       />
                       )}
                     </div>
