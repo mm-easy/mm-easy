@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={gothic_a1.className}>
         <Provider>
           <QueryProvider>
-            <Header />
+          <Header />
             <ToastContainer />
             {children}
             <Footer />

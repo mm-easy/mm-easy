@@ -26,7 +26,7 @@ const Home = () => {
             .from('profiles')
             .select('id')
             .eq('email', email)
-            .single();
+            .maybeSingle();
 
           if (error) {
             console.error('프로필 조회 중 에러 발생', error.message);
@@ -37,7 +37,7 @@ const Home = () => {
             try {
               const { error } = await supabase
                 .from('profiles')
-                .upsert([{ id, email, nickname, avatar_img_url: 'https://via.placeholder.com/150' }], {
+                .upsert([{ id, email, nickname, avatar_img_url: 'login_1.png' }], {
                   onConflict: 'id'
                 });
               if (error) {
