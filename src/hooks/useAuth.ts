@@ -27,16 +27,17 @@ export const useAuth = () => {
       .eq('email', email)
       .maybeSingle();
 
-      if (existingUserError) {
-        setError('사용자 정보를 검사하는 데 실패했습니다.');
-        setLoading(false);
-        return { error: true, errorMessage: '사용자 정보를 검사하는 데 실패했습니다.' };
+    if (existingUserError) {
+      console.log('existingUserError', existingUserError);
+      setError('사용자 정보를 검사하는 데 실패했습니다.');
+      setLoading(false);
+      return { error: true, errorMessage: '사용자 정보를 검사하는 데 실패했습니다.' };
     }
 
     if (existingUser) {
-        setError('이미 사용 중인 이메일 주소입니다.');
-        setLoading(false);
-        return { error: true, errorMessage: '이미 사용 중인 이메일 주소입니다.' };
+      setError('이미 사용 중인 이메일 주소입니다.');
+      setLoading(false);
+      return { error: true, errorMessage: '이미 사용 중인 이메일 주소입니다.' };
     }
 
     const { data, error } = await supabase.auth.signUp({

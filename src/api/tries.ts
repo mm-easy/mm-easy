@@ -46,3 +46,17 @@ export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
     throw error;
   }
 };
+
+/** quiz_tries 테이블에서 나의 점수만(score컬럼) 가져오기 */
+export const getMyQuizScore = async (user_id: string): Promise<number | null> => {
+  try {
+    let { data: myQuizScores, error } = await supabase.from('quiz_tries').select('score').eq('user_id', user_id);
+
+    if (error) throw error;
+    const totalScore = myQuizScores?.reduce((acc, cur) => acc + parseInt(cur.score), 0);
+    return totalScore ?? null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
