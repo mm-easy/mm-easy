@@ -180,7 +180,7 @@ const TypingGamePage = () => {
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
-        const newTotalScore = existingScores.score + finalScore;
+        const newTotalScore = finalScore;
         const { error: updateError } = await supabase
           .from('game_tries')
           .update({ score: newTotalScore })
