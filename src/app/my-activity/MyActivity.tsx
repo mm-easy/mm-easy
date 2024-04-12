@@ -4,7 +4,6 @@ import { getMyActivityComment } from '@/api/comments';
 import { getMyActivityPosts } from '@/api/posts';
 import { fetchUserQuizzes, userSolvedQuizzes } from '@/api/quizzes';
 import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
-import { PostEditButton } from '@/components/common/EditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
@@ -58,6 +57,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  // 사용자가 푼 quiz 불러오기
   const {
     data: userSolvedQuiz,
     isLoading: isSolvedQuizLoading,
@@ -79,8 +79,6 @@ const MyActivity = () => {
     queryKey: ['userSolvedQuizzes'],
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
-
-  console.log("userSolvedQuiz",userSolvedQuiz)
 
   // 사용자가 작성한 post 불러오기
   const {
@@ -136,6 +134,12 @@ const MyActivity = () => {
     isPostError && <div>게시글을 불러오는 중 오류가 발생했습니다.</div>;
   }
   {
+    isSolvedQuizLoading && <div>로딩 중...</div>;
+  }
+  {
+    isSolvedQuizError && <div>퀴즈를 불러오는 중 오류가 발생했습니다.</div>;
+  }
+  {
     isQuizLoading && <div>로딩 중...</div>;
   }
   {
@@ -156,8 +160,8 @@ const MyActivity = () => {
       <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
         <ul className="flex justify-center text-2xl w-full text-center border-b-2 border-solid ">
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'quizzesClear' ? 'font-bold border-solid border-b-3' : ''}`}
-            onClick={() => setActiveTab('quizzesClear')}
+            className={`w-[25%] pb-6 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
+            onClick={() => setActiveTab('solvedQuizzes')}
           >
             내가 푼 퀴즈
           </li>
@@ -181,6 +185,43 @@ const MyActivity = () => {
           </li>
         </ul>
       </nav>
+      {activeTab === 'solvedQuizzes' && (
+        <div className="flex justify-center w-full ">
+          <table className="w-full text-lg font-medium">
+            <thead className="text-left">
+              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+                <th className="pb-2 w-[36%]">제목</th>
+                <th className="w-[20%]">점수</th>
+                <th>작성 날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userSolvedQuiz && userSolvedQuiz.length > 0
+                ? userSolvedQuiz.map((quiz, index) => (
+                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="py-6 w-24">{quiz.quizzes.title}</td>
+                      <td>{quiz.score}</td>
+                      {/* <td>{formatToLocaleDateTimeString(quiz)}</td> */}
+                      <div className="text-right">
+                        <button
+                          className="h-12 border border-solid border-pointColor1 px-4 py-2 rounded-md font-bold text-pointColor1"
+                          onClick={() => navigateToQuiz(quiz)}
+                        >
+                          다시 풀기
+                        </button>
+                      </div>
+                    </tr>
+                  ))
+                : !isSolvedQuizLoading && (
+                    <tr>
+                      <td>퀴즈가 없습니다.</td>
+                    </tr>
+                  )}
+            </tbody>
+          </table>
+        </div>
+      )}
+      
       {activeTab === 'quizzes' && (
         <div className="flex justify-center w-full ">
           <table className="w-full text-lg font-medium">
@@ -196,7 +237,7 @@ const MyActivity = () => {
                 ? userQuiz.map((quiz, index) => (
                     <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
                       <td className="py-6 w-24">{quiz.title}</td>
-                      <td>120</td>
+                      <td>{quiz.quiz_tries.length}</td>
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <div className="text-right">
                         <button
