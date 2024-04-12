@@ -4,7 +4,7 @@ import DetailPost from '@/app/(community)/(components)/DetailPost';
 
 const CategoryDetailPage = () => {
   return (
-    <div>
+    <div className='h-[84vh]'>
       <DetailPost />
     </div>
   );

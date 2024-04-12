@@ -36,7 +36,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const endPage = Math.min(startPage + btnRange - 1, Math.ceil(totalNum / pageRange));
 
   return (
-    <article className="w-full">
+    <article className="w-full ">
       <div className="bg-white p-4 w-full">
         <table className="w-full text-xl">
           <thead className="text-left">
