@@ -71,9 +71,9 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
   };
   return (
     <main className="w-full h-full flex flex-col items-center">
-      <div className="mt-10 text-center text-pointColor1 text-xl font-semibold">프로필</div>
-      <div className="flex gap-20 mt-5">
-        <div className="w-[230px] h-[230px]">
+      <h3 className="mt-10 text-center text-pointColor1 text-xl font-semibold">프로필</h3>
+      <article className="flex gap-20 mt-5">
+        <section className="w-[230px] h-[230px]">
           <Image
             src={`${profileStorageUrl}/${currentUser.avatar_img_url}`}
             alt="사용자 프로필"
@@ -81,28 +81,30 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
             height={250}
             className="w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
           />
-        </div>
-        <div className="flex flex-col p-4 justify-between">
-          <div className="flex flex-col gap-1">
-            <p className="text-pointColor1 font-semibold">닉네임</p>
-            <p className="text-lg">{currentUser.nickname}</p>
-          </div>
-          <div className="flex flex-col gap-1">
-            <p className="text-pointColor1 font-semibold">이메일</p>
-            <p className="text-lg">{currentUser.email}</p>
+        </section>
+        <section className="flex flex-col justify-around">
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1">
+              <p className="text-pointColor1 font-semibold">닉네임</p>
+              <p className="text-lg">{currentUser.nickname}</p>
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-pointColor1 font-semibold">이메일</p>
+              <p className="text-lg">{currentUser.email}</p>
+            </div>
           </div>
           <div
-            className="mt-7 text-pointColor1 underline underline-offset-4 cursor-pointer"
+            className="text-pointColor1 underline underline-offset-4 cursor-pointer"
             onClick={() => setIsEditing(true)}
           >
             프로필 수정
           </div>
-        </div>
-      </div>
+        </section>
+      </article>
       {isEditing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white border-solid border-2 border-pointColor1 p-6 rounded-md flex flex-col w-[330px]">
-            <h2 className="font-bold text-xl mb-4">프로필 수정</h2>
+          <div className="bg-white border-solid border-2 border-pointColor1 p-6 rounded-xl flex flex-col w-[330px]">
+            <h2 className="mb-4 text-center text-xl font-bold text-pointColor1">프로필 수정</h2>
             <form
               className="flex flex-col gap-5 justify-center items-center"
               onSubmit={(e) => {
@@ -133,12 +135,15 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
               <div className="flex w-full justify-center gap-2">
                 <button
                   type="button"
-                  className="w-[120px] bg-gray-300 text-black font-bold py-2 px-4 rounded"
+                  className="w-[120px] bg-gray-300 text-black font-bold tracking-wider py-2 px-4 rounded-md"
                   onClick={handleCancelBtn}
                 >
                   취소하기
                 </button>
-                <button type="submit" className="w-[120px] bg-pointColor1 text-white font-bold py-2 px-4 rounded">
+                <button
+                  type="submit"
+                  className="w-[120px] bg-pointColor1 text-white font-bold tracking-wider py-2 px-4 rounded-md"
+                >
                   수정완료
                 </button>
               </div>
