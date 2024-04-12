@@ -21,7 +21,6 @@ import { useQuery } from '@tanstack/react-query';
 import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
-import { loginImageWithoutHandUrl } from '@/utils/supabase/storage';
 
 const AboutPage = () => {
   const router = useRouter();
@@ -117,7 +116,7 @@ const AboutPage = () => {
       content1: '좋은 분들과 함께 해서 행복했습니다!',
       content2: '즐겁게 이용해 주세요!',
       Behance: '',
-      Instagram: '"https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
+      Instagram: 'https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
       img: InfoYS
     }
   ];
@@ -272,8 +271,12 @@ const AboutPage = () => {
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
-                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-28" />
-                    <WhiteButton onClick={() => handleGitBtn(item.Instagram)} text="Instagram" width="w-28" /> */}
+                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-28" /> */}
+                      <WhiteButton
+                        onClick={() => item.Instagram && handleGitBtn(item.Instagram)}
+                        text="Instagram"
+                        width="w-28"
+                      />
                     </div>
                   )}
                 </div>

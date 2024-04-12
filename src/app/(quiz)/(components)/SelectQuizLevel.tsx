@@ -99,12 +99,13 @@ const SelectQuizLevel = () => {
               alt="초급"
               width={350}
               height={240}
+              quality={100}
               className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] ${
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -115,12 +116,13 @@ const SelectQuizLevel = () => {
               alt="중급"
               width={350}
               height={240}
+              quality={100}
               className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] ${
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -131,12 +133,13 @@ const SelectQuizLevel = () => {
               alt="고급"
               width={350}
               height={240}
+              quality={100}
               className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 ${
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />

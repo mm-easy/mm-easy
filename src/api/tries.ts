@@ -23,7 +23,7 @@ export const updateQuizScore = async (userId: string | null, quizId: string | st
   }
 };
 
-export const getQuizzesISolved = async (id: string) => {
+export const getQuizzesISolved = async (id: string): Promise<QuizTry[]> => {
   try {
     const { data, error } = await supabase.from('quiz_tries').select('*').eq('user_id', id);
     if (error) throw error;
@@ -48,15 +48,14 @@ export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
 };
 
 /** quiz_tries 테이블에서 나의 점수만(score컬럼) 가져오기 */
-export const getMyQuizScore = async (user_id: string): Promise<number | null> => {
+export const getMyQuizScore = async (user_id: string): Promise<number> => {
   try {
     let { data: myQuizScores, error } = await supabase.from('quiz_tries').select('score').eq('user_id', user_id);
-
     if (error) throw error;
-    const totalScore = myQuizScores?.reduce((acc, cur) => acc + parseInt(cur.score), 0);
-    return totalScore ?? null;
+    const totalScore = myQuizScores?.reduce((acc: number, cur: any) => acc + parseInt(cur.score), 0);
+    return totalScore ?? 0;
   } catch (error) {
     console.error(error);
-    return null;
+    return 0;
   }
 };

@@ -13,7 +13,6 @@ import { getUser } from '@/api/users';
 import type { User } from '@/types/users';
 
 const ProfilePage = () => {
-  const [currentUser, setCurrentUser] = useState<User | null>();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const router = useRouter();
 
@@ -35,36 +34,30 @@ const ProfilePage = () => {
   }, [isLoggedIn]);
 
   /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
-  const { data, isLoading, isError } = useQuery<User | null>({
+  const { data, isLoading } = useQuery<User | null>({
     queryKey: ['loggedInUser'],
     queryFn: async () => {
       try {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) return null;
         const fetchData = await getUser(getSession.data.session.user.id);
-        setCurrentUser(fetchData);
         return fetchData;
       } catch (error) {
         throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
       }
-    },
-    refetchOnWindowFocus: false
+    }
   });
-  if (isLoading) return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
-  if (isError) return <div>데이터 로드 실패</div>;
-  if (!data) return;
 
-  if (!currentUser) {
-    return;
-  }
+  if (isLoading) return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
+  if (!data) return <div>사용자 정보 불러오기 실패</div>;
 
   return (
     <main>
       <div className="h-[47vh]">
-        <MyProfile currentUser={currentUser} />
+        <MyProfile data={data} />
       </div>
       <div className="h-[37vh]">
-        <MyLevelAndScore currentUser={currentUser} />
+        <MyLevelAndScore data={data} />
       </div>
     </main>
   );

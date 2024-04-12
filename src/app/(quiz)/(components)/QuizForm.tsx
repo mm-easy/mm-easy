@@ -6,6 +6,8 @@ import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 import UnloadImgBtn from './UnloadImg';
+import default144 from '@/assets/quiz_144x144.png';
+import default570 from '@/assets/quiz_570x160.png';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -27,7 +29,7 @@ const QuizForm = () => {
   const [level, setLevel] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  const [selectedImg, setSelectedImg] = useState(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
+  const [selectedImg, setSelectedImg] = useState(`${storageUrl}/assets/quiz_144x144.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
@@ -62,7 +64,7 @@ const QuizForm = () => {
       type: QuestionType.objective,
       title: '',
       img_file: null,
-      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
+      img_url: `${storageUrl}/assets/quiz_570x160.png`,
       correct_answer: '',
       options: [
         {
@@ -82,7 +84,7 @@ const QuizForm = () => {
       type: QuestionType.objective,
       title: '',
       img_file: null,
-      img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
+      img_url: `${storageUrl}/assets/quiz_570x160.png`,
       correct_answer: '',
       options: [
         {
@@ -159,7 +161,7 @@ const QuizForm = () => {
             }
           ],
           img_file: null,
-          img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`,
+          img_url: `${storageUrl}/assets/quiz_570x160.png`,
           correct_answer: ''
         }
       ]);
@@ -268,7 +270,7 @@ const QuizForm = () => {
   const handleRemoveImg = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
     setFile(null);
-    setSelectedImg(`${storageUrl}/quiz-thumbnails/tempThumbnail.png`);
+    setSelectedImg(`${storageUrl}/assets/quiz_144x144.png`);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
