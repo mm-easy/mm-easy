@@ -134,7 +134,7 @@ const AboutPage = () => {
         <div className="flex justify-center space-x-4">
           {NowData.map((item) => {
             return (
-              <div className="p-8">
+              <div key={item.content} className="p-8">
                 <div className="flex">
                   <div className="text-8xl font-semibold text-pointColor1">{item.number}</div>
                   <span className="mt-16">{item.count}</span>
@@ -194,7 +194,7 @@ const AboutPage = () => {
       <div className="grid grid-cols-3 gap-4">
         {managerData.map((item) => {
           return (
-            <div>
+            <div key={item.name}>
               <div className="flex flex-col gap-1">
                 <h3 className="m-2 font-bold">{item.name}</h3>
                 <span>{item.content1}</span>
