@@ -123,6 +123,7 @@ const Header = () => {
                   <Avatar
                     as="button"
                     className="transition-transform"
+                    color="default"
                     size="md"
                     src={`${profileStorageUrl}/${data?.avatar_img_url}`}
                   />
