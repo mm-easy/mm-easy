@@ -123,69 +123,73 @@ const AboutPage = () => {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="flex flex-col">
-        <h2 className="text-4xl font-bold mb-4">재밌게 배우는 한국어!</h2>
+      <div className="flex flex-col bg-pointColor1 w-full">
+        <h2 className="text-6xl font-bold mb-4">재밌게 배우는 한국어!</h2>
         <span>직접 퀴즈를 만들면서 한국어 실력을 키워보세요!</span>
         <span>타자 연습으로 한국어에 익숙해져 보세요!</span>
         <span>커뮤니티에서 소통하며 자신감을 길러보세요!</span>
       </div>
-      <div>
-        <h2 className="text-2xl font-bold text-pointColor1">뭔말이지?에서 지금까지</h2>
-        <div className="flex justify-center space-x-4">
-          {NowData.map((item) => {
+      <div className="  border-b border-solid border-pointColor1 w-full bg-sky-50">
+        <h2 className="py-12 text-4xl font-bold text-pointColor1">뭔말이지?에서 지금까지</h2>
+        <div className="flex justify-center py-10">
+          {NowData.map((item, index) => {
             return (
-              <div className="p-8">
+              <div
+                className={`w-[20%] py-8 px-20 ${
+                  index === 1 ? 'border-l border-r border-solid border-pointColor1' : ''
+                }`}
+              >
                 <div className="flex">
                   <div className="text-8xl font-semibold text-pointColor1">{item.number}</div>
-                  <span className="mt-16">{item.count}</span>
+                  <span className="mt-16 text-xl font-semibold">{item.count}</span>
                 </div>
-                <div className="text-base">{item.content}</div>
+                <div className="text-xl font-semibold">{item.content}</div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="flex flex-col w-full">
-        <h2 className="text-2xl font-bold mb-4 text-pointColor1">유저후기</h2>
+      <div className="flex flex-col w-full text-xl ">
+        <h2 className="text-4xl font-bold py-14 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
-          <div className="flex justify-center items-center w-full">
+          <div className="flex justify-center items-center w-full pl-10">
             <div className="flex flex-col mr-auto mb-6 w-1/3">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="text-lg">“한국어 속도가 확 늘었어요~ 모두 타자 연습 게임 덕분!”</span>
+                <span className="">“한국어 속도가 확 늘었어요~ 모두 타자 연습 게임 덕분!”</span>
               </div>
-              <span className="block mt-2">Elisa, 멕시코</span>
+              <span className="text-base block mt-2">Elisa, 멕시코</span>
             </div>
           </div>
-          <div className="flex justify-center items-center w-full">
+          <div className="flex justify-center items-center w-full pr-20">
             <div className="flex flex-col ml-auto mb-6 w-1/3">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="text-lg">"퀴즈를 직접 만드는 것, 너무 흥미진진했어요!"</span>
+                <span className="">"퀴즈를 직접 만드는 것, 너무 흥미진진했어요!"</span>
               </div>
-              <span className="block mt-2">Danielle, 호주</span>
+              <span className="text-base block mt-2">Danielle, 호주</span>
             </div>
           </div>
-          <div className="flex justify-center items-center w-full">
+          <div className="flex justify-center items-center w-full pl-32">
             <div className="flex flex-col mr-auto mb-6 w-1/3">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="text-lg">“이 사이트를 찾고 제 인생이 달라졌어요..! 쭈천 함미다!”</span>
+                <span className="">“이 사이트를 찾고 제 인생이 달라졌어요..! 쭈천 함미다!”</span>
               </div>
-              <span className="block mt-2">Bryan, 태국</span>
+              <span className="text-base block mt-2">Bryan, 태국</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full">
             <div className="flex flex-col ml-auto mb-10 w-1/3">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="text-lg">“미루고 있던 한글 공부를 즐겁게 할 수 있었어요. 고맙습니다.”</span>
+                <span className="">“미루고 있던 한글 공부를 즐겁게 할 수 있었어요. 고맙습니다.”</span>
               </div>
-              <span className="block mt-2">Danaka, 일본</span>
+              <span className="text-base block mt-2">Danaka, 일본</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full">
             <div className="flex flex-col mb-4">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="text-lg">"'뭔말이지?' 게임 퀴즈로, 한국어 이제 내 두 번째 언어 같은 느낌!"</span>
+                <span className="">"'뭔말이지?' 게임 퀴즈로, 한국어 이제 내 두 번째 언어 같은 느낌!"</span>
               </div>
-              <span className="block mt-2">Jonathan, 콩고</span>
+              <span className="text-base block mt-2">Jonathan, 콩고</span>
             </div>
           </div>
         </div>
