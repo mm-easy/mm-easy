@@ -1,11 +1,9 @@
-
-
-import { getDeleteComment, getInsertComment, getUpdateComment } from '@/api/comment';
-import { deleteLike, getLike, insertLike } from '@/api/likes';
-import { InsertComment, LikeParams, UpdateCommentParams } from '@/types/posts';
-import { supabase } from '@/utils/supabase/supabase';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { getDeleteComment, getInsertComment, getUpdateComment } from '@/api/comment';
+import { deleteLike, insertLike } from '@/api/likes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import type { InsertComment, LikeParams, UpdateCommentParams } from '@/types/posts';
 
 export const useInsertComment = () => {
   const queryClient = useQueryClient();
