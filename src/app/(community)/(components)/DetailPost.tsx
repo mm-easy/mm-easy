@@ -138,13 +138,13 @@ const DetailPost = () => {
               <h1 className="text-3xl font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
                 <div className="flex">
-                  <div className="w-50 h-50 m-3 ml-0 rounded-full overflow-hidden">
+                  <div className="w-[50px] h-[50px] m-3 ml-0 rounded-full overflow-hidden">
                     <Image
                       src={`${profileStorageUrl}/${post.profiles.avatar_img_url}`}
                       alt="프로필이미지"
                       width={50}
                       height={50}
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="flex flex-col justify-center text-blackColor">
