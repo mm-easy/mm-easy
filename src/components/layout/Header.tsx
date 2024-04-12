@@ -17,7 +17,6 @@ import { getUser } from '@/api/users';
 import Image from 'next/image';
 
 const Header = () => {
-  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { logout, getCurrentUserProfile } = useAuth();
@@ -76,23 +75,24 @@ const Header = () => {
 
   /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
   const { data, isLoading, isError } = useQuery<User | null>({
+    queryKey: ['loggedInUser'],
     queryFn: async () => {
       try {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) return null;
         const fetchData = await getUser(getSession.data.session.user.id);
-        console.log('ㅇㅇ', fetchData);
+        // console.log('ㅇㅇ', fetchData);
+        setCurrentUser(fetchData);
         return fetchData;
       } catch (error) {
         throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
       }
     },
-    queryKey: ['loggedInUser'],
     refetchOnWindowFocus: false
   });
+
   if (isLoading) return <div>로그인 정보를 불러오고 있습니다.</div>;
   if (isError) return <div>데이터 로드 실패</div>;
-  if (!data) return;
 
   /** 로그아웃 핸들러 */
   const handleLogout = async () => {
@@ -123,9 +123,8 @@ const Header = () => {
                   <Avatar
                     as="button"
                     className="transition-transform"
-                    name={currentUser?.nickname}
                     size="md"
-                    src={`${profileStorageUrl}/${data.avatar_img_url}`}
+                    src={`${profileStorageUrl}/${data?.avatar_img_url}`}
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -135,6 +134,9 @@ const Header = () => {
                   </DropdownItem>
                   <DropdownItem as={Link} href="/profile">
                     내 프로필
+                  </DropdownItem>
+                  <DropdownItem as={Link} href="/my-activity">
+                    나의 활동
                   </DropdownItem>
                   <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                     Log Out
