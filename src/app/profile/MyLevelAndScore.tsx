@@ -2,7 +2,6 @@ import VerticalBlueLine from './VerticalBlueLine';
 import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase/supabase';
 import { getQuizzes } from '@/api/quizzes';
 
 import type { Quiz, QuizTry } from '@/types/quizzes';
@@ -10,9 +9,11 @@ import type { User } from '@/types/users';
 import { getMyGameScore } from '@/api/game_scrore';
 import { useQuery } from '@tanstack/react-query';
 import { getQuizzesISolved } from '@/api/tries';
+import { getMyQuizScore } from '@/api/tries';
 
 const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [myQuizScore, setMyQuizScore] = useState(0);
   const [myGameScore, setMyGameScore] = useState(0);
 
   /** 등록된 퀴즈 가져오기 */
@@ -21,10 +22,14 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
       try {
         const quizData = await getQuizzes();
         const myGameScoreData = await getMyGameScore(currentUser.id);
+        const myQuizScoreData = await getMyQuizScore(currentUser.id);
 
         if (!quizData || !myGameScoreData) return;
         setQuizzes(quizData);
         setMyGameScore(myGameScoreData);
+        if (!myQuizScoreData) return;
+        setMyQuizScore(myQuizScoreData);
+
       } catch (error) {
         console.error('데이터 가져오기 에러', error);
       }
@@ -33,6 +38,7 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
   }, []);
 
   const { data, isLoading, isError } = useQuery({
+    queryKey: ['quiz_tries'],
     queryFn: async () => {
       try {
         const data = await getQuizzesISolved(currentUser.email);
@@ -41,7 +47,6 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
         return error;
       }
     },
-    queryKey: ['quiz_tries']
   });
 
   if (isLoading) return <div>로드 중..</div>;
@@ -63,7 +68,7 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>퀴즈 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">999</p>
+          <p className="mt-5 text-3xl text-pointColor1">{myQuizScore}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
@@ -73,7 +78,7 @@ const MyLevelAndScore = ({ currentUser }: { currentUser: User }) => {
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>총 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">999</p>
+          <p className="mt-5 text-3xl text-pointColor1">{myQuizScore + myGameScore}</p>
         </div>
       </div>
       <div className="text-center mt-10 text-pointColor1 underline underline-offset-4">
