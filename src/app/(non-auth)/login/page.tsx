@@ -42,11 +42,10 @@ const LoginPage = () => {
     <article className="h-[84vh]">
       <div className="grid grid-cols-10 min-h-full bg-bgColor1">
         <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
-
           <div className="mr-4 w-80 h-80 rounded-full flex items-center justify-center">
           {showPasswordImage ? (
                         <Image
-                        src={`${loginImageWithoutHandUrl}/login_2.png`}
+                        src={`${loginImageWithHandUrl}/login_2.png`}
                         alt="로그인 이미지"
                         width={80}
                         height={80}
