@@ -82,7 +82,10 @@ const SelectQuizLevel = () => {
       <main className="w-full bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
         <div className="mt-5 absolute top-20 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">난이도를 골라보세요!</p>
-          <p className="text-pointColor1 text-lg font-bold mt-5 cursor-pointer" onClick={() => handleSelectLevel(null)}>
+          <p
+            className="text-pointColor1 underline underline-offset-4 text-lg font-bold mt-5 cursor-pointer"
+            onClick={() => handleSelectLevel(null)}
+          >
             전체보기
           </p>
         </div>
