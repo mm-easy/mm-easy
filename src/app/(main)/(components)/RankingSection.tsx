@@ -40,13 +40,13 @@ const RankingSection = () => {
               quizRank.map((quizRank, index) => (
                 <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
                   {quizRank.avatar_img_url && (
-                    <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
+                    <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
                         src={`${profileStorageUrl}/${quizRank.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   )}
@@ -65,16 +65,16 @@ const RankingSection = () => {
               quizScoreRank.map((quizScoreRank, index) => (
                 <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
                   {quizScoreRank.avatar_img_url && (
-                    <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
+                    <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
                         src={`${profileStorageUrl}/${quizScoreRank.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                   )}
+                  )}
                   <div className="flex flex-col">
                     <h3 className="text-xl font-medium mb-1">{quizScoreRank.nickname}</h3>
                     <h2 className="text-pointColor1">점수: {quizScoreRank.score}</h2>
@@ -90,13 +90,13 @@ const RankingSection = () => {
               gameScores.map((score, index) => (
                 <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
                   {score.avatar_img_url && (
-                    <div className="mr-4 rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
+                    <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
                         src={`${profileStorageUrl}/${score.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   )}
