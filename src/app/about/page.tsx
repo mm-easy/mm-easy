@@ -1,16 +1,17 @@
 'use client';
 
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import LogoVertical3 from '@/assets/logo_vertical_3.png';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
 import { WhiteButton } from '@/components/common/FormButtons';
-import { Post } from '@/types/posts';
-import { Quiz } from '@/types/quizzes';
-import { User } from '@/types/users';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import LogoVertical3 from '@/assets/logo_vertical_3.png';
+
+import type { Post } from '@/types/posts';
+import type { Quiz } from '@/types/quizzes';
+import type { User } from '@/types/users';
 
 const AboutPage = () => {
   const router = useRouter();
@@ -55,9 +56,9 @@ const AboutPage = () => {
   });
 
   const NowData = [
-    { number: quizNum?.length, count: '개의', content: '퀴즈가 만들어졌어요!' },
-    { number: postNum?.length, count: '개의', content: '게시글이 작성되었어요!' },
-    { number: userNum?.length, count: '명의', content: '사람들이 이용 중이에요!' }
+    { id: 1, number: quizNum?.length, count: '개의', content: '퀴즈가 만들어졌어요!' },
+    { id: 2, number: postNum?.length, count: '개의', content: '게시글이 작성되었어요!' },
+    { id: 3, number: userNum?.length, count: '명의', content: '사람들이 이용 중이에요!' }
   ];
 
   const managerData = [
@@ -157,6 +158,7 @@ const AboutPage = () => {
           {NowData.map((item, index) => {
             return (
               <div
+                key={item.id}
                 className={`w-[25%] py-8 px-32 ${
                   index === 1 ? 'border-l border-r border-solid border-pointColor1' : ''
                 }`}
@@ -216,14 +218,12 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className='w-full border-t-2 border-solid border-pointColor1'>
-        <h2 className="text-pointColor1 text-4xl font-extrabold py-16">
-          뭔말이지? 프로젝트에 참여한 사람들
-        </h2>
+      <div className="w-full border-t-2 border-solid border-pointColor1">
+        <h2 className="text-pointColor1 text-4xl font-extrabold py-16">뭔말이지? 프로젝트에 참여한 사람들</h2>
         <div className="grid grid-cols-3 gap-4">
           {managerData.map((item) => {
             return (
-              <div>
+              <div key={item.name}>
                 <div className="flex flex-col gap-1">
                   <h3 className="m-2 font-bold text-2xl">{item.name}</h3>
                   <span>{item.content1}</span>

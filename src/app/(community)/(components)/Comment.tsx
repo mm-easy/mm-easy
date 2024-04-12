@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 import { useDeleteComment, useInsertComment, useUpdateComment } from './mutations';
 import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { profileStorageUrl } from '@/utils/supabase/storage';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
