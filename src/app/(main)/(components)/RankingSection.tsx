@@ -27,22 +27,29 @@ const RankingSection = () => {
 
   return (
     <>
-      <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-y border-solid border-pointColor1">
-        <p className="ml-4">랭킹</p>
+      <div className="p-4 text-lg text-pointColor1 bg-bgColor1 font-bold border-y-2 border-solid border-pointColor1">
+        <div className="flex items-center justify-center">
+          <p className="w-5/6 ml-10">명예의 전당</p>
+        </div>
       </div>
-      <section className="">
-        <div className="flex">
+      <section className="flex flex-col justify-center items-center">
+        <div className="w-5/6 flex">
           <div className="w-1/3 p-8 border-r border-solid border-pointColor1">
             <div className="flex">
               <h2 className="mb-4 text-lg font-bold">이번주 퀴즈 만들기 장인</h2>
             </div>
             {quizRank &&
-              quizRank.map((quizRank, index) => (
-                <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
-                  {quizRank.avatar_img_url && (
+              quizRank.map((item, index) => (
+                <div
+                  key={index}
+                  className={`mt-4 pb-4 flex items-center ${
+                    index !== quizRank.length - 1 && 'border-b border-solid border-pointColor1'
+                  }`}
+                >
+                  {item.avatar_img_url && (
                     <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={`${profileStorageUrl}/${quizRank.avatar_img_url}`}
+                        src={`${profileStorageUrl}/${item.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
@@ -51,8 +58,8 @@ const RankingSection = () => {
                     </div>
                   )}
                   <div className="flex flex-col">
-                    <h3 className="text-xl font-medium mb-1">{quizRank.nickname}</h3>
-                    <h2 className="text-pointColor1">만든 퀴즈수: {quizRank.quiz_count}</h2>
+                    <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
+                    <h2 className="text-pointColor1">만든 퀴즈수: {item.quiz_count}</h2>
                   </div>
                 </div>
               ))}
@@ -62,12 +69,17 @@ const RankingSection = () => {
               <h2 className="mb-4 text-lg font-bold">이번주 퀴즈 마스터</h2>
             </div>
             {quizScoreRank &&
-              quizScoreRank.map((quizScoreRank, index) => (
-                <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
-                  {quizScoreRank.avatar_img_url && (
+              quizScoreRank.map((item, index) => (
+                <div
+                  key={index}
+                  className={`mt-4 pb-4 flex items-center ${
+                    index !== quizScoreRank.length - 1 && 'border-b border-solid border-pointColor1'
+                  }`}
+                >
+                  {item.avatar_img_url && (
                     <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
-                        src={`${profileStorageUrl}/${quizScoreRank.avatar_img_url}`}
+                        src={`${profileStorageUrl}/${item.avatar_img_url}`}
                         alt="프로필 이미지"
                         width={60}
                         height={60}
@@ -76,19 +88,24 @@ const RankingSection = () => {
                     </div>
                   )}
                   <div className="flex flex-col">
-                    <h3 className="text-xl font-medium mb-1">{quizScoreRank.nickname}</h3>
-                    <h2 className="text-pointColor1">점수: {quizScoreRank.score}</h2>
+                    <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
+                    <h2 className="text-pointColor1">점수: {item.score}</h2>
                   </div>
                 </div>
               ))}
           </div>
-          <div className="w-1/3 p-8 border-r border-solid border-pointColor1">
+          <div className="w-1/3 p-8 border-solid border-pointColor1">
             <div className="flex">
               <h2 className="mb-4 text-lg font-bold">이번주 키보드 워리어</h2>
             </div>
             {gameScores &&
               gameScores.map((score, index) => (
-                <div key={index} className="mt-4 border-b border-solid border-pointColor1 pb-4 flex items-center">
+                <div
+                  key={index}
+                  className={`mt-4 pb-4 flex items-center ${
+                    index !== gameScores.length - 1 && 'border-b border-solid border-pointColor1'
+                  }`}
+                >
                   {score.avatar_img_url && (
                     <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                       <Image
