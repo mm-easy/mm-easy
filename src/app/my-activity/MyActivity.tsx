@@ -4,6 +4,7 @@ import { getMyActivityComment } from '@/api/comments';
 import { getMyActivityPosts } from '@/api/posts';
 import { fetchUserQuizzes } from '@/api/quizzes';
 import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
+import { PostEditButton } from '@/components/common/EditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
