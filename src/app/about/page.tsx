@@ -149,12 +149,12 @@ const AboutPage = () => {
           })}
         </div>
       </div>
-      <div className="flex flex-col w-full text-xl ">
+      <div className="flex flex-col text-2xl w-5/6">
         <h2 className="text-4xl font-bold py-14 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center w-full pl-10">
-            <div className="flex flex-col mr-auto mb-6 w-1/3">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col mr-auto mb-6 w-2/5">
+              <div className=" bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">“한국어 속도가 확 늘었어요~ 모두 타자 연습 게임 덕분!”</span>
               </div>
               <span className="text-base block mt-2">Elisa, 멕시코</span>
