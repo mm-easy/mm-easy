@@ -15,7 +15,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/api/users';
 
 const Header = () => {
-  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { logout, getCurrentUserProfile } = useAuth();
@@ -88,9 +87,10 @@ const Header = () => {
     queryKey: ['loggedInUser'],
     refetchOnWindowFocus: false
   });
+
   if (isLoading) return <div>로그인 정보를 불러오고 있습니다.</div>;
   if (isError) return <div>데이터 로드 실패</div>;
-  if (!data) return;
+  if (!data) return <div>데이터 확인 불가</div>;
 
   /** 로그아웃 핸들러 */
   const handleLogout = async () => {

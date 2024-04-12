@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider>
           <QueryProvider>
-            <Header />
+          <Header />
             <ToastContainer />
             {children}
             <Footer />

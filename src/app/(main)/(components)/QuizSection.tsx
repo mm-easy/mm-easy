@@ -19,8 +19,11 @@ const QuizSection = () => {
 
   return (
     <>
-      <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-b border-solid border-pointColor1">
-        <p className="ml-4">최근 올라온 퀴즈</p>
+      <div className="flex justify-between p-4 bg-bgColor1 border-b border-solid border-pointColor1">
+        <p className="ml-4 text-2xl text-pointColor1 font-bold">최근 올라온 퀴즈</p>
+        <Link href={`/quiz-list`} className="mr-4 font-semibold text-lg text-pointColor1">
+                더보기
+              </Link>
       </div>
       <section className="">
         <div className="grid grid-cols-4 gap-2 p-4">
