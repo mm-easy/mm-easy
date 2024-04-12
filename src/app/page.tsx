@@ -26,7 +26,7 @@ const Home = () => {
             .from('profiles')
             .select('id')
             .eq('email', email)
-            .single();
+            .maybeSingle();
 
           if (error) {
             console.error('프로필 조회 중 에러 발생', error.message);
