@@ -42,25 +42,27 @@ const LoginPage = () => {
     <article className="h-[84vh]">
       <div className="grid grid-cols-10 min-h-full bg-bgColor1">
         <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
-          <div className="mr-4 w-80 h-80 rounded-full flex items-center justify-center">
-          {showPasswordImage ? (
-                        <Image
-                        src={`${loginImageWithHandUrl}/login_2.png`}
-                        alt="로그인 이미지"
-                        width={80}
-                        height={80}
-                        // className="w-full h-full object-cover"
-                        /> 
-                      ) : (
-                        <Image
-                        src={`${loginImageWithoutHandUrl}/login_1.png`}
-                        alt="로그인 이미지"
-                        width={80}
-                        height={80}
-                        // className="w-full h-full object-cover"
-                      />
-                      )}
-                    </div>
+          <div className="mr-4 w-[300px] h-[300px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
+            {showPasswordImage ? (
+              <Image
+                src={`${loginImageWithHandUrl}/login_2.png`}
+                alt="로그인 이미지"
+                width={300}
+                height={300}
+                quality={100}
+                className="w-full h-full object-cover rounded-full"
+              />
+            ) : (
+              <Image
+                src={`${loginImageWithoutHandUrl}/login_1.png`}
+                alt="로그인 이미지"
+                width={300}
+                height={300}
+                quality={100}
+                className="w-full h-full object-cover rounded-full"
+              />
+            )}
+          </div>
         </div>
         <div className="col-span-6 flex items-center bg-white justify-center">
           <div className="w-full max-w-md p-8 bg-white">
@@ -92,7 +94,7 @@ const LoginPage = () => {
                       placeholder="••••••••"
                       autoComplete="current-password"
                       value={password}
-                      onChange={handlePasswordChange} 
+                      onChange={handlePasswordChange}
                     />
                   </div>
                 </div>

@@ -15,6 +15,7 @@ export type PostDetailDateType = {
   attached_img_url: string;
   created_at: string;
   category: string;
+  view_count: number;
 };
 
 export type PostDetailUserType = {

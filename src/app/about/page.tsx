@@ -21,6 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
+import { loginImageWithoutHandUrl } from '@/utils/supabase/storage';
 
 const AboutPage = () => {
   const router = useRouter();
@@ -80,20 +81,12 @@ const AboutPage = () => {
       img: InfoSH
     },
     {
-      name: '박지영',
-      content1: '개발하면서 뭔말이지? 23482번 외쳤습니다.',
-      content2: '정말 너무 재밌고 즐거운 프로젝트였어요',
-      Github: 'https://github.com/redberry0217',
-      Blog: 'https://velog.io/@redberry0217/',
-      img: InfoJY
-    },
-    {
-      name: '정예슬',
-      content1: '좋은 분들과 함께 해서 행복했습니다!',
-      content2: '즐겁게 이용해 주세요!',
-      Behance: '',
-      Instagram: '',
-      img: InfoYS
+      name: '김연재',
+      content1: '원장님 사랑해요',
+      content2: '혁우님도 사랑합니다',
+      Github: 'https://github.com/porosadporosad',
+      Blog: 'https://velog.io/@tmxk1594/posts',
+      img: InfoYJ
     },
     {
       name: '김형민',
@@ -112,12 +105,20 @@ const AboutPage = () => {
       img: InfoJM
     },
     {
-      name: '김연재',
-      content1: '원장님 사랑해요',
-      content2: '혁우님도 사랑합니다',
-      Github: 'https://github.com/porosadporosad',
-      Blog: 'https://velog.io/@tmxk1594/posts',
-      img: InfoYJ
+      name: '박지영',
+      content1: '개발하면서 뭔말이지? 23482번 외쳤습니다.',
+      content2: '정말 너무 재밌고 즐거운 프로젝트였어요',
+      Github: 'https://github.com/redberry0217',
+      Blog: 'https://velog.io/@redberry0217/',
+      img: InfoJY
+    },
+    {
+      name: '정예슬',
+      content1: '좋은 분들과 함께 해서 행복했습니다!',
+      content2: '즐겁게 이용해 주세요!',
+      Behance: '',
+      Instagram: '"https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
+      img: InfoYS
     }
   ];
 
@@ -141,30 +142,36 @@ const AboutPage = () => {
 
   return (
     <div className="flex flex-col text-center items-center">
-      <div className="flex flex-col bg-pointColor1 w-full h-[1600px]">
+      <div className="flex flex-col bg-pointColor1 w-full">
         <div className="w-full">
-          <h2 className="text-7xl font-extrabold pb-16 text-white inline-block py-36">재밌게 배우는 한국어!</h2>
+          <h2 className="text-7xl font-extrabold pb-16 text-white inline-block py-36 pb-36">재밌게 배우는 한국어!</h2>
         </div>
         <div className="flex justify-center">
-          <Image src={Infopeople} alt="로고" width={300} />
+          <Image src={Infopeople} alt="로고" width={1000} quality={100} />
         </div>
         <div className="text-4xl w-full text-white ">
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              <Image src={InfoIcon1} alt="로고" width={100} />
-              직접 퀴즈를 만들면서 한국어 실력을 키워보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon3} alt="로고" width={100} />
+                <span className="ml-2 text-white">직접 퀴즈를 만들면서 한국어 실력을 키워보세요!</span>
+              </div>
             </h2>
           </div>
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              <Image src={InfoIcon2} alt="로고" width={100} />
-              타자 연습으로 한국어에 익숙해져 보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon2} alt="로고" width={100} />
+                <span className="ml-2 text-white">타자 연습으로 한국어에 익숙해져 보세요!</span>
+              </div>
             </h2>
           </div>
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              <Image src={InfoIcon3} alt="로고" width={100} />
-              커뮤니티에서 소통하며 자신감을 길러보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon1} alt="로고" width={100} />
+                <span className="ml-2 text-white">커뮤니티에서 소통하며 자신감을 길러보세요!</span>
+              </div>
             </h2>
           </div>
         </div>
@@ -236,28 +243,38 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className="w-full border-t-2 border-solid border-pointColor1">
+      <div className="w-full m-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
         <h2 className="text-pointColor1 text-4xl font-extrabold py-16">뭔말이지? 프로젝트에 참여한 사람들</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-16">
           {managerData.map((item) => {
             return (
               <div key={item.name}>
-                <div className="flex flex-col gap-1">
-                  <h3 className="m-2 font-bold text-2xl">{item.name}</h3>
+                <div className="flex flex-col items-center justify-center gap-1">
+                  <div className="w-[240px] h-[240px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
+                    <Image
+                      src={item.img}
+                      alt="프로필 이미지"
+                      width={240}
+                      height={240}
+                      quality={100}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                  <h3 className="m-4 font-bold text-2xl">{item.name}</h3>
                   <span>{item.content1}</span>
                   <span>{item.content2}</span>
                 </div>
-                <div className="m-3">
+                <div className="m-8">
                   {item.Github ? (
-                    <>
-                      <WhiteButton onClick={() => handleGitBtn(item.Github)} text="Github" width="w-24" />
-                      <WhiteButton onClick={() => handleBlogBtn(item.Blog)} text="Blog" width="w-24" />
-                    </>
+                    <div className="flex gap-2 items-center justify-center">
+                      <WhiteButton onClick={() => handleGitBtn(item.Github)} text="Github" width="w-28" />
+                      <WhiteButton onClick={() => handleBlogBtn(item.Blog)} text="Blog" width="w-28" />
+                    </div>
                   ) : (
-                    <>
-                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-24" />
-                    <WhiteButton onClick={() => handleGitBtn(item.Instagram)} text="Instagram" width="w-24" /> */}
-                    </>
+                    <div className="flex gap-2 items-center justify-center">
+                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-28" />
+                    <WhiteButton onClick={() => handleGitBtn(item.Instagram)} text="Instagram" width="w-28" /> */}
+                    </div>
                   )}
                 </div>
               </div>
