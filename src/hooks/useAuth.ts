@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabase/supabase';
-
-import type { User } from '@/types/users';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
+
+import type { User } from '@/types/users';
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export const useAuth = () => {
       .from('profiles')
       .select('id')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
       if (existingUserError) {
         setError('사용자 정보를 검사하는 데 실패했습니다.');
@@ -53,7 +53,7 @@ export const useAuth = () => {
       const nickname = email.split('@')[0];
       const { error: insertError } = await supabase
         .from('profiles')
-        .insert([{ id: data.user.id, email, nickname, avatar_img_url: '1712826502503.png' }]);
+        .insert([{ id: data.user.id, email, nickname, avatar_img_url: 'face_1.png' }]);
 
       if (insertError) {
         setError(insertError.message);

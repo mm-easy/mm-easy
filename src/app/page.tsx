@@ -34,7 +34,7 @@ const Home = () => {
           try {
             const { error } = await supabase
               .from('profiles')
-              .upsert([{ id, email, nickname, avatar_img_url: 'https://via.placeholder.com/150' }], {
+              .upsert([{ id, email, nickname, avatar_img_url: 'face_1.png' }], {
                 onConflict: 'id'
               });
             if (error) {

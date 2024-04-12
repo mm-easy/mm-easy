@@ -28,7 +28,7 @@ const RankingSection = () => {
   return (
     <>
       <div className="p-4 text-2xl text-pointColor1 bg-bgColor1 font-bold border-y border-solid border-pointColor1">
-        <p className="ml-4">랭킹</p>
+        <p className="ml-4">명예의 전당</p>
       </div>
       <section className="">
         <div className="flex">
