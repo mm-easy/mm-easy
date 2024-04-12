@@ -1,10 +1,12 @@
 import { handleDeleteBtn } from '@/api/comments';
 import { removeCommunityPost } from '@/api/posts';
 import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const handleDeleteClick = async () => {
@@ -15,6 +17,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
+        queryClient.invalidateQueries({ queryKey: ['userPosts'] });
       } catch (error) {
         throw error;
       }
@@ -32,8 +35,8 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
   );
 };
 
-
 export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width, height, userId, redirectUrl }) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const handleDeleteClick = async () => {
@@ -44,6 +47,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
+        queryClient.invalidateQueries({ queryKey: ['userComments'] });
       } catch (error) {
         throw error;
       }
