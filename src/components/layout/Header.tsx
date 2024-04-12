@@ -11,6 +11,8 @@ import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/api/users';
 
 const Header = () => {
   // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
@@ -35,21 +37,6 @@ const Header = () => {
 
     fetchData();
   }, []);
-
-  /** 로그인이 되어 있다면 프로필 가져오기 */
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-        console.log('로그인한 자의 프로필..', userProfile);
-        setCurrentUser(userProfile); // 사용자 프로필 정보를 상태에 저장
-      } else {
-        setCurrentUser(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
-      }
-    };
-
-    fetchData();
-  }, [isLoggedIn]);
 
   /** 소셜 로그인 처리 */
   useEffect(() => {
@@ -85,6 +72,27 @@ const Header = () => {
     };
   }, [setIsLoggedIn]);
 
+  /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
+  const { data, isLoading, isError } = useQuery<User | null>({
+    queryFn: async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return null;
+        const fetchData = await getUser(getSession.data.session.user.id);
+        setCurrentUser(fetchData);
+        return fetchData;
+      } catch (error) {
+        throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
+      }
+    },
+    queryKey: ['loggedInUser'],
+    refetchOnWindowFocus: false
+  });
+  if (isLoading) return <div>로그인 정보를 불러오고 있습니다.</div>;
+  if (isError) return <div>데이터 로드 실패</div>;
+  if (!data) return;
+
+  /** 로그아웃 핸들러 */
   const handleLogout = async () => {
     await logout();
     setIsLoggedIn(false);
