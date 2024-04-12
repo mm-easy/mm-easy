@@ -36,6 +36,7 @@ const ProfilePage = () => {
 
   /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
   const { data, isLoading, isError } = useQuery<User | null>({
+    queryKey: ['loggedInUser'],
     queryFn: async () => {
       try {
         const getSession = await supabase.auth.getSession();
@@ -47,7 +48,6 @@ const ProfilePage = () => {
         throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
       }
     },
-    queryKey: ['loggedInUser'],
     refetchOnWindowFocus: false
   });
   if (isLoading) return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;

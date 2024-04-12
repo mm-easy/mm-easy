@@ -1,3 +1,5 @@
+
+
 import { getDeleteComment, getInsertComment, getUpdateComment } from '@/api/comment';
 import { deleteLike, getLike, insertLike } from '@/api/likes';
 import { InsertComment, LikeParams, UpdateCommentParams } from '@/types/posts';
@@ -72,7 +74,7 @@ export const useDeleteComment = () => {
 };
 
 /** 좋아요 만들기 */
-export const useinsertLike = () => {
+export const useInsertLike = () => {
   const queryClient = useQueryClient();
 
   const insertLikeMuitation = useMutation({

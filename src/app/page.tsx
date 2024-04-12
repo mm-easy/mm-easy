@@ -1,14 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
 import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
 import MainLogo from './(main)/(components)/MainLogo';
 import RankingSection from './(main)/(components)/RankingSection';
 import Footer from './(main)/(components)/Footer';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const Home = () => {
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+
   useEffect(() => {
     const saveUserProfile = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -20,35 +23,47 @@ const Home = () => {
           const nickname = email.split('@')[0];
 
           const { data: existingProfile, error } = await supabase
-          .from('profiles')
-          .select('id')
-          .eq('email',email)
-          .single()
+            .from('profiles')
+            .select('id')
+            .eq('email', email)
+            .maybeSingle();
 
           if (error) {
-            console.error('프로필 조회 중 에러 발생', error.message)
+            console.error('프로필 조회 중 에러 발생', error.message);
             return;
           }
 
           if (!existingProfile) {
-          try {
-            const { error } = await supabase
-              .from('profiles')
-              .upsert([{ id, email, nickname, avatar_img_url: 'https://via.placeholder.com/150' }], {
-                onConflict: 'id'
-              });
-            if (error) {
-              console.error('프로필 정보 저장 실패:', error.message);
+            try {
+              const { error } = await supabase
+                .from('profiles')
+                .upsert([{ id, email, nickname, avatar_img_url: 'login_1.png' }], {
+                  onConflict: 'id'
+                });
+              if (error) {
+                console.error('프로필 정보 저장 실패:', error.message);
+              }
+            } catch (error) {
+              console.error(error);
             }
-          } catch (error) {
-            console.error(error);
           }
         }
-      }
       }
     };
     saveUserProfile();
   }, []);
+
+  /** 스크롤 이동 추적 */
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
 
   return (
     <div className="min-h-screen">
@@ -57,6 +72,7 @@ const Home = () => {
       <RankingSection />
       <CommunitySection />
       <Footer />
+      <PageUpBtn scrollPosition={scrollPosition} />
     </div>
   );
 };

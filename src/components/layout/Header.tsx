@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import MainLogo from '@/assets/logo_horizontal_1.png';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
@@ -11,9 +12,11 @@ import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/api/users';
+import Image from 'next/image';
 
 const Header = () => {
-  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const { logout, getCurrentUserProfile } = useAuth();
@@ -35,21 +38,6 @@ const Header = () => {
 
     fetchData();
   }, []);
-
-  /** 로그인이 되어 있다면 프로필 가져오기 */
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-        console.log('로그인한 자의 프로필..', userProfile);
-        setCurrentUser(userProfile); // 사용자 프로필 정보를 상태에 저장
-      } else {
-        setCurrentUser(null); // 로그아웃 상태에서는 사용자 정보를 null로 설정
-      }
-    };
-
-    fetchData();
-  }, [isLoggedIn]);
 
   /** 소셜 로그인 처리 */
   useEffect(() => {
@@ -85,6 +73,28 @@ const Header = () => {
     };
   }, [setIsLoggedIn]);
 
+  /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
+  const { data, isLoading, isError } = useQuery<User | null>({
+    queryKey: ['loggedInUser'],
+    queryFn: async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) return null;
+        const fetchData = await getUser(getSession.data.session.user.id);
+        // console.log('ㅇㅇ', fetchData);
+        setCurrentUser(fetchData);
+        return fetchData;
+      } catch (error) {
+        throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
+      }
+    },
+    refetchOnWindowFocus: false
+  });
+
+  if (isLoading) return <div>로그인 정보를 불러오고 있습니다.</div>;
+  if (isError) return <div>데이터 로드 실패</div>;
+
+  /** 로그아웃 핸들러 */
   const handleLogout = async () => {
     await logout();
     setIsLoggedIn(false);
@@ -94,8 +104,8 @@ const Header = () => {
   return (
     <>
       <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-        <Link href="/" className="w-[16%] text-center">
-          LOGO
+        <Link href="/" className="w-[16%] text-center flex justify-center items-center">
+          <Image src={MainLogo} alt="로고" width={150} />
         </Link>
         <section className="w-[84%] flex justify-between px-10">
           <nav className="flex gap-14">
@@ -113,9 +123,8 @@ const Header = () => {
                   <Avatar
                     as="button"
                     className="transition-transform"
-                    name={currentUser?.nickname}
                     size="md"
-                    src={`${profileStorageUrl}/${currentUser?.avatar_img_url}`}
+                    src={`${profileStorageUrl}/${data?.avatar_img_url}`}
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -125,6 +134,9 @@ const Header = () => {
                   </DropdownItem>
                   <DropdownItem as={Link} href="/profile">
                     내 프로필
+                  </DropdownItem>
+                  <DropdownItem as={Link} href="/my-activity">
+                    나의 활동
                   </DropdownItem>
                   <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                     Log Out

@@ -134,15 +134,26 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
 //   return count;
 // };
 
-export const fetchUserQuizzes = async (email : string) => {
+export const fetchUserQuizzes = async (email: string) => {
   try {
-    const { data, error } = await supabase
-      .from('quizzes')
-      .select('*')
-      .eq('creator_id', email);
+    const { data, error } = await supabase.from('quizzes').select('*').eq('creator_id', email);
 
     if (error) throw error;
     return data;
+  } catch (error) {
+    console.error('사용자 퀴즈 불러오기 실패', error);
+  }
+};
+
+export const userSolvedQuizzes = async (email: string) => {
+  try {
+    const { data, error, count } = await supabase
+      .from('quiz_tries')
+      .select('*', { count: 'exact' }) // 'exact'로 정확한 수를 가져옵니다.
+      .eq('user_id', email);
+
+    if (error) throw error;
+    return { data, count }
   } catch (error) {
     console.error('사용자 퀴즈 불러오기 실패', error);
   }

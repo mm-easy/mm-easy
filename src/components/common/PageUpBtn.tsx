@@ -31,8 +31,8 @@ const PageUpBtn = ({ scrollPosition }: PageUpBtnProps) => {
   }, [scrollPosition]);
 
   return (
-    <div className="fixed bottom-[110px] right-[40px] cursor-pointer origin-center rotate-[270deg]">
-      {isVisible && <ArrowCircle width={40} height={40} onClick={handlePageUp} fill="#2B84ED" />}
+    <div className="fixed bottom-[110px] right-[40px] cursor-pointer origin-center rotate-[270deg] rounded-full bg-pointColor1">
+      {isVisible && <ArrowCircle width={40} height={40} onClick={handlePageUp} fill="#fff" />}
     </div>
   );
 };
