@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import LikeToggleButton from './LikeToggleButton';
-import { useDeleteLike, useinsertLike } from './mutations';
+import { useDeleteLike, useInsertLike } from './mutations';
 import { getLike } from '@/api/likes';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,7 +9,7 @@ import type { LikeParams, LikeProps, LikeType } from '@/types/posts';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const userId = profile?.id;
-  const insertLike = useinsertLike();
+  const insertLike = useInsertLike();
   const deleteLike = useDeleteLike();
 
   const { data: nowLike = [] } = useQuery<LikeType[]>({
