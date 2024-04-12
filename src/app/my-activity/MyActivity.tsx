@@ -2,8 +2,9 @@
 
 import { getMyActivityComment } from '@/api/comments';
 import { getMyActivityPosts } from '@/api/posts';
-import { fetchUserQuizzes } from '@/api/quizzes';
+import { fetchUserQuizzes, userSolvedQuizzes } from '@/api/quizzes';
 import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
+import { PostEditButton } from '@/components/common/EditButton';
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
@@ -57,6 +58,30 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  const {
+    data: userSolvedQuiz,
+    isLoading: isSolvedQuizLoading,
+    isError: isSolvedQuizError
+  } = useQuery({
+    queryFn: async () => {
+      try {
+        const userProfile = await getCurrentUserProfile();
+        if (userProfile && userProfile.email) {
+          return await userSolvedQuizzes(userProfile.email);
+          
+        }
+        return [];
+      } catch (error) {
+        console.error('퀴즈 불러오기 실패:', error);
+        throw error;
+      }
+    },
+    queryKey: ['userSolvedQuizzes'],
+    enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
+  });
+
+  console.log("userSolvedQuiz",userSolvedQuiz)
+
   // 사용자가 작성한 post 불러오기
   const {
     data: userPost,
@@ -66,7 +91,7 @@ const MyActivity = () => {
     queryFn: async () => {
       try {
         const userProfile = await getCurrentUserProfile();
-        if (userProfile && userProfile.email) {
+        if (userProfile && userProfile.id) {
           return await getMyActivityPosts(userProfile.id);
         }
         return [];

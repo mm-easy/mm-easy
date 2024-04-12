@@ -124,7 +124,7 @@ const DetailPost = () => {
   }, [isLoggedIn]);
 
   return (
-    <article className="grid grid-cols-[16%_84%]">
+    <article className="grid grid-cols-[16%_84%] h-[84%]">
       <div>
         <CategorySelector categoryNow={categoryNow} />
       </div>
