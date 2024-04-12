@@ -80,7 +80,7 @@ const SelectQuizLevel = () => {
   return (
     <>
       <main className="w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
-        <div className="mt-5 absolute top-20 flex flex-col items-center">
+        <div className="mt-5 absolute top-20 z-10 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">난이도를 골라보세요!</p>
           <p
             className="text-pointColor1 underline underline-offset-4 text-lg font-bold mt-5 cursor-pointer"
@@ -89,54 +89,54 @@ const SelectQuizLevel = () => {
             전체보기
           </p>
         </div>
-        <div className="mt-5 mr-1/4 absolute top-20 left-3/4">
+        <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
           <WhiteButton text="퀴즈 만들기" onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
-        <div className="flex items-end overflow-hidden mt-20">
-          <div>
+        <div className="flex items-end overflow-hidden mt-30">
+          <div className="rotate-[-5deg] ml-5">
             <Image
               src={Level1}
               alt="초급"
               width={350}
               height={240}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] ${
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
           </div>
-          <div>
+          <div className="rotate-[-2deg]">
             <Image
               src={Level2}
               alt="중급"
               width={350}
               height={240}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] ${
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
           </div>
-          <div>
+          <div className="rotate-3 mr-5">
             <Image
               src={Level3}
               alt="고급"
               width={350}
               height={240}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 ${
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
