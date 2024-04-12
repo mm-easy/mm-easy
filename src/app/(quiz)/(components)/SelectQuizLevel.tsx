@@ -79,7 +79,7 @@ const SelectQuizLevel = () => {
 
   return (
     <>
-      <main className="w-full bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
+      <main className="w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
         <div className="mt-5 absolute top-20 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">난이도를 골라보세요!</p>
           <p
@@ -93,48 +93,54 @@ const SelectQuizLevel = () => {
           <WhiteButton text="퀴즈 만들기" onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
         <div className="flex items-end overflow-hidden mt-20">
-          <Image
-            src={Level1}
-            alt="초급"
-            width={350}
-            height={240}
-            className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 1
-                ? 'translate-y-[10%] z-10'
-                : selectedLevel === null
-                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
-                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
-            }`}
-            onClick={() => handleSelectLevel(1)}
-          />
-          <Image
-            src={Level2}
-            alt="중급"
-            width={350}
-            height={240}
-            className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 2
-                ? 'translate-y-[20%] z-10'
-                : selectedLevel === null
-                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
-                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
-            }`}
-            onClick={() => handleSelectLevel(2)}
-          />
-          <Image
-            src={Level3}
-            alt="고급"
-            width={350}
-            height={240}
-            className={`object-none transform transition-transform duration-500 ease-in-out ${
-              selectedLevel === 3
-                ? 'translate-y-[10%] z-10'
-                : selectedLevel === null
-                ? 'z-0 translate-y-[30%] hover:translate-y-[10%]'
-                : 'z-0 translate-y-[50%] hover:translate-y-[40%]'
-            }`}
-            onClick={() => handleSelectLevel(3)}
-          />
+          <div>
+            <Image
+              src={Level1}
+              alt="초급"
+              width={350}
+              height={240}
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+                selectedLevel === 1
+                  ? 'translate-y-[60%] z-10'
+                  : selectedLevel === null
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+              }`}
+              onClick={() => handleSelectLevel(1)}
+            />
+          </div>
+          <div>
+            <Image
+              src={Level2}
+              alt="중급"
+              width={350}
+              height={240}
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+                selectedLevel === 2
+                  ? 'translate-y-[65%] z-10'
+                  : selectedLevel === null
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+              }`}
+              onClick={() => handleSelectLevel(2)}
+            />
+          </div>
+          <div>
+            <Image
+              src={Level3}
+              alt="고급"
+              width={350}
+              height={240}
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out ${
+                selectedLevel === 3
+                  ? 'translate-y-[60%] z-10'
+                  : selectedLevel === null
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+              }`}
+              onClick={() => handleSelectLevel(3)}
+            />
+          </div>
         </div>
       </main>
       <QuizList quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
