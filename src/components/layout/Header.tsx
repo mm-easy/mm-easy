@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import MainLogo from '@/assets/logo_horizontal_1.png';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,6 +14,7 @@ import { User } from '@/types/users';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/api/users';
+import Image from 'next/image';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -78,7 +80,7 @@ const Header = () => {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) return null;
         const fetchData = await getUser(getSession.data.session.user.id);
-        setCurrentUser(fetchData);
+        console.log('ㅇㅇ', fetchData);
         return fetchData;
       } catch (error) {
         throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
@@ -102,8 +104,8 @@ const Header = () => {
   return (
     <>
       <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-        <Link href="/" className="w-[16%] text-center">
-          LOGO
+        <Link href="/" className="w-[16%] text-center flex justify-center items-center">
+          <Image src={MainLogo} alt="로고" width={150} />
         </Link>
         <section className="w-[84%] flex justify-between px-10">
           <nav className="flex gap-14">
@@ -123,7 +125,7 @@ const Header = () => {
                     className="transition-transform"
                     name={currentUser?.nickname}
                     size="md"
-                    src={`${profileStorageUrl}/${currentUser?.avatar_img_url}`}
+                    src={`${profileStorageUrl}/${data.avatar_img_url}`}
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">

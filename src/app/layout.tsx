@@ -2,14 +2,12 @@ import QueryProvider from './provider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import './globals.css';
-import { Inter } from 'next/font/google';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
-
-const inter = Inter({ subsets: ['latin'] });
+import { gothic_a1 } from './styles/font';
 
 export const metadata: Metadata = {
   title: '뭔말이지?',
@@ -23,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={gothic_a1.className}>
         <Provider>
           <QueryProvider>
           <Header />

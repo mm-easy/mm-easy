@@ -5,12 +5,26 @@ import Image from 'next/image';
 import { Quiz } from '@/types/quizzes';
 import { useRouter } from 'next/navigation';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[]; currentUser: string }) => {
   const router = useRouter();
   const [quizId, setQuizId] = useState<string | undefined>('');
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
+
+  /** 스크롤 이동 추적 */
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
 
   const handleShowModal = (id: string | undefined) => {
     setQuizId(id);
@@ -54,6 +68,7 @@ const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[
         ))}
         {showModal && <RecommendLoginModal id={quizId} proceedWithoutLogin={handleMoveQuizTry} />}
       </div>
+      <PageUpBtn scrollPosition={scrollPosition} />
     </main>
   );
 };
