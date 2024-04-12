@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 const MyActivity = () => {
   const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [activeTab, setActiveTab] = useState('quizzes'); // 활성 탭 상태
+  const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const router = useRouter();
 
   useEffect(() => {
@@ -68,7 +68,6 @@ const MyActivity = () => {
         const userProfile = await getCurrentUserProfile();
         if (userProfile && userProfile.email) {
           return await userSolvedQuizzes(userProfile.email);
-          
         }
         return [];
       } catch (error) {
@@ -155,7 +154,7 @@ const MyActivity = () => {
   return (
     <main className="px-[20%]">
       <div className="flex justify-center">
-        <p className="py-14 text-2xl font-bold text-pointColor1">나의 활동</p>
+        <p className="py-14 text-3xl font-bold text-pointColor1">나의 활동</p>
       </div>
       <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
         <ul className="flex justify-center text-2xl w-full text-center border-b-2 border-solid ">
@@ -185,6 +184,7 @@ const MyActivity = () => {
           </li>
         </ul>
       </nav>
+      
       {activeTab === 'solvedQuizzes' && (
         <div className="flex justify-center w-full ">
           <table className="w-full text-lg font-medium">
@@ -192,7 +192,7 @@ const MyActivity = () => {
               <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
                 <th className="w-[20%]">점수</th>
-                <th>작성 날짜</th>
+                <th>만든 날짜</th>
               </tr>
             </thead>
             <tbody>
@@ -214,14 +214,14 @@ const MyActivity = () => {
                   ))
                 : !isSolvedQuizLoading && (
                     <tr>
-                      <td>퀴즈가 없습니다.</td>
+                      <td>푼 퀴즈가 없습니다.</td>
                     </tr>
                   )}
             </tbody>
           </table>
         </div>
       )}
-      
+
       {activeTab === 'quizzes' && (
         <div className="flex justify-center w-full ">
           <table className="w-full text-lg font-medium">
@@ -251,13 +251,42 @@ const MyActivity = () => {
                   ))
                 : !isQuizLoading && (
                     <tr>
-                      <td>퀴즈가 없습니다.</td>
+                      <td>만든 퀴즈가 없습니다.</td>
                     </tr>
                   )}
             </tbody>
           </table>
         </div>
       )}
+      
+      {activeTab === 'posts' && (
+        <div className="flex justify-center w-full">
+          <table className="w-full text-lg font-medium">
+            <thead className="text-left">
+              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+                <th className="pb-2 w-[36%]">제목</th>
+                <th>작성 날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userPost && userPost.length > 0
+                ? userPost.map((post, index) => (
+                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="py-6 w-24">{post.title}</td>
+                      <td>작성일 {formatToLocaleDateTimeString(post.created_at)}</td>
+                      <div className="text-right">
+                      <div>
+                    <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-12" />
+                  </div>
+                      </div>
+                    </tr>
+                  ))
+                  : !isPostLoading && <div>게시글이 없습니다.</div>}
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {activeTab === 'posts' && (
         <div>
           {userPost && userPost.length > 0
@@ -278,6 +307,7 @@ const MyActivity = () => {
             : !isPostLoading && <div>게시글이 없습니다.</div>}
         </div>
       )}
+
       {activeTab === 'comments' && (
         <div>
           {userComment && userComment.length > 0
