@@ -53,7 +53,7 @@ export const useAuth = () => {
       const nickname = email.split('@')[0];
       const { error: insertError } = await supabase
         .from('profiles')
-        .insert([{ id: data.user.id, email, nickname, avatar_img_url: 'face_1.png' }]);
+        .insert([{ id: data.user.id, email, nickname, avatar_img_url: 'login_1.png' }]);
 
       if (insertError) {
         setError(insertError.message);

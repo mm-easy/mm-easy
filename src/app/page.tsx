@@ -37,7 +37,7 @@ const Home = () => {
             try {
               const { error } = await supabase
                 .from('profiles')
-                .upsert([{ id, email, nickname, avatar_img_url: 'face_1.png' }], {
+                .upsert([{ id, email, nickname, avatar_img_url: 'login_1.png' }], {
                   onConflict: 'id'
                 });
               if (error) {

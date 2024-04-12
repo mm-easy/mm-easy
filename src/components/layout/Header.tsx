@@ -135,6 +135,9 @@ const Header = () => {
                   <DropdownItem as={Link} href="/profile">
                     내 프로필
                   </DropdownItem>
+                  <DropdownItem as={Link} href="/my-activity">
+                    나의 활동
+                  </DropdownItem>
                   <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                     Log Out
                   </DropdownItem>
