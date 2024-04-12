@@ -134,12 +134,9 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
 //   return count;
 // };
 
-export const fetchUserQuizzes = async (email : string) => {
+export const fetchUserQuizzes = async (email: string) => {
   try {
-    const { data, error } = await supabase
-      .from('quizzes')
-      .select('*')
-      .eq('creator_id', email);
+    const { data, error } = await supabase.from('quizzes').select('*').eq('creator_id', email);
 
     if (error) throw error;
     return data;
