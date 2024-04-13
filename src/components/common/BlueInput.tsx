@@ -70,7 +70,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 1 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        꼬마급
+        순한맛
       </label>
       <input
         type="radio"
@@ -87,7 +87,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 2 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        똑똑이급
+        중간맛
       </label>
       <input
         type="radio"
@@ -104,7 +104,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 3 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        대장급
+        매운맛
       </label>
     </div>
   );

@@ -156,7 +156,7 @@ const QuestionForm = ({
     setQuestions((prev) =>
       prev.map((question) => {
         return question.id === id
-          ? { ...question, img_url: `${storageUrl}/quiz-thumbnails/tempThumbnail.png`, img_file: null }
+          ? { ...question, img_url: `${storageUrl}/assets/quiz_570x160.png`, img_file: null }
           : question;
       })
     );
@@ -225,7 +225,7 @@ const QuestionForm = ({
                               handleChangeOption(id, e.target.value, options, option.id);
                             }}
                           />
-                          <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{option.content.length}/25</p>
+                          <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{option.content.length} / 25</p>
                         </div>
                         <button
                           type="button"
@@ -239,7 +239,7 @@ const QuestionForm = ({
                   })}
                   <button
                     type="button"
-                    className="w-full pb-[6px] text-3xl border-solid border border-pointColor1 rounded-md"
+                    className="w-full text-3xl border-solid border border-pointColor1 rounded-md"
                     onClick={() => handleAddOption(id, options)}
                   >
                     +
