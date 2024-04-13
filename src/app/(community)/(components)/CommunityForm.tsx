@@ -38,7 +38,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   return (
     <article className="w-full ">
       <div className="bg-white p-4 w-full">
-        <table className="w-full text-xl">
+        <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
               <th className="p-4 w-[15%]">구분</th>
@@ -65,8 +65,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           </tbody>
         </table>
       </div>
-
-      <section className="flex justify-center my-[30px] px-20 w-full">
+      <section className="flex justify-center my-[10px] px-20 w-full">
         <nav className="text-xl flex gap-10">
           {currentSet > 1 && (
             <button className="text-pointColor1" onClick={() => setCurrentPage(startPage - 1)}>

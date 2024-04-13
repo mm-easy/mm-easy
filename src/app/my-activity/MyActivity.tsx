@@ -152,44 +152,42 @@ const MyActivity = () => {
   }
 
   return (
-    <main className="px-[20%]">
-      <div className="flex justify-center">
-        <p className="py-14 text-3xl font-bold text-pointColor1">나의 활동</p>
-      </div>
-      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
-        <ul className="flex justify-center text-2xl w-full text-center border-b-2 border-solid ">
+    <main className="px-[25%]">
+      <h3 className="text-center my-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
+      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
+        <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
             onClick={() => setActiveTab('solvedQuizzes')}
           >
             내가 푼 퀴즈
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'quizzes' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'quizzes' ? 'font-bold  border-solid border-b-3' : ''}`}
             onClick={() => setActiveTab('quizzes')}
           >
             내가 만든 퀴즈
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'posts' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'posts' ? 'font-bold  border-solid border-b-3' : ''}`}
             onClick={() => setActiveTab('posts')}
           >
             내가 쓴 글
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'comments' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'comments' ? 'font-bold  border-solid border-b-3' : ''}`}
             onClick={() => setActiveTab('comments')}
           >
             내가 쓴 댓글
           </li>
         </ul>
       </nav>
-      
+
       {activeTab === 'solvedQuizzes' && (
         <div className="flex justify-center w-full ">
-          <table className="w-full text-lg font-medium">
+          <table className="w-full font-medium">
             <thead className="text-left">
-              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
                 <th className="w-[20%]">점수</th>
                 <th>만든 날짜</th>
@@ -198,13 +196,13 @@ const MyActivity = () => {
             <tbody>
               {userSolvedQuiz && userSolvedQuiz.length > 0
                 ? userSolvedQuiz.map((quiz, index) => (
-                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-6 w-24">{quiz.quizzes.title}</td>
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="py-4 w-24">{quiz.quizzes.title}</td>
                       <td>{quiz.score}</td>
                       {/* <td>{formatToLocaleDateTimeString(quiz)}</td> */}
                       <div className="text-right">
                         <button
-                          className="h-12 border border-solid border-pointColor1 px-4 py-2 rounded-md font-bold text-pointColor1"
+                          className="h-8 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
                           onClick={() => navigateToQuiz(quiz)}
                         >
                           다시 풀기
@@ -224,7 +222,7 @@ const MyActivity = () => {
 
       {activeTab === 'quizzes' && (
         <div className="flex justify-center w-full ">
-          <table className="w-full text-lg font-medium">
+          <table className="w-full font-medium">
             <thead className="text-left">
               <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
@@ -235,13 +233,13 @@ const MyActivity = () => {
             <tbody>
               {userQuiz && userQuiz.length > 0
                 ? userQuiz.map((quiz, index) => (
-                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
                       <td className="py-6 w-24">{quiz.title}</td>
                       <td>{quiz.quiz_tries.length}</td>
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <div className="text-right">
                         <button
-                          className="h-12 border border-solid border-pointColor1 px-4 py-2 rounded-md font-bold text-pointColor1"
+                          className="h-8 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
                           onClick={() => navigateToQuiz(quiz.id)}
                         >
                           다시 풀기
@@ -258,7 +256,7 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-      
+
       {activeTab === 'posts' && (
         <div className="flex justify-center w-full">
           <table className="w-full text-lg font-medium">
@@ -275,13 +273,13 @@ const MyActivity = () => {
                       <td className="py-6 w-24">{post.title}</td>
                       <td>작성일 {formatToLocaleDateTimeString(post.created_at)}</td>
                       <div className="text-right">
-                      <div>
-                    <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-12" />
-                  </div>
+                        <div>
+                          <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-12" />
+                        </div>
                       </div>
                     </tr>
                   ))
-                  : !isPostLoading && <div>게시글이 없습니다.</div>}
+                : !isPostLoading && <div>게시글이 없습니다.</div>}
             </tbody>
           </table>
         </div>

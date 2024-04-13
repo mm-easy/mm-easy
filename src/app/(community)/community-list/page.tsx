@@ -89,15 +89,14 @@ const CommunityPage = () => {
   const currentItems = post.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="grid grid-cols-[16%_84%]">
-      <section>
+    <main className="grid grid-cols-[16%_84%] h-[84vh]">
+      <section className='relative h-[84vh] bg-bgColor1 border-r-2 border-solid border-pointColor1'>
         <CategorySelector categoryNow={category} />
-        <div className="flex justify-center pt-64 pb-12 text-xl font-bold">
+        <div className="absolute inset-x-0 bottom-4 flex justify-center pb-12 font-bold">
           <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
-      <section className="flex w-full border-l-2 border-solid  border-pointColor1">
-        <div className="flex justify-center w-full py-16 px-48">
+      <section className="w-full mt-[4vh] px-48 flex justify-center ">
           <CommunityForm
             currentItems={currentItems}
             setCurrentPage={setCurrentPage}
@@ -107,7 +106,6 @@ const CommunityPage = () => {
             btnRange={btnRange}
             category={category}
           />
-        </div>
       </section>
     </main>
   );

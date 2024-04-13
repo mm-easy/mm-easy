@@ -137,6 +137,12 @@ body {
   line-height: 1;
 }
 
+body > div {
+  min-height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
