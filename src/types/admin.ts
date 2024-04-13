@@ -5,7 +5,7 @@ export type Admin = {
   reported_user_id: string;
 };
 
-export type Reports = {
-  user_id: string;
-  target_id: string;
+export type Report = {
+  user_id: string | null;
+  admin_id: string;
 };
