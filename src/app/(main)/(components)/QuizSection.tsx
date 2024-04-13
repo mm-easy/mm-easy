@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Quiz } from '@/types/quizzes';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizSection = () => {
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
@@ -23,8 +24,8 @@ const QuizSection = () => {
         <div className="flex items-center justify-center">
           <p className="w-5/6 ml-10">최근 올라온 퀴즈</p>
           <Link href={`/quiz-list`} className="mr-10 font-semibold text-lg text-pointColor1">
-                더보기
-              </Link>
+            더보기
+          </Link>
         </div>
       </div>
       <section className="flex flex-col justify-center items-center">
@@ -34,10 +35,10 @@ const QuizSection = () => {
               key={quiz.id}
               className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4"
             >
-              <p className="font-bold text-lg mt-4 mb-3">{quiz.title}</p>
+              <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
               <div className="flex flex-col gap-3">
                 <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${quiz.thumbnail_img_url}`}
+                  src={`${storageUrl}/quiz-thumbnails/${quiz.thumbnail_img_url}`}
                   alt="퀴즈 썸네일"
                   width={250}
                   height={250}

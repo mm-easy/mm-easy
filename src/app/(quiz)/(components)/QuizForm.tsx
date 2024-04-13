@@ -23,6 +23,7 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 import { QuestionType, type Question } from '@/types/quizzes';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
+import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -225,7 +226,7 @@ const QuizForm = () => {
         level,
         title,
         info,
-        thumbnail_img_url: imgUrl || 'tempThumbnail.png'
+        thumbnail_img_url: imgUrl || getRandomThumbnail()
       };
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);

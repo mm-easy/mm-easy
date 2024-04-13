@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import { useEffect, useState } from 'react';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[]; currentUser: string }) => {
   const router = useRouter();
@@ -40,29 +41,28 @@ const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[
   };
 
   return (
-    <main className="p-5 flex flex-col items-center">
+    <main className="p-5 flex flex-col justify-center items-center">
       {quizLevelSelected.length === 0 && <div className="p-36">해당 난이도에 아직 등록된 퀴즈가 없습니다.</div>}
-      <div className="w-full grid grid-cols-4 place-items-center gap-4">
+      <div className="w-9/12 grid grid-cols-4 gap-10 p-4">
         {quizLevelSelected.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 min-w-[250px] cursor-pointer"
+            className="flex flex-col border my-3 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 cursor-pointer"
             onClick={() => {
               handleShowModal(item.id);
             }}
           >
-            <p className="font-bold text-lg mt-4 mb-3">{item.title}</p>
+            <p className="font-bold text-lg mt-4 mb-3 truncate">{item.title}</p>
             <div className="flex flex-col gap-3">
-              <div className="border-solid border border-pointColor1 rounded-md overflow-hidden w-[250px] h-[250px]">
-                <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${item.thumbnail_img_url}`}
-                  alt="퀴즈 썸네일"
-                  width={250}
-                  height={250}
-                  className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
-                />
-              </div>
-              <p className="mb-4">{item.info}</p>
+              <Image
+                src={`${storageUrl}/quiz-thumbnails/${item.thumbnail_img_url}`}
+                alt="퀴즈 썸네일"
+                width={250}
+                height={250}
+                quality={100}
+                className="w-full h-[250px] object-cover border-solid border-2 border-pointColor1 rounded-md"
+              />
+              <p className="mb-4 line-clamp-2">{item.info}</p>
             </div>
           </div>
         ))}
