@@ -189,8 +189,8 @@ const MyActivity = () => {
           <table className="w-full font-medium">
             <thead className="text-left">
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[36%]">제목</th>
-                <th className="w-[20%]">점수</th>
+                <th className="pb-2 w-[55%]">제목</th>
+                <th className="w-[13%]">점수</th>
                 <th>만든 날짜</th>
               </tr>
             </thead>
@@ -226,8 +226,8 @@ const MyActivity = () => {
           <table className="w-full font-medium">
             <thead className="text-left">
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[36%]">제목</th>
-                <th className="w-[20%]">완료수</th>
+                <th className="pb-2 w-[55%]">제목</th>
+                <th className="w-[13%]">완료수</th>
                 <th>작성 날짜</th>
               </tr>
             </thead>
@@ -265,8 +265,8 @@ const MyActivity = () => {
           <table className="w-full font-medium">
             <thead className="text-left">
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[36%]">제목</th>
-                <th className="w-[20%]">조회수</th>
+                <th className="pb-2 w-[55%]">제목</th>
+                <th className="w-[13%]">조회수</th>
                 <th>작성 날짜</th>
               </tr>
             </thead>
@@ -274,11 +274,11 @@ const MyActivity = () => {
               {currentPosts && currentPosts.length > 0
                 ? currentPosts.map((post, index) => (
                     <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="truncate max-w-xs pr-8 py-4 w-24">
+                      <td className="truncate max-w-xs pr-12 py-4 w-24">
                         <a href={`/community-list/${post.category}/${post.id}`}>{post.title}</a>
                       </td>
                       <td>{post.view_count}</td>
-                      <td>작성일 {formatToLocaleDateTimeString(post.created_at)}</td>
+                      <td>{formatToLocaleDateTimeString(post.created_at)}</td>
                       <div className="text-right">
                         <div>
                           <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
@@ -297,7 +297,7 @@ const MyActivity = () => {
           <table className="w-full font-medium">
             <thead className="text-left">
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[56%]">내용</th>
+                <th className="pb-2 w-[55%]">내용</th>
                 <th>작성 날짜</th>
               </tr>
             </thead>
@@ -306,7 +306,7 @@ const MyActivity = () => {
                 ? currentComments.map((comment, index) => (
                     <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
                       <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
-                      <td>작성일 {formatToLocaleDateTimeString(comment.created_at)}</td>
+                      <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
                       <div className="text-right">
                         <div>
                           <PostDeleteButton text="삭제" postId={comment.id} width="w-28" height="h-8" />

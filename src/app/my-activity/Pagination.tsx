@@ -24,7 +24,7 @@ export const Pagination: React.FC<PaginationProps> = ({ total, itemsPerPage, cur
           {pageNumbers.map((number) => (
             <li
               key={number}
-              className={`cursor-pointer ${number === currentPage ? 'text-blue-700 font-bold' : ''}`}
+              className={`cursor-pointer ${number === currentPage ? 'text-pointColor1 font-bold' : ''}`}
               onClick={() => onPageChange(number)}
             >
               {number}
