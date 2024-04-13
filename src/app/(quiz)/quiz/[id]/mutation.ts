@@ -31,8 +31,7 @@ export const useUpdateQuizTry = () => {
   const mutation = useMutation({
     mutationFn: async (quizTry: QuizTry) => {
       try {
-        const { user_id, quiz_id, score } = quizTry;
-        const result = await updateQuizScore(user_id, quiz_id, score);
+        const result = await updateQuizScore(quizTry);
         return result;
       } catch (error) {
         console.log('퀴즈 점수 업데이트 실패', error);
