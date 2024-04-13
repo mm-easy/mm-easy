@@ -45,6 +45,7 @@ export type Post = {
   nickname: string;
   profiles: UserProfile;
   imageUrl: string[];
+  view_count: string;
 };
 
 export type MenuItem = {

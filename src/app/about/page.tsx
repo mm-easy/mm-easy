@@ -195,7 +195,7 @@ const AboutPage = () => {
               >
                 <div className="flex">
                   <div className="text-8xl font-semibold text-pointColor1">{item.number}</div>
-                  <span className="mt-14 text-xl font-semibold">{item.count}</span>
+                  <span className="mt-14 w-16 text-xl font-semibold">{item.count}</span>
                 </div>
                 <div className="text-xl font-semibold">{item.content}</div>
               </div>
@@ -233,7 +233,7 @@ const AboutPage = () => {
           <div className="flex justify-center items-center w-full py-10">
             <div className="flex flex-col ml-auto mb-10 w-3/6">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="">"퀴즈를 직접 만드는 것, 너무 흥미진진했어요!"</span>
+                <span className="">“퀴즈를 직접 만드는 것, 너무 흥미진진했어요!”</span>
               </div>
               <span className="text-pointColor1 text-base block mt-2">Danielle, 호주</span>
             </div>
@@ -241,16 +241,17 @@ const AboutPage = () => {
           <div className="flex justify-center items-center w-full">
             <div className="flex flex-col mb-4 w-3/6">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="">"'뭔말이지?' 게임 퀴즈로, 한국어 이제 내 두 번째 언어 같은 느낌!"</span>
+                <span className="">“'뭔말이지?' 게임 퀴즈로, 한국어 이제 내 두 번째 언어 같은 느낌!”</span>
               </div>
               <span className="text-pointColor1 text-base block mt-2">Jonathan, 콩고</span>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-full pb-10 flex flex-col justify-center items-center border-t-2 border-solid border-pointColor1 bg-bgColor1">
-        <h2 className="text-pointColor1 text-4xl font-extrabold py-16">뭔말이지? 프로젝트에 참여한 사람들</h2>
-        <div className="w-9/12 grid grid-cols-3 gap-16">
+      <div className="w-full mt-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
+        <h2 className="text-pointColor1 text-4xl font-extrabold pt-16 pb-10">뭔말이지? 프로젝트에 참여한 사람들</h2>
+        <h2 className='text-pointColor1 text-xl font-bold pb-24' >Team Coding Zizon</h2>
+        <div className="grid grid-cols-3 gap-16">
           {managerData.map((item) => {
             return (
               <div key={item.name} className="">
