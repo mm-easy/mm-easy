@@ -13,7 +13,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitAdmin, useSubmitQuizTry, useSubmitReport, useUpdateQuizTry } from './mutations';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 
 import Header from './Header';
 import Creator from './Creator';
@@ -21,6 +21,7 @@ import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
+import ReportButton from '@/components/common/ReportButton';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -35,8 +36,6 @@ const QuizTryPage = () => {
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
-  const insertAdminMutation = useSubmitAdmin();
-  const insertReportMutation = useSubmitReport();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,61 +197,6 @@ const QuizTryPage = () => {
     }
   };
 
-  const handleReport = async (id: string | string[]) => {
-    try {
-      if (!currentUserEmail) {
-        toast.warn('로그인이 필요합니다.');
-        return;
-      }
-      const admin = {
-        type: 'quizzes',
-        title,
-        target_id: id,
-        reported_user_id: creator_id
-      };
-
-      const { data: adminData } = await supabase.from('admin').select('*').eq('target_id', id); // 이 퀴즈의 신고 이력을 가져옴
-      console.log('adminData', adminData);
-
-      const adminId = adminData && adminData.length > 0 ? adminData?.[0].id : null; // adminData가 null이 아니고 비어 있지 않은 경우에만 id 할당 or null 할당
-
-      /** 신고 이력이 없다면 admin에 최초 신고 등록 */
-      if (adminData?.length === 0) {
-        const insertedAdminId = await insertAdminMutation.mutateAsync(admin);
-        const report = {
-          user_id: currentUserEmail,
-          admin_id: insertedAdminId
-        };
-
-        insertReportMutation.mutate(report);
-        toast.success('신고가 등록되었습니다.');
-        return;
-      } else {
-        /** admin에 신고 이력이 있고 report에 현재 사용자가 신고자로 등록돼 있다면 이미 신고한 퀴즈라고 알림 */
-        const { data: reportData } = await supabase
-          .from('reports')
-          .select('*')
-          .eq('user_id', currentUserEmail)
-          .eq('admin_id', adminId);
-
-        if (reportData?.length !== 0) {
-          toast.warn('이미 신고한 퀴즈입니다.');
-          return;
-        }
-
-        /** admin에 신고 이력이 있지만 현재 사용자는 처음 신고하는 퀴즈라면 report에 신고자 등록 */
-        const report = {
-          user_id: currentUserEmail,
-          admin_id: adminId
-        };
-        insertReportMutation.mutate(report);
-        toast.success('신고가 등록되었습니다.');
-      }
-    } catch (error) {
-      console.log('관리 등록/업데이트 실패', error);
-    }
-  };
-
   return (
     <>
       <Header level={level} title={title} />
@@ -341,9 +285,15 @@ const QuizTryPage = () => {
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
           {resultMode && (
-            <button className="text-pointColor1 underline" onClick={() => handleReport(id)}>
+            <ReportButton
+              targetId={id}
+              type="quizzes"
+              currentUserEmail={currentUserEmail}
+              title={title}
+              creatorId={creator_id}
+            >
               🚨 퀴즈에 오류가 있나요?
-            </button>
+            </ReportButton>
           )}
         </article>
         <PageUpBtn scrollPosition={scrollPosition} />
