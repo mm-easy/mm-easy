@@ -37,7 +37,7 @@ const CommunitySection = () => {
                   className={`py-4 ${index !== posts.length - 1 && 'border-b border-solid border-pointColor1'}`}
                 >
                   <Link href={`/community-list/전체/${post.id}`} className="flex flex-col gap-2">
-                    <h2 className="text-lg font-bold">{post.title}</h2>
+                    <h2 className="text-lg font-bold truncate">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
                   </Link>
                 </div>
@@ -58,7 +58,7 @@ const CommunitySection = () => {
                   className={`py-4 ${index !== posts.length - 1 && 'border-b border-solid border-pointColor1'}`}
                 >
                   <Link href={`/community-list/전체/${post.id}`} className="flex flex-col gap-2">
-                    <h2 className="text-lg font-bold">{post.title}</h2>
+                    <h2 className="text-lg font-bold truncate">{post.title}</h2>
                     <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
                   </Link>
                 </div>

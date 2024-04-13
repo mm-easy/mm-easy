@@ -80,9 +80,10 @@ export const insertOptionsToTable = async (newOptions: OptionsToInsert[]) => {
   }
 };
 
+/** quizzes 테이블에서 전체 데이터 가져오기 */
 export const getQuizzes = async () => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*');
+    const { data, error } = await supabase.from('quizzes').select('*').order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {

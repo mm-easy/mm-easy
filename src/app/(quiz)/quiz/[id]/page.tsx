@@ -20,6 +20,7 @@ import Options from './Options';
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
 import { errorMonitor } from 'events';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -202,10 +203,11 @@ const QuizTryPage = () => {
         <article className="h-[76vh] text-pointColor1">
           <section>
             <Image
-              src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${url}`}
+              src={`${storageUrl}/quiz-thumbnails/${url}`}
               alt="샘플 이미지"
               width={230}
               height={230}
+              quality={100}
               className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
@@ -232,7 +234,7 @@ const QuizTryPage = () => {
                 <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                 {img_url !== 'tempThumbnail.png' ? (
                   <Image
-                    src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/question-imgs/${img_url}`}
+                    src={`${storageUrl}/question-imgs/${img_url}`}
                     alt="문제 이미지"
                     width={570}
                     height={200}
@@ -247,7 +249,11 @@ const QuizTryPage = () => {
                   <div className="w-full relative">
                     {resultMode ? (
                       <p
-                        className={`w-full pl-4 py-[9px] border-solid border ${usersAnswer?.answer === correct_answer ? ' border-pointColor1 bg-bgColor2' : 'border-pointColor2 bg-bgColor3'} rounded-md`}
+                        className={`w-full pl-4 py-[9px] border-solid border ${
+                          usersAnswer?.answer === correct_answer
+                            ? ' border-pointColor1 bg-bgColor2'
+                            : 'border-pointColor2 bg-bgColor3'
+                        } rounded-md`}
                       >
                         {usersAnswer?.answer}
                       </p>
