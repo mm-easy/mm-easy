@@ -1,9 +1,9 @@
 import { supabase } from '@/utils/supabase/supabase';
 import type { QuizTry, QuizTryRank } from '@/types/quizzes';
 
-export const insertQuizTry = async (quizTries: QuizTry) => {
+export const insertQuizTry = async (quizTry: QuizTry) => {
   try {
-    const { error } = await supabase.from('quiz_tries').insert([quizTries]).select('*');
+    const { error } = await supabase.from('quiz_tries').insert([quizTry]).select('*');
     if (error) throw error;
   } catch (error) {
     console.log('퀴즈 점수 등록 실패', error);
@@ -12,9 +12,10 @@ export const insertQuizTry = async (quizTries: QuizTry) => {
   }
 };
 
-export const updateQuizScore = async (userId: string | null, quizId: string | string[], score: number) => {
+export const updateQuizScore = async (quizTry: QuizTry) => {
   try {
-    const { error } = await supabase.from('quiz_tries').update({ score }).eq('user_id', userId).eq('quiz_id', quizId);
+    const { user_id, quiz_id, score } = quizTry;
+    const { error } = await supabase.from('quiz_tries').update({ score }).eq('user_id', user_id).eq('quiz_id', quiz_id);
     if (error) throw error;
   } catch (error) {
     console.log('퀴즈 점수 업데이트 실패', error);

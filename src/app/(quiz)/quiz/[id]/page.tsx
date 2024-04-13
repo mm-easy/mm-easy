@@ -8,19 +8,19 @@ import { toast } from 'react-toastify';
 
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
+import { supabase } from '@/utils/supabase/supabase';
+import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
+import { useSubmitAdmin, useSubmitQuizTry, useSubmitReport, useUpdateQuizTry } from './mutations';
+
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
-import { errorMonitor } from 'events';
-import PageUpBtn from '@/components/common/PageUpBtn';
-import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -35,6 +35,8 @@ const QuizTryPage = () => {
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
+  const insertAdminMutation = useSubmitAdmin();
+  const insertReportMutation = useSubmitReport();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -192,7 +194,27 @@ const QuizTryPage = () => {
         insertQuizMutation.mutate(quizTry);
       }
     } catch (error) {
-      console.log('퀴즈 점수 저장/업데이트 실패', errorMonitor);
+      console.log('퀴즈 점수 저장/업데이트 실패', error);
+    }
+  };
+
+  const handleReport = async (id: string | string[]) => {
+    try {
+      const admin = {
+        type: 'quizzes',
+        title,
+        target_id: id,
+        reported_user_id: creator_id
+      };
+      const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
+
+      const report = {
+        user_id: currentUserEmail,
+        admin_id: insertAdminResult
+      };
+      insertReportMutation.mutate(report);
+    } catch (error) {
+      console.log('관리 등록/업데이트 실패', error);
     }
   };
 
@@ -283,6 +305,11 @@ const QuizTryPage = () => {
           >
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
+          {resultMode && (
+            <button className="text-pointColor1 underline" onClick={() => handleReport(id)}>
+              🚨 퀴즈에 오류가 있나요?
+            </button>
+          )}
         </article>
         <PageUpBtn scrollPosition={scrollPosition} />
       </main>
