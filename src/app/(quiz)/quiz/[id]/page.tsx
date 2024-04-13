@@ -205,7 +205,7 @@ const QuizTryPage = () => {
         reported_user_id: creator_id
       };
 
-      insertAdminMutation.mutate(admin);
+      const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
     } catch (error) {
       console.log('관리 등록/업데이트 실패', error);
     }
