@@ -211,15 +211,40 @@ const QuizTryPage = () => {
         reported_user_id: creator_id
       };
 
-      const { data: adminData } = await supabase.from('admin').select('*').eq('target_id', id);
-      console.log(adminData);
+      const { data: adminData } = await supabase.from('admin').select('*').eq('target_id', id); // 이 퀴즈의 신고 이력을 가져옴
+      console.log('adminData', adminData);
+
+      const adminId = adminData && adminData.length > 0 ? adminData?.[0].id : null; // adminData가 null이 아니고 비어 있지 않은 경우에만 id 할당 or null 할당
+
+      /** 신고 이력이 없다면 admin에 최초 신고 등록 */
       if (adminData?.length === 0) {
-        const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
+        const insertedAdminId = await insertAdminMutation.mutateAsync(admin);
         const report = {
           user_id: currentUserEmail,
-          admin_id: insertAdminResult
+          admin_id: insertedAdminId
         };
 
+        insertReportMutation.mutate(report);
+        toast.success('신고가 등록되었습니다.');
+        return;
+      } else {
+        /** admin에 신고 이력이 있고 report에 현재 사용자가 신고자로 등록돼 있다면 이미 신고한 퀴즈라고 알림 */
+        const { data: reportData } = await supabase
+          .from('reports')
+          .select('*')
+          .eq('user_id', currentUserEmail)
+          .eq('admin_id', adminId);
+
+        if (reportData?.length !== 0) {
+          toast.warn('이미 신고한 퀴즈입니다.');
+          return;
+        }
+
+        /** admin에 신고 이력이 있지만 현재 사용자는 처음 신고하는 퀴즈라면 report에 신고자 등록 */
+        const report = {
+          user_id: currentUserEmail,
+          admin_id: adminId
+        };
         insertReportMutation.mutate(report);
         toast.success('신고가 등록되었습니다.');
       }
