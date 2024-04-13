@@ -199,6 +199,11 @@ const QuizTryPage = () => {
   };
 
   const handleReport = async (id: string | string[]) => {
+    if (!currentUserEmail) {
+      toast.warn('로그인이 필요합니다.');
+      return;
+    }
+
     try {
       const admin = {
         type: 'quizzes',
@@ -213,6 +218,7 @@ const QuizTryPage = () => {
         admin_id: insertAdminResult
       };
       insertReportMutation.mutate(report);
+      toast.success('신고가 등록되었습니다.');
     } catch (error) {
       console.log('관리 등록/업데이트 실패', error);
     }
