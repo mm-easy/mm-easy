@@ -48,9 +48,9 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
             }`}
             onClick={() => handleSelectCategory(category)}
           >
-            <button className="text-2xl w-full text-left">
+            <button className="text-[calc(2vh+5px)] w-full text-left flex">
               {category}
-              {category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
+              <div className='pl-2'>{category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}</div>
             </button>
           </li>
         ))}

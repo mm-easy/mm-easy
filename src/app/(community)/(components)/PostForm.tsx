@@ -101,10 +101,10 @@ const PostForm = () => {
 
   return (
     <main className="grid grid-cols-[16%_84%]">
-      <div>
+      <div className='border-r-2 border-solid border-pointColor1'>
         <CategorySelector categoryNow={categoryNow} />
       </div>
-      <form onSubmit={handleNewPost} className="py-16 px-48 border-l-2 border-solid  border-pointColor1">
+      <form onSubmit={handleNewPost} className="py-12 px-48">
         <section className="flex border-b border-pointColor1 border-solid">
           {categories.map((item) => (
             <div key={item.id}>
@@ -130,11 +130,12 @@ const PostForm = () => {
         </section>
         <div>
           <input
-            className="focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
+            className="w-full focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
             type="text"
             value={title}
             onChange={handleTitle}
             placeholder=" 제목을 입력하세요."
+            maxLength={36}
           />
         </div>
         <div>

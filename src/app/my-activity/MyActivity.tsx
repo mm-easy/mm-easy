@@ -10,11 +10,16 @@ import { supabase } from '@/utils/supabase/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Pagination } from './Pagination';
+import { TabName } from '@/types/pagination';
+
+
 
 const MyActivity = () => {
-  const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
+  const [currentPage, setCurrentPage] = useState(1);
+  const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +42,7 @@ const MyActivity = () => {
 
   // 사용자가 만든 quiz 불러오기
   const {
-    data: userQuiz,
+    data: userQuiz = [],
     isLoading: isQuizLoading,
     isError: isQuizError
   } = useQuery({
@@ -59,7 +64,7 @@ const MyActivity = () => {
 
   // 사용자가 푼 quiz 불러오기
   const {
-    data: userSolvedQuiz,
+    data: userSolvedQuiz = [],
     isLoading: isSolvedQuizLoading,
     isError: isSolvedQuizError
   } = useQuery({
@@ -81,7 +86,7 @@ const MyActivity = () => {
 
   // 사용자가 작성한 post 불러오기
   const {
-    data: userPost,
+    data: userPost = [],
     isLoading: isPostLoading,
     isError: isPostError
   } = useQuery({
@@ -102,7 +107,7 @@ const MyActivity = () => {
   });
 
   const {
-    data: userComment,
+    data: userComment = [],
     isLoading: isCommentLoading,
     isError: isCommentError
   } = useQuery({
@@ -126,85 +131,79 @@ const MyActivity = () => {
     router.push(`/quiz/${puizId}`);
   };
 
-  {
-    isPostLoading && <div>로딩 중...</div>;
-  }
-  {
-    isPostError && <div>게시글을 불러오는 중 오류가 발생했습니다.</div>;
-  }
-  {
-    isSolvedQuizLoading && <div>로딩 중...</div>;
-  }
-  {
-    isSolvedQuizError && <div>퀴즈를 불러오는 중 오류가 발생했습니다.</div>;
-  }
-  {
-    isQuizLoading && <div>로딩 중...</div>;
-  }
-  {
-    isQuizError && <div>퀴즈를 불러오는 중 오류가 발생했습니다.</div>;
-  }
-  {
-    isCommentLoading && <div>로딩 중...</div>;
-  }
-  {
-    isCommentError && <div>댓글을 불러오는 중 오류가 발생했습니다.</div>;
-  }
+  const handlePageChange = (page : number) => {
+    setCurrentPage(page);
+  };
+
+  const changeTab = (newTab : TabName) => {
+    setActiveTab(newTab);
+    setCurrentPage(1); // 탭을 변경할 때 페이지를 1로 리셋
+  };
+
+
+  // 페이지
+  const itemsPerPage = 8; // 페이지 당 항목 수
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // 각 탭의 데이터 슬라이싱
+  const currentSolvedQuizzes = userSolvedQuiz.slice(indexOfFirstItem, indexOfLastItem);
+  const currentQuizzes = userQuiz.slice(indexOfFirstItem, indexOfLastItem);
+  const currentPosts = userPost.slice(indexOfFirstItem, indexOfLastItem);
+  const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="px-[20%]">
-      <div className="flex justify-center">
-        <p className="py-14 text-3xl font-bold text-pointColor1">나의 활동</p>
-      </div>
-      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
-        <ul className="flex justify-center text-2xl w-full text-center border-b-2 border-solid ">
+    <main className="px-[25%]">
+      <h3 className="text-center my-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
+      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
+        <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
-            onClick={() => setActiveTab('solvedQuizzes')}
+            className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
+            onClick={() => changeTab('solvedQuizzes')}
           >
             내가 푼 퀴즈
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'quizzes' ? 'font-bold  border-solid border-b-3' : ''}`}
-            onClick={() => setActiveTab('quizzes')}
+            className={`w-[25%] pb-3 ${activeTab === 'quizzes' ? 'font-bold  border-solid border-b-3' : ''}`}
+            onClick={() => changeTab('quizzes')}
           >
             내가 만든 퀴즈
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'posts' ? 'font-bold  border-solid border-b-3' : ''}`}
-            onClick={() => setActiveTab('posts')}
+            className={`w-[25%] pb-3 ${activeTab === 'posts' ? 'font-bold  border-solid border-b-3' : ''}`}
+            onClick={() => changeTab('posts')}
           >
             내가 쓴 글
           </li>
           <li
-            className={`w-[25%] pb-6 ${activeTab === 'comments' ? 'font-bold  border-solid border-b-3' : ''}`}
-            onClick={() => setActiveTab('comments')}
+            className={`w-[25%] pb-3 ${activeTab === 'comments' ? 'font-bold  border-solid border-b-3' : ''}`}
+            onClick={() => changeTab('comments')}
           >
             내가 쓴 댓글
           </li>
         </ul>
       </nav>
-      
+
       {activeTab === 'solvedQuizzes' && (
         <div className="flex justify-center w-full ">
-          <table className="w-full text-lg font-medium">
+          <table className="w-full font-medium">
             <thead className="text-left">
-              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
                 <th className="w-[20%]">점수</th>
                 <th>만든 날짜</th>
               </tr>
             </thead>
             <tbody>
-              {userSolvedQuiz && userSolvedQuiz.length > 0
-                ? userSolvedQuiz.map((quiz, index) => (
-                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-6 w-24">{quiz.quizzes.title}</td>
+              {currentSolvedQuizzes && currentSolvedQuizzes.length > 0
+                ? currentSolvedQuizzes.map((quiz, index) => (
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="py-4 w-24">{quiz.quizzes.title}</td>
                       <td>{quiz.score}</td>
                       {/* <td>{formatToLocaleDateTimeString(quiz)}</td> */}
                       <div className="text-right">
                         <button
-                          className="h-12 border border-solid border-pointColor1 px-4 py-2 rounded-md font-bold text-pointColor1"
+                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
                           onClick={() => navigateToQuiz(quiz)}
                         >
                           다시 풀기
@@ -224,24 +223,26 @@ const MyActivity = () => {
 
       {activeTab === 'quizzes' && (
         <div className="flex justify-center w-full ">
-          <table className="w-full text-lg font-medium">
+          <table className="w-full font-medium">
             <thead className="text-left">
-              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
                 <th className="w-[20%]">완료수</th>
                 <th>작성 날짜</th>
               </tr>
             </thead>
             <tbody>
-              {userQuiz && userQuiz.length > 0
-                ? userQuiz.map((quiz, index) => (
-                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-6 w-24">{quiz.title}</td>
+              {currentQuizzes && currentQuizzes.length > 0
+                ? currentQuizzes.map((quiz, index) => (
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="py-4 w-24">
+                        <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
+                      </td>
                       <td>{quiz.quiz_tries.length}</td>
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <div className="text-right">
                         <button
-                          className="h-12 border border-solid border-pointColor1 px-4 py-2 rounded-md font-bold text-pointColor1"
+                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
                           onClick={() => navigateToQuiz(quiz.id)}
                         >
                           다시 풀기
@@ -258,76 +259,80 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-      
+
       {activeTab === 'posts' && (
         <div className="flex justify-center w-full">
-          <table className="w-full text-lg font-medium">
+          <table className="w-full font-medium">
             <thead className="text-left">
-              <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
+              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[36%]">제목</th>
+                <th className="w-[20%]">조회수</th>
                 <th>작성 날짜</th>
               </tr>
             </thead>
             <tbody>
-              {userPost && userPost.length > 0
-                ? userPost.map((post, index) => (
-                    <tr className="font-bold bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-6 w-24">{post.title}</td>
+              {currentPosts && currentPosts.length > 0
+                ? currentPosts.map((post, index) => (
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="truncate max-w-xs pr-8 py-4 w-24">
+                        <a href={`/community-list/${post.category}/${post.id}`}>{post.title}</a>
+                      </td>
+                      <td>{post.view_count}</td>
                       <td>작성일 {formatToLocaleDateTimeString(post.created_at)}</td>
                       <div className="text-right">
-                      <div>
-                    <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-12" />
-                  </div>
+                        <div>
+                          <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
+                        </div>
                       </div>
                     </tr>
                   ))
-                  : !isPostLoading && <div>게시글이 없습니다.</div>}
+                : !isPostLoading && <div>게시글이 없습니다.</div>}
             </tbody>
           </table>
         </div>
       )}
 
-      {activeTab === 'posts' && (
-        <div>
-          {userPost && userPost.length > 0
-            ? userPost.map((post, index) => (
-                <div
-                  className="flex justify-between items-start text-lg py-4 border-b border-solid border-pointColor3"
-                  key={index}
-                >
-                  <div className="">
-                    <h3 className="font-bold">{post.title}</h3>
-                    <p>작성일 {formatToLocaleDateTimeString(post.created_at)}</p>
-                  </div>
-                  <div>
-                    <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-12" />
-                  </div>
-                </div>
-              ))
-            : !isPostLoading && <div>게시글이 없습니다.</div>}
-        </div>
-      )}
-
       {activeTab === 'comments' && (
-        <div>
-          {userComment && userComment.length > 0
-            ? userComment.map((comment, index) => (
-                <div
-                  className="flex justify-between items-start text-lg py-4 border-b border-solid border-pointColor3 "
-                  key={index}
-                >
-                  <div>
-                    <h3 className="font-bold">{comment.content}</h3>
-                    <p>작성일 {formatToLocaleDateTimeString(comment.created_at)}</p>
-                  </div>
-                  <div>
-                    <CommentDeleteBtn text="삭제" userId={comment.id} width="w-28" height="h-12" />
-                  </div>
-                </div>
-              ))
-            : !isPostLoading && <div>댓글이 없습니다.</div>}
+        <div className="flex justify-center w-full">
+          <table className="w-full font-medium">
+            <thead className="text-left">
+              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                <th className="pb-2 w-[56%]">내용</th>
+                <th>작성 날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentComments && currentComments.length > 0
+                ? currentComments.map((comment, index) => (
+                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                      <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
+                      <td>작성일 {formatToLocaleDateTimeString(comment.created_at)}</td>
+                      <div className="text-right">
+                        <div>
+                          <PostDeleteButton text="삭제" postId={comment.id} width="w-28" height="h-8" />
+                        </div>
+                      </div>
+                    </tr>
+                  ))
+                : !isCommentLoading && <div>댓글이 없습니다.</div>}
+            </tbody>
+          </table>
         </div>
       )}
+      <Pagination
+        total={
+          activeTab === 'solvedQuizzes'
+            ? userSolvedQuiz.length
+            : activeTab === 'quizzes'
+            ? userQuiz.length
+            : activeTab === 'posts'
+            ? userPost.length
+            : userComment.length
+        }
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </main>
   );
 };

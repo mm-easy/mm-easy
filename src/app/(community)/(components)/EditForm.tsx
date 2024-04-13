@@ -102,11 +102,11 @@ const EditForm = ({ postId, prevTitle, prevContent, prevCategory, prevAuthorId }
 
   return (
     <main className="grid grid-cols-[16%_84%]">
-      <div>
+      <div className='border-r-2 border-solid border-pointColor1'>
         <CategorySelector categoryNow={categoryNow} />
       </div>
       <form
-        className="py-16 px-48 border-l-2 border-solid  border-pointColor1"
+        className="py-12 px-48"
         onSubmit={async (e) => {
           e.preventDefault();
           await updateCommunityPost(postId, title, content, category);
