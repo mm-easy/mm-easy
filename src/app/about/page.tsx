@@ -1,8 +1,17 @@
 'use client';
 
 import Image from 'next/image';
+import InfoHM from '@/assets/team/info_HM.png';
+import InfoJM from '@/assets/team/info_JM.png';
+import InfoJY from '@/assets/team/info_JY.png';
+import InfoSH from '@/assets/team/info_SH.png';
+import InfoYJ from '@/assets/team/info_YJ.png';
+import InfoYS from '@/assets/team/info_YS.png';
+import Infopeople from '@/assets/team/info_people.png';
+import InfoIcon1 from '@/assets/info_icon_1.png';
+import InfoIcon2 from '@/assets/info_icon_2.png';
+import InfoIcon3 from '@/assets/info_icon_3.png';
 import { useRouter } from 'next/navigation';
-import LogoVertical3 from '@/assets/logo_vertical_3.png';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
@@ -67,42 +76,48 @@ const AboutPage = () => {
       content1: '좋은 분들과 함께 해서 행복했습니다!',
       content2: '즐겁게 이용해 주세요!',
       Github: 'https://github.com/aotoyae',
-      Blog: 'https://aotoyae.tistory.com/'
+      Blog: 'https://aotoyae.tistory.com/',
+      img: InfoSH
     },
     {
       name: '김연재',
       content1: '원장님 사랑해요',
       content2: '혁우님도 사랑합니다',
       Github: 'https://github.com/porosadporosad',
-      Blog: 'https://velog.io/@tmxk1594/posts'
+      Blog: 'https://velog.io/@tmxk1594/posts',
+      img: InfoYJ
     },
     {
       name: '김형민',
       content1: '눈에서 불이날것 같아요.',
       content2: '열심히 만들었으니 즐겨주시면 감사하겠습니다!',
       Github: 'https://github.com/C1oudys',
-      Blog: 'https://velog.io/@kim9567/posts'
+      Blog: 'https://velog.io/@kim9567/posts',
+      img: InfoHM
     },
     {
       name: '박재민',
       content1: '부족하지만 열심히 만들었습니다!',
       content2: '피드백은 언제나 환영입니다!',
       Github: 'https://github.com/ahddl622',
-      Blog: 'https://velog.io/@ahddl622/posts'
+      Blog: 'https://velog.io/@ahddl622/posts',
+      img: InfoJM
     },
     {
       name: '박지영',
       content1: '개발하면서 뭔말이지? 23482번 외쳤습니다.',
       content2: '정말 너무 재밌고 즐거운 프로젝트였어요',
       Github: 'https://github.com/redberry0217',
-      Blog: 'https://velog.io/@redberry0217/'
+      Blog: 'https://velog.io/@redberry0217/',
+      img: InfoJY
     },
     {
       name: '정예슬',
       content1: '좋은 분들과 함께 해서 행복했습니다!',
       content2: '즐겁게 이용해 주세요!',
       Behance: '',
-      Instagram: ''
+      Instagram: 'https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
+      img: InfoYS
     }
   ];
 
@@ -126,27 +141,36 @@ const AboutPage = () => {
 
   return (
     <div className="flex flex-col text-center items-center">
-      <div className="flex flex-col bg-pointColor1 w-full h-[1600px]">
-        <div className="flex justify-center py-36">
-          <Image src={LogoVertical3} alt="로고" width={300} />
-        </div>
+      <div className="flex flex-col bg-pointColor1 w-full">
         <div className="w-full">
-          <h2 className="text-7xl font-extrabold pb-16 text-white inline-block">재밌게 배우는 한국어!</h2>
+          <h2 className="text-7xl font-extrabold pb-16 text-white inline-block py-36 pb-36">재밌게 배우는 한국어!</h2>
+        </div>
+        <div className="flex justify-center">
+          <Image src={Infopeople} alt="로고" width={1000} quality={100} />
         </div>
         <div className="text-4xl w-full text-white ">
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              직접 퀴즈를 만들면서 한국어 실력을 키워보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon3} alt="로고" width={100} />
+                <span className="ml-2 text-white">직접 퀴즈를 만들면서 한국어 실력을 키워보세요!</span>
+              </div>
             </h2>
           </div>
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              타자 연습으로 한국어에 익숙해져 보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon2} alt="로고" width={100} />
+                <span className="ml-2 text-white">타자 연습으로 한국어에 익숙해져 보세요!</span>
+              </div>
             </h2>
           </div>
           <div>
             <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
-              커뮤니티에서 소통하며 자신감을 길러보세요!
+              <div className="flex justify-center items-center gap-4">
+                <Image src={InfoIcon1} alt="로고" width={100} />
+                <span className="ml-2 text-white">커뮤니티에서 소통하며 자신감을 길러보세요!</span>
+              </div>
             </h2>
           </div>
         </div>
@@ -187,25 +211,25 @@ const AboutPage = () => {
           <div className="flex justify-center items-center w-full pr-20 py-10">
             <div className="flex flex-col ml-auto mb-6 w-3/6">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
-                <span className="">"퀴즈를 직접 만드는 것, 너무 흥미진진했어요!"</span>
-              </div>
-              <span className="text-pointColor1 text-base block mt-2">Danielle, 호주</span>
-            </div>
-          </div>
-          <div className="flex justify-center items-center w-full pl-32 py-10">
-            <div className="flex flex-col mr-auto mb-6 w-3/6">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">“이 사이트를 찾고 제 인생이 달라졌어요..! 쭈천 함미다!”</span>
               </div>
               <span className="text-pointColor1 text-base block mt-2">Bryan, 태국</span>
             </div>
           </div>
-          <div className="flex justify-center items-center w-full py-10">
-            <div className="flex flex-col ml-auto mb-10 w-3/6">
+          <div className="flex justify-center items-center w-full pl-32 py-10">
+            <div className="flex flex-col mr-auto mb-6 w-3/6">
               <div className="bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">“미루고 있던 한글 공부를 즐겁게 할 수 있었어요. 고맙습니다.”</span>
               </div>
               <span className="text-pointColor1 text-base block mt-2">Danaka, 일본</span>
+            </div>
+          </div>
+          <div className="flex justify-center items-center w-full py-10">
+            <div className="flex flex-col ml-auto mb-10 w-3/6">
+              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+                <span className="">"퀴즈를 직접 만드는 것, 너무 흥미진진했어요!"</span>
+              </div>
+              <span className="text-pointColor1 text-base block mt-2">Danielle, 호주</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full">
@@ -218,28 +242,42 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className="w-full border-t-2 border-solid border-pointColor1">
+      <div className="w-full m-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
         <h2 className="text-pointColor1 text-4xl font-extrabold py-16">뭔말이지? 프로젝트에 참여한 사람들</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-16">
           {managerData.map((item) => {
             return (
               <div key={item.name}>
-                <div className="flex flex-col gap-1">
-                  <h3 className="m-2 font-bold text-2xl">{item.name}</h3>
+                <div className="flex flex-col items-center justify-center gap-1">
+                  <div className="w-[240px] h-[240px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
+                    <Image
+                      src={item.img}
+                      alt="프로필 이미지"
+                      width={240}
+                      height={240}
+                      quality={100}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                  <h3 className="m-4 font-bold text-2xl">{item.name}</h3>
                   <span>{item.content1}</span>
                   <span>{item.content2}</span>
                 </div>
-                <div className="m-3">
+                <div className="m-8">
                   {item.Github ? (
-                    <>
-                      <WhiteButton onClick={() => handleGitBtn(item.Github)} text="Github" width="w-24" />
-                      <WhiteButton onClick={() => handleBlogBtn(item.Blog)} text="Blog" width="w-24" />
-                    </>
+                    <div className="flex gap-2 items-center justify-center">
+                      <WhiteButton onClick={() => handleGitBtn(item.Github)} text="Github" width="w-28" />
+                      <WhiteButton onClick={() => handleBlogBtn(item.Blog)} text="Blog" width="w-28" />
+                    </div>
                   ) : (
-                    <>
-                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-24" />
-                    <WhiteButton onClick={() => handleGitBtn(item.Instagram)} text="Instagram" width="w-24" /> */}
-                    </>
+                    <div className="flex gap-2 items-center justify-center">
+                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-28" /> */}
+                      <WhiteButton
+                        onClick={() => item.Instagram && handleGitBtn(item.Instagram)}
+                        text="Instagram"
+                        width="w-28"
+                      />
+                    </div>
                   )}
                 </div>
               </div>
