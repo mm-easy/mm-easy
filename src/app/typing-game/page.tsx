@@ -174,19 +174,25 @@ const TypingGamePage = () => {
         .single();
 
       if (fetchError && !existingScores) {
+        // 2. 새로운 점수 추가
         const { error: insertError } = await supabase
           .from('game_tries')
           .insert([{ user_id: user.id, score: finalScore }]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
-        const newTotalScore = existingScores.score + finalScore;
-        const { error: updateError } = await supabase
-          .from('game_tries')
-          .update({ score: newTotalScore })
-          .eq('user_id', user.id);
-        if (updateError) throw updateError;
-        console.log('점수가 업데이트되었습니다!');
+        // 3. 현재 점수와 새로운 점수 비교 후 업데이트
+        const currentScore = existingScores?.score || 0;
+        if (finalScore > currentScore) {
+          const { error: updateError } = await supabase
+            .from('game_tries')
+            .update({ score: finalScore })
+            .eq('user_id', user.id);
+          if (updateError) throw updateError;
+          console.log('점수가 업데이트되었습니다!');
+        } else {
+          console.log('현재 점수보다 낮기 때문에 업데이트되지 않았습니다.');
+        }
       }
     } catch (error) {
       console.error('점수 저장 중 오류 발생:', error);
@@ -267,7 +273,7 @@ const TypingGamePage = () => {
       </div>
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-md">
+          <div className="bg-white p-6 rounded-md border-solid border-2 border-pointColor1">
             <h2 className="font-bold text-xl mb-4">로그인이 필요합니다</h2>
             <p className="mb-4">로그인하지 않으면 점수가 저장되지 않습니다.</p>
             <div className="flex justify-around">

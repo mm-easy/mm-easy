@@ -80,9 +80,10 @@ export const insertOptionsToTable = async (newOptions: OptionsToInsert[]) => {
   }
 };
 
+/** quizzes 테이블에서 전체 데이터 가져오기 */
 export const getQuizzes = async () => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*');
+    const { data, error } = await supabase.from('quizzes').select('*').order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {
@@ -136,7 +137,7 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
 
 export const fetchUserQuizzes = async (email: string) => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*').eq('creator_id', email);
+    const { data, error } = await supabase.from('quizzes').select(`*,quiz_tries:id (id)`).eq('creator_id', email);
 
     if (error) throw error;
     return data;
@@ -147,13 +148,13 @@ export const fetchUserQuizzes = async (email: string) => {
 
 export const userSolvedQuizzes = async (email: string) => {
   try {
-    const { data, error, count } = await supabase
+    const { data, error } = await supabase
       .from('quiz_tries')
-      .select('*', { count: 'exact' }) // 'exact'로 정확한 수를 가져옵니다.
+      .select(`*,quizzes:quiz_id (id, title)`)
       .eq('user_id', email);
 
     if (error) throw error;
-    return { data, count }
+    return data;
   } catch (error) {
     console.error('사용자 퀴즈 불러오기 실패', error);
   }

@@ -100,9 +100,22 @@ export const getPostDetail = async (postId: string) => {
       .from('posts')
       .select(`*, profiles!inner(nickname,avatar_img_url)`)
       .eq('id', postId);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    } else {
+      const getPost = post[0];
+      if (getPost) {
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ view_count: (getPost.view_count ?? 0) + 1 })
+          .eq('id', postId);
 
-    return post![0] || [];
+        if (updateError) {
+          console.error('조회수 업데이트 실패:', updateError);
+        }
+      }
+      return getPost || [];
+    }
   } catch (error) {
     throw error;
   }
@@ -115,9 +128,22 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
       .select(`*, profiles!inner(nickname,avatar_img_url)`)
       .eq('category', categoryNow)
       .eq('id', postId);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    } else {
+      const getPost = post[0];
+      if (getPost) {
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ view_count: (getPost.view_count ?? 0) + 1 })
+          .eq('id', postId);
 
-    return post![0] || [];
+        if (updateError) {
+          console.error('조회수 업데이트 실패:', updateError);
+        }
+      }
+      return getPost || [];
+    }
   } catch (error) {
     throw error;
   }
@@ -135,7 +161,7 @@ export const fetchPost = async (id: string | undefined) => {
   }
 };
 
-export const getMyActivityPosts = async (userId:string) => {
+export const getMyActivityPosts = async (userId: string) => {
   try {
     const { data: posts, error } = await supabase
       .from('posts')

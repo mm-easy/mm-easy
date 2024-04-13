@@ -12,11 +12,11 @@ import { useUpdateProfile } from './mutations';
 
 import type { User } from '@/types/users';
 
-const MyProfile = ({ currentUser }: { currentUser: User }) => {
+const MyProfile = ({ data }: { data: User }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [nickname, setNickname] = useState(currentUser.nickname);
+  const [nickname, setNickname] = useState(data.nickname);
   const [file, setFile] = useState<File | null>(null);
-  const [selectedImg, setSelectedImg] = useState(`${profileStorageUrl}/${currentUser.avatar_img_url}`);
+  const [selectedImg, setSelectedImg] = useState(`${profileStorageUrl}/${data.avatar_img_url}`);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const updateProfileMutation = useUpdateProfile();
@@ -25,7 +25,7 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
   const handleCancelBtn = () => {
     if (!window.confirm('프로필 수정을 취소하시겠습니까?')) return;
     setFile(null);
-    setSelectedImg(`${profileStorageUrl}/${currentUser.avatar_img_url}`);
+    setSelectedImg(`${profileStorageUrl}/${data.avatar_img_url}`);
     setIsEditing(false);
   };
 
@@ -49,7 +49,7 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
   /** 수정 모달에서 수정완료 버튼 클릭 시 */
   const handleSubmitBtn = async () => {
     try {
-      let imgUrl = currentUser.avatar_img_url;
+      let imgUrl = data.avatar_img_url;
       if (file) {
         const fileName = generateFileName(file);
         imgUrl = (await uploadAvatarToStorage(file, fileName)) as string;
@@ -62,35 +62,36 @@ const MyProfile = ({ currentUser }: { currentUser: User }) => {
         nickname,
         avatar_img_url: imgUrl
       };
-      await updateProfileMutation.mutateAsync({ id: currentUser.id, newProfile: newProfile });
+      await updateProfileMutation.mutateAsync({ id: data.id, newProfile: newProfile });
       toast.success('프로필이 수정되었습니다.');
       setIsEditing(false);
     } catch (error) {
       toast.error('이미지 업로드 중 오류발생! 다시 시도하세요.');
     }
   };
+
   return (
     <main className="w-full h-full flex flex-col items-center">
       <h3 className="mt-10 text-center text-pointColor1 text-xl font-semibold">프로필</h3>
       <article className="flex gap-20 mt-5">
         <section className="w-[230px] h-[230px]">
           <Image
-            src={`${profileStorageUrl}/${currentUser.avatar_img_url}`}
+            src={`${profileStorageUrl}/${data.avatar_img_url}`}
             alt="사용자 프로필"
             width={250}
             height={250}
-            className="w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
+            className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
           />
         </section>
         <section className="flex flex-col justify-around">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-1">
               <p className="text-pointColor1 font-semibold">닉네임</p>
-              <p className="text-lg">{currentUser.nickname}</p>
+              <p className="text-lg">{data.nickname}</p>
             </div>
             <div className="flex flex-col gap-1">
               <p className="text-pointColor1 font-semibold">이메일</p>
-              <p className="text-lg">{currentUser.email}</p>
+              <p className="text-lg">{data.email}</p>
             </div>
           </div>
           <div

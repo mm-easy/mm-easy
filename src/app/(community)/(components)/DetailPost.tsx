@@ -8,19 +8,18 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
-import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { useQuery } from '@tanstack/react-query';
-
+import { PostEditButton } from '@/components/common/EditButton';
+import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { PostEditButton } from '@/components/common/EditButton';
-import { PostDeleteButton } from '@/components/common/DeleteButton';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -36,13 +35,10 @@ const DetailPost = () => {
     queryFn: async () => {
       try {
         let data;
-        let nextPosts;
         if (categoryNow === '전체') {
           data = await getPostDetail(params.id);
-          nextPosts = await getPosts();
         } else {
           data = await getPostCategoryDetail(categoryNow, params.id);
-          nextPosts = await getFilterPosts(categoryNow);
         }
         return data;
       } catch (error) {
@@ -134,6 +130,7 @@ const DetailPost = () => {
             <div>
               <div className="flex justify-between">
                 <p className="text-lg font-bold">{post.category}</p>
+                <p className="text-sm">조회수{post.view_count}</p>
               </div>
               <h1 className="text-3xl font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
