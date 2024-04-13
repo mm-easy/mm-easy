@@ -199,26 +199,30 @@ const QuizTryPage = () => {
   };
 
   const handleReport = async (id: string | string[]) => {
-    if (!currentUserEmail) {
-      toast.warn('로그인이 필요합니다.');
-      return;
-    }
-
     try {
+      if (!currentUserEmail) {
+        toast.warn('로그인이 필요합니다.');
+        return;
+      }
       const admin = {
         type: 'quizzes',
         title,
         target_id: id,
         reported_user_id: creator_id
       };
-      const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
 
-      const report = {
-        user_id: currentUserEmail,
-        admin_id: insertAdminResult
-      };
-      insertReportMutation.mutate(report);
-      toast.success('신고가 등록되었습니다.');
+      const { data: adminData } = await supabase.from('admin').select('*').eq('target_id', id);
+      console.log(adminData);
+      if (adminData?.length === 0) {
+        const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
+        const report = {
+          user_id: currentUserEmail,
+          admin_id: insertAdminResult
+        };
+
+        insertReportMutation.mutate(report);
+        toast.success('신고가 등록되었습니다.');
+      }
     } catch (error) {
       console.log('관리 등록/업데이트 실패', error);
     }
