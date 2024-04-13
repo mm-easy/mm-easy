@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import { useEffect, useState } from 'react';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[]; currentUser: string }) => {
   const router = useRouter();
@@ -53,13 +54,14 @@ const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[
           >
             <p className="font-bold text-lg mt-4 mb-3">{item.title}</p>
             <div className="flex flex-col gap-3">
-              <div className="border-solid border border-pointColor1 rounded-md overflow-hidden w-[250px] h-[250px]">
+              <div className="border-solid border-2 border-pointColor1 rounded-md overflow-hidden w-[250px] h-[250px]">
                 <Image
-                  src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/quiz-thumbnails/${item.thumbnail_img_url}`}
+                  src={`${storageUrl}/quiz-thumbnails/${item.thumbnail_img_url}`}
                   alt="퀴즈 썸네일"
                   width={250}
                   height={250}
-                  className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
+                  quality={100}
+                  className="w-full h-[250px] object-cover"
                 />
               </div>
               <p className="mb-4">{item.info}</p>
