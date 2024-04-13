@@ -13,7 +13,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
+import { useSubmitAdmin, useSubmitQuizTry, useUpdateQuizTry } from './mutation';
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
@@ -34,6 +34,7 @@ const QuizTryPage = () => {
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
+  const insertAdminMutation = useSubmitAdmin();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -197,10 +198,16 @@ const QuizTryPage = () => {
 
   const handleReport = async (id: string | string[]) => {
     try {
-      alert('hi');
-      const report = {};
+      const admin = {
+        type: 'quizzes',
+        title,
+        target_id: id,
+        reported_user_id: creator_id
+      };
+
+      insertAdminMutation.mutate(admin);
     } catch (error) {
-      console.log('신고 등록/업데이트 실패', error);
+      console.log('관리 등록/업데이트 실패', error);
     }
   };
 
