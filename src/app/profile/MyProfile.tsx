@@ -80,7 +80,7 @@ const MyProfile = ({ data }: { data: User }) => {
             alt="사용자 프로필"
             width={250}
             height={250}
-            className="w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
+            className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
           />
         </section>
         <section className="flex flex-col justify-around">
