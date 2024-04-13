@@ -11,6 +11,7 @@ import Infopeople from '@/assets/team/info_people.png';
 import InfoIcon1 from '@/assets/info_icon_1.png';
 import InfoIcon2 from '@/assets/info_icon_2.png';
 import InfoIcon3 from '@/assets/info_icon_3.png';
+import LogoHorizontal3 from '@/assets/logo_horizontal_3.png';
 import { useRouter } from 'next/navigation';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
@@ -141,16 +142,16 @@ const AboutPage = () => {
 
   return (
     <div className="flex flex-col text-center items-center">
-      <div className="flex flex-col bg-pointColor1 w-full">
+      <div className="flex flex-col justify-center items-center bg-pointColor1 w-full">
         <div className="w-full">
-          <h2 className="text-7xl font-extrabold pb-16 text-white inline-block py-36 pb-36">재밌게 배우는 한국어!</h2>
+          <h2 className="text-5xl font-extrabold pb-16 text-white inline-block py-36">재밌게 배우는 한국어!</h2>
         </div>
-        <div className="flex justify-center">
-          <Image src={Infopeople} alt="로고" width={1000} quality={100} />
+        <div className="flex justify-center w-3/5 items-center">
+          <Image src={Infopeople} alt="로고" width={900} quality={100} />
         </div>
         <div className="text-4xl w-full text-white ">
           <div>
-            <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
                 <Image src={InfoIcon3} alt="로고" width={100} />
                 <span className="ml-2 text-white">직접 퀴즈를 만들면서 한국어 실력을 키워보세요!</span>
@@ -158,7 +159,7 @@ const AboutPage = () => {
             </h2>
           </div>
           <div>
-            <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
                 <Image src={InfoIcon2} alt="로고" width={100} />
                 <span className="ml-2 text-white">타자 연습으로 한국어에 익숙해져 보세요!</span>
@@ -166,7 +167,7 @@ const AboutPage = () => {
             </h2>
           </div>
           <div>
-            <h2 className="py-32 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
                 <Image src={InfoIcon1} alt="로고" width={100} />
                 <span className="ml-2 text-white">커뮤니티에서 소통하며 자신감을 길러보세요!</span>
@@ -177,8 +178,13 @@ const AboutPage = () => {
       </div>
 
       <div className="border-b-2 border-solid border-pointColor1 w-full bg-sky-50">
-        <h2 className="py-12 text-4xl font-extrabold text-pointColor1">뭔말이지?에서 지금까지</h2>
-        <div className="flex justify-center py-10">
+        <h2 className="py-12 text-4xl font-extrabold text-pointColor1">
+          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <Image src={LogoHorizontal3} alt="로고" width={200} quality={100} />
+            <span className="ml-2">에서 지금까지</span>
+          </span>
+        </h2>
+        <div className="flex justify-center pb-10">
           {NowData.map((item, index) => {
             return (
               <div
@@ -242,12 +248,12 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className="w-full m-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
+      <div className="w-full pb-10 flex flex-col justify-center items-center border-t-2 border-solid border-pointColor1 bg-bgColor1">
         <h2 className="text-pointColor1 text-4xl font-extrabold py-16">뭔말이지? 프로젝트에 참여한 사람들</h2>
-        <div className="grid grid-cols-3 gap-16">
+        <div className="w-9/12 grid grid-cols-3 gap-16">
           {managerData.map((item) => {
             return (
-              <div key={item.name}>
+              <div key={item.name} className="">
                 <div className="flex flex-col items-center justify-center gap-1">
                   <div className="w-[240px] h-[240px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
                     <Image
