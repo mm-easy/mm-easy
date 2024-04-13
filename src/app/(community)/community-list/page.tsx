@@ -80,7 +80,7 @@ const CommunityPage = () => {
     }
   };
 
-  const pageRange = 10; // 페이지당 보여줄 게시물 수
+  const pageRange = 2; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
   const totalNum = post.length; // 총 데이터 수
 

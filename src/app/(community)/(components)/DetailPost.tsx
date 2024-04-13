@@ -132,7 +132,7 @@ const DetailPost = () => {
                 <p className="text-lg font-bold">{post.category}</p>
                 <p className="text-sm">조회수{post.view_count}</p>
               </div>
-              <h1 className="text-3xl font-bolder font-bold text-blackColor ">{post.title}</h1>
+              <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
                 <div className="flex">
                   <div className="w-[50px] h-[50px] m-3 ml-0 rounded-full overflow-hidden">
@@ -145,7 +145,7 @@ const DetailPost = () => {
                     />
                   </div>
                   <div className="flex flex-col justify-center text-blackColor">
-                    <p>{post.profiles.nickname}</p>
+                    <p className='font-medium text-lg'>{post.profiles.nickname}</p>
                     <time className="text-sm">{formatToLocaleDateTimeString(post.created_at)}</time>
                   </div>
                 </div>

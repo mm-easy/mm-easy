@@ -79,7 +79,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                 />
               </div>
               <div className="flex flex-col justify-center text-blackColor">
-                <p>{prev.profiles?.nickname}</p>
+                <p className='pb-2 font-semibold'>{prev.profiles?.nickname}</p>
 
                 {btnChange && nowCommentId === prev.id ? (
                   <div>

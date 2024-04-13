@@ -26,10 +26,6 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     }
   };
 
-  const truncateTitle = (title: string): string => {
-    return title.length > 20 ? title.substring(0, 32) + ' ...' : title;
-  };
-
   const totalSet = Math.ceil(Math.ceil(totalNum / pageRange) / btnRange);
   const currentSet = Math.ceil(currentPage / btnRange);
   const startPage = (currentSet - 1) * btnRange + 1;
@@ -41,10 +37,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="p-4 w-[15%]">구분</th>
-              <th className="w-[18%]">닉네임</th>
-              <th className="w-[52%]">제목</th>
-              <th className="w-[15%]">날짜</th>
+              <th className="pl-6 p-4 w-[11%]">구분</th>
+              <th className="w-[11%]">닉네임</th>
+              <th className="w-[60%]">제목</th>
+              <th className="w-[13%]">날짜</th>
+              <th className="w-[5%]">조회수</th>
             </tr>
           </thead>
           <tbody>
@@ -55,10 +52,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}
                 >
-                  <td className="p-4 w-24">{item['category']}</td>
+                  <td className="pl-6 p-4">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
-                  <td>{truncateTitle(item['title'])}</td>
+                  <td className="truncate max-w-xs pr-8">{item['title']}</td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
+                  <td>{item["view_count"]}</td>
                 </tr>
               );
             })}
@@ -66,9 +64,9 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         </table>
       </div>
       <section className="flex justify-center my-[10px] px-20 w-full">
-        <nav className="text-xl flex gap-10">
+        <nav className="flex gap-10 text-base font-bold ">
           {currentSet > 1 && (
-            <button className="text-pointColor1" onClick={() => setCurrentPage(startPage - 1)}>
+            <button className=" text-pointColor1" onClick={() => setCurrentPage(startPage - 1)}>
               &#9664;
             </button>
           )}
@@ -78,7 +76,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`text-[16px] font-bold ${currentPage === page ? 'text-pointColor1' : ''}`}
+                className={`${currentPage === page ? 'text-pointColor1' : ''}`}
               >
                 {page}
               </button>
