@@ -130,7 +130,7 @@ const DetailPost = () => {
             <div>
               <div className="flex justify-between">
                 <p className="text-lg font-bold">{post.category}</p>
-                <p className="text-sm">조회수{post.view_count}</p>
+                <p className="text-sm">조회수 {post.view_count}</p>
               </div>
               <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
