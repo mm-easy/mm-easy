@@ -51,7 +51,9 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
           >
             <button className="text-[calc(2vh+5px)] w-full text-left flex">
               {category}
-              <div className='pl-2'>{category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}</div>
+              <div className="pl-2">
+                {category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
+              </div>
             </button>
           </li>
         ))}

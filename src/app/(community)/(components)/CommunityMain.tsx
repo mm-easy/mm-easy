@@ -99,13 +99,13 @@ const CommunityMain = () => {
 
   return (
     <main className="grid grid-cols-[16%_84%] h-[84vh]">
-      <section className="relative h-[84vh] bg-bgColor1 border-r-2 border-solid border-pointColor1">
+      <section className="flex flex-col justify-between h-[84vh] bg-bgColor1 border-r-2 border-solid border-pointColor1">
         <CategorySelector categoryNow={category} />
-        <div className="absolute inset-x-0 bottom-4 flex justify-center pb-12 font-bold">
+        <div className="flex justify-center w-full pb-4 font-bold">
           <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
-      <section className="w-full mt-[8vh] px-24 flex justify-center ">
+      <section className="w-full px-24 flex justify-center mt-6">
         <CommunityForm
           currentItems={currentItems}
           setCurrentPage={setCurrentPage}
@@ -118,6 +118,7 @@ const CommunityMain = () => {
       </section>
     </main>
   );
+  
 };
 
 export default CommunityMain;

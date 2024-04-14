@@ -131,9 +131,9 @@ const DetailPost = () => {
 
   return (
     <main className="grid grid-cols-[16%_84%] h-[84%]">
-      <section className="relative bg-bgColor1 border-r-2 border-solid border-pointColor1 min-h-[84vh]">
+      <section className="flex flex-col justify-between bg-bgColor1 border-r-2 border-solid border-pointColor1">
         <CategorySelector categoryNow={categoryNow} />
-        <div className="absolute inset-x-0 bottom-4 flex justify-center pb-12 font-bold">
+        <div className="flex justify-center w-full pb-4 font-bold">
           <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
