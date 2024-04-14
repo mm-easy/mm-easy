@@ -1,18 +1,17 @@
 'use client';
 
-import Image from 'next/image';
-import { Dispatch, FormEvent, useEffect, useRef, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SetStateAction } from 'jotai';
-import checkboxImg from '@/assets/checkbox.png';
 
-import { type Option, type Question, QuestionType } from '@/types/quizzes';
+import { handleMaxLength } from '@/utils/handleMaxLength';
+import { storageUrl } from '@/utils/supabase/storage';
 import SelectQuestionType from './SelectQuestionType';
 import InputQuestionTitle from './InputQuestionTitle';
 import InputQuestionImg from './InputQuestionImg';
-import { handleMaxLength } from '@/utils/handleMaxLength';
 import UnloadImgBtn from './UnloadImg';
-import { storageUrl } from '@/utils/supabase/storage';
+
+import { type Option, type Question, QuestionType } from '@/types/quizzes';
 
 const QuestionForm = ({
   questions,

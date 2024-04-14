@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
 import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
-import MainLogo from './(main)/(components)/MainLogo';
+import Banner from './(main)/(components)/Banner';
 import RankingSection from './(main)/(components)/RankingSection';
 import Footer from './(main)/(components)/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
@@ -67,7 +67,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      <MainLogo />
+      <Banner />
       <QuizSection />
       <RankingSection />
       <CommunitySection />
