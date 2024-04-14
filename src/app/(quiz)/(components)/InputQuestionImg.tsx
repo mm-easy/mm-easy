@@ -20,7 +20,7 @@ const InputQuestionImg = ({
         }}
         className="hidden"
       />
-      <label htmlFor={`file-input-${id}`} className="">
+      <label htmlFor={`file-input-${id}`}>
         <Image
           src={img_url}
           alt="문항 이미지"

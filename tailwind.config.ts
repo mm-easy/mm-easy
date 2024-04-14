@@ -19,13 +19,6 @@ const config: Config = {
         pointColor3: '#D9D9D9',
         blackColor: '#2e2e2e'
       }
-      // fontWeight: {
-      //   thin: '100',
-      //   right: '200',
-      //   medium: '400',
-      //   bold: '700',
-      //   black: '900'
-      // }
     },
     backgroundSize: { md: '80%' }
   },
