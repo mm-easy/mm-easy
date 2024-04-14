@@ -44,7 +44,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}
-            className={`p-8 pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
+            className={`p-[30px] pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
               selectedCategory === category || categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
