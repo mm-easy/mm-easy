@@ -6,6 +6,7 @@ export const getPosts = async () => {
     const { data: posts, error } = await supabase
       .from('posts')
       .select(`*, profiles!inner(nickname)`)
+      .is('deleted_at', null)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
