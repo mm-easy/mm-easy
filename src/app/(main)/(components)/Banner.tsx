@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import LogoVertical3 from '@/assets/logo_vertical_3.png';
 
-const MainLogo = () => {
+const Banner = () => {
   return (
     <>
       <header className="w-full h-[400px] relative bg-bgColor2 border-solid border-b-2 border-pointColor1 flex flex-col items-center justify-center">
@@ -28,4 +28,4 @@ const MainLogo = () => {
   );
 };
 
-export default MainLogo;
+export default Banner;
