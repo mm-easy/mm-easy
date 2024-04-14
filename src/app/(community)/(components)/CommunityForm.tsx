@@ -45,8 +45,8 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             </tr>
           </thead>
           <tbody>
-            {currentItems?.map((item, idx) => {
-              return (
+            {currentItems?.length > 0 ? (
+              currentItems.map((item, idx) => (
                 <tr
                   className="bg-white cursor-pointer border-y border-solid border-pointColor3"
                   key={idx}
@@ -56,10 +56,16 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8">{item['title']}</td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
-                  <td>{item["view_count"]}</td>
+                  <td>{item['view_count']}</td>
                 </tr>
-              );
-            })}
+              ))
+            ) : (
+              <tr className="bg-white">
+                <td colSpan={5} className="text-center py-4">
+                  게시글이 없습니다.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

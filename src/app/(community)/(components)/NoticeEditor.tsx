@@ -89,7 +89,7 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   ];
 
   return (
-    <div style={{ height: '700px' }}>
+    <div style={{ height: '450px' }}>
       <ReactQuill
         ref={quillRef}
         theme="snow"
@@ -98,7 +98,7 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
         modules={modules}
         formats={formats}
         placeholder="내용을 입력해 주세요."
-        style={{ height: '650px' }}
+        style={{ height: '400px' }}
       />
     </div>
   );

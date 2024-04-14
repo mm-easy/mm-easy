@@ -43,7 +43,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
     if (window.confirm('정말 해당 댓글을 삭제하시겠습니까?')) {
       try {
         await handleDeleteBtn(userId);
-        toast("게시글이 삭제되었습니다.")
+        toast("댓글이 삭제되었습니다.")
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
