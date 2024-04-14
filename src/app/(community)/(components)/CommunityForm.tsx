@@ -48,11 +48,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             {currentItems?.length > 0 ? (
               currentItems.map((item, idx) => (
                 <tr
-                  className="bg-white cursor-pointer border-y border-solid border-pointColor3"
+                  className="bg-white cursor-pointer text-[calc(1vh+8px)] border-y border-solid border-pointColor3"
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}
                 >
-                  <td className="pl-6 p-4">{item['category']}</td>
+                  <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8">{item['title']}</td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
