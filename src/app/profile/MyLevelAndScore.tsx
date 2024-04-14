@@ -78,17 +78,17 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>퀴즈 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">{myQuizScore}</p>
+          <p className="mt-5 text-3xl text-pointColor1">{myQuizScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>타자연습 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">{myGameScore}</p>
+          <p className="mt-5 text-3xl text-pointColor1">{myGameScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>총 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">{myQuizScore && myGameScore && myQuizScore + myGameScore}</p>
+          <p className="mt-5 text-3xl text-pointColor1">{(myQuizScore ?? 0) + (myGameScore ?? 0)}</p>
         </div>
       </div>
       <div className="text-center mt-10 text-pointColor1 underline underline-offset-4">

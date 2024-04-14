@@ -17,6 +17,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import ReportButton from '@/components/common/ReportButton';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
@@ -47,6 +48,7 @@ const DetailPost = () => {
     },
     queryKey: ['posts']
   });
+  
 
   const { data: nextBeforePost = [] } = useQuery<Post[]>({
     queryFn: async () => {
@@ -130,7 +132,7 @@ const DetailPost = () => {
             <div>
               <div className="flex justify-between">
                 <p className="text-lg font-bold">{post.category}</p>
-                <p className="text-sm">조회수{post.view_count}</p>
+                <p className="text-sm">조회수 {post.view_count}</p>
               </div>
               <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>
               <div className="flex border-solid border-b justify-between ">
@@ -181,6 +183,17 @@ const DetailPost = () => {
               <div className="flex items-center pt-4">
                 <div className="flex ml-auto items-center">
                   <Like postId={params.id} profile={profile} />
+                  {profile && profile.email!==post.profiles.email && (
+                  <ReportButton
+              targetId={params.id}
+              type="posts"
+              currentUserEmail={profile.email}
+              title={post.title}
+              creatorId={post.profiles.email}
+            >
+            🚨마음이 아프네요
+            </ReportButton>
+            )}
                 </div>
               </div>
               <div className="border-solid border-t pt-3">

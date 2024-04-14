@@ -98,7 +98,7 @@ export const getPostDetail = async (postId: string) => {
   try {
     const { data: post, error } = await supabase
       .from('posts')
-      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .select(`*, profiles!inner(nickname,avatar_img_url,email)`)
       .eq('id', postId);
     if (error) {
       throw error;
@@ -125,7 +125,7 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
   try {
     const { data: post, error } = await supabase
       .from('posts')
-      .select(`*, profiles!inner(nickname,avatar_img_url)`)
+      .select(`*, profiles!inner(nickname,avatar_img_url,email)`)
       .eq('category', categoryNow)
       .eq('id', postId);
     if (error) {
