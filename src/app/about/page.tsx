@@ -207,45 +207,45 @@ const AboutPage = () => {
         <h2 className="text-4xl font-extrabold py-16 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center w-full pl-10 py-10">
-            <div className="flex flex-col mr-auto mb-6 w-3/6">
-              <div className=" bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col ml-auto mb-6 w-2/3">
+              <div className="about-userreviewright bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">&quot;한국어 속도가 확 늘었어요~ 모두 타자 연습 게임 덕분!&quot;</span>
+                <span className="text-pointColor1 text-base block mt-2">Elisa, 멕시코</span>
               </div>
-              <span className="text-pointColor1 text-base block mt-2">Elisa, 멕시코</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full pr-20 py-10">
-            <div className="flex flex-col ml-auto mb-6 w-3/6">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col mr-auto mb-6 w-2/3">
+              <div className="about-userreviewleft bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">&quot;이 사이트를 찾고 제 인생이 달라졌어요..! 쭈천 함미다!&quot;</span>
+                <span className="text-pointColor1 text-base block mt-2">Bryan, 태국</span>
               </div>
-              <span className="text-pointColor1 text-base block mt-2">Bryan, 태국</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full pl-32 py-10">
-            <div className="flex flex-col mr-auto mb-6 w-3/6">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col ml-auto mb-6 w-4/5">
+              <div className="about-userreviewright bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">&quot;미루고 있던 한글 공부를 즐겁게 할 수 있었어요. 고맙습니다.&quot;</span>
+                <span className="text-pointColor1 text-base block mt-2">Danaka, 일본</span>
               </div>
-              <span className="text-pointColor1 text-base block mt-2">Danaka, 일본</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full py-10">
-            <div className="flex flex-col ml-auto mb-10 w-3/6">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col mr-auto mb-10 w-3/5">
+              <div className="about-userreviewleft bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">&quot;퀴즈를 직접 만드는 것, 너무 흥미진진했어요!&quot;</span>
+                <span className="text-pointColor1 text-base block mt-2">Danielle, 호주</span>
               </div>
-              <span className="text-pointColor1 text-base block mt-2">Danielle, 호주</span>
             </div>
           </div>
           <div className="flex justify-center items-center w-full">
-            <div className="flex flex-col mb-4 w-3/6">
-              <div className="bg-white rounded p-4 border border-solid border-pointColor1">
+            <div className="flex flex-col ml-auto mb-4 w-3/4">
+              <div className="about-userreviewright bg-white rounded p-4 border border-solid border-pointColor1">
                 <span className="">
                   &quot;&apos;뭔말이지?&apos; 게임 퀴즈로, 한국어 이제 내 두 번째 언어 같은 느낌!&quot;
                 </span>
+                <span className="text-pointColor1 text-base block mt-2">Jonathan, 콩고</span>
               </div>
-              <span className="text-pointColor1 text-base block mt-2">Jonathan, 콩고</span>
             </div>
           </div>
         </div>

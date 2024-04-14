@@ -21,6 +21,7 @@ import ReportButton from '@/components/common/ReportButton';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import { CancelButton } from '@/components/common/FormButtons';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -120,13 +121,24 @@ const DetailPost = () => {
     fetchData();
   }, [isLoggedIn]);
 
+  const navigateToPostPage = () => {
+    if (!isLoggedIn) {
+      toast.warn('게시물을 작성하려면 로그인 해주세요.');
+    } else {
+      router.push('/community-post');
+    }
+  };
+
   return (
-    <article className="grid grid-cols-[16%_84%] h-[84%]">
-      <div>
+    <main className="grid grid-cols-[16%_84%] h-[84%]">
+      <section className="relative bg-bgColor1 border-r-2 border-solid border-pointColor1 min-h-[84vh]">
         <CategorySelector categoryNow={categoryNow} />
-      </div>
+        <div className="absolute inset-x-0 bottom-4 flex justify-center pb-12 font-bold">
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
+        </div>
+      </section>
       <div className="flex bg-bgColor1 text-pointColor1">
-        <div className="py-16 px-48 border-l-2 border-solid w-full border-pointColor1 bg-white">
+        <div className="py-16 px-48 w-full bg-white">
           {post && post.profiles && (
             <div>
               <div className="flex justify-between">
@@ -206,7 +218,7 @@ const DetailPost = () => {
           )}
         </div>
       </div>
-    </article>
+    </main>
   );
 };
 
