@@ -21,13 +21,13 @@ const PostForm = () => {
   const [category, setCategory] = useState('질문');
   const router = useRouter();
 
-  const categories = [
-    { id: 'notice', value: '공지', label: '공지' },
+  const baseCategories = [
     { id: 'question', value: '질문', label: '질문' },
     { id: 'chat', value: '잡담', label: '잡담' },
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
+
 
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
@@ -40,6 +40,10 @@ const PostForm = () => {
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
   });
+
+  const categories = profile?.email === 'daejang@mmeasy.com' 
+  ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
+  : baseCategories;
 
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
