@@ -4,6 +4,7 @@ type UserProfile = {
   nickname: string;
   avatar_img_url: string;
   id: string;
+  email: string;
 };
 
 export type PostDetailDateType = {

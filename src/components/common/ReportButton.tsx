@@ -13,7 +13,7 @@ const ReportButton = ({
   children: React.ReactNode;
   targetId: string | string[];
   type: string;
-  currentUserEmail: string | null;
+  currentUserEmail?: string | null | undefined;
   title: string;
   creatorId: string;
 }) => {
