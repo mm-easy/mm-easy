@@ -13,9 +13,9 @@ export const Pagination: React.FC<PaginationProps> = ({ total, itemsPerPage, cur
   }
 
   return (
-    <section className='flex justify-center pt-10'>
+    <section className='flex justify-center h-full'>
       <nav className="">
-        <ul className="flex justify-center text-base font-bold gap-10">
+        <ul className="flex justify-center text-base font-bold gap-10 h-full">
           {startPage > 1 && (
             <button className="text-pointColor1" onClick={() => onPageChange(startPage - 1)}>
               &#9664;
@@ -24,7 +24,7 @@ export const Pagination: React.FC<PaginationProps> = ({ total, itemsPerPage, cur
           {pageNumbers.map((number) => (
             <li
               key={number}
-              className={`cursor-pointer ${number === currentPage ? 'text-pointColor1 font-bold' : ''}`}
+              className={`cursor-pointer ${number === currentPage ? 'text-blue-700 font-bold' : ''}`}
               onClick={() => onPageChange(number)}
             >
               {number}

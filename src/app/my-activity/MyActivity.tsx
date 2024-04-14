@@ -191,7 +191,7 @@ const MyActivity = () => {
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[55%]">제목</th>
                 <th className="w-[13%]">점수</th>
-                <th>만든 날짜</th>
+                <th>푼 날짜</th>
               </tr>
             </thead>
             <tbody>
@@ -200,7 +200,7 @@ const MyActivity = () => {
                     <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
                       <td className="py-4 w-24">{quiz.quizzes.title}</td>
                       <td>{quiz.score}</td>
-                      {/* <td>{formatToLocaleDateTimeString(quiz)}</td> */}
+                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <div className="text-right">
                         <button
                           className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
