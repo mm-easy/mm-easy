@@ -102,7 +102,7 @@ const CommunityMain = () => {
       <section className="relative h-[84vh] bg-bgColor1 border-r-2 border-solid border-pointColor1">
         <CategorySelector categoryNow={category} />
         <div className="absolute inset-x-0 bottom-4 flex justify-center pb-12 font-bold">
-          {/* <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" /> */}
+          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
       <section className="w-full mt-[8vh] px-24 flex justify-center ">
