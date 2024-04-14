@@ -42,7 +42,11 @@ const QuizForm = () => {
     const fetchData = async () => {
       try {
         const getSession = await supabase.auth.getSession();
-        if (!getSession.data.session) return;
+        if (!getSession.data.session) {
+        router.push('/login'); 
+        toast('로그인 후 이용해 주세요');
+        return;
+        }
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
         setCurrentUser(userProfile.email);
