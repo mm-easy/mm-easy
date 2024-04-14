@@ -1,14 +1,14 @@
 'use client'
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { getQuizzesReports, getPostsReports } from "@/api/admin";
 import { formatToLocaleDateTimeString } from "@/utils/date";
-import { useRouter } from "next/navigation";
+import { supabase } from "@/utils/supabase/supabase";
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState('posts')
-  const router = useRouter();
+  const [activeTab, setActiveTab] = useState('posts');
+  const queryClient = useQueryClient();
 
     const { data: quizReports, isLoading: quizLoading } = useQuery({
       queryKey: ['getquizreports'],
@@ -22,6 +22,71 @@ const AdminPage = () => {
   
     if (quizLoading || postsLoading) {
       return <div>로딩중..</div>;
+    };
+
+    const handleDelete = async (id: string | undefined, target_id: string | undefined) => {
+      try {
+        const { error: adminError } = await supabase
+          .from('admin')
+          .update({ status: true })
+          .eq('id', id);
+    
+        if (adminError) throw adminError;
+    
+        const currentTimestamp = new Date().toISOString();
+    
+        const { error: postsError } = await supabase
+          .from('posts')
+          .update({ deleted_at: currentTimestamp })
+          .eq('id', target_id);  
+    
+        if (postsError) throw postsError;
+    
+        const { error: quizzesError } = await supabase
+          .from('quizzes')
+          .update({ deleted_at: currentTimestamp })
+          .eq('id', target_id);  
+    
+        if (quizzesError) throw quizzesError;
+
+        await queryClient.invalidateQueries({ queryKey: ['getquizreports'] });
+        await queryClient.invalidateQueries({ queryKey: ['getpostsreports'] });
+
+      } catch (error) {
+        console.error('삭제 중 오류:', error);
+      }
+    };
+    
+    
+    const handleRestore = async (id: string | undefined, target_id: string | undefined) => {
+      try {
+        const { error: adminError } = await supabase
+          .from('admin')
+          .update({ status: false })
+          .eq('id', id);
+    
+        if (adminError) throw adminError;
+    
+        const { error: postsError } = await supabase
+          .from('posts')
+          .update({ deleted_at: null })
+          .eq('id', target_id);  
+    
+        if (postsError) throw postsError;
+    
+        const { error: quizzesError } = await supabase
+          .from('quizzes')
+          .update({ deleted_at: null })
+          .eq('id', target_id);  
+    
+        if (quizzesError) throw quizzesError;
+
+        await queryClient.invalidateQueries({ queryKey: ['getquizreports'] });
+        await queryClient.invalidateQueries({ queryKey: ['getpostsreports'] });
+
+      } catch (error) {
+        console.error('복구 중 오류:', error);
+      }
     };
 
   return ( 
@@ -47,7 +112,7 @@ const AdminPage = () => {
       <thead className="text-left">
         <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
           <th className="p-4 w-[15%]">구분</th>
-          <th className="w-[20%]">닉네임</th>
+          <th className="w-[20%]">이메일</th>
           <th className="w-[35%]">제목</th>
           <th className="w-[15%]">날짜</th>
           <th className="w-[15%]">처리</th>
@@ -61,13 +126,18 @@ const AdminPage = () => {
               className="bg-bg-bgColor2"
               key={idx}
             >
-               <td className="pl-6 p-4">게시글</td>
+               <td className="pl-6 p-4">{item.status === false ? "처리 중" : "처리 완료"}</td>
                   <td>{item.reported_user_id || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8 cursor-pointer" >
                     <a href={`/community-list/전체/${item.target_id}`}>{item['title']}</a>
                     </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
-                  <td>{item["status"]}</td>
+                  <td>{item.status === false ? (
+                  <button onClick={() => handleDelete(item.id, item.target_id as string)}>삭제</button>
+                ) : (
+                  <button onClick={() => handleRestore(item.id, item.target_id as string)}>복구</button>
+                )}
+              </td>
             </tr>
           );
         })} 
@@ -82,13 +152,17 @@ const AdminPage = () => {
               className="bg-bg-bgColor2"
               key={idx}
             >
-               <td className="pl-6 p-4">퀴즈</td>
+               <td className="pl-6 p-4">{item.status === false ? "처리 중" : "처리 완료"}</td>
                   <td>{item.reported_user_id || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8 cursor-pointer">
                   <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
                   </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
-                  <td>{item["status"]}</td>
+                  <td>{item.status === false ? (
+                  <button onClick={() => handleDelete(item.id, item.target_id as string)}>삭제</button>
+                ) : (
+                  <button onClick={() => handleRestore(item.id, item.target_id as string)}>복구</button>
+                )}</td>
             </tr>
           );
         })} 
