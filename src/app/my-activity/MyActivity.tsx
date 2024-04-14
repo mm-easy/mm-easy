@@ -13,8 +13,6 @@ import { useEffect, useState } from 'react';
 import { Pagination } from './Pagination';
 import { TabName } from '@/types/pagination';
 
-
-
 const MyActivity = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
@@ -131,15 +129,14 @@ const MyActivity = () => {
     router.push(`/quiz/${puizId}`);
   };
 
-  const handlePageChange = (page : number) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const changeTab = (newTab : TabName) => {
+  const changeTab = (newTab: TabName) => {
     setActiveTab(newTab);
     setCurrentPage(1); // 탭을 변경할 때 페이지를 1로 리셋
   };
-
 
   // 페이지
   const itemsPerPage = 8; // 페이지 당 항목 수
@@ -191,7 +188,7 @@ const MyActivity = () => {
               <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                 <th className="pb-2 w-[55%]">제목</th>
                 <th className="w-[13%]">점수</th>
-                <th>만든 날짜</th>
+                <th>푼 날짜</th>
               </tr>
             </thead>
             <tbody>
@@ -200,7 +197,7 @@ const MyActivity = () => {
                     <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
                       <td className="py-4 w-24">{quiz.quizzes.title}</td>
                       <td>{quiz.score}</td>
-                      {/* <td>{formatToLocaleDateTimeString(quiz)}</td> */}
+                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <div className="text-right">
                         <button
                           className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
@@ -211,9 +208,11 @@ const MyActivity = () => {
                       </div>
                     </tr>
                   ))
-                : !isSolvedQuizLoading && (
+                  : (
                     <tr>
-                      <td>푼 퀴즈가 없습니다.</td>
+                      <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                        푼 퀴즈가 없습니다.
+                      </td>
                     </tr>
                   )}
             </tbody>
@@ -250,9 +249,11 @@ const MyActivity = () => {
                       </div>
                     </tr>
                   ))
-                : !isQuizLoading && (
+                  : (
                     <tr>
-                      <td>만든 퀴즈가 없습니다.</td>
+                      <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                        만든 퀴즈가 없습니다.
+                      </td>
                     </tr>
                   )}
             </tbody>
@@ -271,22 +272,26 @@ const MyActivity = () => {
               </tr>
             </thead>
             <tbody>
-              {currentPosts && currentPosts.length > 0
-                ? currentPosts.map((post, index) => (
-                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="truncate max-w-xs pr-12 py-4 w-24">
-                        <a href={`/community-list/${post.category}/${post.id}`}>{post.title}</a>
-                      </td>
-                      <td>{post.view_count}</td>
-                      <td>{formatToLocaleDateTimeString(post.created_at)}</td>
-                      <div className="text-right">
-                        <div>
-                          <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
-                        </div>
-                      </div>
-                    </tr>
-                  ))
-                : !isPostLoading && <div>게시글이 없습니다.</div>}
+              {currentPosts && currentPosts.length > 0 ? (
+                currentPosts.map((post, index) => (
+                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                    <td className="truncate max-w-xs pr-12 py-4 w-24">
+                      <a href={`/community-list/${post.category}/${post.id}`}>{post.title}</a>
+                    </td>
+                    <td>{post.view_count}</td>
+                    <td>{formatToLocaleDateTimeString(post.created_at)}</td>
+                    <td className="text-right">
+                      <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lgtext-center">
+                    게시글이 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -302,19 +307,23 @@ const MyActivity = () => {
               </tr>
             </thead>
             <tbody>
-              {currentComments && currentComments.length > 0
-                ? currentComments.map((comment, index) => (
-                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
-                      <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
-                      <div className="text-right">
-                        <div>
-                          <PostDeleteButton text="삭제" postId={comment.id} width="w-28" height="h-8" />
-                        </div>
-                      </div>
-                    </tr>
-                  ))
-                : !isCommentLoading && <div>댓글이 없습니다.</div>}
+              {currentComments && currentComments.length > 0 ? (
+                currentComments.map((comment, index) => (
+                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                    <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
+                    <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
+                    <td className="text-right">
+                      <CommentDeleteBtn text="삭제" userId={comment.id} width="w-28" height="h-8" />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                    댓글이 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

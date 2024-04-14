@@ -100,11 +100,11 @@ const PostForm = () => {
   };
 
   return (
-    <main className="grid grid-cols-[16%_84%]">
-      <div className='border-r-2 border-solid border-pointColor1'>
+    <main className="grid grid-cols-[16%_84%] h-[84vh]">
+      <div className='bg-bgColor1 border-r-2 border-solid border-pointColor1'>
         <CategorySelector categoryNow={categoryNow} />
       </div>
-      <form onSubmit={handleNewPost} className="py-12 px-48">
+      <form onSubmit={handleNewPost} className="w-full mt-[4vh] px-48">
         <section className="flex border-b border-pointColor1 border-solid">
           {categories.map((item) => (
             <div key={item.id}>
