@@ -1,17 +1,17 @@
-import Link from 'next/link';
-import { isMenuOpenAtom } from '@/store/store';
-import { useAtom } from 'jotai';
+// import Link from 'next/link';
+// import { isMenuOpenAtom } from '@/store/store';
+// import { useAtom } from 'jotai';
 
 const MenuPage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
+  // const [isMenuOpen, setIsMenuOpen] = useAtom(isMenuOpenAtom);
 
-  const handleLinkClick = () => {
-    setIsMenuOpen(false);
-  };
+  // const handleLinkClick = () => {
+  //   setIsMenuOpen(false);
+  // };
 
   return (
     <div className="flex justify-center bg-bgColor1 z-50 fixed inset-0 items-center mt-[8vh] h-screen">
-      <div className="grid grid-rows-2 grid-cols-3 gap-x-24 gap-y-12 p-20 pt-2 w-140 h-140">
+      {/* <div className="grid grid-rows-2 grid-cols-3 gap-x-24 gap-y-12 p-20 pt-2 w-140 h-140">
         <div className="flex flex-col justify-center items-center">
           <Link
             href="/quiz-list"
@@ -67,7 +67,7 @@ const MenuPage = () => {
             <p className="text-pointColor1 text-4xl font-bold">LOGO</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

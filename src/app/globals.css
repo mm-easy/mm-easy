@@ -178,7 +178,8 @@ a {
   transition: opacity 300ms, transform 300ms;
 }
 
-.ql-editor strong, em {
+.ql-editor strong,
+em {
   font-weight: bold;
 }
 .ql-editor em {
@@ -191,4 +192,62 @@ a {
 
 .ql-editor h2 {
   font-size: x-large;
+}
+
+.about-userreviewright {
+  position: relative;
+}
+
+.about-userreviewright::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  right: 60px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreviewright::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  right: 60px;
+  z-index: 1;
+}
+
+.about-userreviewleft {
+  position: relative;
+}
+
+.about-userreviewleft::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 60px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreviewleft::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  left: 60px;
+  z-index: 1;
 }

@@ -42,6 +42,7 @@ const QuizSection = () => {
                   alt="퀴즈 썸네일"
                   width={250}
                   height={250}
+                  quality={100}
                   className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
                 />
                 <QuestionEx id={quiz.id} />
