@@ -22,6 +22,7 @@ const PostForm = () => {
   const router = useRouter();
 
   const categories = [
+    { id: 'notice', value: '공지', label: '공지' },
     { id: 'question', value: '질문', label: '질문' },
     { id: 'chat', value: '잡담', label: '잡담' },
     { id: 'study', value: '공부', label: '공부' },
