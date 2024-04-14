@@ -61,7 +61,7 @@ const AdminPage = () => {
               className="bg-bg-bgColor2"
               key={idx}
             >
-               <td className="pl-6 p-4">{item['type']}</td>
+               <td className="pl-6 p-4">게시글</td>
                   <td>{item.reported_user_id || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8 cursor-pointer" >
                     <a href={`/community-list/전체/${item.target_id}`}>{item['title']}</a>
@@ -82,7 +82,7 @@ const AdminPage = () => {
               className="bg-bg-bgColor2"
               key={idx}
             >
-               <td className="pl-6 p-4">{item['type']}</td>
+               <td className="pl-6 p-4">퀴즈</td>
                   <td>{item.reported_user_id || '알 수 없음'}</td>
                   <td className="truncate max-w-xs pr-8 cursor-pointer">
                   <a href={`/quiz/${item.target_id}`}>{item['title']}</a>

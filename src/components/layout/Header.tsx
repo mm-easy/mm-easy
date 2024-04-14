@@ -5,13 +5,15 @@ import MainLogo from '@/assets/logo_horizontal_1.png';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { isLoggedInAtom, isMenuOpenAtom } from '../../store/store';
+import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import ProfileDropdown from './ProfileDropdown';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string>();
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -22,6 +24,7 @@ const Header = () => {
           return;
         } else {
           setIsLoggedIn(true);
+          setCurrentUserEmail(getSession.data.session.user.email);
         }
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
@@ -38,6 +41,7 @@ const Header = () => {
         setIsLoggedIn(true);
       } else if (event === 'SIGNED_OUT') {
         setIsLoggedIn(false);
+        setCurrentUserEmail('');
       }
     };
 
@@ -78,6 +82,9 @@ const Header = () => {
           <Link href="/typing-game">타자 연습</Link>
           <Link href="/community-list?category=전체">커뮤니티</Link>
           <Link href="/about">서비스 소개</Link>
+          {currentUserEmail === 'daejang@mmeasy.com' && (
+            <Link href="/admin">Admin</Link>
+          )}
         </nav>
         {isLoggedIn ? (
           <ProfileDropdown />
