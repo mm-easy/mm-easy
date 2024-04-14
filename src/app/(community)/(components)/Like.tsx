@@ -57,8 +57,8 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   };
 
   return (
-    <div className="flex w-full justify-between">
-      <div className="flex pt-[2px]">
+    <div className="flex gap-1">
+      <div>
         <LikeToggleButton
           toggled={likes ?? false}
           onToggle={handleLikeToggle}
@@ -66,7 +66,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
           offIcon={<AiOutlineHeart />}
         />
       </div>
-      <p className="ml-[5px] h-8">좋아요 {likeCount}</p>
+      <p>좋아요 {likeCount}</p>
     </div>
   );
 };
