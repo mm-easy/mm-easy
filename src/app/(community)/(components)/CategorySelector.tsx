@@ -10,6 +10,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
 
   const categoryMenu: Record<string, string> = {
     전체: '전체',
+    공지: '공지',
     질문: '질문',
     잡담: '잡담',
     공부: '공부',
