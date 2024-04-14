@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import LogoVertical3 from '@/assets/logo_vertical_3.png';
+import { useState } from 'react';
 
 const Banner = () => {
   const banners = ['banner_v2_b.png', 'banner_v2_lb.png'];
-  const randomIdx = Math.floor(Math.random() * banners.length);
+  const [randomIdx] = useState(Math.floor(Math.random() * banners.length));
 
   return (
     <main className="w-full border-solid border-b-2 border-pointColor1">
