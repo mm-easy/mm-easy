@@ -8,19 +8,20 @@ import { toast } from 'react-toastify';
 
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
+import { supabase } from '@/utils/supabase/supabase';
+import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitQuizTry, useUpdateQuizTry } from './mutation';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
-import { errorMonitor } from 'events';
-import PageUpBtn from '@/components/common/PageUpBtn';
-import { storageUrl } from '@/utils/supabase/storage';
+import ReportButton from '@/components/common/ReportButton';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -192,7 +193,7 @@ const QuizTryPage = () => {
         insertQuizMutation.mutate(quizTry);
       }
     } catch (error) {
-      console.log('퀴즈 점수 저장/업데이트 실패', errorMonitor);
+      console.log('퀴즈 점수 저장/업데이트 실패', error);
     }
   };
 
@@ -283,6 +284,17 @@ const QuizTryPage = () => {
           >
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
+          {resultMode && (
+            <ReportButton
+              targetId={id}
+              type="quizzes"
+              currentUserEmail={currentUserEmail}
+              title={title}
+              creatorId={creator_id}
+            >
+              🚨 퀴즈에 오류가 있나요?
+            </ReportButton>
+          )}
         </article>
         <PageUpBtn scrollPosition={scrollPosition} />
       </main>

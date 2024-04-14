@@ -145,7 +145,7 @@ const DetailPost = () => {
                     />
                   </div>
                   <div className="flex flex-col justify-center text-blackColor">
-                    <p className='font-medium text-lg'>{post.profiles.nickname}</p>
+                    <p className="font-medium text-lg">{post.profiles.nickname}</p>
                     <time className="text-sm">{formatToLocaleDateTimeString(post.created_at)}</time>
                   </div>
                 </div>
