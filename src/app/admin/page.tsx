@@ -1,9 +1,28 @@
 'use client'
 
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { getQuizzesReports, getPostsReports } from "@/api/admin";
+import { formatToLocaleDateTimeString } from "@/utils/date";
+import { useRouter } from "next/navigation";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('posts')
+  const router = useRouter();
+
+    const { data: quizReports, isLoading: quizLoading } = useQuery({
+      queryKey: ['getquizreports'],
+      queryFn: getQuizzesReports,
+    });
+
+    const { data: postsReports, isLoading: postsLoading } = useQuery({
+      queryKey: ['getpostsreports'],
+      queryFn: getPostsReports,
+    });
+  
+    if (quizLoading || postsLoading) {
+      return <div>로딩중..</div>;
+    };
 
   return ( 
   <article className="w-full p-40 bg-bgColor2">
@@ -34,22 +53,47 @@ const AdminPage = () => {
           <th className="w-[15%]">처리</th>
         </tr>
       </thead>
+      {activeTab === 'posts' && (
       <tbody>
-        {/* {currentItems?.map((item, idx) => { */}
-          {/* return ( */}
+        {postsReports?.map((item, idx) => {
+          return (
             <tr
-              className="bg-bg-bgColor2 cursor-pointer"
-              // key={idx}
-              // onClick={() => navigateToDetailPost(item)}
+              className="bg-bg-bgColor2"
+              key={idx}
             >
-              <td className="p-4 w-24"></td>
-              <td></td>
-              <td></td>
-              <td></td>
+               <td className="pl-6 p-4">{item['type']}</td>
+                  <td>{item.reported_user_id || '알 수 없음'}</td>
+                  <td className="truncate max-w-xs pr-8 cursor-pointer" >
+                    <a href={`/community-list/전체/${item.target_id}`}>{item['title']}</a>
+                    </td>
+                  <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
+                  <td>{item["status"]}</td>
             </tr>
-          {/* ); */}
-        {/* })} */}
+          );
+        })} 
       </tbody>
+      )}
+
+      {activeTab === 'quizzes' && (
+      <tbody>
+        {quizReports?.map((item, idx) => {
+          return (
+            <tr
+              className="bg-bg-bgColor2"
+              key={idx}
+            >
+               <td className="pl-6 p-4">{item['type']}</td>
+                  <td>{item.reported_user_id || '알 수 없음'}</td>
+                  <td className="truncate max-w-xs pr-8 cursor-pointer">
+                  <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
+                  </td>
+                  <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
+                  <td>{item["status"]}</td>
+            </tr>
+          );
+        })} 
+      </tbody>
+      )}
     </table>
   </div>
   </article>
