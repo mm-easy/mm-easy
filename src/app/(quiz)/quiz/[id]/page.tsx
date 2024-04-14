@@ -13,7 +13,7 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitAdmin, useSubmitQuizTry, useSubmitReport, useUpdateQuizTry } from './mutations';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 
 import Header from './Header';
 import Creator from './Creator';
@@ -21,6 +21,7 @@ import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
+import ReportButton from '@/components/common/ReportButton';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -35,8 +36,6 @@ const QuizTryPage = () => {
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
-  const insertAdminMutation = useSubmitAdmin();
-  const insertReportMutation = useSubmitReport();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,26 +197,6 @@ const QuizTryPage = () => {
     }
   };
 
-  const handleReport = async (id: string | string[]) => {
-    try {
-      const admin = {
-        type: 'quizzes',
-        title,
-        target_id: id,
-        reported_user_id: creator_id
-      };
-      const insertAdminResult = await insertAdminMutation.mutateAsync(admin);
-
-      const report = {
-        user_id: currentUserEmail,
-        admin_id: insertAdminResult
-      };
-      insertReportMutation.mutate(report);
-    } catch (error) {
-      console.log('관리 등록/업데이트 실패', error);
-    }
-  };
-
   return (
     <>
       <Header level={level} title={title} />
@@ -306,9 +285,15 @@ const QuizTryPage = () => {
             {resultMode ? '다시 풀기' : '제출하기'}
           </button>
           {resultMode && (
-            <button className="text-pointColor1 underline" onClick={() => handleReport(id)}>
+            <ReportButton
+              targetId={id}
+              type="quizzes"
+              currentUserEmail={currentUserEmail}
+              title={title}
+              creatorId={creator_id}
+            >
               🚨 퀴즈에 오류가 있나요?
-            </button>
+            </ReportButton>
           )}
         </article>
         <PageUpBtn scrollPosition={scrollPosition} />
