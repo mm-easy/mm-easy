@@ -36,9 +36,10 @@ export const getQuizzesISolved = async (id: string): Promise<QuizTry[]> => {
   }
 };
 
+/** tries 테이블에서 상위점수 3명 target_date기준 일주일단위로 가져오기 */
 export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
   try {
-    const { data: quizScores, error } = await supabase.rpc('get_quiz_tries_with_details').limit(3);
+    const { data: quizScores, error } = await supabase.rpc('get_quiz_tries_with_details', { target_date: '2024-04-15' }).limit(3);
     if (error) throw error;
     return quizScores;
   } catch (error) {
