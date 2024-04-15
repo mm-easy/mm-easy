@@ -40,7 +40,7 @@ const AdminPage = () => {
 
   // 에러가 발생했거나 로그인한 사용자가 없거나 특정 이메일이 아닐 경우 로그인 페이지로 리다이렉트
   if (isProfileError || !userProfile || userProfile.email !== 'daejang@mmeasy.com') {
-    router.push("/login");
+    router.push("/");
     alert('접근할 수 없습니다.');
   }
 
@@ -96,7 +96,9 @@ const AdminPage = () => {
 
   return (
     <article className="w-full p-40 bg-bgColor2">
-      <nav className="flex px-4 justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
+      {userProfile?.email === 'daejang@mmeasy.com' && (
+        <>
+        <nav className="flex px-4 justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-16 cursor-pointer">
         <ul className="flex justify-center text-2xl w-full text-center border-b-2 border-solid ">
           <li
             className={`w-[50%] pb-6 ${activeTab === 'posts' ? 'font-bold border-solid border-b-3' : ''}`}
@@ -172,6 +174,8 @@ const AdminPage = () => {
           )}
         </table>
       </div>
+        </>
+      )}
     </article>
   );
 };
