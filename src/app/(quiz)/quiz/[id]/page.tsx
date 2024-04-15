@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-
+import { CancelButton } from '@/components/common/FormButtons';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { supabase } from '@/utils/supabase/supabase';
@@ -13,15 +13,14 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useAuth } from '@/hooks/useAuth';
-import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
-
+import { useDeleteQuiz, useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import ReportButton from '@/components/common/ReportButton';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
-import ReportButton from '@/components/common/ReportButton';
 
 const QuizTryPage = () => {
   const { id } = useParams();
@@ -36,6 +35,8 @@ const QuizTryPage = () => {
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
+  const deleteQuizMutation = useDeleteQuiz();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -197,6 +198,12 @@ const QuizTryPage = () => {
     }
   };
 
+  const handleDeleteQuiz = (id: string) => {
+    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    deleteQuizMutation.mutateAsync(id);
+    router.replace('/quiz-list');
+  };
+
   return (
     <>
       <Header level={level} title={title} />
@@ -220,6 +227,17 @@ const QuizTryPage = () => {
             </section>
           </section>
           <p className="p-4">{info}</p>
+          <div className="flex mt-10 justify-center font-bold">
+            {currentUserEmail === creator_id && (
+              <CancelButton
+                text="퀴즈 삭제"
+                width="w-44"
+                height="h-16"
+                border="border-2"
+                onClick={() => handleDeleteQuiz(id as string)}
+              />
+            )}
+          </div>
         </article>
         <article className="pt-12 pb-20 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (

@@ -1,5 +1,6 @@
 import { Option, OptionsToInsert, Question, QuestionsToInsert, Quiz, QuizRank } from '@/types/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
+import { ErrorBoundaryHandler } from 'next/dist/client/components/error-boundary';
 
 /** quiz 썸네일을 스토리지에 upload */
 export const uploadThumbnailToStorage = async (file: File, fileName: string) => {
@@ -83,13 +84,27 @@ export const insertOptionsToTable = async (newOptions: OptionsToInsert[]) => {
 /** quizzes 테이블에서 전체 데이터 가져오기 */
 export const getQuizzes = async () => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*').is('deleted_at', null).order('created_at', { ascending: false });
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select('*')
+      .is('deleted_at', null)
+      .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {
     console.error('퀴즈 목록 받아오기 실패', error);
     alert('일시적으로 퀴즈 목록을 받아오지 못했습니다. 다시 시도하세요.');
     throw error;
+  }
+};
+
+/** quizzes 테이블에서 해당 퀴즈 삭제하기 */
+export const deleteQuiz = async (id: string) => {
+  try {
+    const { error } = await supabase.from('quizzes').delete().eq('id', id);
+    if (error) throw error;
+  } catch (error) {
+    console.error('퀴즈 삭제 중 에러 발생', error);
   }
 };
 
