@@ -114,9 +114,9 @@ const AboutPage = () => {
     },
     {
       name: '정예슬',
-      content1: '좋은 분들과 함께 해서 행복했습니다!',
-      content2: '즐겁게 이용해 주세요!',
-      Behance: '',
+      content1: '어려운 만큼 재밌고 보람 있는 프로젝트였습니다.',
+      content2: '함께 참여할 수 있어 즐거웠습니다!',
+      Behance: 'https://www.behance.net/0802ysf5ee',
       Instagram: 'https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
       img: InfoYS
     }
@@ -149,27 +149,27 @@ const AboutPage = () => {
         <div className="flex justify-center w-3/5 items-center">
           <Image src={Infopeople} alt="로고" width={900} quality={100} />
         </div>
-        <div className="text-4xl w-full text-white ">
+        <div className="text-3xl w-full text-white ">
           <div>
-            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="py-16 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
-                <Image src={InfoIcon3} alt="로고" width={100} />
+                <Image src={InfoIcon3} alt="로고" width={50} />
                 <span className="ml-2 text-white">직접 퀴즈를 만들면서 한국어 실력을 키워보세요!</span>
               </div>
             </h2>
           </div>
           <div>
-            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="py-16 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
-                <Image src={InfoIcon2} alt="로고" width={100} />
+                <Image src={InfoIcon2} alt="로고" width={50} />
                 <span className="ml-2 text-white">타자 연습으로 한국어에 익숙해져 보세요!</span>
               </div>
             </h2>
           </div>
           <div>
-            <h2 className="py-28 text-center inline-block border-t border-solid border-white w-3/5">
+            <h2 className="pt-16 pb-24 text-center inline-block border-t border-solid border-white w-3/5">
               <div className="flex justify-center items-center gap-4">
-                <Image src={InfoIcon1} alt="로고" width={100} />
+                <Image src={InfoIcon1} alt="로고" width={50} />
                 <span className="ml-2 text-white">커뮤니티에서 소통하며 자신감을 길러보세요!</span>
               </div>
             </h2>
@@ -203,12 +203,12 @@ const AboutPage = () => {
           })}
         </div>
       </div>
-      <div className="flex flex-col text-xl font-bold w-4/6 pb-20">
+      <div className="flex flex-col text-xl font-bold w-3/6 pb-20">
         <h2 className="text-4xl font-extrabold py-16 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center w-full pl-10 py-10">
             <div className="flex flex-col ml-auto mb-6 w-2/3">
-              <div className="about-userreviewright bg-white rounded p-4 border border-solid border-pointColor1">
+              <div className="about-userreviewright bg-white rounded-lg p-4 border border-solid border-pointColor1">
                 <span className="">&quot;한국어 속도가 확 늘었어요~ 모두 타자 연습 게임 덕분!&quot;</span>
                 <span className="text-pointColor1 text-base block mt-2">Elisa, 멕시코</span>
               </div>
@@ -216,7 +216,7 @@ const AboutPage = () => {
           </div>
           <div className="flex justify-center items-center w-full pr-20 py-10">
             <div className="flex flex-col mr-auto mb-6 w-2/3">
-              <div className="about-userreviewleft bg-white rounded p-4 border border-solid border-pointColor1">
+              <div className="about-userreviewleft bg-white rounded-lg p-4 border border-solid border-pointColor1">
                 <span className="">&quot;이 사이트를 찾고 제 인생이 달라졌어요..! 쭈천 함미다!&quot;</span>
                 <span className="text-pointColor1 text-base block mt-2">Bryan, 태국</span>
               </div>
@@ -253,7 +253,8 @@ const AboutPage = () => {
       <div className="w-full mt-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
         <h2 className="text-pointColor1 text-4xl font-extrabold pt-16 pb-10">뭔말이지? 프로젝트에 참여한 사람들</h2>
         <h2 className="text-pointColor1 text-xl font-bold pb-24">Team Coding Zizon</h2>
-        <div className="grid grid-cols-3 gap-16">
+
+        <div className="w-3/5 mx-auto grid grid-cols-3 gap-y-4 mb-10">
           {managerData.map((item) => {
             return (
               <div key={item.name} className="">
@@ -280,7 +281,7 @@ const AboutPage = () => {
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
-                      {/* <WhiteButton onClick={() => handleGitBtn(item.Behance)} text="Behance" width="w-28" /> */}
+                      <WhiteButton onClick={() => item.Behance && handleGitBtn(item.Behance)} text="Behance" width="w-28" />
                       <WhiteButton
                         onClick={() => item.Instagram && handleGitBtn(item.Instagram)}
                         text="Instagram"
