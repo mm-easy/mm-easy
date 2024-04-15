@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase/supabase';
 import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
 import Banner from './(main)/(components)/Banner';
 import RankingSection from './(main)/(components)/RankingSection';
 import Footer from './(main)/(components)/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/utils/supabase/supabase';
 
 const Home = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
+  /** 소셜 로그인 가입 시 profiles 업데이트 */
   useEffect(() => {
     const saveUserProfile = async () => {
       const { data: session } = await supabase.auth.getSession();

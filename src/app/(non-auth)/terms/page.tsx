@@ -1,11 +1,9 @@
 'use client';
-
+import Terms from '@/constant/Terms';
+import PrivacyPolicy from '@/constant/PrivacyPolicy';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import Terms from '@/constant/Terms';
-import PrivacyPolicy from '@/constant/PrivacyPolicy';
-import SubHeader from '@/components/common/SubHeader';
 
 const TermsPage = () => {
   const [allChecked, setAllChecked] = useState(false);
@@ -27,9 +25,7 @@ const TermsPage = () => {
     setPrivacyChecked(!privacyChecked);
   };
 
-  {
-    /* 모든 체크박스가 선택되었는지 확인 */
-  }
+  /** 모든 체크박스가 선택되었는지 확인 */
   useEffect(() => {
     setAllChecked(termsChecked && privacyChecked);
   }, [termsChecked, privacyChecked]);
@@ -46,7 +42,7 @@ const TermsPage = () => {
   return (
     <article className="h-[84vh] flex items-center justify-center">
       <div className="flex w-[600px] items-center justify-center">
-        <div className="w-full bg-white p-3 rounded shadow mx-4">
+        <div className="w-full bg-white p-3 rounded mx-4">
           <h1 className="text-xl font-semibold text-center mt-4 mb-6">약관 동의</h1>
           <form className="space-y-6 mb-5" onSubmit={handleSubmit}>
             <div className="flex items-start">
@@ -69,7 +65,7 @@ const TermsPage = () => {
                 onChange={handleTermsChange}
                 className="h-5 w-5"
               />
-              <label htmlFor="terms-checkbox" className="ml-2 text-sm leading-tight">
+              <label htmlFor="terms-checkbox" className="ml-2 text-sm">
                 <span className="text-pointColor1">[필수]</span> 뭔말Easy? 이용약관
               </label>
             </div>
@@ -84,7 +80,7 @@ const TermsPage = () => {
                 onChange={handlePrivacyChange}
                 className="h-5 w-5"
               />
-              <label htmlFor="privacy-checkbox" className="ml-2 text-sm leading-tight">
+              <label htmlFor="privacy-checkbox" className="ml-2 text-sm">
                 <span className="text-pointColor1">[필수]</span> 개인정보 수집 및 이용
               </label>
             </div>
