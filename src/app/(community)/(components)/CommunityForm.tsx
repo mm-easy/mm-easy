@@ -32,7 +32,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const endPage = Math.min(startPage + btnRange - 1, Math.ceil(totalNum / pageRange));
 
   return (
-    <article className="w-full">
+    <article className="w-full ">
       <div className="bg-white p-4 w-full">
         <table className="w-full">
           <thead className="text-left">
@@ -48,7 +48,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             {currentItems?.length > 0 ? (
               currentItems.map((item, idx) => (
                 <tr
-                  className="bg-white cursor-pointer border-y border-solid border-pointColor3"
+                  className={`bg-white cursor-pointer border-y border-solid border-pointColor3 text-[calc(1vh+5px)] ${item['category'] === '공지' ? 'font-bold' : ''}`}
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}
                 >

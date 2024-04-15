@@ -21,6 +21,21 @@ export const getRecentPosts = async () => {
   const { data: posts, error } = await supabase
     .from('posts')
     .select('*')
+    .neq('category', '공지') 
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
+    .limit(3); // 3개의 게시글만 가져옴
+
+  if (error) throw error;
+  return posts || [];
+};
+
+export const getRecentNotice = async () => {
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('category', '공지') 
+    .is('deleted_at', null)
     .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
     .limit(3); // 3개의 게시글만 가져옴
 

@@ -1,16 +1,23 @@
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { getRecentPosts } from '@/api/posts';
+import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
-const CommunitySection = () => {
-  const { data: posts, isLoading } = useQuery({
-    queryKey: ['recentPosts'],
-    queryFn: getRecentPosts,
-    staleTime: 1000 * 60 * 5
+  const CommunitySection = () => {
+
+    const { data: posts, isLoading: postsLoading } = useQuery({
+      queryKey: ['recentPosts'],
+      queryFn: getRecentPosts,
+      staleTime: 1000 * 60 * 5
   });
 
-  if (isLoading) {
+    const { data: notices, isLoading: noticesLoading } = useQuery({
+      queryKey: ['recentNotice'],
+      queryFn: getRecentNotice,
+      staleTime: 1000 * 60 * 5
+    });
+
+  if (postsLoading || noticesLoading) {
     return <div>로딩중..</div>;
   }
 
@@ -31,14 +38,14 @@ const CommunitySection = () => {
               </Link>
             </div>
             <div>
-              {posts?.map((post, index) => (
+              {notices?.map((notice, index) => (
                 <div
-                  key={post.id}
-                  className={`py-4 ${index !== posts.length - 1 && 'border-b border-solid border-pointColor1'}`}
+                  key={notice.id}
+                  className={`py-4 ${index !== notices.length - 1 && 'border-b border-solid border-pointColor1'}`}
                 >
-                  <Link href={`/community-list/전체/${post.id}`} className="flex flex-col gap-2">
-                    <h2 className="text-lg font-bold truncate">{post.title}</h2>
-                    <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
+                  <Link href={`/community-list/전체/${notice.id}`} className="flex flex-col gap-2">
+                    <h2 className="text-lg font-bold truncate">{notice.title}</h2>
+                    <time>작성일: {formatToLocaleDateTimeString(notice.created_at)}</time>
                   </Link>
                 </div>
               ))}
