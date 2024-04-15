@@ -222,7 +222,7 @@ const TypingGamePage = () => {
         </h2>
         <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
       </header>
-      )};
+      )}
       <div className="h-[76vh] flex-grow relative">
         {gameStarted ? (
           <>

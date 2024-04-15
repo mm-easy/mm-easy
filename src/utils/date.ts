@@ -11,3 +11,4 @@ export const formatToLocaleDateTimeString = (dateTime: string | undefined): stri
       .replace('.', '');
   }
 };
+
