@@ -105,7 +105,7 @@ const CommunityMain = () => {
           <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
         </div>
       </section>
-      <section className="w-full px-24 flex justify-center mt-6">
+      <section className="w-full px-24 flex justify-center mt-[calc(8vh-25px)]">
         <CommunityForm
           currentItems={currentItems}
           setCurrentPage={setCurrentPage}
