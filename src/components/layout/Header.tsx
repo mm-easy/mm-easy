@@ -83,7 +83,7 @@ const Header = () => {
           <Link href="/community-list?category=전체">커뮤니티</Link>
           <Link href="/about">서비스 소개</Link>
           {currentUserEmail === 'daejang@mmeasy.com' && (
-            <Link href="/admin">Admin</Link>
+            <Link href="/admin" className='text-pointColor2'>관리자</Link>
           )}
         </nav>
         {isLoggedIn ? (
