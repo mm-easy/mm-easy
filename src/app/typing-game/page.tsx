@@ -203,6 +203,7 @@ const TypingGamePage = () => {
 
   return (
     <div className="flex flex-col">
+      {gameStarted && (
       <header className="h-[8vh] flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1">
         <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           난이도
@@ -221,6 +222,7 @@ const TypingGamePage = () => {
         </h2>
         <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
       </header>
+      )};
       <div className="h-[76vh] flex-grow relative">
         {gameStarted ? (
           <>
