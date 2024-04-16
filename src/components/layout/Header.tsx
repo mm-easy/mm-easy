@@ -76,14 +76,22 @@ const Header = () => {
       </Link>
       <section className="w-[84%] flex justify-between px-10">
         <nav className="flex gap-14">
-          <Link href="/quiz-list" className="">
+          <Link href="/quiz-list" className="hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1">
             퀴즈
           </Link>
-          <Link href="/typing-game">타자 연습</Link>
-          <Link href="/community-list?category=전체">커뮤니티</Link>
-          <Link href="/about">서비스 소개</Link>
+          <Link href="/typing-game" className="hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1">
+            타자 연습
+          </Link>
+          <Link href="/community-list?category=전체" className="hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1">
+            커뮤니티
+          </Link>
+          <Link href="/about" className="hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1">
+            서비스 소개
+          </Link>
           {currentUserEmail === 'daejang@mmeasy.com' && (
-            <Link href="/admin" className='text-pointColor2'>관리자</Link>
+            <Link href="/admin" className='text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1'>
+              관리자
+            </Link>
           )}
         </nav>
         {isLoggedIn ? (
