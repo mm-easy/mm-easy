@@ -238,7 +238,7 @@ const QuestionForm = ({
                   })}
                   <button
                     type="button"
-                    className="w-full text-3xl border-solid border border-pointColor1 rounded-md"
+                    className={`w-full text-3xl border-solid border ${options.length === 5 ? 'text-grayColor border-grayColor cursor-default' : 'border-pointColor1'} rounded-md`}
                     onClick={() => handleAddOption(id, options)}
                   >
                     +

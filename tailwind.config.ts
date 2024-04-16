@@ -17,10 +17,32 @@ const config: Config = {
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
         pointColor3: '#D9D9D9',
-        blackColor: '#2e2e2e'
+        pointColor4: '#8dbdf6',
+        blackColor: '#2E2E2E',
+        grayColor: '#D9D9D9'
+      },
+      keyframes: {
+        'wave-opacity': {
+          '0%, 100%': { opacity: 1 as any },
+          '50%': { opacity: 0.5 as any }
+        },
+        slash: {
+          'from': {
+            transform: 'rotate(-45deg) translateX(-100%)',
+            opacity: 0 as any
+          },
+          'to': {
+            transform: 'rotate(-45deg) translateX(100%)', 
+            opacity: 1 as any
+          }
+        }
+      },
+      animation: {
+        'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
+        slash: 'slash 0.5s ease-out forwards'
       }
     },
-    backgroundSize: { md: '80%' }
+    backgroundSize: { md: '80%', cover: 'cover' }
   },
   darkMode: 'class',
   plugins: [nextui()]
