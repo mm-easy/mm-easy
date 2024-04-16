@@ -12,7 +12,6 @@ import InfoIcon1 from '@/assets/info_icon_1.png';
 import InfoIcon2 from '@/assets/info_icon_2.png';
 import InfoIcon3 from '@/assets/info_icon_3.png';
 import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
-import { useRouter } from 'next/navigation';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
@@ -24,8 +23,6 @@ import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 
 const AboutPage = () => {
-  const router = useRouter();
-
   const { data: quizNum } = useQuery<Quiz[]>({
     queryFn: async () => {
       try {
@@ -125,7 +122,7 @@ const AboutPage = () => {
   const handleGitBtn = (git: string) => {
     const pageNowReal = window.confirm('이동하시겠습니까?');
     if (pageNowReal) {
-      router.push(git);
+      window.open(git, '_blank');
     } else {
       return;
     }
@@ -134,7 +131,7 @@ const AboutPage = () => {
   const handleBlogBtn = (blog: string) => {
     const pageNowReal = window.confirm('이동하시겠습니까?');
     if (pageNowReal) {
-      router.push(blog);
+      window.open(blog, '_blank');
     } else {
       return;
     }

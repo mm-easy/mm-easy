@@ -10,12 +10,21 @@ export const getPosts = async () => {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return posts || [];
+
+    // 데이터가 성공적으로 로드된 후, "공지" 카테고리를 최상단으로 재정렬
+    if (posts) {
+      const noticePosts = posts.filter(post => post.category === '공지');
+      const otherPosts = posts.filter(post => post.category !== '공지');
+      return [...noticePosts, ...otherPosts];
+    }
+
+    return [];
   } catch (error) {
     console.error('포스트를 가져오는 중 오류 발생:', error);
     return [];
   }
 };
+
 
 export const getRecentPosts = async () => {
   const { data: posts, error } = await supabase
