@@ -10,13 +10,14 @@ import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 
 import type { User } from '@/types/users';
+import type { DifficultySetting } from '@/types/difficultySetting';
 
-const difficultySettings: { [key: number]: { speed: number; interval: number } } = {
-  1: { speed: 20, interval: 5000 },
-  2: { speed: 30, interval: 4000 },
-  3: { speed: 40, interval: 3000 },
-  4: { speed: 50, interval: 2000 },
-  5: { speed: 60, interval: 1000 }
+const difficultySettings: { [key: number]: DifficultySetting } = {
+  1: { label: "왕초보", speed: 20, interval: 5000 },
+  2: { label: "초보", speed: 30, interval: 4000 },
+  3: { label: "중수", speed: 40, interval: 3000 },
+  4: { label: "고수", speed: 50, interval: 2000 },
+  5: { label: "지존", speed: 70, interval: 2000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length;
@@ -209,7 +210,7 @@ const TypingGamePage = () => {
           난이도
         </h2>
         <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
-          {difficulty}
+          {difficultySettings[difficulty].label}
         </h3>
         <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
           점수
@@ -263,7 +264,7 @@ const TypingGamePage = () => {
                     difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid'
                   } p-2 text-lg w-12 rounded-md`}
                 >
-                  {index + 1}
+                  {difficultySettings[index + 1].label}
                 </button>
               ))}
             </div>
