@@ -309,9 +309,9 @@ const QuizForm = () => {
                 <p className="text-xs text-pointColor1">퀴즈 제목</p>
                 <BlueInput
                   value={title}
-                  width="w-[385px]"
-                  maxNum={15}
-                  onInput={(e) => handleMaxLength(e, 15)}
+                  width="w-[385px] pr-16"
+                  maxNum={25}
+                  onInput={(e) => handleMaxLength(e, 25)}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>

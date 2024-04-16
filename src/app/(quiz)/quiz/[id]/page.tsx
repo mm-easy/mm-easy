@@ -204,6 +204,10 @@ const QuizTryPage = () => {
     router.replace('/quiz-list');
   };
 
+  const handleEditQuiz = (id: string) => {
+    router.push(`/quiz-form?id=${id}`);
+  };
+
   return (
     <>
       <Header level={level} title={title} />
@@ -229,13 +233,22 @@ const QuizTryPage = () => {
           <p className="p-4">{info}</p>
           <div className="flex mt-10 justify-center font-bold">
             {currentUserEmail === creator_id && (
-              <CancelButton
-                text="퀴즈 삭제"
-                width="w-44"
-                height="h-16"
-                border="border-2"
-                onClick={() => handleDeleteQuiz(id as string)}
-              />
+              <div className="flex gap-2 w-52">
+                <CancelButton
+                  text="수정"
+                  width="w-44"
+                  height="h-12"
+                  border="border-2"
+                  onClick={() => handleEditQuiz(id as string)}
+                />
+                <CancelButton
+                  text="삭제"
+                  width="w-44"
+                  height="h-12"
+                  border="border-2"
+                  onClick={() => handleDeleteQuiz(id as string)}
+                />
+              </div>
             )}
           </div>
         </article>
