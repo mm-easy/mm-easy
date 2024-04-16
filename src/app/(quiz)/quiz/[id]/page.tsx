@@ -251,7 +251,7 @@ const QuizTryPage = () => {
           </div>
         </article>
         <main
-          className={`py-14 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-auto'}`}
+          className={`py-14 flex flex-col place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-auto'}`}
         >
           {resultMode && (
             <h1 className="text-2xl">
