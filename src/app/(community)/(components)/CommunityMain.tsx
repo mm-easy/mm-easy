@@ -73,6 +73,7 @@ const CommunityMain = () => {
     fetchData();
   }, [isLoggedIn]);
 
+  // 게시글 작성 페이지 이동
   const navigateToPostPage = () => {
     if (!isLoggedIn) {
       toast.warn('게시물을 작성하려면 로그인 해주세요.');
