@@ -17,10 +17,11 @@ const config: Config = {
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
         pointColor3: '#D9D9D9',
+        pointColor4: '#8dbdf6',
         blackColor: '#2e2e2e'
       }
     },
-    backgroundSize: { md: '80%' }
+    backgroundSize: { md: '80%', cover: 'cover' }
   },
   darkMode: 'class',
   plugins: [nextui()]

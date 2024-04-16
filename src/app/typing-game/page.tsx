@@ -13,11 +13,11 @@ import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
 
 const difficultySettings: { [key: number]: DifficultySetting } = {
-  1: { label: "왕초보", speed: 20, interval: 5000 },
-  2: { label: "초보", speed: 30, interval: 4000 },
-  3: { label: "중수", speed: 40, interval: 3000 },
-  4: { label: "고수", speed: 50, interval: 2000 },
-  5: { label: "지존", speed: 70, interval: 2000 }
+  1: { label: '왕초보', speed: 20, interval: 5000 },
+  2: { label: '초보', speed: 30, interval: 4000 },
+  3: { label: '중수', speed: 40, interval: 3000 },
+  4: { label: '고수', speed: 50, interval: 2000 },
+  5: { label: '지존', speed: 70, interval: 2000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length;
@@ -32,13 +32,13 @@ const TypingGamePage = () => {
   const [difficulty, setDifficulty] = useState(1);
   const [correctWordsCount, setCorrectWordsCount] = useState(0);
   const [gameAreaWidth, setGameAreaWidth] = useState(0);
-  const [gameAreaHeight, setGameAreaHeight] = useState(550);
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
+  const gameAreaHeightTest = Math.floor(window.innerHeight * 0.8);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -82,10 +82,10 @@ const TypingGamePage = () => {
           top: word.top + 10
         }));
 
-        const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
+        const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeightTest - wordHeight);
         if (outOfBoundWords.length > 0) {
           setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
-          setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
+          setWords(updatedWords.filter((word) => word.top < gameAreaHeightTest - wordHeight));
         } else {
           setWords(updatedWords);
         }
@@ -203,30 +203,30 @@ const TypingGamePage = () => {
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/game_imgs/game_2.png')] bg-cover bg-no-repeat bg-center">
       {gameStarted && (
-      <header className="h-[8vh] flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1">
-        <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-          난이도
-        </h2>
-        <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
-          {difficultySettings[difficulty].label}
-        </h3>
-        <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-          점수
-        </h2>
-        <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
-          {score}
-        </h3>
-        <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-          생명
-        </h2>
-        <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
-      </header>
+        <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
+          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+            난이도
+          </h2>
+          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+            {difficultySettings[difficulty].label}
+          </h3>
+          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+            점수
+          </h2>
+          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+            {score}
+          </h3>
+          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+            생명
+          </h2>
+          <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
+        </header>
       )}
-      <div className="h-[76vh] flex-grow relative">
+      <div className="h-[84vh] flex-grow relative">
         {gameStarted ? (
-          <>
+          <div>
             {words.map((word) => (
               <div
                 key={word.id}
@@ -238,7 +238,7 @@ const TypingGamePage = () => {
             ))}
             <form
               onSubmit={handleSubmit}
-              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 border border-solid border-pointColor2 bg-white"
+              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor4"
             >
               <input
                 type="text"
@@ -251,7 +251,7 @@ const TypingGamePage = () => {
                 입력
               </button>
             </form>
-          </>
+          </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
             <p className="mb-6 font-bold text-2xl text-pointColor1">난이도를 선택해주세요!</p>
