@@ -262,6 +262,8 @@ const QuizTryPage = () => {
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
+              const userAnswer = usersAnswers.find((answer) => answer.id === id);
+              const answer = userAnswer ? (userAnswer.answer as string) : '';
 
               return (
                 pageMode && (
@@ -296,6 +298,7 @@ const QuizTryPage = () => {
                           <>
                             <input
                               type="text"
+                              value={answer}
                               className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                               onChange={(e) => {
                                 handleMaxLength(e, 30);
