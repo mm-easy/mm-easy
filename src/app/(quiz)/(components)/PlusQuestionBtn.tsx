@@ -9,7 +9,6 @@ const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ disabled, onClick }) 
       <button
         type="button"
         className={`w-[570px] mb-9 p-2 text-white ${disabled ? 'bg-grayColor cursor-default' : 'bg-pointColor1'} rounded-md`}
-        // disabled={disabled}
         onClick={onClick}
       >
         문제 추가하기
