@@ -242,7 +242,7 @@ const TypingGamePage = () => {
             ))}
             <form
               onSubmit={handleSubmit}
-              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 border border-solid border-pointColor2"
+              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor4"
             >
               <input
                 type="text"
