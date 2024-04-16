@@ -250,7 +250,9 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <main className="h-[76vh] pt-28 pb-14 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 overflow-y-auto">
+        <main
+          className={`py-14 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-auto'}`}
+        >
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
@@ -259,11 +261,11 @@ const QuizTryPage = () => {
           <article className="flex flex-col justify-between gap-8">
             {questions.map((question) => {
               const { id, title, type, img_url, correct_answer } = question;
-              const usersAnswer = usersAnswers.find((answer) => answer.id === id);
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
-              const userAnswer = usersAnswers.find((answer) => answer.id === id);
-              const answer = userAnswer ? (userAnswer.answer as string) : '';
+
+              const usersAnswer = usersAnswers.find((answer) => answer.id === id);
+              const answer = usersAnswer ? (usersAnswer.answer as string) : '';
 
               return (
                 pageMode && (
