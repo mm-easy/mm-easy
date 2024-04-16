@@ -9,8 +9,8 @@ Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
 
 interface NoticeEditorProps {
-  value: string;
-  onChange: (content: string) => void;
+  value: ReactQuill.Value;
+  onChange: (value: string) => void;
 }
 
 const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {

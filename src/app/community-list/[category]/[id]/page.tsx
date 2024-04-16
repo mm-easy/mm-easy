@@ -1,6 +1,6 @@
 'use client';
 
-import DetailPost from '@/app/(community)/(components)/DetailPost';
+import DetailPost from '@/app/(components)/DetailPost';
 
 const CategoryDetailPage = () => {
   return (

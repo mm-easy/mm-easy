@@ -1,11 +1,10 @@
-import CategorySelector from './CategorySelector';
-import CommunityForm from './CommunityForm';
+'use client';
+
+import CommunityForm from '../../(components)/CommunityForm';
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPosts } from '@/api/posts';
-import { CancelButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { isLoggedInAtom } from '@/store/store';
@@ -18,9 +17,9 @@ const CommunityMain = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { getCurrentUserProfile } = useAuth();
-  const router = useRouter();
-  const params = useSearchParams();
-  const category = params.get('category');
+  const params = useParams<{ category: string }>();
+  console.log('params', params);
+  const category = decodeURIComponent(params.category);
 
   const {
     data: post = [],
@@ -73,15 +72,6 @@ const CommunityMain = () => {
     fetchData();
   }, [isLoggedIn]);
 
-  // 게시글 작성 페이지 이동
-  const navigateToPostPage = () => {
-    if (!isLoggedIn) {
-      toast.warn('게시물을 작성하려면 로그인 해주세요.');
-    } else {
-      router.push('/community-post');
-    }
-  };
-
   const pageRange = 10; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
   const totalNum = post.length; // 총 데이터 수
@@ -99,27 +89,18 @@ const CommunityMain = () => {
   }
 
   return (
-    <main className="grid grid-cols-[16%_84%] h-[84vh]">
-      <section className="flex flex-col justify-between h-[84vh] bg-bgColor1 border-r-2 border-solid border-pointColor1">
-        <CategorySelector categoryNow={category} />
-        <div className="flex justify-center w-full pb-4 font-bold">
-          <CancelButton text="작성하기" onClick={navigateToPostPage} width="w-44" height="h-16" border="border-2" />
-        </div>
-      </section>
-      <section className="w-full px-24 flex justify-center mt-[calc(8vh-25px)]">
-        <CommunityForm
-          currentItems={currentItems}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          totalNum={totalNum}
-          pageRange={pageRange}
-          btnRange={btnRange}
-          category={category}
-        />
-      </section>
-    </main>
+    <section className="w-full px-24 flex justify-center mt-[calc(8vh-25px)]">
+      <CommunityForm
+        currentItems={currentItems}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        totalNum={totalNum}
+        pageRange={pageRange}
+        btnRange={btnRange}
+        category={category}
+      />
+    </section>
   );
-  
 };
 
 export default CommunityMain;
