@@ -1,13 +1,15 @@
 interface PlusQuestionBtnProps {
+  disabled: boolean;
   onClick: () => void;
 }
 
-const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ onClick }) => {
+const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ disabled, onClick }) => {
   return (
     <div className="flex justify-center">
       <button
         type="button"
-        className="mb-9 rounded-md w-[570px] text-white border-solid p-2 border border-white bg-pointColor1"
+        className={`w-[570px] mb-9 p-2 text-white ${disabled ? 'bg-grayColor cursor-default' : 'bg-pointColor1'} rounded-md`}
+        // disabled={disabled}
         onClick={onClick}
       >
         문제 추가하기

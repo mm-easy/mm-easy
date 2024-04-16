@@ -17,7 +17,8 @@ const config: Config = {
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
         pointColor3: '#D9D9D9',
-        blackColor: '#2e2e2e'
+        blackColor: '#2E2E2E',
+        grayColor: '#D9D9D9'
       }
     },
     backgroundSize: { md: '80%' }
