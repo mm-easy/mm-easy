@@ -250,7 +250,7 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <main className="h-[76vh] pt-12 pb-20 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 overflow-y-auto">
+        <main className="h-[76vh] pt-28 pb-14 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 overflow-y-auto">
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
@@ -261,9 +261,10 @@ const QuizTryPage = () => {
               const { id, title, type, img_url, correct_answer } = question;
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
               const questionOrder = questions.indexOf(question);
+              const pageMode = !resultMode ? page === questionOrder : true;
 
               return (
-                page === questionOrder && (
+                pageMode && (
                   <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
                     <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                     {img_url !== 'tempThumbnail.png' ? (
@@ -313,22 +314,24 @@ const QuizTryPage = () => {
               );
             })}
             <section className="w-[570px] flex flex-col justify-between gap-3">
-              <div className="flex justify-between gap-3">
-                <button
-                  disabled={page === 0}
-                  className={`w-full py-[9px] ${page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
-                  onClick={handlePrevPage}
-                >
-                  이전 페이지
-                </button>
-                <button
-                  disabled={page === questions.length - 1}
-                  className={`w-full py-[9px] ${page === questions.length - 1 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
-                  onClick={handleNextPage}
-                >
-                  다음 페이지
-                </button>
-              </div>
+              {!resultMode && (
+                <div className="flex justify-between gap-3">
+                  <button
+                    disabled={page === 0}
+                    className={`w-full py-[9px] ${page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    onClick={handlePrevPage}
+                  >
+                    이전 페이지
+                  </button>
+                  <button
+                    disabled={page === questions.length - 1}
+                    className={`w-full py-[9px] ${page === questions.length - 1 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    onClick={handleNextPage}
+                  >
+                    다음 페이지
+                  </button>
+                </div>
+              )}
               <button
                 className="w-full py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
                 onClick={handleResultMode}
