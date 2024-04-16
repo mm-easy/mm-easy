@@ -4,7 +4,7 @@ import logoVertical4 from '@/assets/logo_vertical_4.png';
 const Footer = () => {
   return (
     <main className="p-8 flex gap-8 text-white bg-pointColor1 border-b-2 border-solid border-white">
-      <Image src={logoVertical4} alt="사이트 로고" width={300} className="object-cover" />
+      <Image src={logoVertical4} alt="사이트 로고" width={300} quality={100} className="object-cover" />
       <article className="py-5 flex flex-col justify-between">
         <section>
           <div className="mb-2 text-5xl font-black tracking-widest">뭔말이지? 뭔말easy!</div>
