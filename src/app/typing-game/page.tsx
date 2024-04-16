@@ -35,10 +35,14 @@ const TypingGamePage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
-  const gameAreaHeightTest = Math.floor(window.innerHeight * 0.8);
+
+  useEffect(() => {
+    setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
+  }, []);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -82,10 +86,10 @@ const TypingGamePage = () => {
           top: word.top + 10
         }));
 
-        const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeightTest - wordHeight);
+        const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
         if (outOfBoundWords.length > 0) {
           setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
-          setWords(updatedWords.filter((word) => word.top < gameAreaHeightTest - wordHeight));
+          setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
         } else {
           setWords(updatedWords);
         }
