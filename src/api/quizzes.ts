@@ -110,7 +110,7 @@ export const deleteQuiz = async (id: string) => {
 
 export const getRecentQuizzes = async () => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*').limit(4);
+    const { data, error } = await supabase.from('quizzes').select('*').order('created_at', { ascending: false }).limit(4);
     if (error) throw error;
     return data;
   } catch (error) {
