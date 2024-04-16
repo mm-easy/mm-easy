@@ -192,29 +192,29 @@ const MyActivity = () => {
               </tr>
             </thead>
             <tbody>
-              {currentSolvedQuizzes && currentSolvedQuizzes.length > 0
-                ? currentSolvedQuizzes.map((quiz, index) => (
-                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-4 w-24">{quiz.quizzes.title}</td>
-                      <td>{quiz.score}</td>
-                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
-                      <div className="text-right">
-                        <button
-                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
-                          onClick={() => navigateToQuiz(quiz)}
-                        >
-                          다시 풀기
-                        </button>
-                      </div>
-                    </tr>
-                  ))
-                  : (
-                    <tr>
-                      <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                        푼 퀴즈가 없습니다.
-                      </td>
-                    </tr>
-                  )}
+              {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
+                currentSolvedQuizzes.map((quiz, index) => (
+                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                    <td className="py-4 w-24">{quiz.quizzes.title}</td>
+                    <td>{quiz.score}</td>
+                    <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
+                    <div className="text-right">
+                      <button
+                        className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
+                        onClick={() => navigateToQuiz(quiz)}
+                      >
+                        다시 풀기
+                      </button>
+                    </div>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                    푼 퀴즈가 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -231,31 +231,31 @@ const MyActivity = () => {
               </tr>
             </thead>
             <tbody>
-              {currentQuizzes && currentQuizzes.length > 0
-                ? currentQuizzes.map((quiz, index) => (
-                    <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
-                      <td className="py-4 w-24">
-                        <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
-                      </td>
-                      <td>{quiz.quiz_tries.length}</td>
-                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
-                      <div className="text-right">
-                        <button
-                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
-                          onClick={() => navigateToQuiz(quiz.id)}
-                        >
-                          다시 풀기
-                        </button>
-                      </div>
-                    </tr>
-                  ))
-                  : (
-                    <tr>
-                      <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                        만든 퀴즈가 없습니다.
-                      </td>
-                    </tr>
-                  )}
+              {currentQuizzes && currentQuizzes.length > 0 ? (
+                currentQuizzes.map((quiz, index) => (
+                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                    <td className="py-4 w-24">
+                      <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
+                    </td>
+                    <td>{quiz.quiz_tries.length}</td>
+                    <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
+                    <div className="text-right">
+                      <button
+                        className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
+                        onClick={() => navigateToQuiz(quiz.id)}
+                      >
+                        다시 풀기
+                      </button>
+                    </div>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                    만든 퀴즈가 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

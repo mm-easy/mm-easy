@@ -153,7 +153,13 @@ export const getQuizRank = async (): Promise<QuizRank[]> => {
 
 export const fetchUserQuizzes = async (email: string) => {
   try {
-    const { data, error } = await supabase.from('quizzes').select(`*,quiz_tries:id (id)`).eq('creator_id', email);
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select(`
+        *,
+        quiz_tries:quiz_tries!public_quiz_tries_quiz_id_fkey(id)
+      `)
+      .eq('creator_id', email);
 
     if (error) throw error;
     return data;

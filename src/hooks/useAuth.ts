@@ -204,3 +204,4 @@ export const useAuth = () => {
 
   return { signUp, signIn, logout, loading, error, setError, signInWithGoogle, signInWithKakao, getCurrentUserProfile };
 };
+
