@@ -47,7 +47,7 @@ const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[
         {quizLevelSelected.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col border my-3 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 cursor-pointer"
+            className="flex flex-col border my-3 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:border-blue-500"
             onClick={() => {
               handleShowModal(item.id);
             }}
@@ -60,7 +60,7 @@ const QuizList = ({ quizLevelSelected, currentUser }: { quizLevelSelected: Quiz[
                 width={250}
                 height={250}
                 quality={100}
-                className="w-full h-[250px] object-cover border-solid border-2 border-pointColor1 rounded-md"
+                className="w-full h-[250px] object-cover border-solid border border-gray-200 rounded-md"
               />
               <p className="mb-4 line-clamp-2">{item.info}</p>
             </div>
