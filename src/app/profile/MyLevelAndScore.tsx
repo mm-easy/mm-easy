@@ -61,6 +61,10 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
     return a + b.score;
   }, 0);
 
+  const myTotalScore = (totalQuizScore ?? 0) + (myGameScore ?? 0);
+  const myLevel =
+    myTotalScore < 5000 ? 1 : myTotalScore < 15000 ? 2 : myTotalScore < 35000 ? 3 : myTotalScore < 70000 ? 4 : 5;
+
   return (
     <main className="w-full h-full flex flex-col items-center bg-bgColor2 border-solid border-t border-pointColor1">
       <div className="mt-10 text-xl font-semibold">
@@ -70,7 +74,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
       <div className="flex gap-7 mt-10 font-semibold">
         <div className="flex flex-col items-center w-32">
           <p>레벨</p>
-          <p className="mt-5 text-3xl text-pointColor1">999</p>
+          <p className="mt-5 text-3xl text-pointColor1">Lv. {myLevel}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
@@ -85,7 +89,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
           <p>총 점수</p>
-          <p className="mt-5 text-3xl text-pointColor1">{(totalQuizScore ?? 0) + (myGameScore ?? 0)}</p>
+          <p className="mt-5 text-3xl text-pointColor1">{myTotalScore}</p>
         </div>
       </div>
       <div className="text-center mt-10 text-pointColor1 underline underline-offset-4">
