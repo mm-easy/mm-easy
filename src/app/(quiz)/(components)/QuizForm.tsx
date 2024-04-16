@@ -43,9 +43,9 @@ const QuizForm = () => {
       try {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
-        router.push('/login'); 
-        toast('로그인 후 이용해 주세요');
-        return;
+          router.push('/login');
+          toast('로그인 후 이용해 주세요');
+          return;
         }
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
@@ -171,7 +171,7 @@ const QuizForm = () => {
         }
       ]);
     } else {
-      toast.warning('최대 5개까지만 문제를 추가할 수 있습니다.');
+      toast.warning('최대 5개까지 문제를 추가할 수 있습니다.');
       return;
     }
   };
@@ -329,7 +329,7 @@ const QuizForm = () => {
           </div>
         </div>
         <QuestionForm questions={questions} setQuestions={setQuestions} />
-        <PlusQuestionBtn onClick={handleAddQuestion} />
+        <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
         <div className="bg-white flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t-2 border-pointColor1">
           <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-[275px]" />
           <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-[275px]" />
