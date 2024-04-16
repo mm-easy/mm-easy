@@ -30,6 +30,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     });
   }, [currentItems]);
 
+  // 게시글 상세 페이지로 이동
   const navigateToDetailPost = (post: { id: string }): void => {
     if (category === null) {
       router.push(`/community-list/전체/${post.id}`);
@@ -49,18 +50,20 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="pl-6 p-4 w-[11%]">구분</th>
-              <th className="w-[11%]">닉네임</th>
-              <th className="w-[60%]">제목</th>
+              <th className="pl-6 p-4 w-[10%]">구분</th>
+              <th className="w-[16%]">닉네임</th>
+              <th className="w-[56%]">제목</th>
               <th className="w-[13%]">날짜</th>
               <th className="w-[5%]">조회수</th>
             </tr>
           </thead>
           <tbody>
-          {sortedItems?.length > 0 ? (
+            {sortedItems?.length > 0 ? (
               sortedItems.map((item, idx) => (
                 <tr
-                  className={`bg-white cursor-pointer border-y border-solid border-pointColor3 text-[calc(1vh+8px)] ${item['category'] === '공지' ? 'font-bold' : ''}`}
+                  className={`cursor-pointer text-[calc(1vh+8px)] ${
+                    item['category'] === '공지' ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1' : 'bg-white border-pointColor3 border-y border-solid '
+                  }`}
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}
                 >

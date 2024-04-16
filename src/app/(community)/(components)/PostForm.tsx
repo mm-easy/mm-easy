@@ -48,12 +48,12 @@ const PostForm = () => {
   if (isLoading) return <div>Loading profile...</div>;
   if (error) return <div>An error occurred: {error instanceof Error ? error.message : 'Unknown error'}</div>;
 
-  //
+  // 제목 핸들러
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  //
+  // 에디터 content 핸들러
   const handleEditorChange = (content: string) => {
     setContent(content);
   };

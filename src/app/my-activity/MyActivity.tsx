@@ -20,6 +20,7 @@ const MyActivity = () => {
   const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
 
+  // 사용자 정보 확인
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -104,6 +105,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  // 사용자가 작성한 content 불러오기
   const {
     data: userComment = [],
     isLoading: isCommentLoading,
@@ -125,6 +127,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  // 
   const navigateToQuiz = (puizId: string) => {
     router.push(`/quiz/${puizId}`);
   };
