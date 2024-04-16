@@ -74,7 +74,7 @@ const ReportButton = ({
   };
 
   return (
-    <button className="text-pointColor1 underline underline-offset-[3px]" onClick={() => handleReport(targetId)}>
+    <button className=" text-pointColor1 underline underline-offset-[3px]" onClick={() => handleReport(targetId)}>
       {children}
     </button>
   );

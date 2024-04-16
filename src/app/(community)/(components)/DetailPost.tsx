@@ -191,19 +191,23 @@ const DetailPost = () => {
                 className="my-5 ql-editor text-blackColor"
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
               ></p>
-              <div className="py-4 flex justify-end place-items-center gap-3">
-                <Like postId={params.id} profile={profile} />
-                {profile && profile.email !== post.profiles.email && (
-                  <ReportButton
-                    targetId={params.id}
-                    type="posts"
-                    currentUserEmail={profile.email}
-                    title={post.title}
-                    creatorId={post.profiles.email}
-                  >
-                    🚨 신고
-                  </ReportButton>
-                )}
+              <div className="py-4 flex justify-between">
+                <div>
+                  <Like postId={params.id} profile={profile} />
+                </div>
+                <div>
+                  {profile && profile.email !== post.profiles.email && (
+                    <ReportButton
+                      targetId={params.id}
+                      type="posts"
+                      currentUserEmail={profile.email}
+                      title={post.title}
+                      creatorId={post.profiles.email}
+                    >
+                      신고하기
+                    </ReportButton>
+                  )}
+                </div>
               </div>
               <div className="border-solid border-t pt-3">
                 <span className="text-lg font-bold">댓글</span>
