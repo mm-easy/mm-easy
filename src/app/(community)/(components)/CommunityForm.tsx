@@ -3,7 +3,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useMemo } from 'react';
 
 import type { CommunityFormProps } from '@/types/posts';
 
@@ -17,18 +16,6 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   category
 }) => {
   const router = useRouter();
-
-  const sortedItems = useMemo(() => {
-    return [...currentItems].sort((a, b) => {
-      if (a.category === '공지' && b.category !== '공지') {
-        return -1; // a가 공지이면, b보다 앞에 오도록 정렬
-      }
-      if (a.category !== '공지' && b.category === '공지') {
-        return 1; // b가 공지이면, a보다 앞에 오도록 정렬
-      }
-      return 0; // 두 항목이 모두 공지이거나 공지가 아닐 경우 기본 순서 유지
-    });
-  }, [currentItems]);
 
   // 게시글 상세 페이지로 이동
   const navigateToDetailPost = (post: { id: string }): void => {
@@ -58,8 +45,8 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             </tr>
           </thead>
           <tbody>
-            {sortedItems?.length > 0 ? (
-              sortedItems.map((item, idx) => (
+            {currentItems?.length > 0 ? (
+              currentItems.map((item, idx) => (
                 <tr
                   className={`cursor-pointer text-[calc(1vh+8px)] ${
                     item['category'] === '공지' ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1' : 'bg-white border-pointColor3 border-y border-solid '
