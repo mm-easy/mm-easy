@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="mb-2 text-5xl font-black tracking-widest">뭔말이지? 뭔말easy!</div>
           <p className="text-3xl">퀴즈와 게임으로 쉽고 재미있게 배우는 한국어~ :P</p>
         </section>
-        <section>
+        <section className="pb-1">
           <p className="text-lg">제작 | coding zizon</p>
           <p className="text-lg">문의 | redbery0217@gmail.com</p>
         </section>
