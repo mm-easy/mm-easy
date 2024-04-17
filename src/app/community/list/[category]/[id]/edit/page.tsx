@@ -63,15 +63,23 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
     router.push(`/community/list/${params.category}/${postId}`);
   };
 
+  const handleCancel = () => {
+    const confirmLeave = window.confirm("작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?");
+    if (confirmLeave) {
+      router.push('/community/list/전체');
+    }
+  };
+
   // TODO : 조건부로 랜더링
   return (
-    <>
+    <article className="bg-white px-48 pt-[calc(4vh-20px)] border-l-2 border-solid border-pointColor1">
       <PostEditor
         defaultValues={{
           category: post.category,
           title: post.title,
           content: post.content
         }}
+        onCancel={handleCancel}
         onSubmit={async ({ category, title, content }) => {
           await updateCommunityPost(postId, title, content as unknown as string, category);
           toast('수정이 완료되었습니다.');
@@ -79,7 +87,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
           console.log('content => ', content);
         }}
       />
-    </>
+    </article>
   );
 };
 

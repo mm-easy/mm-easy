@@ -7,8 +7,8 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <main className="grid grid-cols-[16%_84%] h-[84vh]">
-      <section className="flex flex-col justify-between bg-bgColor1 border-r-2 border-solid border-pointColor1">
+    <main className="bg-bgColor1 grid grid-cols-[16%_84%] h-[84vh]">
+      <section className="h-[84vh] flex flex-col justify-between bg-bgColor1">
         <div>
           <CategorySelector categoryNow={''} />
         </div>
