@@ -1,4 +1,4 @@
-import { useSubmitAdmin, useSubmitReport } from '@/app/(quiz)/quiz/[id]/mutations';
+import { useSubmitAdmin, useSubmitReport } from '@/app/quiz/[id]/mutations';
 import { supabase } from '@/utils/supabase/supabase';
 import { toast } from 'react-toastify';
 
