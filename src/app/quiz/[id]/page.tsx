@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -153,12 +153,13 @@ const QuizTryPage = () => {
   const handleResultMode = () => {
     if (!resultMode) {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
-      if (questions.length !== usersAnswers.length) {
+      const isEmptyAnswersExists = usersAnswers.some((usersAnswer) => usersAnswer.answer === '');
+
+      if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
         toast.warn('모든 문제를 풀어줘!');
       } else {
         let countCorrect = 0;
-
         for (const usersAnswer of usersAnswers) {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
@@ -178,6 +179,7 @@ const QuizTryPage = () => {
         left: 0,
         behavior: 'smooth'
       });
+      console.log(usersAnswers);
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
     }
@@ -220,10 +222,10 @@ const QuizTryPage = () => {
   const handleEditQuiz = (id: string) => {
     router.push(`/quiz-form?id=${id}`);
   };
-
+  console.log(resultMode);
   return (
     <>
-      <Header level={level} title={title} />
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
         <article className="h-[76vh] text-pointColor1">
           <section>
@@ -337,12 +339,12 @@ const QuizTryPage = () => {
               );
             })}
             <section className="w-[570px] flex flex-col justify-between gap-3">
-              {!resultMode && (
+              {!resultMode && questions.length > 1 && (
                 <div className="flex justify-between gap-3">
                   <button
                     disabled={page === 0}
                     className={`w-full py-[9px] ${
-                      page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'
+                      page === 0 ? 'text-white bg-grayColor2' : 'border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handlePrevPage}
                   >
@@ -352,7 +354,7 @@ const QuizTryPage = () => {
                     disabled={page === questions.length - 1}
                     className={`w-full py-[9px] ${
                       page === questions.length - 1
-                        ? 'text-white bg-grayColor'
+                        ? 'text-white bg-grayColor2'
                         : 'border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handleNextPage}

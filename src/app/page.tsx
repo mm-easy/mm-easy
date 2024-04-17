@@ -67,7 +67,7 @@ const Home = () => {
   }, [scrollPosition]);
 
   return (
-    <div className="min-h-screen">
+    <div>
       <Banner />
       <QuizSection />
       <RankingSection />

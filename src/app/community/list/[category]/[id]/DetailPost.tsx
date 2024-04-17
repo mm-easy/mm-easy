@@ -3,7 +3,6 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
-import CategorySelector from '../CategorySelector';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
@@ -20,7 +19,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import ReportButton from '@/components/common/ReportButton';
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { CancelButton } from '@/components/common/FormButtons';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);

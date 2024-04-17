@@ -341,7 +341,7 @@ const QuizForm = () => {
           <div className="flex gap-10">
             <div
               onClick={handleClickImg}
-              className="relative bg-gray-200 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
+              className="relative bg-grayColor1 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
             >
               <Image
                 src={selectedImg}
