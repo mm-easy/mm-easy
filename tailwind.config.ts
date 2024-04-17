@@ -20,7 +20,7 @@ const config: Config = {
         pointColor4: '#8dbdf6',
         blackColor: '#2E2E2E',
         grayColor: '#D9D9D9'
-      }
+      },
     },
     backgroundSize: { md: '80%', cover: 'cover' }
   },
