@@ -8,7 +8,7 @@ const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ disabled, onClick }) 
     <div className="flex justify-center">
       <button
         type="button"
-        className={`w-[570px] mb-9 p-2 text-white ${disabled ? 'bg-grayColor cursor-default' : 'bg-pointColor1'} rounded-md`}
+        className={`w-[570px] mb-9 p-2 text-white ${disabled ? 'bg-grayColor2 cursor-default' : 'bg-pointColor1'} rounded-md`}
         onClick={onClick}
       >
         문제 추가하기
