@@ -6,24 +6,24 @@ import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 import UnloadImgBtn from './UnloadImg';
-import default144 from '@/assets/quiz_144x144.png';
-import default570 from '@/assets/quiz_570x160.png';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BlueInput, BlueLevelSelect } from '@/components/common/BlueInput';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 import { generateFileName, generateImgFileName } from '@/utils/generateFileName';
-import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
+import { getQuiz, uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
 import { toast } from 'react-toastify';
 import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
-
-import { QuestionType, type Question } from '@/types/quizzes';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
+
+import { Option, QuestionType, type Question } from '@/types/quizzes';
+import { getQuestions } from '@/api/questions';
+import { getOptions } from '@/api/question_options';
 
 const QuizForm = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -33,9 +33,55 @@ const QuizForm = () => {
   const [selectedImg, setSelectedImg] = useState(`${storageUrl}/assets/quiz_144x144.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+  const [myQuizData, setMyquizData] = useState<Question[]>([]);
   const { getCurrentUserProfile } = useAuth();
 
   useConfirmPageLeave();
+  const router = useRouter();
+
+  /** '수정' 버튼을 통해 쿼리를 달고 왔다면 */
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const id = queryParams.get('id');
+    if (!id) return;
+    const fetchQuizData = async () => {
+      try {
+        //퀴즈 데이터 가져오기
+        const quizData = await getQuiz(id as string);
+        setLevel(quizData[0].level);
+        setTitle(quizData[0].title);
+        setInfo(quizData[0].info);
+        setSelectedImg(`${storageUrl}/quiz-thumbnails/${quizData[0].thumbnail_img_url}`);
+        if (!quizData) return;
+
+        //문제 데이터 가져오기
+        const questionsData = await getQuestions(id as string);
+        console.log('문제들 얻었당', questionsData);
+        if (!questionsData) return;
+
+        //선택지 데이터 가져오기 및 questions 상태 설정
+        const questionsWithOptions = await Promise.all(
+          questionsData.map(async (question) => {
+            console.log('뀽', question.img_url);
+            const options = await getOptions(question.id);
+            const img_url = `${storageUrl}/question-imgs/${question.img_url}`;
+            return {
+              ...question,
+              img_url,
+              options: options || [] // options가 없을 경우 빈 배열로 설정
+            };
+          })
+        );
+
+        console.log('options 포함한 questions:', questionsWithOptions);
+        setMyquizData(questionsWithOptions);
+        setQuestions(questionsWithOptions);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchQuizData();
+  }, []);
 
   /** 로그인한 유저의 정보를 불러옴 */
   useEffect(() => {
@@ -107,7 +153,6 @@ const QuizForm = () => {
   ]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   /** 스크롤 이동 추적 */
   useEffect(() => {
@@ -178,6 +223,12 @@ const QuizForm = () => {
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = async () => {
+    const isDifferent = JSON.stringify(myQuizData) !== JSON.stringify(questions);
+    if (!isDifferent) {
+      toast.warning('변경된 내용이 없습니다.');
+      return;
+    }
+
     if (!level) {
       toast.warn('난이도를 선택해 주세요.');
       return;

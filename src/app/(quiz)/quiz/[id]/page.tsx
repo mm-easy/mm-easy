@@ -198,12 +198,14 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
     deleteQuizMutation.mutateAsync(id);
     router.replace('/quiz-list');
   };
 
+  /** 수정 버튼 클릭 핸들러 */
   const handleEditQuiz = (id: string) => {
     router.push(`/quiz-form?id=${id}`);
   };

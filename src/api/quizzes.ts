@@ -110,7 +110,11 @@ export const deleteQuiz = async (id: string) => {
 
 export const getRecentQuizzes = async () => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*').order('created_at', { ascending: false }).limit(4);
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(4);
     if (error) throw error;
     return data;
   } catch (error) {
@@ -120,6 +124,7 @@ export const getRecentQuizzes = async () => {
   }
 };
 
+/** id에 해당하는 퀴즈 1개 가져오기 */
 export const getQuiz = async (id: string | string[]) => {
   try {
     const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
@@ -135,7 +140,7 @@ export const getQuiz = async (id: string | string[]) => {
 /** quizzes 테이블에서 target_date기준으로 일주일동안 가장많이 퀴즈를 만든 3명 가져오기 */
 export const getQuizRank = async (): Promise<QuizRank[]> => {
   try {
-    const { data, error } = await supabase.rpc('get_quiz_ranking_with_details', {target_date: '2024-04-15' }).limit(3);
+    const { data, error } = await supabase.rpc('get_quiz_ranking_with_details', { target_date: '2024-04-15' }).limit(3);
     if (error) throw error;
     return data;
   } catch (error) {
@@ -155,10 +160,12 @@ export const fetchUserQuizzes = async (email: string) => {
   try {
     const { data, error } = await supabase
       .from('quizzes')
-      .select(`
+      .select(
+        `
         *,
         quiz_tries:quiz_tries!public_quiz_tries_quiz_id_fkey(id)
-      `)
+      `
+      )
       .eq('creator_id', email);
 
     if (error) throw error;
