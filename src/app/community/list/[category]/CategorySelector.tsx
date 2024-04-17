@@ -14,7 +14,8 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     질문: '질문',
     잡담: '잡담',
     공부: '공부',
-    일기: '일기'
+    일기: '일기',
+    이벤트: '이벤트'
   };
 
   const { data: postNum = {} } = useQuery<Record<string, number>>({

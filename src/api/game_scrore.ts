@@ -1,11 +1,12 @@
 import { supabase } from '@/utils/supabase/supabase';
 
-import type { TypeingGame } from '@/types/game';
+import type { TypingGame } from '@/types/game';
 
 /** game_tires 테이블에서 상위점수 3명 target_date기준 일주일단위로 가져오기 */
-export const getGameScore = async (): Promise<TypeingGame[]> => {
+export const getGameScore = async (): Promise<TypingGame[]> => {
+  const targetDate = new Date('2024-04-18').toISOString().slice(0, 10); 
   try {
-    let { data: gameScore, error } = await supabase.rpc('get_game_tries_with_details', { target_date: '2024-04-15' }).limit(3);
+    let { data: gameScore, error } = await supabase.rpc('get_game_tries_with_details', { target_date: targetDate }).limit(3);
 
     if (error) throw error;
 

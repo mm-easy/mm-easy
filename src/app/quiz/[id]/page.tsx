@@ -344,7 +344,7 @@ const QuizTryPage = () => {
                   <button
                     disabled={page === 0}
                     className={`w-full py-[9px] ${
-                      page === 0 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'
+                      page === 0 ? 'text-white bg-grayColor2' : 'border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handlePrevPage}
                   >
@@ -354,7 +354,7 @@ const QuizTryPage = () => {
                     disabled={page === questions.length - 1}
                     className={`w-full py-[9px] ${
                       page === questions.length - 1
-                        ? 'text-white bg-grayColor'
+                        ? 'text-white bg-grayColor2'
                         : 'border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handleNextPage}
