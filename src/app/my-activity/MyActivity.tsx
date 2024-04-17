@@ -279,7 +279,7 @@ const MyActivity = () => {
                 currentPosts.map((post, index) => (
                   <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
                     <td className="truncate max-w-xs pr-12 py-4 w-24">
-                      <a href={`/community-list/${post.category}/${post.id}`}>{post.title}</a>
+                      <a href={`/community/list/${post.category}/${post.id}`}>{post.title}</a>
                     </td>
                     <td>{post.view_count}</td>
                     <td>{formatToLocaleDateTimeString(post.created_at)}</td>

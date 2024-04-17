@@ -33,7 +33,7 @@ const QuizSection = () => {
           {quiz?.map((quiz) => (
             <div
               key={quiz.id}
-              className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4"
+              className="flex flex-col border my-5 border-solid border-gray-200 rounded-t-3xl rounded-b-md p-4 transition duration-300 ease-in-out transform hover:border-blue-500"
             >
               <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
               <div className="flex flex-col gap-3">
@@ -43,7 +43,7 @@ const QuizSection = () => {
                   width={250}
                   height={250}
                   quality={100}
-                  className="w-full h-[250px] object-cover border-solid border border-pointColor1 rounded-md"
+                  className="w-full h-[250px] object-cover border-solid border border-gray-200 rounded-md"
                 />
                 <QuestionEx id={quiz.id} />
                 <Link href={`/quiz/${quiz.id}`}>
