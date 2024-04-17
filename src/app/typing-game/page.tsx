@@ -56,15 +56,15 @@ const TypingGamePage = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    if (window.innerWidth > 1440) {
-      setGameAreaWidth(1440);
-    } else {
-      setGameAreaWidth(window.innerWidth);
+    // window 객체가 있는지 확인하여 서버 사이드에서 실행될 때 오류 방지
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth > 1440) {
+        setGameAreaWidth(1440);
+      } else {
+        setGameAreaWidth(window.innerWidth);
+      }
     }
   }, []);
-
-  console.log(window.innerWidth);
-  console.log('gameAreaWidth', gameAreaWidth);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
