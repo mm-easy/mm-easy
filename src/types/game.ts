@@ -1,4 +1,4 @@
-export type TypeingGame = {
+export type TypingGame = {
   user_id: string | null;
   score: number;
   nickname: string;
