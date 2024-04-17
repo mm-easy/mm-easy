@@ -339,7 +339,7 @@ const QuizTryPage = () => {
               );
             })}
             <section className="w-[570px] flex flex-col justify-between gap-3">
-              {!resultMode && (
+              {!resultMode && questions.length > 1 && (
                 <div className="flex justify-between gap-3">
                   <button
                     disabled={page === 0}
