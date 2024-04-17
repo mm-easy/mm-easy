@@ -135,7 +135,7 @@ const DetailPost = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                {profile && post.author_id === profile.id && (
+              {profile && (post.author_id === profile.id || profile?.email === 'daejang@mmeasy.com') && (
                   <div className="flex">
                     <div>
                       <PostEditButton
