@@ -220,7 +220,7 @@ const TypingGamePage = () => {
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
-    <div className="relative flex flex-col bg-no-repeat bg-center">
+    <div className="relative flex flex-col">
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
           <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
