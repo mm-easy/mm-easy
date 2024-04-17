@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 const CommunityPage = () => {
-  redirect('/community/list/전체');
+  redirect(`/community/list/${encodeURIComponent('전체')}`);
 };
 
 export default CommunityPage;

@@ -109,14 +109,6 @@ const DetailPost = () => {
     };
     fetchData();
   }, [isLoggedIn]);
-  const navigateToPostPage = () => {
-    if (!isLoggedIn) {
-      toast.warn('게시물을 작성하려면 로그인 해주세요.');
-    } else {
-      // router.push('/community-post');
-      router.push('/community/list/write');
-    }
-  };
 
   return (
     <div className="flex bg-bgColor1 text-pointColor1">
