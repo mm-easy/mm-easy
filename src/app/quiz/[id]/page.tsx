@@ -78,12 +78,10 @@ const QuizTryPage = () => {
 
   const handlePrevPage = () => {
     setPage(page - 1);
-    console.log(page);
   };
 
   const handleNextPage = () => {
     setPage(page + 1);
-    console.log(page);
   };
 
   const {
@@ -179,7 +177,6 @@ const QuizTryPage = () => {
         left: 0,
         behavior: 'smooth'
       });
-      console.log(usersAnswers);
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
     }
@@ -222,7 +219,7 @@ const QuizTryPage = () => {
   const handleEditQuiz = (id: string) => {
     router.push(`/quiz-form?id=${id}`);
   };
-  console.log(resultMode);
+
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
