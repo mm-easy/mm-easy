@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -223,7 +223,7 @@ const QuizTryPage = () => {
 
   return (
     <>
-      <Header level={level} title={title} />
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
         <article className="h-[76vh] text-pointColor1">
           <section>
