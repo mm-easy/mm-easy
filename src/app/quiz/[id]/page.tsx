@@ -209,10 +209,16 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
     deleteQuizMutation.mutateAsync(id);
     router.replace('/quiz-list');
+  };
+
+  /** 수정 버튼 클릭 핸들러 */
+  const handleEditQuiz = (id: string) => {
+    router.push(`/quiz-form?id=${id}`);
   };
 
   return (
@@ -240,13 +246,22 @@ const QuizTryPage = () => {
           <p className="p-4">{info}</p>
           <div className="flex mt-10 justify-center font-bold">
             {currentUserEmail === creator_id && (
-              <CancelButton
-                text="퀴즈 삭제"
-                width="w-44"
-                height="h-16"
-                border="border-2"
-                onClick={() => handleDeleteQuiz(id as string)}
-              />
+              <div className="flex gap-2 w-52">
+                <CancelButton
+                  text="수정"
+                  width="w-44"
+                  height="h-12"
+                  border="border-2"
+                  onClick={() => handleEditQuiz(id as string)}
+                />
+                <CancelButton
+                  text="삭제"
+                  width="w-44"
+                  height="h-12"
+                  border="border-2"
+                  onClick={() => handleDeleteQuiz(id as string)}
+                />
+              </div>
             )}
           </div>
         </article>
@@ -326,14 +341,20 @@ const QuizTryPage = () => {
                 <div className="flex justify-between gap-3">
                   <button
                     disabled={page === 0}
-                    className={`w-full py-[9px] ${page === 0 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    className={`w-full py-[9px] ${
+                      page === 0 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'
+                    } rounded-md`}
                     onClick={handlePrevPage}
                   >
                     이전 페이지
                   </button>
                   <button
                     disabled={page === questions.length - 1}
-                    className={`w-full py-[9px] ${page === questions.length - 1 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    className={`w-full py-[9px] ${
+                      page === questions.length - 1
+                        ? 'text-white bg-grayColor'
+                        : 'border border-solid border-pointColor1'
+                    } rounded-md`}
                     onClick={handleNextPage}
                   >
                     다음 페이지

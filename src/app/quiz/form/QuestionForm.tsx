@@ -172,6 +172,7 @@ const QuestionForm = ({
               <section>
                 <SelectQuestionType
                   id={id}
+                  currentType={type}
                   defaultChecked={true}
                   onChange={handleChangeType}
                   type={QuestionType.objective}
@@ -179,6 +180,7 @@ const QuestionForm = ({
                 />
                 <SelectQuestionType
                   id={id}
+                  currentType={type}
                   defaultChecked={false}
                   onChange={handleChangeType}
                   type={QuestionType.subjective}
@@ -216,6 +218,7 @@ const QuestionForm = ({
                             type="text"
                             className="w-full pl-4 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
                             placeholder="선택지를 입력해 주세요."
+                            value={option.content}
                             onInput={(e) => {
                               handleMaxLength(e, 25);
                             }}
@@ -238,7 +241,9 @@ const QuestionForm = ({
                   })}
                   <button
                     type="button"
-                    className={`w-full text-3xl border-solid border ${options.length === 5 ? 'text-grayColor border-grayColor cursor-default' : 'border-pointColor1'} rounded-md`}
+                    className={`w-full text-3xl border-solid border ${
+                      options.length === 5 ? 'text-grayColor border-grayColor cursor-default' : 'border-pointColor1'
+                    } rounded-md`}
                     onClick={() => handleAddOption(id, options)}
                   >
                     +
@@ -253,6 +258,7 @@ const QuestionForm = ({
                       type="text"
                       className="w-full px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
                       placeholder="정답을 입력해 주세요."
+                      value={correct_answer}
                       onInput={(e) => {
                         handleMaxLength(e, 30);
                       }}

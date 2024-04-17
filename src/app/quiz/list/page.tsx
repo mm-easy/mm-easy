@@ -1,4 +1,4 @@
-import SelectQuizLevel from '../(components)/SelectQuizLevel';
+import SelectQuizLevel from './SelectQuizLevel';
 
 const QuizListPage = () => {
   return (
