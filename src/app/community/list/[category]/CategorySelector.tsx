@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+'use client';
+
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('');
-
   const router = useRouter();
 
   const categoryMenu: Record<string, string> = {
@@ -34,8 +34,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   });
 
   const handleSelectCategory = (category: string) => {
-    setSelectedCategory(category);
-    router.push(`/community-list?category=${categoryMenu[category]}`);
+    router.push(`/community/list/${categoryMenu[category]}`);
   };
 
   return (
@@ -45,7 +44,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
           <li
             key={category}
             className={`h-[8vh] flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
-              selectedCategory === category || categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
+              categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
           >

@@ -89,7 +89,7 @@ const Header = () => {
             타자 연습
           </Link>
           <Link
-            href="/community-list?category=전체"
+            href="/community/list/전체"
             className="hover:border-b-5 hover:border-solid hover:border-pointColor1 focus:border-b-5 focus:border-solid focus:border-pointColor1"
           >
             커뮤니티

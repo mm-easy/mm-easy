@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDeleteComment, useInsertComment, useUpdateComment } from './mutations';
+import { useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
 import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
@@ -79,7 +79,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                 />
               </div>
               <div className="flex flex-col justify-center text-blackColor">
-                <p className='pb-2 font-semibold'>{prev.profiles?.nickname}</p>
+                <p className="pb-2 font-semibold">{prev.profiles?.nickname}</p>
 
                 {btnChange && nowCommentId === prev.id ? (
                   <div>

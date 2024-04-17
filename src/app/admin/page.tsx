@@ -133,7 +133,7 @@ const AdminPage = () => {
                     <td className="pl-6 p-4">{item.status === false ? '처리 중' : '처리 완료'}</td>
                     <td>{item.reported_user_id || '알 수 없음'}</td>
                     <td className="truncate max-w-xs pr-8 cursor-pointer">
-                      <a href={`/community-list/전체/${item.target_id}`}>{item['title']}</a>
+                      <a href={`/community/list/전체/${item.target_id}`}>{item['title']}</a>
                     </td>
                     <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                     <td>
