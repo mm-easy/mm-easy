@@ -222,10 +222,10 @@ const QuizTryPage = () => {
   const handleEditQuiz = (id: string) => {
     router.push(`/quiz-form?id=${id}`);
   };
-
+  console.log(resultMode);
   return (
     <>
-      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} />
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
         <article className="h-[76vh] text-pointColor1">
           <section>

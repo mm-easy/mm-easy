@@ -1,17 +1,21 @@
-import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 import { useRouter } from 'next/navigation';
 
-const Header = ({ level, title, isAnswerWritten }: { level: number; title: string; isAnswerWritten: number }) => {
+const Header = ({
+  level,
+  title,
+  isAnswerWritten,
+  resultMode
+}: {
+  level: number;
+  title: string;
+  isAnswerWritten: number;
+  resultMode: boolean;
+}) => {
   const router = useRouter();
-  const exitBtnWidth = Math.floor(window.innerHeight * 0.08);
-
-  if (isAnswerWritten) {
-    useConfirmPageLeave();
-  }
 
   const handleExitBtn = () => {
-    if (isAnswerWritten) {
-      if (!window.confirm('작성하던 내용이 모두 사라집니다. 계속하시겠습니까?')) return;
+    if (isAnswerWritten && !resultMode) {
+      if (!window.confirm('변경사항이 저장되지 않을 수 있습니다. 계속하시겠습니까?')) return;
     }
     router.push('/quiz/list');
   };
@@ -32,7 +36,7 @@ const Header = ({ level, title, isAnswerWritten }: { level: number; title: strin
       </h2>
       <h3 className="pl-[2%]">{title}</h3>
       <button
-        className={`w-[${exitBtnWidth}px] h-[calc(8vh-2px)] absolute right-0 font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1`}
+        className="w-[5%] h-[calc(8vh-2px)] absolute right-0 font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1"
         onClick={handleExitBtn}
       >
         ✕
