@@ -16,13 +16,17 @@ const config: Config = {
         bgColor3: '#FFF0EF',
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
-        pointColor3: '#D9D9D9',
-        pointColor4: '#8dbdf6',
+        pointColor3: '#8dbdf6',
         blackColor: '#2E2E2E',
-        grayColor: '#D9D9D9'
-      },
+        grayColor1: '#E5E7EB',
+        grayColor2: '#D9D9D9'
+      }
     },
-    backgroundSize: { md: '80%', cover: 'cover' }
+    backgroundSize: { md: '80%', cover: 'cover' },
+    screens: {
+      lg: '1441px',
+      md: '861px'
+    }
   },
   darkMode: 'class',
   plugins: [nextui()]
