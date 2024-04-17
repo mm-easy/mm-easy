@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -28,10 +28,10 @@ const QuizTryPage = () => {
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
   const [page, setPage] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
   const insertQuizMutation = useSubmitQuizTry();
@@ -250,9 +250,7 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <main
-          className={`py-14 flex flex-col place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-scroll'}`}
-        >
+        <main className="py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
