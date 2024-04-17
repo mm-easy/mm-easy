@@ -44,6 +44,7 @@ const Options = ({
               disabled={resultMode}
               name={questionId}
               onChange={() => onChange(questionId, is_answer, id)}
+              checked={usersAnswer?.option_id === id}
             />
             <p>{content}</p>
           </div>

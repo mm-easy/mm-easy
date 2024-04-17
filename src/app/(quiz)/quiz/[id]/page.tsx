@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -27,11 +27,12 @@ const QuizTryPage = () => {
   const [resultMode, setResultMode] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
-
+  const [page, setPage] = useState(0);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+
+  const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
-  const { getCurrentUserProfile } = useAuth();
 
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
@@ -74,6 +75,16 @@ const QuizTryPage = () => {
     };
     fetchData();
   }, [isLoggedIn]);
+
+  const handlePrevPage = () => {
+    setPage(page - 1);
+    console.log(page);
+  };
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+    console.log(page);
+  };
 
   const {
     data: quizData,
@@ -213,7 +224,7 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} />
-      <main className="grid grid-cols-[16%_84%] bg-bgColor1">
+      <div className="grid grid-cols-[16%_84%] bg-bgColor1">
         <article className="h-[76vh] text-pointColor1">
           <section>
             <Image
@@ -254,69 +265,104 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <article className="pt-12 pb-20 flex flex-col justify-center place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
+        <main className="py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
             </h1>
           )}
-          {questions.map((question) => {
-            const { id, title, type, img_url, correct_answer } = question;
-            const usersAnswer = usersAnswers.find((answer) => answer.id === id);
-            return (
-              <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
-                <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
-                {img_url !== 'tempThumbnail.png' ? (
-                  <Image
-                    src={`${storageUrl}/question-imgs/${img_url}`}
-                    alt="문제 이미지"
-                    width={570}
-                    height={200}
-                    className="h-[200px] mb-2 object-cover rounded-md"
-                  />
-                ) : (
-                  <></>
-                )}
-                {type === QuestionType.objective ? (
-                  <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
-                ) : (
-                  <div className="w-full relative">
-                    {resultMode ? (
-                      <p
-                        className={`w-full pl-4 py-[9px] border-solid border ${
-                          usersAnswer?.answer === correct_answer
-                            ? ' border-pointColor1 bg-bgColor2'
-                            : 'border-pointColor2 bg-bgColor3'
-                        } rounded-md`}
-                      >
-                        {usersAnswer?.answer}
-                      </p>
+          <article className="flex flex-col justify-between gap-8">
+            {questions.map((question) => {
+              const { id, title, type, img_url, correct_answer } = question;
+              const questionOrder = questions.indexOf(question);
+              const pageMode = !resultMode ? page === questionOrder : true;
+
+              const usersAnswer = usersAnswers.find((answer) => answer.id === id);
+              const answer = usersAnswer ? (usersAnswer.answer as string) : '';
+
+              return (
+                pageMode && (
+                  <section key={id} className="w-[570px] flex flex-col items-center gap-4">
+                    <div className="w-full flex justify-between place-items-center">
+                      <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
+                      <h3>
+                        {questionOrder + 1}/{questions.length}
+                      </h3>
+                    </div>
+                    {img_url !== 'tempThumbnail.png' ? (
+                      <Image
+                        src={`${storageUrl}/question-imgs/${img_url}`}
+                        alt="문제 이미지"
+                        width={570}
+                        height={200}
+                        className="h-[200px] mb-2 object-cover rounded-md"
+                      />
                     ) : (
-                      <>
-                        <input
-                          type="text"
-                          className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
-                          onChange={(e) => {
-                            handleMaxLength(e, 30);
-                            handleGetAnswer(id, e.target.value);
-                          }}
-                        />
-                        <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
-                          {handleGetLength(id)}/30
-                        </p>
-                      </>
+                      <></>
                     )}
-                  </div>
-                )}
-              </section>
-            );
-          })}
-          <button
-            className="w-[570px] pl-4 py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
-            onClick={handleResultMode}
-          >
-            {resultMode ? '다시 풀기' : '제출하기'}
-          </button>
+                    {type === QuestionType.objective ? (
+                      <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
+                    ) : (
+                      <div className="w-full relative">
+                        {resultMode ? (
+                          <p
+                            className={`w-full pl-4 py-[9px] border-solid border ${
+                              usersAnswer?.answer === correct_answer
+                                ? ' border-pointColor1 bg-bgColor2'
+                                : 'border-pointColor2 bg-bgColor3'
+                            } rounded-md`}
+                          >
+                            {usersAnswer?.answer}
+                          </p>
+                        ) : (
+                          <>
+                            <input
+                              type="text"
+                              value={answer}
+                              className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                              onChange={(e) => {
+                                handleMaxLength(e, 30);
+                                handleGetAnswer(id, e.target.value);
+                              }}
+                            />
+                            <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
+                              {handleGetLength(id)}/30
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </section>
+                )
+              );
+            })}
+            <section className="w-[570px] flex flex-col justify-between gap-3">
+              {!resultMode && (
+                <div className="flex justify-between gap-3">
+                  <button
+                    disabled={page === 0}
+                    className={`w-full py-[9px] ${page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    onClick={handlePrevPage}
+                  >
+                    이전 페이지
+                  </button>
+                  <button
+                    disabled={page === questions.length - 1}
+                    className={`w-full py-[9px] ${page === questions.length - 1 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    onClick={handleNextPage}
+                  >
+                    다음 페이지
+                  </button>
+                </div>
+              )}
+              <button
+                className="w-full py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
+                onClick={handleResultMode}
+              >
+                {resultMode ? '다시 풀기' : '제출하기'}
+              </button>
+            </section>
+          </article>
           {resultMode && (
             <ReportButton
               targetId={id}
@@ -328,9 +374,9 @@ const QuizTryPage = () => {
               🚨 퀴즈에 오류가 있나요?
             </ReportButton>
           )}
-        </article>
+        </main>
         <PageUpBtn scrollPosition={scrollPosition} />
-      </main>
+      </div>
     </>
   );
 };
