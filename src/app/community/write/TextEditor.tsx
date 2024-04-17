@@ -8,12 +8,12 @@ import { ImageFormats } from '@xeger/quill-image-formats';
 Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
 
-interface NoticeEditorProps {
+interface TextEditorProps {
   value: ReactQuill.Value;
   onChange: (value: string) => void;
 }
 
-const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
+const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
   const quillRef = useRef<any | null>(null);
 
   // 이미지 업로드
@@ -104,4 +104,4 @@ const NoticeEditor = ({ value, onChange }: NoticeEditorProps): ReactElement => {
   );
 };
 
-export default NoticeEditor;
+export default TextEditor;
