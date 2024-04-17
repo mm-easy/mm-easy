@@ -37,7 +37,13 @@ const Options = ({
         return (
           <div
             key={id}
-            className={`pl-4 py-[9px] flex gap-4 border-solid border ${resultMode && usersAnswer?.option_id === id ? (is_answer ? 'border-pointColor1 bg-bgColor2' : 'border-pointColor2 bg-bgColor3') : 'border-pointColor1'} rounded-md`}
+            className={`pl-4 py-[9px] flex gap-4 border-solid border ${
+              resultMode && usersAnswer?.option_id === id
+                ? is_answer
+                  ? 'border-pointColor1 bg-bgColor2'
+                  : 'border-pointColor2 bg-bgColor3'
+                : 'border-pointColor1'
+            } rounded-md`}
           >
             <input
               type="radio"
