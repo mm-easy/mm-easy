@@ -12,8 +12,8 @@ type Props = {
 const Layout = ({ children, params }: Props) => {
   const category = decodeURIComponent(params.category);
   return (
-    <main className="grid grid-cols-[16%_84%] h-[84%]">
-      <section className="justify-between bg-bgColor1 border-r-2 border-solid border-pointColor1">
+    <main className="bg-bgColor1 grid grid-cols-[16%_84%] h-[84%]">
+      <section className="h-[84vh] justify-between bg-bgColor1">
         <div>
           <CategorySelector categoryNow={category} />
         </div>
