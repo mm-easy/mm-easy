@@ -13,24 +13,50 @@ import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const { getCurrentUserProfile } = useAuth();
   const postId = params.id;
   const router = useRouter();
 
-  const {
-    data: post,
-    isLoading,
-    isError
-  } = useQuery({
+  const { data: post, isLoading, isError } = useQuery({
+    queryKey: ['posts', postId],
     queryFn: async () => {
-      try {
-        const data = await fetchPost(postId);
-        return data;
-      } catch (error) {
-        return error;
-      }
+      const data = await fetchPost(postId);
+      return data;
     },
-    queryKey: ['posts']
   });
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      try {
+        const getSession = await supabase.auth.getSession();
+        if (!getSession.data.session) {
+          router.push('/login');
+          toast('로그인 후 이용해 주세요.');
+          return;
+        }
+        const userProfile = await getCurrentUserProfile();
+        if (!userProfile) return;
+
+        // 권한 검사는 post 데이터가 로딩된 후에 수행
+        if (post && userProfile.id !== post.author_id) {
+          console.log("author_id",post.author_id)
+          console.log("userProfile.id",userProfile.id)
+          router.push('/');
+          toast('수정 권한이 없습니다.');
+          return;
+        }
+        setIsLoggedIn(true);
+      } catch (error) {
+        toast('프로필 정보를 찾을 수 없습니다.');
+        console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    if (!isLoading && post) { // post 데이터가 로드되면 권한 검사 수행
+      checkAccess();
+    }
+  }, [post, isLoading]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -39,19 +65,21 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   };
 
   return (
-    <PostEditor
-      defaultValues={{
-        category: post.category,
-        title: post.title,
-        content: post.content
-      }}
-      onSubmit={async ({ category, title, content }) => {
-        await updateCommunityPost(postId, title, content as unknown as string, category);
-        toast('수정이 완료되었습니다.');
-        navigateToCreatedPost(postId);
-        console.log('content => ', content);
-      }}
-    />
+    <>
+      <PostEditor
+        defaultValues={{
+          category: post.category,
+          title: post.title,
+          content: post.content
+        }}
+        onSubmit={async ({ category, title, content }) => {
+          await updateCommunityPost(postId, title, content as unknown as string, category);
+          toast('수정이 완료되었습니다.');
+          navigateToCreatedPost(postId);
+          console.log('content => ', content);
+        }}
+      />
+    </>
   );
 };
 
