@@ -45,15 +45,22 @@ const PostPage = () => {
     fetchData();
   }, []);
 
+  const handleCancel = () => {
+    const confirmLeave = window.confirm("작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?");
+    if (confirmLeave) {
+      router.push('/community/list/전체');
+    }
+  };
+
   return (
     <article className="px-48 pt-[calc(4vh-20px)]">
       <PostEditor
+        onCancel={handleCancel}
         onSubmit={async ({ category, title, content }) => {
           if (!userProfile) {
             toast('사용자 정보가 없습니다.');
             return;
           }
-
           if (!title.trim()) {
             toast('제목을 입력해주세요.');
             return;
@@ -62,7 +69,6 @@ const PostPage = () => {
             toast('내용을 입력해주세요.');
             return;
           }
-
           try {
             const newPost = await insertPost(title, content as unknown as string, category, userProfile.id);
             toast('게시물이 등록되었습니다.');

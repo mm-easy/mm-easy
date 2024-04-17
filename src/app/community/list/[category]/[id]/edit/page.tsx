@@ -38,7 +38,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
 
-        if (post && userProfile.id !== post.author_id) {
+        if (post && userProfile.id !== post.author_id && userProfile.email !== 'daejang@mmeasy.com') {
           console.log("author_id",post.author_id)
           console.log("userProfile.id",userProfile.id)
           router.push('/');
