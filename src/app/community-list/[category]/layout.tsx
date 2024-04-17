@@ -17,13 +17,13 @@ const Layout = ({ children, params }: Props) => {
         <div>
           <CategorySelector categoryNow={category} />
         </div>
-        <div className="flex justify-center w-full pb-4 font-bold">
+        <div className="flex justify-center w-full pb-4 font-bold mt-10">
           <Link
             href="/community-list/write"
             type="button"
-            className={`rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white `}
+            className='flex justify-center items-center rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white w-32 h-12'
           >
-            작성하기
+            글쓰기
           </Link>
         </div>
       </section>
