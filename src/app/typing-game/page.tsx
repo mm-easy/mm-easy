@@ -268,19 +268,18 @@ const TypingGamePage = () => {
             <div className="flex mb-4 items-center justify-center">
               {Array.from({ length: maxDifficulty }, (_, index) => (
                 <button
-                  key={index + 1}
-                  onClick={() => handleDifficultyChange(index + 1)}
-                  className={`text-pointColor1 mx-3 mb-6 ${
-                    difficulty === index + 1
-                      ? 'bg-pointColor1 text-white font-bold'
-                      : 'font-bold border border-solid border-pointColor1'
-                  } p-2 text-lg w-12 rounded-md`}
-                >
-                  {difficultySettings[index + 1].label}
-                </button>
+                key={index + 1}
+                onClick={() => handleDifficultyChange(index + 1)}
+                className={`text-pointColor1 mx-3 mb-6 ${
+                  difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid border-pointColor1'
+                } p-2 text-lg w-12 rounded-md relative overflow-hidden`}
+              >
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-0 animate-none hover:animate-slash"></div>
+                {difficultySettings[index + 1].label}
+              </button>
               ))}
             </div>
-            <button onClick={startGame} className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded">
+            <button onClick={startGame} className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded animate-wave-opacity hover:animate-hover-opacity">
               시작하기
             </button>
           </div>
