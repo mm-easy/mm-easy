@@ -71,7 +71,7 @@ const Header = () => {
     };
   }, [setIsLoggedIn]);
 
-  const isActive = (path: string): boolean => {
+  const isActive = (path: string) => {
     return pathname.includes(path);
   };
 
