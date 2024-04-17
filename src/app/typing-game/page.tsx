@@ -56,8 +56,15 @@ const TypingGamePage = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    setGameAreaWidth(window.innerWidth);
+    if (window.innerWidth > 1440) {
+      setGameAreaWidth(1440);
+    } else {
+      setGameAreaWidth(window.innerWidth);
+    }
   }, []);
+
+  console.log(window.innerWidth);
+  console.log('gameAreaWidth', gameAreaWidth);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -213,7 +220,7 @@ const TypingGamePage = () => {
   const lifePercentage = (lives / maxLives) * 60;
 
   return (
-    <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/game_imgs/game_2.png')] bg-cover bg-no-repeat bg-center">
+    <div className="relative flex flex-col bg-no-repeat bg-center">
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
           <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
