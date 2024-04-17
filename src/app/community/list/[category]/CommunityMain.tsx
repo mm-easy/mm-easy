@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useAtom } from 'jotai';
@@ -12,6 +11,7 @@ import { supabase } from '@/utils/supabase/supabase';
 
 import type { Post } from '@/types/posts';
 import CommunityForm from './CommunityForm';
+import { redirect } from 'next/navigation';
 
 const CommunityMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -19,8 +19,22 @@ const CommunityMain = () => {
 
   const { getCurrentUserProfile } = useAuth();
   const params = useParams<{ category: string }>();
-  console.log('params', params);
   const category = decodeURIComponent(params.category);
+
+  // if (
+  //   category !== '전체' &&
+  //   category !== '공지' &&
+  //   category !== '질문' &&
+  //   category !== '잡담' &&
+  //   category !== '공부' &&
+  //   category !== '일기'
+  // ) {
+  //   redirect(`/community/list/${encodeURIComponent('전체')}`);
+  // }
+  const validCategories = ['전체', '공지', '질문', '잡담', '공부', '일기'];
+  if (!validCategories.includes(category)) {
+    redirect(`/community/list/${encodeURIComponent('전체')}`);
+  }
 
   const {
     data: post = [],

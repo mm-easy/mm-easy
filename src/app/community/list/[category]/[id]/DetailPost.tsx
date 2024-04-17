@@ -30,6 +30,7 @@ const DetailPost = () => {
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
 
+  console.log('params', categoryNow);
   const { data: post } = useQuery<PostDetailDateType>({
     queryFn: async () => {
       try {
