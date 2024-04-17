@@ -44,7 +44,7 @@ const SelectQuizLevel = () => {
       toast.warn('로그인이 필요합니다.');
       return;
     }
-    router.push('/quiz-form');
+    router.push('/quiz/form');
   };
 
   /** quizzes 테이블에서 리스트 가져오기 */
