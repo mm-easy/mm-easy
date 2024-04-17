@@ -1,5 +1,5 @@
 import React from 'react';
-import CategorySelector from '@/app/(components)/CategorySelector';
+import CategorySelector from '@/app/community/list/[category]/CategorySelector';
 import Link from 'next/link';
 
 type Props = {
@@ -19,9 +19,9 @@ const Layout = ({ children, params }: Props) => {
         </div>
         <div className="flex justify-center w-full pb-4 font-bold mt-10">
           <Link
-            href="/community-list/write"
+            href="/community/write"
             type="button"
-            className='flex justify-center items-center rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white w-32 h-12'
+            className="flex justify-center items-center rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white w-32 h-12"
           >
             글쓰기
           </Link>

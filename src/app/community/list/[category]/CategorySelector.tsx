@@ -34,7 +34,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   });
 
   const handleSelectCategory = (category: string) => {
-    router.push(`/community-list/${categoryMenu[category]}`);
+    router.push(`/community/list/${categoryMenu[category]}`);
   };
 
   return (

@@ -1,4 +1,4 @@
-import CategorySelector from '@/app/(components)/CategorySelector';
+import CategorySelector from '@/app/community/list/[category]/CategorySelector';
 import React from 'react';
 
 type Props = {

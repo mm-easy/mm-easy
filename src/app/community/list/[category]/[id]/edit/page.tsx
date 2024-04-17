@@ -4,13 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 
 import { fetchPost, updateCommunityPost } from '@/api/posts';
-import PostEditor from '@/app/community-list/PostEditor';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
 import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
+import PostEditor from '@/app/community/write/PostEditor';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -60,7 +60,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   if (isLoading) return <div>Loading...</div>;
 
   const navigateToCreatedPost = (postId: string) => {
-    router.push(`/community-list/${params.category}/${postId}`);
+    router.push(`/community/list/${params.category}/${postId}`);
   };
 
   // TODO : 조건부로 랜더링

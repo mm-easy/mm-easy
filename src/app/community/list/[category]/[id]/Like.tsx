@@ -1,7 +1,7 @@
 import LikeToggleButton from './LikeToggleButton';
 import { toast } from 'react-toastify';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { useDeleteLike, useInsertLike } from './mutations';
+import { useDeleteLike, useInsertLike } from '../../../mutations';
 import { getLike } from '@/api/likes';
 import { useQuery } from '@tanstack/react-query';
 

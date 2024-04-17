@@ -1,6 +1,6 @@
 'use client';
 
-import CommunityForm from '../../(components)/CommunityForm';
+
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useAtom } from 'jotai';
@@ -11,6 +11,7 @@ import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { Post } from '@/types/posts';
+import CommunityForm from './CommunityForm';
 
 const CommunityMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);

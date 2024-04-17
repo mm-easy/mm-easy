@@ -33,9 +33,9 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   // 게시글 상세 페이지로 이동
   const navigateToDetailPost = (post: { id: string }): void => {
     if (category === null) {
-      router.push(`/community-list/전체/${post.id}`);
+      router.push(`/community/list/전체/${post.id}`);
     } else {
-      router.push(`/community-list/${category}/${post.id}`);
+      router.push(`/community/list/${category}/${post.id}`);
     }
   };
 

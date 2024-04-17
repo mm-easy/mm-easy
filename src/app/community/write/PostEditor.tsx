@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
-const TextEditor = dynamic(() => import('../(components)/NoticeEditor'), { ssr: false });
+const TextEditor = dynamic(() => import('./NoticeEditor'), { ssr: false });
 
 type Props = {
   defaultValues?: { category?: string; title?: string; content?: ReactQuill.Value };
@@ -43,9 +43,10 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     queryFn: getCurrentUserProfile
   });
 
-  const categories = profile?.email === 'daejang@mmeasy.com' 
-  ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
-  : baseCategories;
+  const categories =
+    profile?.email === 'daejang@mmeasy.com'
+      ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
+      : baseCategories;
 
   if (isLoading) return null;
 

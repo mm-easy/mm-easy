@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import PostEditor from '../PostEditor';
+import PostEditor from './PostEditor';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { insertPost } from '@/api/posts';
@@ -46,7 +46,7 @@ const PostPage = () => {
   }, []);
 
   return (
-    <article className='px-48 pt-[calc(4vh-20px)]'>
+    <article className="px-48 pt-[calc(4vh-20px)]">
       <PostEditor
         onSubmit={async ({ category, title, content }) => {
           if (!userProfile) {
@@ -66,7 +66,7 @@ const PostPage = () => {
           try {
             const newPost = await insertPost(title, content as unknown as string, category, userProfile.id);
             toast('게시물이 등록되었습니다.');
-            router.push(`/community-list/${category}/${newPost}`);
+            router.push(`/community/list/${category}/${newPost}`);
           } catch (error) {
             toast('게시물 추가 중 오류가 발생했습니다.');
             console.error(error);

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
-import CategorySelector from './CategorySelector';
+import CategorySelector from '../CategorySelector';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
@@ -29,7 +29,7 @@ const DetailPost = () => {
   const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
-  
+
   const { data: post } = useQuery<PostDetailDateType>({
     queryFn: async () => {
       try {
@@ -69,7 +69,7 @@ const DetailPost = () => {
       toast.warning('첫 게시물 입니다!');
       return;
     } else {
-      router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum + 1].id}`);
+      router.push(`/community/list/${categoryNow}/${nextBeforePost[nowPostNum + 1].id}`);
     }
   };
   /** 다음글 가기 */
@@ -79,7 +79,7 @@ const DetailPost = () => {
       toast.warning('가장 최신글 입니다!');
       return;
     } else {
-      router.push(`/community-list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
+      router.push(`/community/list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
     }
   };
   useEffect(() => {
@@ -114,7 +114,7 @@ const DetailPost = () => {
       toast.warn('게시물을 작성하려면 로그인 해주세요.');
     } else {
       // router.push('/community-post');
-      router.push('/community-list/write');
+      router.push('/community/list/write');
     }
   };
 
@@ -151,7 +151,7 @@ const DetailPost = () => {
                       <PostEditButton
                         text="수정"
                         postId={post.id}
-                        redirectUrl={`/community-list/${categoryNow}/${post.id}/edit`}
+                        redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
                         width="w-20"
                         height="h-12"
                       />
@@ -159,7 +159,7 @@ const DetailPost = () => {
                     <div className="pl-3">
                       <PostDeleteButton
                         text="삭제"
-                        redirectUrl={`/community-list?category=${categoryNow}`}
+                        redirectUrl={`/community/list/${categoryNow}`}
                         postId={post.id}
                         width="w-20"
                         height="h-12"
@@ -197,7 +197,7 @@ const DetailPost = () => {
             </div>
             <div className="pt-10 flex justify-center item items-center font-bold gap-10">
               <button onClick={() => nextPostBtn(post.id)}>&#9664;</button>
-              <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
+              <Link href={`/community/list/${categoryNow}`}>목록으로</Link>
               <button onClick={() => beforePostBtn(post.id)}>&#9654;</button>
             </div>
           </div>
