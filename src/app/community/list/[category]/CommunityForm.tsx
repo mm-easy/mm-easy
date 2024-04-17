@@ -64,7 +64,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                   className={`cursor-pointer text-[calc(1vh+8px)] ${
                     item['category'] === '공지'
                       ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1'
-                      : 'bg-white border-grayColor border-y border-solid '
+                      : 'bg-white border-grayColor2 border-y border-solid '
                   }`}
                   key={idx}
                   onClick={() => navigateToDetailPost(item)}

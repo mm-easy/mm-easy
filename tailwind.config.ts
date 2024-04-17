@@ -18,13 +18,14 @@ const config: Config = {
         pointColor2: '#FF8878',
         pointColor3: '#8dbdf6',
         blackColor: '#2E2E2E',
-        grayColor: '#D9D9D9'
+        grayColor1: '#E5E7EB',
+        grayColor2: '#D9D9D9'
       }
     },
     backgroundSize: { md: '80%', cover: 'cover' },
     screens: {
-      lg: '1440px',
-      md: '860px'
+      lg: '1441px',
+      md: '861px'
     }
   },
   darkMode: 'class',
