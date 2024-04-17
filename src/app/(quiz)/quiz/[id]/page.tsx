@@ -251,7 +251,7 @@ const QuizTryPage = () => {
           </div>
         </article>
         <main
-          className={`py-14 flex flex-col place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-auto'}`}
+          className={`py-14 flex flex-col place-items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 ${resultMode ? '' : 'h-[76vh] overflow-y-scroll'}`}
         >
           {resultMode && (
             <h1 className="text-2xl">
@@ -269,8 +269,13 @@ const QuizTryPage = () => {
 
               return (
                 pageMode && (
-                  <section key={id} className="w-[570px] flex flex-col place-items-center gap-4">
-                    <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
+                  <section key={id} className="w-[570px] flex flex-col items-center gap-4">
+                    <div className="w-full flex justify-between place-items-center">
+                      <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
+                      <h3>
+                        {questionOrder + 1}/{questions.length}
+                      </h3>
+                    </div>
                     {img_url !== 'tempThumbnail.png' ? (
                       <Image
                         src={`${storageUrl}/question-imgs/${img_url}`}
