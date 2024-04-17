@@ -13,11 +13,9 @@ import ProfileDropdown from './ProfileDropdown';
 import { usePathname } from 'next/navigation';
 
 const Header = () => {
+  const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const pathname = usePathname();
-   
-
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -73,6 +71,10 @@ const Header = () => {
     };
   }, [setIsLoggedIn]);
 
+  const isActive = (path: string): boolean => {
+    return pathname.includes(path);
+  };
+
   return (
     <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
       <Link href="/" className="w-[16%] text-center flex justify-center items-center">
@@ -80,11 +82,23 @@ const Header = () => {
       </Link>
       <section className="w-[84%] flex justify-between px-10">
         <nav className="flex gap-14">
-        {['/quiz-list', '/typing-game', '/community-list', '/about'].map((path, index) => (
-            <Link key={index} href={path} className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${pathname === path ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
-                {['퀴즈', '타자 연습', '커뮤니티', '서비스 소개'][index]}
+          <Link href="/quiz/list" className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${isActive('/quiz') ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
+            퀴즈
+          </Link>
+          <Link href="/typing-game" className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${isActive('/typing-game') ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
+            타자 연습
+          </Link>
+          <Link href="/community/list/전체" className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${isActive('/community') ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
+            커뮤니티
+          </Link>
+          <Link href="/about" className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${isActive('/about') ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
+            서비스 소개
+          </Link>
+          {currentUserEmail === 'daejang@mmeasy.com' && (
+            <Link href="/admin" className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${isActive('/admin') ? 'border-b-5 border-solid border-pointColor1' : ''}`}>
+              관리자
             </Link>
-          ))}
+          )}
         </nav>
         {isLoggedIn ? (
           <ProfileDropdown />
