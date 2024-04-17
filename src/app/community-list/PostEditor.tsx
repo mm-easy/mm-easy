@@ -71,7 +71,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
           <div key={id}>
             <div
               className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
-                selectedCategory === value ? 'bg-pointColor1 text-white' : 'bg-white'
+                selectedCategory === value ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
               onClick={() => {
                 setSelectedCategory(value);
@@ -97,7 +97,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
       <div>
         <TextEditor value={textEditorValue} onChange={setTextEditorValue} />
       </div>
-      <div className="pt-14 flex justify-center gap-5 font-bold">
+      <div className="mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
         <CancelButton text="취소" onClick={onCancel} width="w-[15%]" border="border-2" />
         <SubmitButton text="제출" width="w-[15%]" />
       </div>

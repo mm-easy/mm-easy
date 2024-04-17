@@ -5,7 +5,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   return (
-    <div>
+    <div className='h-[84vh]'>
       <Suspense>
         <CommunityMain />
       </Suspense>

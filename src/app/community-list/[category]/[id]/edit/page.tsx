@@ -32,13 +32,12 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
           router.push('/login');
-          toast('로그인 후 이용해 주세요.');
+          toast('로그인 후 이용하세요.');
           return;
         }
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
 
-        // 권한 검사는 post 데이터가 로딩된 후에 수행
         if (post && userProfile.id !== post.author_id) {
           console.log("author_id",post.author_id)
           console.log("userProfile.id",userProfile.id)
@@ -53,7 +52,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
       }
     };
 
-    if (!isLoading && post) { // post 데이터가 로드되면 권한 검사 수행
+    if (!isLoading && post) {
       checkAccess();
     }
   }, [post, isLoading]);
@@ -64,6 +63,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
     router.push(`/community-list/${params.category}/${postId}`);
   };
 
+  // TODO : 조건부로 랜더링
   return (
     <>
       <PostEditor

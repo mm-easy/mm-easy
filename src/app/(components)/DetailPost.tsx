@@ -195,7 +195,7 @@ const DetailPost = () => {
               <span className="text-lg font-bold">댓글</span>
               <Comment postId={params.id} profile={profile} />
             </div>
-            <div className="pt-10 flex justify-center item items-center text-xl font-bold gap-10">
+            <div className="pt-10 flex justify-center item items-center font-bold gap-10">
               <button onClick={() => nextPostBtn(post.id)}>&#9664;</button>
               <Link href={`/community-list?category=${categoryNow}`}>목록으로</Link>
               <button onClick={() => beforePostBtn(post.id)}>&#9654;</button>
