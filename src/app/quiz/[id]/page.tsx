@@ -153,12 +153,13 @@ const QuizTryPage = () => {
   const handleResultMode = () => {
     if (!resultMode) {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
-      if (questions.length !== usersAnswers.length) {
+      const isEmptyAnswersExists = usersAnswers.some((usersAnswer) => usersAnswer.answer === '');
+
+      if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
         toast.warn('모든 문제를 풀어줘!');
       } else {
         let countCorrect = 0;
-
         for (const usersAnswer of usersAnswers) {
           const question = questions.find((question) => question.id === usersAnswer.id);
 
@@ -178,6 +179,7 @@ const QuizTryPage = () => {
         left: 0,
         behavior: 'smooth'
       });
+      console.log(usersAnswers);
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
     }

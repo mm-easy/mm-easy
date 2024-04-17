@@ -32,7 +32,7 @@ const Header = ({ level, title, isAnswerWritten }: { level: number; title: strin
       </h2>
       <h3 className="pl-[2%]">{title}</h3>
       <button
-        className={`w-[${exitBtnWidth}px] h-[calc(8vh-2px)] absolute right-0 bg-bgColor1 border-l-2 border-solid border-pointColor1`}
+        className={`w-[${exitBtnWidth}px] h-[calc(8vh-2px)] absolute right-0 font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1`}
         onClick={handleExitBtn}
       >
         ✕
