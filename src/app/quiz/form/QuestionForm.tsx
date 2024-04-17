@@ -172,6 +172,7 @@ const QuestionForm = ({
               <section>
                 <SelectQuestionType
                   id={id}
+                  currentType={type}
                   defaultChecked={true}
                   onChange={handleChangeType}
                   type={QuestionType.objective}
@@ -179,6 +180,7 @@ const QuestionForm = ({
                 />
                 <SelectQuestionType
                   id={id}
+                  currentType={type}
                   defaultChecked={false}
                   onChange={handleChangeType}
                   type={QuestionType.subjective}

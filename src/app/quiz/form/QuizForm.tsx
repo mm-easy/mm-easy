@@ -223,11 +223,11 @@ const QuizForm = () => {
 
   /** 등록 버튼 클릭 핸들러 */
   const handleSubmitBtn = async () => {
-    const isDifferent = JSON.stringify(myQuizData) !== JSON.stringify(questions);
-    if (!isDifferent) {
-      toast.warning('변경된 내용이 없습니다.');
-      return;
-    }
+    // const isDifferent = JSON.stringify(myQuizData) !== JSON.stringify(questions);
+    // if (!isDifferent) {
+    //   toast.warning('변경된 내용이 없습니다.');
+    //   return;
+    // }
 
     if (!level) {
       toast.warn('난이도를 선택해 주세요.');
@@ -331,6 +331,8 @@ const QuizForm = () => {
       fileInputRef.current.value = '';
     }
   };
+
+  // ui는 똑가팅 하고 등록하기 버튼에 대한 함수만 다른 props로 구분
 
   return (
     <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">

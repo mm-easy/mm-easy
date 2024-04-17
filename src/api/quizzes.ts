@@ -108,6 +108,7 @@ export const deleteQuiz = async (id: string) => {
   }
 };
 
+/** quizzes 테이블에서 최근 4개 퀴즈 가져오기기 */
 export const getRecentQuizzes = async () => {
   try {
     const { data, error } = await supabase

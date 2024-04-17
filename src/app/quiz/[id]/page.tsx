@@ -341,14 +341,20 @@ const QuizTryPage = () => {
                 <div className="flex justify-between gap-3">
                   <button
                     disabled={page === 0}
-                    className={`w-full py-[9px] ${page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    className={`w-full py-[9px] ${
+                      page === 0 ? 'bg-grayColor' : 'border border-solid border-pointColor1'
+                    } rounded-md`}
                     onClick={handlePrevPage}
                   >
                     이전 페이지
                   </button>
                   <button
                     disabled={page === questions.length - 1}
-                    className={`w-full py-[9px] ${page === questions.length - 1 ? 'text-white bg-grayColor' : 'border border-solid border-pointColor1'} rounded-md`}
+                    className={`w-full py-[9px] ${
+                      page === questions.length - 1
+                        ? 'text-white bg-grayColor'
+                        : 'border border-solid border-pointColor1'
+                    } rounded-md`}
                     onClick={handleNextPage}
                   >
                     다음 페이지
