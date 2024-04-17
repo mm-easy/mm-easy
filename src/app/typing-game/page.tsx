@@ -13,11 +13,11 @@ import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
 
 const difficultySettings: { [key: number]: DifficultySetting } = {
-  1: { label: "초보", speed: 20, interval: 5000 },
-  2: { label: "하수", speed: 30, interval: 4000 },
-  3: { label: "중수", speed: 40, interval: 3000 },
-  4: { label: "고수", speed: 50, interval: 2000 },
-  5: { label: "지존", speed: 70, interval: 2000 }
+  1: { label: '초보', speed: 20, interval: 5000 },
+  2: { label: '하수', speed: 30, interval: 4000 },
+  3: { label: '중수', speed: 40, interval: 3000 },
+  4: { label: '고수', speed: 50, interval: 2000 },
+  5: { label: '지존', speed: 70, interval: 2000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length;
@@ -104,11 +104,11 @@ const TypingGamePage = () => {
       if (user) {
         addGameScore(score);
       }
-       setGameStarted(false);
-       setScore(0); 
-       setLives(maxLives); 
-       setWords([]); 
-       setCorrectWordsCount(0);
+      setGameStarted(false);
+      setScore(0);
+      setLives(maxLives);
+      setWords([]);
+      setCorrectWordsCount(0);
     }
   }, [lives, score, user]);
 
@@ -248,7 +248,7 @@ const TypingGamePage = () => {
             ))}
             <form
               onSubmit={handleSubmit}
-              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor4"
+              className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor3"
             >
               <input
                 type="text"
@@ -271,17 +271,16 @@ const TypingGamePage = () => {
                   key={index + 1}
                   onClick={() => handleDifficultyChange(index + 1)}
                   className={`text-pointColor1 mx-3 mb-6 ${
-                    difficulty === index + 1 ? 'bg-pointColor1 text-white font-bold' : 'font-bold border border-solid border-pointColor1'
+                    difficulty === index + 1
+                      ? 'bg-pointColor1 text-white font-bold'
+                      : 'font-bold border border-solid border-pointColor1'
                   } p-2 text-lg w-12 rounded-md`}
                 >
                   {difficultySettings[index + 1].label}
                 </button>
               ))}
             </div>
-            <button 
-              onClick={startGame} 
-              className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded"
-            >
+            <button onClick={startGame} className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded">
               시작하기
             </button>
           </div>

@@ -127,7 +127,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  // 
+  //
   const navigateToQuiz = (puizId: string) => {
     router.push(`/quiz/${puizId}`);
   };
@@ -197,7 +197,7 @@ const MyActivity = () => {
             <tbody>
               {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
                 currentSolvedQuizzes.map((quiz, index) => (
-                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
                     <td className="py-4 w-24">{quiz.quizzes.title}</td>
                     <td>{quiz.score}</td>
                     <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
@@ -236,7 +236,7 @@ const MyActivity = () => {
             <tbody>
               {currentQuizzes && currentQuizzes.length > 0 ? (
                 currentQuizzes.map((quiz, index) => (
-                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
                     <td className="py-4 w-24">
                       <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
                     </td>
@@ -277,7 +277,7 @@ const MyActivity = () => {
             <tbody>
               {currentPosts && currentPosts.length > 0 ? (
                 currentPosts.map((post, index) => (
-                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
                     <td className="truncate max-w-xs pr-12 py-4 w-24">
                       <a href={`/community/list/${post.category}/${post.id}`}>{post.title}</a>
                     </td>
@@ -312,7 +312,7 @@ const MyActivity = () => {
             <tbody>
               {currentComments && currentComments.length > 0 ? (
                 currentComments.map((comment, index) => (
-                  <tr className="bg-white border-b border-solid border-pointColor3" key={index}>
+                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
                     <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
                     <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
                     <td className="text-right">
@@ -336,10 +336,10 @@ const MyActivity = () => {
           activeTab === 'solvedQuizzes'
             ? userSolvedQuiz.length
             : activeTab === 'quizzes'
-            ? userQuiz.length
-            : activeTab === 'posts'
-            ? userPost.length
-            : userComment.length
+              ? userQuiz.length
+              : activeTab === 'posts'
+                ? userPost.length
+                : userComment.length
         }
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
