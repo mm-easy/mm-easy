@@ -24,15 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={gothic_a1.className}>
-        <Provider>
-          <QueryProvider>
-            <Header />
-            <ToastContainer />
-            {children}
-            <Footer />
-          </QueryProvider>
-        </Provider>
+      <body className={`bg-bgColor1 ${gothic_a1.className}`}>
+        <main className="mx-auto lg:w-[1440px] lg:bg-white lg:border-x-2 lg:border-solid lg:border-pointColor1 md:w-full">
+          <Provider>
+            <QueryProvider>
+              <Header />
+              <ToastContainer />
+              {children}
+              <Footer />
+            </QueryProvider>
+          </Provider>
+        </main>
       </body>
     </html>
   );

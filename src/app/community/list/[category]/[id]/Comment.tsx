@@ -68,7 +68,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="pt-8 flex border-solid border-b border-pointColor3" key={prev.id}>
+            <div className="pt-8 flex border-solid border-b border-grayColor" key={prev.id}>
               <div className="w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
                   src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url || '프로필이미지'}`}
@@ -84,7 +84,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                 {btnChange && nowCommentId === prev.id ? (
                   <div>
                     <textarea
-                      className="resize-none focus:outline-none border-solid border border-pointColor3 "
+                      className="resize-none focus:outline-none border-solid border border-grayColor "
                       value={contentChange}
                       onChange={(e) => setContentChange(e.target.value)}
                       placeholder="Reply to comment…"
@@ -141,7 +141,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       </div>
       <div className="mt-8">
         <form onSubmit={handleSubmitBtn}>
-          <div className="border-solid border border-pointColor3">
+          <div className="border-solid border border-grayColor">
             <div className="p-4">
               <span className="text-blackColor font-bold">{profile?.nickname}</span>
               <div>
