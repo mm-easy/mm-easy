@@ -217,9 +217,9 @@ const QuizTryPage = () => {
   };
 
   /** 수정 버튼 클릭 핸들러 */
-  const handleEditQuiz = (id: string) => {
-    router.push(`/quiz/form/edit?id=${id}`);
-  };
+  // const handleEditQuiz = (id: string) => {
+  //   router.push(`/quiz/form/edit?id=${id}`);
+  // };
 
   return (
     <>
