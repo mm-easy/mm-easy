@@ -162,7 +162,7 @@ const MyActivity = () => {
 
   return (
     <main className="px-[25%] h-[84vh]">
-      <h3 className="text-center my-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
+      <h3 className="text-center py-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
       <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
@@ -340,20 +340,22 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-      <Pagination
-        total={
-          activeTab === 'solvedQuizzes'
-            ? userSolvedQuiz.length
-            : activeTab === 'quizzes'
-            ? userQuiz.length
-            : activeTab === 'posts'
-            ? userPost.length
-            : userComment.length
-        }
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+      <div className='pt-6'>
+        <Pagination
+          total={
+            activeTab === 'solvedQuizzes'
+              ? userSolvedQuiz.length
+              : activeTab === 'quizzes'
+              ? userQuiz.length
+              : activeTab === 'posts'
+              ? userPost.length
+              : userComment.length
+          }
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </main>
   );
 };
