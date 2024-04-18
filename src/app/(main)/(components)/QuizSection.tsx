@@ -16,7 +16,7 @@ const QuizSection = () => {
   });
 
   if (isLoading) {
-    return <LoadingImg height="500px" />;
+    return <LoadingImg height="400px" />;
   }
 
   return (

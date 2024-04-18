@@ -18,7 +18,7 @@ const CommunitySection = () => {
   });
 
   if (postsLoading || noticesLoading) {
-    return <LoadingImg height="500px" />;
+    return <LoadingImg height="400px" />;
   }
 
   return (

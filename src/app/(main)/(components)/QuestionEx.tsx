@@ -18,7 +18,7 @@ const QuestionEx = ({ id }: { id: string | undefined }) => {
   });
 
   if (isLoading) {
-    return <LoadingImg height="500px" />;
+    return <LoadingImg height="400px" />;
   }
 
   const question = data as Question[];
