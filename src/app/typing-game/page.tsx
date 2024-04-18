@@ -16,8 +16,8 @@ const difficultySettings: { [key: number]: DifficultySetting } = {
   1: { label: '초보', speed: 20, interval: 5000 },
   2: { label: '하수', speed: 30, interval: 4000 },
   3: { label: '중수', speed: 40, interval: 3000 },
-  4: { label: '고수', speed: 50, interval: 2000 },
-  5: { label: '지존', speed: 70, interval: 2000 }
+  4: { label: '고수', speed: 70, interval: 2000 },
+  5: { label: '지존', speed: 100, interval: 1000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length;
