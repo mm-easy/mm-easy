@@ -22,7 +22,7 @@ const QuizSection = () => {
     <>
       <div className="w-[1440px] px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1">
         <p className="">최근 올라온 퀴즈</p>
-        <Link href={`/quiz-list`} className="font-semibold text-pointColor1">
+        <Link href={`/quiz/list`} className="font-semibold text-pointColor1">
           더보기
         </Link>
       </div>

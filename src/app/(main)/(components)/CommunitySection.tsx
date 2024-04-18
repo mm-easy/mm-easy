@@ -29,7 +29,7 @@ const CommunitySection = () => {
         <div className="w-1/2 p-8 border-r border-solid border-pointColor1">
           <div className="flex justify-between">
             <h2 className="mb-4 text-lg font-bold">공지</h2>
-            <Link href={`/community/list/전체`} className="font-semibold text-pointColor1">
+            <Link href={`/community/list/공지`} className="font-semibold text-pointColor1">
               더보기
             </Link>
           </div>
