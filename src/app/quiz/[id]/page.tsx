@@ -19,6 +19,7 @@ import Creator from './Creator';
 import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
+import LoadingImg from '@/components/common/LoadingImg';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
 
@@ -116,7 +117,7 @@ const QuizTryPage = () => {
     queryKey: ['questions']
   });
 
-  if (quizIsLoading || questionsIsLoading) return <div>로드 중..</div>;
+  if (quizIsLoading || questionsIsLoading) return <LoadingImg height="84vh" />;
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as Quiz[];

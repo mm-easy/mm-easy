@@ -1,11 +1,12 @@
-import { getRecentQuizzes } from '@/api/quizzes';
-import { useQuery } from '@tanstack/react-query';
-import QuestionEx from './QuestionEx';
 import Image from 'next/image';
 import Link from 'next/link';
+import QuestionEx from './QuestionEx';
+import LoadingImg from '@/components/common/LoadingImg';
+import { getRecentQuizzes } from '@/api/quizzes';
+import { useQuery } from '@tanstack/react-query';
+import { storageUrl } from '@/utils/supabase/storage';
 
 import type { Quiz } from '@/types/quizzes';
-import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizSection = () => {
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
@@ -15,14 +16,14 @@ const QuizSection = () => {
   });
 
   if (isLoading) {
-    return <div>로딩중..</div>;
+    return <LoadingImg height="400px" />;
   }
 
   return (
     <>
       <div className="w-[1440px] px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1">
         <p className="">최근 올라온 퀴즈</p>
-        <Link href={`/quiz-list`} className="font-semibold text-pointColor1">
+        <Link href={`/quiz/list`} className="font-semibold text-pointColor1">
           더보기
         </Link>
       </div>

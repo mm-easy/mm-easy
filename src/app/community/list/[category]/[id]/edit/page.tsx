@@ -1,16 +1,16 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/hooks/useAuth';
-
-import { fetchPost, updateCommunityPost } from '@/api/posts';
+import PostEditor from '@/app/community/write/PostEditor';
+import LoadingImg from '@/components/common/LoadingImg';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
+import { fetchPost, updateCommunityPost } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
-import PostEditor from '@/app/community/write/PostEditor';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -18,12 +18,16 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const postId = params.id;
   const router = useRouter();
 
-  const { data: post, isLoading, isError } = useQuery({
+  const {
+    data: post,
+    isLoading,
+    isError
+  } = useQuery({
     queryKey: ['posts', postId],
     queryFn: async () => {
       const data = await fetchPost(postId);
       return data;
-    },
+    }
   });
 
   useEffect(() => {
@@ -39,8 +43,8 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         if (!userProfile) return;
 
         if (post && userProfile.id !== post.author_id && userProfile.email !== 'daejang@mmeasy.com') {
-          console.log("author_id",post.author_id)
-          console.log("userProfile.id",userProfile.id)
+          console.log('author_id', post.author_id);
+          console.log('userProfile.id', userProfile.id);
           router.push('/');
           toast('수정 권한이 없습니다.');
           return;
@@ -57,14 +61,14 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
     }
   }, [post, isLoading]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingImg height="84vh" />;
 
   const navigateToCreatedPost = (postId: string) => {
     router.push(`/community/list/${params.category}/${postId}`);
   };
 
   const handleCancel = () => {
-    const confirmLeave = window.confirm("작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?");
+    const confirmLeave = window.confirm('작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?');
     if (confirmLeave) {
       router.push('/community/list/전체');
     }

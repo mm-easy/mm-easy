@@ -46,7 +46,7 @@ const PostPage = () => {
   }, []);
 
   const handleCancel = () => {
-    const confirmLeave = window.confirm("작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?");
+    const confirmLeave = window.confirm('작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?');
     if (confirmLeave) {
       router.push('/community/list/전체');
     }

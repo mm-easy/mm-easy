@@ -1,7 +1,8 @@
+import Link from 'next/link';
+import LoadingImg from '@/components/common/LoadingImg';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 
 const CommunitySection = () => {
   const { data: posts, isLoading: postsLoading } = useQuery({
@@ -17,7 +18,7 @@ const CommunitySection = () => {
   });
 
   if (postsLoading || noticesLoading) {
-    return <div>로딩중..</div>;
+    return <LoadingImg height="400px" />;
   }
 
   return (
@@ -29,7 +30,7 @@ const CommunitySection = () => {
         <div className="w-1/2 p-8 border-r border-solid border-pointColor1">
           <div className="flex justify-between">
             <h2 className="mb-4 text-lg font-bold">공지</h2>
-            <Link href={`/community/list/전체`} className="font-semibold text-pointColor1">
+            <Link href={`/community/list/공지`} className="font-semibold text-pointColor1">
               더보기
             </Link>
           </div>
