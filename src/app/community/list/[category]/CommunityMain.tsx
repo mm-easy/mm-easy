@@ -81,7 +81,7 @@ const CommunityMain = () => {
   }
 
   return (
-    <section className="w-full px-24 flex justify-center mt-[calc(8vh-25px)]">
+    <section className="w-full px-[5vw] flex justify-center mt-[calc(8vh-25px)]">
       <CommunityForm
         currentItems={currentItems}
         setCurrentPage={setCurrentPage}

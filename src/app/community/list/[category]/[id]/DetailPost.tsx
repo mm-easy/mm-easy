@@ -114,7 +114,7 @@ const DetailPost = () => {
 
   return (
     <div className="flex bg-bgColor1 text-pointColor1">
-      <div className="py-16 px-48 w-full bg-white">
+      <div className="py-16 px-[5vw] w-full bg-white">
         {post && post.profiles && (
           <div>
             <div className="flex justify-between">
