@@ -161,8 +161,8 @@ const MyActivity = () => {
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="pt-16 px-[20%] h-[84vh]">
-      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-12 cursor-pointer">
+    <main className="h-[84vh] px-[20%] flex flex-col justify-center items-center">
+      <nav className="w-full flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 pb-[4vh] cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
             className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
@@ -205,7 +205,7 @@ const MyActivity = () => {
               {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
                 currentSolvedQuizzes.map((quiz, index) => (
                   <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
-                    <td className="py-4 w-24">{quiz.quizzes.title}</td>
+                    <td className="py-[1.9vh] w-24">{quiz.quizzes.title}</td>
                     <td>{quiz.score}</td>
                     <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                     <div className="text-right">
@@ -229,7 +229,6 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-
       {activeTab === 'quizzes' && (
         <div className="flex justify-center w-full ">
           <table className="w-full font-medium">
@@ -271,7 +270,6 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-
       {activeTab === 'posts' && (
         <div className="flex justify-center w-full">
           <table className="w-full font-medium">
@@ -307,7 +305,6 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-
       {activeTab === 'comments' && (
         <div className="flex justify-center w-full">
           <table className="w-full font-medium">
@@ -339,16 +336,16 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-      <div className='pt-6'>
+      <div className="pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'
               ? userSolvedQuiz.length
               : activeTab === 'quizzes'
-              ? userQuiz.length
-              : activeTab === 'posts'
-              ? userPost.length
-              : userComment.length
+                ? userQuiz.length
+                : activeTab === 'posts'
+                  ? userPost.length
+                  : userComment.length
           }
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
