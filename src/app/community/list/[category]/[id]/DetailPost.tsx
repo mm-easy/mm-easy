@@ -164,7 +164,7 @@ const DetailPost = () => {
               </div>
             </div>
             <p
-              className="my-5 ql-editor text-blackColor"
+              className="leading-9 my-5 ql-editor text-blackColor"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             ></p>
             <div className="py-4 flex justify-between">
