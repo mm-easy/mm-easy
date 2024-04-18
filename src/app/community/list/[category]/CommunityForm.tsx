@@ -80,7 +80,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
-                  {item.title} <span className="text-red-500">({commentCounts[idx].data || 0})</span>
+                  {item.title} {(commentCounts[idx]?.data ?? 0) > 0 && <span className="text-pointColor1">({commentCounts[idx].data})</span>}
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                   <td>{item['view_count']}</td>
                 </tr>

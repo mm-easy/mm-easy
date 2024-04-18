@@ -17,6 +17,7 @@ export const getComment = async (postId: string | string[] | undefined) => {
   }
 };
 
+/** 댓글수 가져오기 */
 export const getCommentCount = async (postId: string) => {
   const { data, error, count } = await supabase
     .from('comments')
@@ -27,7 +28,7 @@ export const getCommentCount = async (postId: string) => {
     throw new Error(error.message);
   }
 
-  return count;  // Return the count of comments
+  return count; 
 };
 
 
