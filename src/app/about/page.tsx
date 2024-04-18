@@ -17,6 +17,7 @@ import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 import { managerData } from '@/utils/managerData';
+import UsageStatus from './UsageStatus';
 
 const AboutPage = () => {
   const { data: quizNum } = useQuery<Quiz[]>({
@@ -101,27 +102,9 @@ const AboutPage = () => {
           <span className="ml-2 pt-2">에서 지금까지</span>
         </section>
         <section className="flex justify-center gap-24">
-          <section className="flex flex-col items-center">
-            <div className="flex">
-              <h1 className="text-8xl font-semibold text-pointColor1">{quizNum?.length}</h1>
-              <span className="mt-14 w-16 text-xl font-semibold">개의</span>
-            </div>
-            <p className="text-xl font-semibold">퀴즈가 만들어졌어요!</p>
-          </section>
-          <section className="px-24 flex flex-col items-center border-x border-solid border-pointColor1">
-            <div className="flex">
-              <h1 className="text-8xl font-semibold text-pointColor1">{postNum?.length}</h1>
-              <span className="mt-14 w-16 text-xl font-semibold">개의</span>
-            </div>
-            <p className="text-xl font-semibold">게시글이 작성되었어요!</p>
-          </section>
-          <section className="flex flex-col items-center">
-            <div className="flex">
-              <h1 className="text-8xl font-semibold text-pointColor1">{quizNum?.length}</h1>
-              <span className="mt-14 w-16 text-xl font-semibold">명의</span>
-            </div>
-            <p className="text-xl font-semibold">사람들이 이용 중이에요!</p>
-          </section>
+          <UsageStatus number={quizNum?.length} unit="개의" content="퀴즈가 만들어졌어요!" isBorderExist={false} />
+          <UsageStatus number={postNum?.length} unit="개의" content="게시글이 작성되었어요!" isBorderExist={true} />
+          <UsageStatus number={userNum?.length} unit="명의" content="사람들이 이용 중이에요!" isBorderExist={false} />
         </section>
       </article>
       <article className="flex flex-col text-xl font-bold w-4/6 pb-20">
