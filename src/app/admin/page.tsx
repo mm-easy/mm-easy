@@ -123,10 +123,10 @@ const AdminPage = () => {
             <table className="w-full text-xl bg-bgColor2">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-                  <th className="p-4 w-[15%]">구분</th>
-                  <th className="w-[20%]">이메일</th>
-                  <th className="w-[35%]">제목</th>
-                  <th className="w-[15%]">날짜</th>
+                  <th className="p-4 w-[15%]">처리 상태</th>
+                  <th className="w-[20%]">게시자 이메일</th>
+                  <th className="w-[35%]">게시글 제목</th>
+                  <th className="w-[15%]">신고 날짜</th>
                   <th className="w-[15%]">처리</th>
                 </tr>
               </thead>
@@ -143,9 +143,19 @@ const AdminPage = () => {
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td>
                           {item.status === false ? (
-                            <button onClick={() => handleDelete(item.id, item.target_id as string)}>삭제</button>
+                            <button
+                            onClick={() => handleDelete(item.id, item.target_id as string)}
+                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                          >
+                            삭제
+                          </button>                          
                           ) : (
-                            <button onClick={() => handleRestore(item.id, item.target_id as string)}>복구</button>
+                            <button
+                            onClick={() => handleRestore(item.id, item.target_id as string)}
+                            className="bg-pointColor1 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
+                          >
+                            복구
+                          </button>
                           )}
                         </td>
                       </tr>
@@ -167,9 +177,19 @@ const AdminPage = () => {
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td>
                           {item.status === false ? (
-                            <button onClick={() => handleDelete(item.id, item.target_id as string)}>삭제</button>
-                          ) : (
-                            <button onClick={() => handleRestore(item.id, item.target_id as string)}>복구</button>
+                          <button
+                          onClick={() => handleDelete(item.id, item.target_id as string)}
+                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                        >
+                          삭제
+                        </button>                          
+                        ) : (
+                          <button
+                          onClick={() => handleRestore(item.id, item.target_id as string)}
+                          className="bg-pointColor1 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
+                        >
+                          복구
+                        </button>
                           )}
                         </td>
                       </tr>
