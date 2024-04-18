@@ -195,7 +195,7 @@ const TypingGamePage = () => {
         // 2. 새로운 점수 추가
         const { error: insertError } = await supabase
           .from('game_tries')
-          .insert([{ user_id: user.id, score: finalScore }]);
+          .insert([{ user_id: user.id, score: finalScore, created_at: new Date().toISOString() }]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
@@ -204,7 +204,7 @@ const TypingGamePage = () => {
         if (finalScore > currentScore) {
           const { error: updateError } = await supabase
             .from('game_tries')
-            .update({ score: finalScore })
+            .update({ score: finalScore, created_at: new Date().toISOString() })
             .eq('user_id', user.id);
           if (updateError) throw updateError;
           console.log('점수가 업데이트되었습니다!');
