@@ -73,7 +73,6 @@ export const useSubmitOptions = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['options'] });
-      toast.success('퀴즈가 등록되었습니다.');
     }
   });
 
