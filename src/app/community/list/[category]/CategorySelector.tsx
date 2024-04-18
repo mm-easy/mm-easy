@@ -19,6 +19,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   };
 
   const { data: postNum = {} } = useQuery<Record<string, number>>({
+    queryKey: ['categoryPostNums'],
     queryFn: async () => {
       try {
         const nums: Record<string, number> = {};
@@ -30,8 +31,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
       } catch (error) {
         return {};
       }
-    },
-    queryKey: ['categoryPostNums']
+    }
   });
 
   const handleSelectCategory = (category: string) => {
