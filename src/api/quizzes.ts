@@ -140,8 +140,10 @@ export const getQuiz = async (id: string | string[]) => {
 
 /** quizzes 테이블에서 target_date기준으로 일주일동안 가장많이 퀴즈를 만든 3명 가져오기 */
 export const getQuizRank = async (): Promise<QuizRank[]> => {
+  const targetDate = new Date('2024-04-18').toISOString().slice(0, 10); // 날짜를 YYYY-MM-DD 형식으로 변환
+
   try {
-    const { data, error } = await supabase.rpc('get_quiz_ranking_with_details', { target_date: '2024-04-15' }).limit(3);
+    const { data, error } = await supabase.rpc('get_quiz_ranking_with_details', { target_date: targetDate }).limit(3);
     if (error) throw error;
     return data;
   } catch (error) {

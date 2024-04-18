@@ -2,6 +2,7 @@
 
 import MyLevelAndScore from './MyLevelAndScore';
 import MyProfile from './MyProfile';
+import LoadingImg from '@/components/common/LoadingImg';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabase/supabase';
@@ -48,7 +49,8 @@ const ProfilePage = () => {
     }
   });
 
-  if (isLoading) return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
+  // if (isLoading) return <div className="flex w-full justify-center my-96">로그인 정보를 불러오고 있습니다.</div>;
+  if (isLoading) return <LoadingImg height="84vh" />;
   if (!data) return <div>사용자 정보 불러오기 실패</div>;
 
   return (

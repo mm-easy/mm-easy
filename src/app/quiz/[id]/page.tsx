@@ -19,6 +19,7 @@ import Creator from './Creator';
 import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
+import LoadingImg from '@/components/common/LoadingImg';
 
 import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
 
@@ -78,12 +79,10 @@ const QuizTryPage = () => {
 
   const handlePrevPage = () => {
     setPage(page - 1);
-    console.log(page);
   };
 
   const handleNextPage = () => {
     setPage(page + 1);
-    console.log(page);
   };
 
   const {
@@ -118,7 +117,7 @@ const QuizTryPage = () => {
     queryKey: ['questions']
   });
 
-  if (quizIsLoading || questionsIsLoading) return <div>로드 중..</div>;
+  if (quizIsLoading || questionsIsLoading) return <LoadingImg height="84vh" />;
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as Quiz[];
@@ -179,7 +178,6 @@ const QuizTryPage = () => {
         left: 0,
         behavior: 'smooth'
       });
-      console.log(usersAnswers);
     } else {
       window.location.reload(); // 결과 모드에서 다시 풀기 버튼을 눌렀을 때
     }
@@ -222,7 +220,7 @@ const QuizTryPage = () => {
   const handleEditQuiz = (id: string) => {
     router.push(`/quiz/form/edit?id=${id}`);
   };
-  console.log(resultMode);
+
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
