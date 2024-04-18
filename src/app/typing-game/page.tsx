@@ -16,8 +16,8 @@ const difficultySettings: { [key: number]: DifficultySetting } = {
   1: { label: '초보', speed: 20, interval: 5000 },
   2: { label: '하수', speed: 30, interval: 4000 },
   3: { label: '중수', speed: 40, interval: 3000 },
-  4: { label: '고수', speed: 50, interval: 2000 },
-  5: { label: '지존', speed: 70, interval: 2000 }
+  4: { label: '고수', speed: 70, interval: 2000 },
+  5: { label: '지존', speed: 100, interval: 1000 }
 };
 
 const maxDifficulty = Object.keys(difficultySettings).length;
@@ -195,7 +195,7 @@ const TypingGamePage = () => {
         // 2. 새로운 점수 추가
         const { error: insertError } = await supabase
           .from('game_tries')
-          .insert([{ user_id: user.id, score: finalScore }]);
+          .insert([{ user_id: user.id, score: finalScore, created_at: new Date().toISOString() }]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
@@ -204,7 +204,7 @@ const TypingGamePage = () => {
         if (finalScore > currentScore) {
           const { error: updateError } = await supabase
             .from('game_tries')
-            .update({ score: finalScore })
+            .update({ score: finalScore, created_at: new Date().toISOString() })
             .eq('user_id', user.id);
           if (updateError) throw updateError;
           console.log('점수가 업데이트되었습니다!');
