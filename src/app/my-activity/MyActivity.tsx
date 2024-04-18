@@ -204,7 +204,7 @@ const MyActivity = () => {
             <tbody>
               {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
                 currentSolvedQuizzes.map((quiz, index) => (
-                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                  <tr key={index} className="bg-white border-b border-solid border-grayColor2">
                     <td className="py-[1.9vh] w-24">{quiz.quizzes.title}</td>
                     <td>{quiz.score}</td>
                     <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
