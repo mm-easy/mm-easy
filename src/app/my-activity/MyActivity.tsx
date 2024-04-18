@@ -161,8 +161,8 @@ const MyActivity = () => {
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="pt-16 px-[20%] h-[84vh]">
-      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-12 cursor-pointer">
+    <main className="h-[84vh] px-[20%] flex flex-col justify-center items-center">
+      <nav className="w-full flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 pb-[4vh] cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
             className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
@@ -190,165 +190,163 @@ const MyActivity = () => {
           </li>
         </ul>
       </nav>
-
-      {activeTab === 'solvedQuizzes' && (
-        <div className="flex justify-center w-full ">
-          <table className="w-full font-medium">
-            <thead className="text-left">
-              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[55%]">제목</th>
-                <th className="w-[13%]">점수</th>
-                <th>푼 날짜</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
-                currentSolvedQuizzes.map((quiz, index) => (
-                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
-                    <td className="py-4 w-24">{quiz.quizzes.title}</td>
-                    <td>{quiz.score}</td>
-                    <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
-                    <div className="text-right">
-                      <button
-                        className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
-                        onClick={() => navigateToQuiz(quiz.quizzes.id)}
-                      >
-                        다시 풀기
-                      </button>
-                    </div>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                    푼 퀴즈가 없습니다.
-                  </td>
+      <article className="w-full h-[calc(302px+16vh)]">
+        {activeTab === 'solvedQuizzes' && (
+          <div className="w-full flex justify-center">
+            <table className="w-full font-medium">
+              <thead className="text-left">
+                <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                  <th className="pb-2 w-[55%]">제목</th>
+                  <th className="w-[13%]">점수</th>
+                  <th>푼 날짜</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {activeTab === 'quizzes' && (
-        <div className="flex justify-center w-full ">
-          <table className="w-full font-medium">
-            <thead className="text-left">
-              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[55%]">제목</th>
-                <th className="w-[13%]">완료수</th>
-                <th>작성 날짜</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentQuizzes && currentQuizzes.length > 0 ? (
-                currentQuizzes.map((quiz, index) => (
-                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
-                    <td className="py-4 w-24">
-                      <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
-                    </td>
-                    <td>{quiz.quiz_tries.length}</td>
-                    <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
-                    <div className="text-right font-bold bg-point">
-                      <CancelButton
-                        text="삭제"
-                        width="w-28"
-                        height="h-8"
-                        border="border"
-                        onClick={() => handleDeleteQuiz(quiz.id)}
-                      />
-                    </div>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                    만든 퀴즈가 없습니다.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {activeTab === 'posts' && (
-        <div className="flex justify-center w-full">
-          <table className="w-full font-medium">
-            <thead className="text-left">
-              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[55%]">제목</th>
-                <th className="w-[13%]">조회수</th>
-                <th>작성 날짜</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPosts && currentPosts.length > 0 ? (
-                currentPosts.map((post, index) => (
-                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
-                    <td className="truncate max-w-xs pr-12 py-4 w-24">
-                      <a href={`/community/list/${post.category}/${post.id}`}>{post.title}</a>
-                    </td>
-                    <td>{post.view_count}</td>
-                    <td>{formatToLocaleDateTimeString(post.created_at)}</td>
-                    <td className="text-right">
-                      <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
+              </thead>
+              <tbody>
+                {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
+                  currentSolvedQuizzes.map((quiz, index) => (
+                    <tr key={index} className="bg-white border-b border-solid border-grayColor2">
+                      <td className="w-24">{quiz.quizzes.title}</td>
+                      <td>{quiz.score}</td>
+                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
+                      <td className="text-right py-[1vh]">
+                        <button
+                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
+                          onClick={() => navigateToQuiz(quiz.quizzes.id)}
+                        >
+                          다시 풀기
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                      푼 퀴즈가 없습니다.
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                    게시글이 없습니다.
-                  </td>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {activeTab === 'quizzes' && (
+          <div className="w-full flex justify-center">
+            <table className="w-full font-medium">
+              <thead className="text-left">
+                <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                  <th className="pb-2 w-[55%]">제목</th>
+                  <th className="w-[13%]">완료수</th>
+                  <th>작성 날짜</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {activeTab === 'comments' && (
-        <div className="flex justify-center w-full">
-          <table className="w-full font-medium">
-            <thead className="text-left">
-              <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                <th className="pb-2 w-[55%]">내용</th>
-                <th>작성 날짜</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentComments && currentComments.length > 0 ? (
-                currentComments.map((comment, index) => (
-                  <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
-                    <td className="truncate max-w-xs py-4 w-24">{comment.content}</td>
-                    <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
-                    <td className="text-right">
-                      <CommentDeleteBtn text="삭제" userId={comment.id} width="w-28" height="h-8" />
+              </thead>
+              <tbody>
+                {currentQuizzes && currentQuizzes.length > 0 ? (
+                  currentQuizzes.map((quiz, index) => (
+                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                      <td className="w-24">
+                        <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
+                      </td>
+                      <td>{quiz.quiz_tries.length}</td>
+                      <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
+                      <td className="text-right font-bold bg-point py-[1vh]">
+                        <CancelButton
+                          text="삭제"
+                          width="w-28"
+                          height="h-8"
+                          border="border"
+                          onClick={() => handleDeleteQuiz(quiz.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                      만든 퀴즈가 없습니다.
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={3} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                    댓글이 없습니다.
-                  </td>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {activeTab === 'posts' && (
+          <div className="w-full flex justify-center">
+            <table className="w-full font-medium">
+              <thead className="text-left">
+                <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                  <th className="pb-2 w-[55%]">제목</th>
+                  <th className="w-[13%]">조회수</th>
+                  <th>작성 날짜</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div className='pt-6'>
+              </thead>
+              <tbody>
+                {currentPosts && currentPosts.length > 0 ? (
+                  currentPosts.map((post, index) => (
+                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                      <td className="truncate max-w-xs pr-12 w-24">
+                        <a href={`/community/list/${post.category}/${post.id}`}>{post.title}</a>
+                      </td>
+                      <td>{post.view_count}</td>
+                      <td>{formatToLocaleDateTimeString(post.created_at)}</td>
+                      <td className="text-right py-[1vh]">
+                        <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                      게시글이 없습니다.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {activeTab === 'comments' && (
+          <div className="w-full flex justify-center">
+            <table className="w-full font-medium">
+              <thead className="text-left">
+                <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                  <th className="pb-2 w-[55%]">내용</th>
+                  <th>작성 날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentComments && currentComments.length > 0 ? (
+                  currentComments.map((comment, index) => (
+                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                      <td className="truncate max-w-xs w-24">{comment.content}</td>
+                      <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
+                      <td className="text-right py-[1vh]">
+                        <CommentDeleteBtn text="삭제" userId={comment.id} width="w-28" height="h-8" />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                      댓글이 없습니다.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </article>
+      <div className="pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'
               ? userSolvedQuiz.length
               : activeTab === 'quizzes'
-              ? userQuiz.length
-              : activeTab === 'posts'
-              ? userPost.length
-              : userComment.length
+                ? userQuiz.length
+                : activeTab === 'posts'
+                  ? userPost.length
+                  : userComment.length
           }
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
