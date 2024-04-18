@@ -1,12 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import InfoHM from '@/assets/team/info_HM.png';
-import InfoJM from '@/assets/team/info_JM.png';
-import InfoJY from '@/assets/team/info_JY.png';
-import InfoSH from '@/assets/team/info_SH.png';
-import InfoYJ from '@/assets/team/info_YJ.png';
-import InfoYS from '@/assets/team/info_YS.png';
+
 import Infopeople from '@/assets/team/info_people.png';
 import InfoIcon1 from '@/assets/info_icon_1.png';
 import InfoIcon2 from '@/assets/info_icon_2.png';
@@ -21,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
+import { managerData } from '@/utils/managerData';
 
 const AboutPage = () => {
   const { data: quizNum } = useQuery<Quiz[]>({
@@ -66,57 +62,6 @@ const AboutPage = () => {
     { id: 1, number: quizNum?.length, count: '개의', content: '퀴즈가 만들어졌어요!' },
     { id: 2, number: postNum?.length, count: '개의', content: '게시글이 작성되었어요!' },
     { id: 3, number: userNum?.length, count: '명의', content: '사람들이 이용 중이에요!' }
-  ];
-
-  const managerData = [
-    {
-      name: '김소현',
-      content1: '좋은 분들과 함께 해서 행복했습니다!',
-      content2: '즐겁게 이용해 주세요!',
-      Github: 'https://github.com/aotoyae',
-      Blog: 'https://aotoyae.tistory.com/',
-      img: InfoSH
-    },
-    {
-      name: '김연재',
-      content1: '원장님 사랑해요',
-      content2: '혁우님도 사랑합니다',
-      Github: 'https://github.com/porosadporosad',
-      Blog: 'https://velog.io/@tmxk1594/posts',
-      img: InfoYJ
-    },
-    {
-      name: '김형민',
-      content1: '눈에서 불이날것 같아요.',
-      content2: '열심히 만들었으니 즐겨주시면 감사하겠습니다!',
-      Github: 'https://github.com/C1oudys',
-      Blog: 'https://velog.io/@kim9567/posts',
-      img: InfoHM
-    },
-    {
-      name: '박재민',
-      content1: '부족하지만 열심히 만들었습니다!',
-      content2: '피드백은 언제나 환영입니다!',
-      Github: 'https://github.com/ahddl622',
-      Blog: 'https://velog.io/@ahddl622/posts',
-      img: InfoJM
-    },
-    {
-      name: '박지영',
-      content1: '개발하면서 뭔말이지? 23482번 외쳤습니다.',
-      content2: '정말 너무 재밌고 즐거운 프로젝트였어요',
-      Github: 'https://github.com/redberry0217',
-      Blog: 'https://velog.io/@redberry0217/',
-      img: InfoJY
-    },
-    {
-      name: '정예슬',
-      content1: '어려운 만큼 재밌고 보람 있는 프로젝트였습니다.',
-      content2: '함께 참여할 수 있어 즐거웠습니다!',
-      Behance: 'https://www.behance.net/0802ysf5ee',
-      Instagram: 'https://www.instagram.com/yethree_design/?igsh=MW42eW5rdG5nenVqZw%3D%3D&utm_source=qr',
-      img: InfoYS
-    }
   ];
 
   const handleGitBtn = (git: string) => {
@@ -252,13 +197,13 @@ const AboutPage = () => {
         <h2 className="text-pointColor1 text-xl font-bold pb-24">Team Coding Zizon</h2>
 
         <div className="w-3/5 mx-auto grid grid-cols-3 gap-y-4 mb-10">
-          {managerData.map((item) => {
+          {managerData.map((member) => {
             return (
-              <div key={item.name} className="">
+              <div key={member.name} className="">
                 <div className="flex flex-col items-center justify-center gap-1">
                   <div className="w-[240px] h-[240px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
                     <Image
-                      src={item.img}
+                      src={member.img}
                       alt="프로필 이미지"
                       width={240}
                       height={240}
@@ -266,25 +211,25 @@ const AboutPage = () => {
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>
-                  <h3 className="m-4 font-bold text-2xl">{item.name}</h3>
-                  <span>{item.content1}</span>
-                  <span>{item.content2}</span>
+                  <h3 className="m-4 font-bold text-2xl">{member.name}</h3>
+                  <span>{member.content1}</span>
+                  <span>{member.content2}</span>
                 </div>
                 <div className="m-8">
-                  {item.Github ? (
+                  {member.Github ? (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => handleGitBtn(item.Github)} text="Github" width="w-28" />
-                      <WhiteButton onClick={() => handleBlogBtn(item.Blog)} text="Blog" width="w-28" />
+                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" width="w-28" />
+                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" width="w-28" />
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
                       <WhiteButton
-                        onClick={() => item.Behance && handleGitBtn(item.Behance)}
+                        onClick={() => member.Behance && handleGitBtn(member.Behance)}
                         text="Behance"
                         width="w-28"
                       />
                       <WhiteButton
-                        onClick={() => item.Instagram && handleGitBtn(item.Instagram)}
+                        onClick={() => member.Instagram && handleGitBtn(member.Instagram)}
                         text="Instagram"
                         width="w-28"
                       />
