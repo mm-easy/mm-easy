@@ -58,12 +58,6 @@ const AboutPage = () => {
     refetchOnWindowFocus: false
   });
 
-  const NowData = [
-    { id: 1, number: quizNum?.length, count: '개의', content: '퀴즈가 만들어졌어요!' },
-    { id: 2, number: postNum?.length, count: '개의', content: '게시글이 작성되었어요!' },
-    { id: 3, number: userNum?.length, count: '명의', content: '사람들이 이용 중이에요!' }
-  ];
-
   const handleGitBtn = (git: string) => {
     const pageNowReal = window.confirm('이동하시겠습니까?');
     if (pageNowReal) {
@@ -116,23 +110,28 @@ const AboutPage = () => {
           <Image src={LogoHorizontal1} alt="로고" width={200} quality={100} />
           <span className="ml-2 pt-2">에서 지금까지</span>
         </section>
-        <section className="flex justify-center">
-          {NowData.map((item, index) => {
-            return (
-              <section
-                key={item.id}
-                className={`w-[25%] py-8 px-32 ${
-                  index === 1 ? 'border-l border-r border-solid border-pointColor1' : ''
-                }`}
-              >
-                <div className="flex">
-                  <div className="text-8xl font-semibold text-pointColor1">{item.number}</div>
-                  <span className="mt-14 w-16 text-xl font-semibold">{item.count}</span>
-                </div>
-                <div className="text-xl font-semibold">{item.content}</div>
-              </section>
-            );
-          })}
+        <section className="flex justify-center gap-24">
+          <section className="flex flex-col items-center">
+            <div className="flex">
+              <h1 className="text-8xl font-semibold text-pointColor1">{quizNum?.length}</h1>
+              <span className="mt-14 w-16 text-xl font-semibold">개의</span>
+            </div>
+            <p className="text-xl font-semibold">퀴즈가 만들어졌어요!</p>
+          </section>
+          <section className="px-24 flex flex-col items-center border-x border-solid border-pointColor1">
+            <div className="flex">
+              <h1 className="text-8xl font-semibold text-pointColor1">{postNum?.length}</h1>
+              <span className="mt-14 w-16 text-xl font-semibold">개의</span>
+            </div>
+            <p className="text-xl font-semibold">게시글이 작성되었어요!</p>
+          </section>
+          <section className="flex flex-col items-center">
+            <div className="flex">
+              <h1 className="text-8xl font-semibold text-pointColor1">{quizNum?.length}</h1>
+              <span className="mt-14 w-16 text-xl font-semibold">명의</span>
+            </div>
+            <p className="text-xl font-semibold">사람들이 이용 중이에요!</p>
+          </section>
         </section>
       </article>
       <article className="flex flex-col text-xl font-bold w-3/6 pb-20">
