@@ -12,11 +12,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Pagination } from './Pagination';
 import { TabName } from '@/types/pagination';
+import { useDeleteQuiz } from '../quiz/[id]/mutations';
+import { CancelButton } from '@/components/common/FormButtons';
 
 const MyActivity = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const [currentPage, setCurrentPage] = useState(1);
+  const deleteQuizMutation = useDeleteQuiz();
   const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
 
@@ -128,8 +131,8 @@ const MyActivity = () => {
   });
 
   //
-  const navigateToQuiz = (puizId: string) => {
-    router.push(`/quiz/${puizId}`);
+  const navigateToQuiz = (quizId: string) => {
+    router.push(`/quiz/${quizId}`);
   };
 
   const handlePageChange = (page: number) => {
@@ -139,6 +142,11 @@ const MyActivity = () => {
   const changeTab = (newTab: TabName) => {
     setActiveTab(newTab);
     setCurrentPage(1); // 탭을 변경할 때 페이지를 1로 리셋
+  };
+
+  const handleDeleteQuiz = (id: string) => {
+    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    deleteQuizMutation.mutateAsync(id);
   };
 
   // 페이지
@@ -153,8 +161,8 @@ const MyActivity = () => {
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="px-[25%]">
-      <h3 className="text-center my-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
+    <main className="px-[25%] h-[84vh]">
+      <h3 className="text-center py-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
       <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
@@ -204,7 +212,7 @@ const MyActivity = () => {
                     <div className="text-right">
                       <button
                         className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
-                        onClick={() => navigateToQuiz(quiz)}
+                        onClick={() => navigateToQuiz(quiz.quizzes.id)}
                       >
                         다시 풀기
                       </button>
@@ -242,13 +250,14 @@ const MyActivity = () => {
                     </td>
                     <td>{quiz.quiz_tries.length}</td>
                     <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
-                    <div className="text-right">
-                      <button
-                        className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
-                        onClick={() => navigateToQuiz(quiz.id)}
-                      >
-                        다시 풀기
-                      </button>
+                    <div className="text-right font-bold bg-point">
+                      <CancelButton
+                        text="삭제"
+                        width="w-28"
+                        height="h-8"
+                        border="border"
+                        onClick={() => handleDeleteQuiz(quiz.id)}
+                      />
                     </div>
                   </tr>
                 ))
@@ -331,20 +340,22 @@ const MyActivity = () => {
           </table>
         </div>
       )}
-      <Pagination
-        total={
-          activeTab === 'solvedQuizzes'
-            ? userSolvedQuiz.length
-            : activeTab === 'quizzes'
+      <div className='pt-6'>
+        <Pagination
+          total={
+            activeTab === 'solvedQuizzes'
+              ? userSolvedQuiz.length
+              : activeTab === 'quizzes'
               ? userQuiz.length
               : activeTab === 'posts'
-                ? userPost.length
-                : userComment.length
-        }
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
+              ? userPost.length
+              : userComment.length
+          }
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </main>
   );
 };
