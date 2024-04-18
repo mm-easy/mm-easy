@@ -139,6 +139,7 @@ const QuizFormPage = () => {
 
     // 퀴즈 썸네일 이미지를 스토리지에 업로드
     try {
+      // 퀴즈 썸네일 이미지를 스토리지에 업로드
       let imgUrl = null;
       if (file) {
         const fileName = generateFileName(file);
@@ -157,8 +158,11 @@ const QuizFormPage = () => {
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
 
-      // questions 요소 하나씩 돌아가며 데이터 처리
-      questions.forEach(async (question) => {
+      // 변수 선언하여 성공 여부 체크
+      let success = true;
+
+      // questions 배열을 순회하면서 각 질문 처리
+      for (const question of questions) {
         // 첨부 이미지 있는 경우 스토리지에 업로드, 없는 경우 null
         const { id, title, type, img_file, correct_answer, options } = question;
         let img_url = null;
@@ -186,9 +190,19 @@ const QuizFormPage = () => {
           }));
           await insertOptionsMutation.mutateAsync(newOptions);
         }
-        toast.success('퀴즈 등록 성공!');
+
+        // 만약 질문 처리 중 문제가 생기면 success를 false로 설정하고 루프 종료
+        if (!insertQuestionResult) {
+          success = false;
+          break;
+        }
+      }
+
+      // success가 true인 경우에만 한 번만 실행
+      if (success) {
+        toast.success('퀴즈가 등록되었습니다');
         router.replace('/quiz/list');
-      });
+      }
     } catch (error) {
       console.log('퀴즈 생성 중 에러 발생');
     }

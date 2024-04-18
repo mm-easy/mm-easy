@@ -67,8 +67,8 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
     myTotalScore < 5000 ? 1 : myTotalScore < 15000 ? 2 : myTotalScore < 35000 ? 3 : myTotalScore < 70000 ? 4 : 5;
 
   return (
-    <main className="w-full h-full flex flex-col items-center bg-bgColor2 border-solid border-t border-pointColor1">
-      <div className="mt-10 text-xl font-semibold">
+    <main className="w-full h-full flex flex-col justify-center items-center bg-bgColor2 border-solid border-t border-pointColor1">
+      <div className="text-xl font-semibold">
         전체 올라온 퀴즈 <span className="text-pointColor1">{quizData?.length}</span>개 중{' '}
         <span className="text-pointColor1">{myQuizScores?.length}</span>개의 퀴즈를 풀었어요!
       </div>
