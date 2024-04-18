@@ -3,7 +3,7 @@ import { naverApi } from '@/api/naverAPI';
 
 export async function loader() {
   try {
-    const newsData = await naverApi('한국');
+    const newsData = await naverApi('한국어');
     // console.log('newData', newsData.items);
     return newsData.items;
     // props: {
