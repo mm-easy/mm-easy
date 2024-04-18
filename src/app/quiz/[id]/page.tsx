@@ -225,7 +225,7 @@ const QuizTryPage = () => {
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
-        <article className="h-[76vh] text-pointColor1">
+        <article className="h-[76vh] flex flex-col justify-between text-pointColor1">
           <section>
             <Image
               src={`${storageUrl}/quiz-thumbnails/${url}`}
@@ -242,11 +242,11 @@ const QuizTryPage = () => {
                 <p>{formatToLocaleDateTimeString(created_at)}</p>
               </div>
             </section>
+            <p className="p-4">{info}</p>
           </section>
-          <p className="p-4">{info}</p>
-          <div className="flex mt-10 justify-center font-bold">
+          <div className="flex justify-center font-bold pb-4">
             {currentUserEmail === creator_id && (
-              <div className="flex justify-center items-center mt-44">
+              <div className="flex justify-center items-center">
                 {/* <CancelButton
                   text="수정"
                   width="w-44"
