@@ -185,7 +185,7 @@ const AboutPage = () => {
         <h2 className="text-pointColor1 text-4xl font-extrabold pt-16 pb-10">뭔말이지? 프로젝트에 참여한 사람들</h2>
         <h2 className="text-pointColor1 text-xl font-bold pb-24">Team Coding Zizon</h2>
 
-        <div className="w-3/5 mx-auto grid grid-cols-3 gap-y-4 mb-10">
+        <div className="w-[73%] mx-auto grid grid-cols-3 gap-y-4 mb-10">
           {managerData.map((member) => {
             return (
               <div key={member.name} className="">
