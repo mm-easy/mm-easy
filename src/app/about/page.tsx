@@ -172,27 +172,22 @@ const AboutPage = () => {
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>
-                  <h3 className="m-4 font-bold text-2xl">{member.name}</h3>
-                  <span className="w-[400px]">{member.content1}</span>
-                  <span className="w-[400px]">{member.content2}</span>
+                  <h3 className="w-40 my-4 font-bold text-2xl">{member.name}</h3>
+                  <span className="w-[25vw] truncate">{member.content1}</span>
+                  <span className="w-[25vw] truncate">{member.content2}</span>
                 </div>
-                <div className="m-8">
+                <div className="my-8">
                   {member.Github ? (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" width="w-28" />
-                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" width="w-28" />
+                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" />
+                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" />
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton
-                        onClick={() => member.Behance && handleGitBtn(member.Behance)}
-                        text="Behance"
-                        width="w-28"
-                      />
+                      <WhiteButton onClick={() => member.Behance && handleGitBtn(member.Behance)} text="Behance" />
                       <WhiteButton
                         onClick={() => member.Instagram && handleGitBtn(member.Instagram)}
                         text="Instagram"
-                        width="w-28"
                       />
                     </div>
                   )}
