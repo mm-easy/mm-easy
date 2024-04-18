@@ -4,6 +4,8 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useMemo } from 'react';
+import { getCommentCount } from '@/api/comment';
+import { useQueries } from '@tanstack/react-query';
 
 import type { CommunityFormProps } from '@/types/posts';
 
@@ -39,6 +41,13 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     }
   };
 
+  const commentCounts = useQueries({
+    queries: sortedItems.map((post) => ({
+      queryKey: ['commentCount', post.id],
+      queryFn: () => getCommentCount(post.id),
+    })),
+  });
+
   const totalSet = Math.ceil(Math.ceil(totalNum / pageRange) / btnRange);
   const currentSet = Math.ceil(currentPage / btnRange);
   const startPage = (currentSet - 1) * btnRange + 1;
@@ -71,7 +80,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
-                  <td className="truncate max-w-xs pr-8">{item['title']}</td>
+                  {item.title} <span className="text-red-500">({commentCounts[idx].data || 0})</span>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                   <td>{item['view_count']}</td>
                 </tr>

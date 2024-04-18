@@ -17,6 +17,20 @@ export const getComment = async (postId: string | string[] | undefined) => {
   }
 };
 
+export const getCommentCount = async (postId: string) => {
+  const { data, error, count } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact' })
+    .eq('post_id', postId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return count;  // Return the count of comments
+};
+
+
 /** 댓글만들기 */
 export const getInsertComment = async ({ profile, postId, content }: InsertComment) => {
   try {
