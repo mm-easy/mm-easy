@@ -162,7 +162,7 @@ const MyActivity = () => {
 
   return (
     <main className="pt-16 px-[20%] h-[84vh]">
-      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
+      <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-12 cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
             className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
