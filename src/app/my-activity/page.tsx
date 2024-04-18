@@ -2,7 +2,7 @@ import MyActivity from "./MyActivity";
 
 const MyActivityPage = () => {
   return (
-    <div>
+    <div className="">
       <MyActivity />
     </div>
   );
