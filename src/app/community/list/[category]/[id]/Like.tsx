@@ -13,6 +13,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const deleteLike = useDeleteLike();
 
   const { data: nowLike = [] } = useQuery<LikeType[]>({
+    queryKey: ['like'],
     queryFn: async () => {
       try {
         const data = await getLike(postId);
@@ -20,8 +21,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
       } catch (error) {
         return [];
       }
-    },
-    queryKey: ['like']
+    }
   });
 
   let likes = nowLike?.some((prev) => prev.user_id === userId);

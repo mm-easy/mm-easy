@@ -1,8 +1,8 @@
 'use client';
 
-
+import CommunityForm from './CommunityForm';
 import { useState, useEffect } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +11,6 @@ import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
 
 import type { Post } from '@/types/posts';
-import CommunityForm from './CommunityForm';
 
 const CommunityMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -19,7 +18,6 @@ const CommunityMain = () => {
 
   const { getCurrentUserProfile } = useAuth();
   const params = useParams<{ category: string }>();
-  console.log('params', params);
   const category = decodeURIComponent(params.category);
 
   const {
@@ -27,6 +25,7 @@ const CommunityMain = () => {
     isLoading,
     isError
   } = useQuery<Post[]>({
+    queryKey: ['postPage', category],
     queryFn: async () => {
       try {
         let nextPosts;
@@ -40,8 +39,7 @@ const CommunityMain = () => {
       } catch (error) {
         return [];
       }
-    },
-    queryKey: ['postPage', category]
+    }
   });
 
   useEffect(() => {
