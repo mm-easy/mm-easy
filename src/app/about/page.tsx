@@ -83,8 +83,8 @@ const AboutPage = () => {
   };
 
   return (
-    <main className="flex flex-col items-center">
-      <article className="w-full py-24 flex flex-col justify-center items-center bg-pointColor1 text-center">
+    <main className="flex flex-col items-center text-center">
+      <article className="w-full py-24 flex flex-col justify-center items-center bg-pointColor1">
         <h2 className="text-5xl pb-16 font-black text-white tracking-wider">재밌게 배우는 한국어!</h2>
         <Image src={Infopeople} alt="로고" width={800} quality={100} />
         <section className="text-3xl w-full text-white ">
@@ -108,17 +108,18 @@ const AboutPage = () => {
           </section>
         </section>
       </article>
-      <article className="border-b-2 border-solid border-pointColor1 w-full bg-sky-50">
-        <h2 className="py-12 text-4xl font-extrabold text-pointColor1">
-          <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-            <Image src={LogoHorizontal1} alt="로고" width={200} quality={100} />
-            <span className="ml-2">에서 지금까지</span>
-          </span>
-        </h2>
-        <div className="flex justify-center pb-10">
+      <article className="w-full py-14 bg-sky-50 border-b-2 border-solid border-pointColor1">
+        <section
+          className="pb-14 text-4xl font-extrabold text-pointColor1"
+          style={{ display: 'inline-flex', alignItems: 'center' }}
+        >
+          <Image src={LogoHorizontal1} alt="로고" width={200} quality={100} />
+          <span className="ml-2 pt-2">에서 지금까지</span>
+        </section>
+        <section className="flex justify-center">
           {NowData.map((item, index) => {
             return (
-              <div
+              <section
                 key={item.id}
                 className={`w-[25%] py-8 px-32 ${
                   index === 1 ? 'border-l border-r border-solid border-pointColor1' : ''
@@ -129,10 +130,10 @@ const AboutPage = () => {
                   <span className="mt-14 w-16 text-xl font-semibold">{item.count}</span>
                 </div>
                 <div className="text-xl font-semibold">{item.content}</div>
-              </div>
+              </section>
             );
           })}
-        </div>
+        </section>
       </article>
       <article className="flex flex-col text-xl font-bold w-3/6 pb-20">
         <h2 className="text-4xl font-extrabold py-16 text-pointColor1">유저후기</h2>
