@@ -108,7 +108,7 @@ export const deleteQuiz = async (id: string) => {
   }
 };
 
-/** quizzes 테이블에서 최근 4개 퀴즈 가져오기기 */
+/** quizzes 테이블에서 최근 4개 퀴즈 가져오기 */
 export const getRecentQuizzes = async () => {
   try {
     const { data, error } = await supabase
@@ -189,5 +189,55 @@ export const userSolvedQuizzes = async (email: string) => {
     return data;
   } catch (error) {
     console.error('사용자 퀴즈 불러오기 실패', error);
+  }
+};
+
+/** quizzes 테이블에서 id에 해당하는 퀴즈를 update */
+export const UpdateQuiz = async (id: string, updatedQuiz: Quiz) => {
+  try {
+    const { data, error } = await supabase.from('quizzes').update(updatedQuiz).eq('id', id).select('*');
+    if (error) throw error;
+    const quizId = data?.[0].id;
+    return quizId;
+  } catch (error) {
+    console.error('퀴즈 업데이트 실패', error);
+    alert('일시적인 오류 발생');
+    throw error;
+  }
+};
+
+/** questions 테이블에서 id에 해당하는 question을 update */
+export const updateQuestion = async (id: string, updatedQuestion: QuestionsToInsert) => {
+  try {
+    const { data, error } = await supabase.from('questions').update(updatedQuestion).eq('id', id).single();
+    if (error) throw error;
+    console.log('꺄잉', data);
+    return data;
+  } catch (error) {
+    console.error('문제 수정 실패', error);
+    alert('일시적인 오류 발생');
+    throw error;
+  }
+};
+
+/** question_options 테이블에서 id에 해당하는 option을 update*/
+export const updateOption = async (updatedOptions: Option[]) => {
+  try {
+    const updatePromises = updatedOptions.map(async (option) => {
+      const { id, content, is_answer } = option;
+      const { data, error } = await supabase
+        .from('question_options')
+        .update({ content, is_answer })
+        .eq('id', id)
+        .select('*');
+      if (error) throw error;
+      return data;
+    });
+    const updateResults = await Promise.all(updatePromises);
+    return updateResults;
+  } catch (error) {
+    console.error('선택지 수정 실패', error);
+    alert('객관식 선택지를 수정하지 못했습니다. 다시 시도하세요.');
+    throw error;
   }
 };
