@@ -59,21 +59,11 @@ const AboutPage = () => {
   });
 
   const handleGitBtn = (git: string) => {
-    const pageNowReal = window.confirm('이동하시겠습니까?');
-    if (pageNowReal) {
-      window.open(git, '_blank');
-    } else {
-      return;
-    }
+    window.open(git, '_blank');
   };
 
   const handleBlogBtn = (blog: string) => {
-    const pageNowReal = window.confirm('이동하시겠습니까?');
-    if (pageNowReal) {
-      window.open(blog, '_blank');
-    } else {
-      return;
-    }
+    window.open(blog, '_blank');
   };
 
   return (
