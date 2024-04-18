@@ -11,7 +11,7 @@ const UsageStatus = ({
 }) => {
   return (
     <section
-      className={`flex flex-col items-center ${isBorderExist && 'px-24 border-x border-solid border-pointColor1'}`}
+      className={`flex flex-col items-center ${isBorderExist && 'px-[4vw] border-x border-solid border-pointColor1'}`}
     >
       <div className="flex">
         <h1 className="text-8xl font-semibold text-pointColor1">{number}</h1>
