@@ -136,7 +136,7 @@ const AdminPage = () => {
                     return (
                       <tr className="bg-bg-bgColor2" key={idx}>
                         <td className="pl-6 p-4">{item.status === false ? '처리 중' : '처리 완료'}</td>
-                        <td>{item.reported_user_id || '알 수 없음'}</td>
+                        <td className="pr-8" >{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs pr-8 cursor-pointer">
                           <a href={`/community/list/전체/${item.target_id}`}>{item['title']}</a>
                         </td>
@@ -145,14 +145,14 @@ const AdminPage = () => {
                           {item.status === false ? (
                             <button
                             onClick={() => handleDelete(item.id, item.target_id as string)}
-                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                            className="bg-red-500 text-white font-semibold w-28 h-8 rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                           >
                             삭제
                           </button>                          
                           ) : (
                             <button
                             onClick={() => handleRestore(item.id, item.target_id as string)}
-                            className="bg-pointColor1 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
+                            className="bg-pointColor1 text-white font-semibold w-28 h-8 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
                           >
                             복구
                           </button>
@@ -170,7 +170,7 @@ const AdminPage = () => {
                     return (
                       <tr className="bg-bg-bgColor2" key={idx}>
                         <td className="pl-6 p-4">{item.status === false ? '처리 중' : '처리 완료'}</td>
-                        <td>{item.reported_user_id || '알 수 없음'}</td>
+                        <td className="pr-8" >{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs pr-8 cursor-pointer">
                           <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
                         </td>
