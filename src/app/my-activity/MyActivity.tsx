@@ -161,8 +161,7 @@ const MyActivity = () => {
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="px-[25%] h-[84vh]">
-      <h3 className="text-center py-10 text-2xl font-bold text-pointColor1">나의 활동</h3>
+    <main className="pt-16 px-[20%] h-[84vh]">
       <nav className="flex justify-center text-pointColor1 font-medium  border-solid border-pointColor1 pb-8 cursor-pointer">
         <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
           <li
