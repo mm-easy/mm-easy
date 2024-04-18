@@ -42,47 +42,49 @@ const QuizEditPage = () => {
 
   /** '수정' 버튼을 통해 쿼리를 달고 왔다면 */
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const id = queryParams.get('id');
-    if (!id) return;
+    if (typeof window !== 'undefined') {
+      const queryParams = new URLSearchParams(window.location.search);
+      const id = queryParams.get('id');
+      if (!id) return;
 
-    const fetchQuizData = async () => {
-      try {
-        //퀴즈 데이터 가져오기
-        const quizData = await getQuiz(id as string);
-        setLevel(quizData[0].level);
-        setTitle(quizData[0].title);
-        setInfo(quizData[0].info);
-        setSelectedImgFilename(quizData[0].thumbnail_img_url);
-        setSelectedImg(`${storageUrl}/quiz-thumbnails/${quizData[0].thumbnail_img_url}`);
-        if (!quizData) return;
+      const fetchQuizData = async () => {
+        try {
+          //퀴즈 데이터 가져오기
+          const quizData = await getQuiz(id as string);
+          setLevel(quizData[0].level);
+          setTitle(quizData[0].title);
+          setInfo(quizData[0].info);
+          setSelectedImgFilename(quizData[0].thumbnail_img_url);
+          setSelectedImg(`${storageUrl}/quiz-thumbnails/${quizData[0].thumbnail_img_url}`);
+          if (!quizData) return;
 
-        //문제 데이터 가져오기
-        const questionsData = await getQuestions(id as string);
-        if (!questionsData) return;
+          //문제 데이터 가져오기
+          const questionsData = await getQuestions(id as string);
+          if (!questionsData) return;
 
-        //선택지 데이터 가져오기 및 questions 상태 설정
-        const questionsWithOptions = await Promise.all(
-          questionsData.map(async (question) => {
-            console.log('뀽', question.img_url);
-            const options = await getOptions(question.id);
-            const img_url = `${storageUrl}/question-imgs/${question.img_url}`;
-            return {
-              ...question,
-              img_url,
-              options: options || [] // options가 없을 경우 빈 배열로 설정
-            };
-          })
-        );
+          //선택지 데이터 가져오기 및 questions 상태 설정
+          const questionsWithOptions = await Promise.all(
+            questionsData.map(async (question) => {
+              console.log('뀽', question.img_url);
+              const options = await getOptions(question.id);
+              const img_url = `${storageUrl}/question-imgs/${question.img_url}`;
+              return {
+                ...question,
+                img_url,
+                options: options || [] // options가 없을 경우 빈 배열로 설정
+              };
+            })
+          );
 
-        console.log('options 포함한 questions:', questionsWithOptions);
-        setMyquizData(questionsWithOptions);
-        setQuestions(questionsWithOptions);
-      } catch (error) {
-        throw error;
-      }
-    };
-    fetchQuizData();
+          console.log('options 포함한 questions:', questionsWithOptions);
+          setMyquizData(questionsWithOptions);
+          setQuestions(questionsWithOptions);
+        } catch (error) {
+          throw error;
+        }
+      };
+      fetchQuizData();
+    }
   }, []);
 
   /** 로그인한 유저의 정보를 불러옴 */
