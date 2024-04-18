@@ -31,6 +31,7 @@ export type Question = {
   img_url: string;
   correct_answer: string;
   options: Option[];
+  img_filename?: string;
 };
 
 export type QuestionsToInsert = Pick<Question, 'title' | 'correct_answer'> & {

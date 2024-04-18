@@ -207,8 +207,9 @@ export const UpdateQuiz = async (id: string, updatedQuiz: Quiz) => {
 /** questions 테이블에서 id에 해당하는 question을 update */
 export const updateQuestion = async (id: string, updatedQuestion: QuestionsToInsert) => {
   try {
-    const { data, error } = await supabase.from('questions').update(updatedQuestion).eq('id', id).select('*');
+    const { data, error } = await supabase.from('questions').update(updatedQuestion).eq('id', id).single();
     if (error) throw error;
+    console.log('꺄잉', data);
     return data;
   } catch (error) {
     console.error('문제 수정 실패', error);

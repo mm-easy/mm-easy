@@ -15,10 +15,12 @@ import { type Option, type Question, QuestionType } from '@/types/quizzes';
 
 const QuestionForm = ({
   questions,
-  setQuestions
+  setQuestions,
+  deletedQuestions
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
+  deletedQuestions: string[];
 }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -140,6 +142,7 @@ const QuestionForm = ({
   const handleDeleteQuestion = (id: string | undefined) => {
     if (questions.length > 1) {
       if (!window.confirm(`해당 문제를 삭제하시겠습니까? ${id}`)) return;
+      deletedQuestions.push(id as string);
       setQuestions((prev) => {
         const newQuestions = prev.filter((question) => question.id !== id);
         return newQuestions;

@@ -23,6 +23,7 @@ const QuizFormPage = () => {
   const [selectedImg, setSelectedImg] = useState(`${storageUrl}/assets/quiz_144x144.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
+  const [deletedQuestions, setDeletedQuestions] = useState(['']);
   const { getCurrentUserProfile } = useAuth();
 
   useConfirmPageLeave();
@@ -212,6 +213,7 @@ const QuizFormPage = () => {
         setFile={setFile}
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
+        deletedQuestions={deletedQuestions}
       />
     </>
   );

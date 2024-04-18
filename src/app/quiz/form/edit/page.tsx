@@ -28,6 +28,7 @@ const QuizEditPage = () => {
   const [currentUser, setCurrentUser] = useState('');
   const [selectedImgFilename, setSelectedImgFilename] = useState('');
   const [myQuizData, setMyquizData] = useState<Question[]>();
+  const [deletedQuestions, setDeletedQuestions] = useState(['']);
   const { getCurrentUserProfile } = useAuth();
 
   useConfirmPageLeave();
@@ -41,6 +42,8 @@ const QuizEditPage = () => {
 
   /** '수정' 버튼을 통해 쿼리를 달고 왔다면 */
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const id = queryParams.get('id');
     if (!id) return;
 
     const fetchQuizData = async () => {
@@ -56,7 +59,6 @@ const QuizEditPage = () => {
 
         //문제 데이터 가져오기
         const questionsData = await getQuestions(id as string);
-        console.log('문제들 얻었당', questionsData);
         if (!questionsData) return;
 
         //선택지 데이터 가져오기 및 questions 상태 설정
@@ -210,10 +212,30 @@ const QuizEditPage = () => {
       questions.forEach(async (question) => {
         // 첨부 이미지 있는 경우 스토리지에 업로드, 없는 경우 null
         const { id, title, type, img_file, correct_answer, options } = question;
-        let img_url = null;
+        if (!id) {
+          alert('해당 퀴즈가 존재하지 않습니다!');
+          return;
+        }
+
+        if (deletedQuestions.includes(question.id as string)) {
+          console.log('삭제된 문제 발견:', question.id);
+          // 삭제된 문제의 내용을 모두 null로 바꿈
+
+          question.title = '';
+          question.img_file = null;
+          question.img_url = '';
+          question.correct_answer = '';
+          question.options = question.options.map((option) => ({
+            ...option,
+            content: '',
+            is_answer: false
+          }));
+        }
+
+        let img_url = question.img_filename;
         if (img_file) {
-          const formattedName = generateImgFileName(img_file, id);
-          img_url = await uploadImageToStorage(img_file, formattedName);
+          const formattedName = generateFileName(img_file);
+          img_url = (await uploadImageToStorage(img_file, formattedName)) as string;
         }
 
         // updatedQuestion 구성하여 questions 테이블에 update
@@ -222,12 +244,13 @@ const QuizEditPage = () => {
           title: title,
           type: type,
           correct_answer: correct_answer,
-          img_url: img_url || 'tempThumbnail.png'
+          img_url: question.img_url.substring(question.img_url.lastIndexOf('/') + 1)
         };
-
+        console.log('등록 전 확인', updatedQuestion);
+        console.log('삭제된 문제들', deletedQuestions);
         // updatedOptions 구성하여 question_options 테이블에 update
         const updateQuestionResult = await updateQuestionsMutation.mutateAsync({
-          id: updateQuizResult,
+          id,
           updatedQuestion
         });
         if (type === QuestionType.objective) {
@@ -266,6 +289,7 @@ const QuizEditPage = () => {
         setFile={setFile}
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
+        deletedQuestions={deletedQuestions}
       />
     </>
   );

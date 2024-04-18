@@ -113,8 +113,8 @@ export const useUpdateQuestions = () => {
     mutationFn: async ({ id, updatedQuestion }: { id: string; updatedQuestion: QuestionsToInsert }) => {
       try {
         const result = await updateQuestion(id, updatedQuestion);
-        const questionId = result[0]?.id;
-        return questionId;
+        console.log('끼이이잉', result);
+        return result;
       } catch (error) {
         console.error('문제들 수정 실패', error);
         throw error;

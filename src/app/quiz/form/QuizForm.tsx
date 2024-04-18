@@ -34,7 +34,8 @@ const QuizForm = ({
   file,
   setFile,
   currentUser,
-  setCurrentUser
+  setCurrentUser,
+  deletedQuestions
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
@@ -51,6 +52,7 @@ const QuizForm = ({
   setFile: Dispatch<SetStateAction<File | null>>;
   currentUser: string;
   setCurrentUser: Dispatch<SetStateAction<string>>;
+  deletedQuestions: string[];
 }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { getCurrentUserProfile } = useAuth();
@@ -205,7 +207,7 @@ const QuizForm = ({
             />
           </div>
         </div>
-        <QuestionForm questions={questions} setQuestions={setQuestions} />
+        <QuestionForm questions={questions} setQuestions={setQuestions} deletedQuestions={deletedQuestions} />
         <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
         <div className="bg-white flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t-2 border-pointColor1">
           <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-[275px]" />
