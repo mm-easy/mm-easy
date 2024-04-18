@@ -101,7 +101,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] cursor-pointer ${
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
@@ -118,7 +118,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] cursor-pointer ${
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
@@ -135,7 +135,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 ${
+              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 cursor-pointer ${
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
