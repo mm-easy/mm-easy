@@ -19,6 +19,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const deleteCommentMutation = useDeleteComment();
 
   const { data: postCommentList } = useQuery<PostDetailCommentType[]>({
+    queryKey: ['comments'],
     queryFn: async () => {
       try {
         const data = await getComment(postId);
@@ -26,8 +27,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       } catch (error) {
         return [];
       }
-    },
-    queryKey: ['comments']
+    }
   });
 
   /**댓글 작성 */

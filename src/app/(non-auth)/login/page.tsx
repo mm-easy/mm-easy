@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
 import { SiKakaotalk } from 'react-icons/si';
-import { loginImageWithoutHandUrl, loginImageWithHandUrl } from '@/utils/supabase/storage';
+import { assetsStorageUrl } from '@/utils/supabase/storage';
 import Image from 'next/image';
 
 const LoginPage = () => {
@@ -45,7 +45,7 @@ const LoginPage = () => {
           <div className="mr-4 w-[300px] h-[300px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
             {showPasswordImage ? (
               <Image
-                src={`${loginImageWithHandUrl}/login_2.png`}
+                src={`${assetsStorageUrl}/login_2.png`}
                 alt="로그인 이미지"
                 width={300}
                 height={300}
@@ -54,7 +54,7 @@ const LoginPage = () => {
               />
             ) : (
               <Image
-                src={`${loginImageWithoutHandUrl}/login_1.png`}
+                src={`${assetsStorageUrl}/login_1.png`}
                 alt="로그인 이미지"
                 width={300}
                 height={300}

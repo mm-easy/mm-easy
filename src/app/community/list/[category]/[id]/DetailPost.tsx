@@ -3,6 +3,7 @@ import Link from 'next/link';
 import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
+import ReportButton from '@/components/common/ReportButton';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
@@ -16,9 +17,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import ReportButton from '@/components/common/ReportButton';
+
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -28,8 +30,8 @@ const DetailPost = () => {
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
 
-  console.log('params', categoryNow);
-  const { data: post } = useQuery<PostDetailDateType>({
+  const { data: post, isLoading } = useQuery<PostDetailDateType>({
+    queryKey: ['posts', params.id],
     queryFn: async () => {
       try {
         let data;
@@ -42,10 +44,10 @@ const DetailPost = () => {
       } catch (error) {
         return;
       }
-    },
-    queryKey: ['posts']
+    }
   });
   const { data: nextBeforePost = [] } = useQuery<Post[]>({
+    queryKey: ['postPage'],
     queryFn: async () => {
       try {
         let nextPosts;
@@ -58,8 +60,7 @@ const DetailPost = () => {
       } catch (error) {
         return [];
       }
-    },
-    queryKey: ['postPage']
+    }
   });
   /** 이전글 가기 */
   const beforePostBtn = (postId: string) => {
@@ -109,6 +110,8 @@ const DetailPost = () => {
     fetchData();
   }, [isLoggedIn]);
 
+  if (isLoading) return <LoadingImg height="84vh" />;
+
   return (
     <div className="flex bg-bgColor1 text-pointColor1">
       <div className="py-16 px-48 w-full bg-white">
@@ -136,7 +139,7 @@ const DetailPost = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                {profile && post.author_id === profile.id && (
+                {profile && (post.author_id === profile.id || profile?.email === 'daejang@mmeasy.com') && (
                   <div className="flex">
                     <div>
                       <PostEditButton
