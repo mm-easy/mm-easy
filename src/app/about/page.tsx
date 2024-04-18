@@ -134,7 +134,7 @@ const AboutPage = () => {
           </section>
         </section>
       </article>
-      <article className="flex flex-col text-xl font-bold w-3/6 pb-20">
+      <article className="flex flex-col text-xl font-bold w-4/6 pb-20">
         <h2 className="text-4xl font-extrabold py-16 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center w-full pl-10 relative z-10">
