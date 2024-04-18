@@ -13,16 +13,18 @@ import { useAuth } from '@/hooks/useAuth';
 import { isLoggedInAtom } from '@/store/store';
 
 import type { User } from '@/types/users';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const ProfileDropdown = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const { logout } = useAuth();
+  const route = useRouter();
 
   /** 로그아웃 핸들러 */
   const handleLogout = async () => {
     await logout();
     setIsLoggedIn(false);
+    route.push('/');
     toast.success('로그아웃되었습니다.');
   };
 
