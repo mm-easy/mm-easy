@@ -173,7 +173,7 @@ const QuizFormPage = () => {
           title: title,
           type: type,
           correct_answer: correct_answer,
-          img_url: img_url || 'tempThumbnail.png'
+          img_url: img_url as string
         };
 
         // newOptions 구성하여 question_options 테이블에 인서트

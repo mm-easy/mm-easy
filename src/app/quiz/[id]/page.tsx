@@ -246,19 +246,19 @@ const QuizTryPage = () => {
           <p className="p-4">{info}</p>
           <div className="flex mt-10 justify-center font-bold">
             {currentUserEmail === creator_id && (
-              <div className="flex gap-2 w-52">
-                <CancelButton
+              <div className="flex justify-center items-center mt-44">
+                {/* <CancelButton
                   text="수정"
                   width="w-44"
                   height="h-12"
                   border="border-2"
                   onClick={() => handleEditQuiz(id as string)}
-                />
+                /> */}
                 <CancelButton
                   text="삭제"
                   width="w-44"
                   height="h-12"
-                  border="border-2"
+                  border="border-1"
                   onClick={() => handleDeleteQuiz(id as string)}
                 />
               </div>
@@ -289,7 +289,7 @@ const QuizTryPage = () => {
                         {questionOrder + 1}/{questions.length}
                       </h3>
                     </div>
-                    {img_url !== 'tempThumbnail.png' ? (
+                    {img_url !== null ? (
                       <Image
                         src={`${storageUrl}/question-imgs/${img_url}`}
                         alt="문제 이미지"
