@@ -1,11 +1,12 @@
-import { getRecentQuizzes } from '@/api/quizzes';
-import { useQuery } from '@tanstack/react-query';
-import QuestionEx from './QuestionEx';
 import Image from 'next/image';
 import Link from 'next/link';
+import QuestionEx from './QuestionEx';
+import LoadingImg from '@/components/common/LoadingImg';
+import { getRecentQuizzes } from '@/api/quizzes';
+import { useQuery } from '@tanstack/react-query';
+import { storageUrl } from '@/utils/supabase/storage';
 
 import type { Quiz } from '@/types/quizzes';
-import { storageUrl } from '@/utils/supabase/storage';
 
 const QuizSection = () => {
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
@@ -15,7 +16,7 @@ const QuizSection = () => {
   });
 
   if (isLoading) {
-    return <div>로딩중..</div>;
+    return <LoadingImg height="500px" />;
   }
 
   return (

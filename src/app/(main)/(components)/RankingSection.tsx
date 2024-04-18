@@ -1,9 +1,11 @@
+import Image from 'next/image';
+
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const RankingSection = () => {
   const { data: gameScores, isLoading: isLoadingGameScores } = useQuery({
@@ -22,7 +24,7 @@ const RankingSection = () => {
   });
 
   if (isLoadingGameScores || isLoadingQuizRank || isLoadingQuizScoreRank) {
-    return <div>Loading...</div>;
+    return <LoadingImg height="500px" />;
   }
 
   return (

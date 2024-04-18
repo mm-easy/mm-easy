@@ -1,6 +1,7 @@
 'use client';
 
 import CommunityForm from './CommunityForm';
+import LoadingImg from '@/components/common/LoadingImg';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useAtom } from 'jotai';
@@ -20,11 +21,7 @@ const CommunityMain = () => {
   const params = useParams<{ category: string }>();
   const category = decodeURIComponent(params.category);
 
-  const {
-    data: post = [],
-    isLoading,
-    isError
-  } = useQuery<Post[]>({
+  const { data: post = [], isLoading } = useQuery<Post[]>({
     queryKey: ['postPage', category],
     queryFn: async () => {
       try {
@@ -80,11 +77,7 @@ const CommunityMain = () => {
   const currentItems = post.slice(indexOfFirstItem, indexOfLastItem);
 
   if (isLoading) {
-    return <div>커뮤니티 불러오기중..</div>;
-  }
-
-  if (isError) {
-    return <div>커뮤니티 불러오기 오류!</div>;
+    return <LoadingImg height="84vh" />;
   }
 
   return (

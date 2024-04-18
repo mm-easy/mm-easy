@@ -1,5 +1,6 @@
 import VerticalBlueLine from './VerticalBlueLine';
 import Link from 'next/link';
+import LoadingImg from '@/components/common/LoadingImg';
 import { getQuizzes } from '@/api/quizzes';
 import { getMyGameScore } from '@/api/game_scrore';
 import { useQuery } from '@tanstack/react-query';
@@ -54,7 +55,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
     }
   });
 
-  if (isLoading) return <div>로딩...</div>;
+  if (isLoading) return <LoadingImg height="84vh" />;
   if (isError) return <div>에러...</div>;
 
   const totalQuizScore = myQuizScores?.reduce((a, b) => {

@@ -20,6 +20,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -29,7 +30,7 @@ const DetailPost = () => {
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
 
-  const { data: post } = useQuery<PostDetailDateType>({
+  const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
     queryFn: async () => {
       try {
@@ -108,6 +109,8 @@ const DetailPost = () => {
     };
     fetchData();
   }, [isLoggedIn]);
+
+  if (isLoading) return <LoadingImg height="84vh" />;
 
   return (
     <div className="flex bg-bgColor1 text-pointColor1">

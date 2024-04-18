@@ -1,5 +1,7 @@
+import LoadingImg from '@/components/common/LoadingImg';
 import { getExQuestion } from '@/api/questions';
 import { useQuery } from '@tanstack/react-query';
+
 import type { Question } from '@/types/quizzes';
 
 const QuestionEx = ({ id }: { id: string | undefined }) => {
@@ -16,7 +18,7 @@ const QuestionEx = ({ id }: { id: string | undefined }) => {
   });
 
   if (isLoading) {
-    return <div>로딩 중..</div>;
+    return <LoadingImg height="500px" />;
   }
 
   const question = data as Question[];

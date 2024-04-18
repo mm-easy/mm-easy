@@ -1,7 +1,8 @@
+import Link from 'next/link';
+import LoadingImg from '@/components/common/LoadingImg';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 
 const CommunitySection = () => {
   const { data: posts, isLoading: postsLoading } = useQuery({
@@ -17,7 +18,7 @@ const CommunitySection = () => {
   });
 
   if (postsLoading || noticesLoading) {
-    return <div>로딩중..</div>;
+    return <LoadingImg height="500px" />;
   }
 
   return (

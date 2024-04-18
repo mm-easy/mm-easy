@@ -5,6 +5,7 @@ import QuizList from './QuizList';
 import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
+import LoadingImg from '@/components/common/LoadingImg';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -62,7 +63,7 @@ const SelectQuizLevel = () => {
     refetchOnWindowFocus: false
   });
 
-  if (isLoading) return <div>데이터 로드 중...</div>;
+  if (isLoading) return <LoadingImg height="84vh" />;
   if (isError) return <div>데이터 로드 실패</div>;
   if (!data) return;
 
