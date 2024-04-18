@@ -298,7 +298,7 @@ const MyActivity = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lgtext-center">
+                  <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
                     게시글이 없습니다.
                   </td>
                 </tr>
