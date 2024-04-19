@@ -24,6 +24,10 @@ const QuestionEx = ({ id }: { id: string | undefined }) => {
   const question = data as Question[];
   const { title } = question[0];
 
+  if( title.length === 0 ){
+    return null;
+  }
+
   return <div className="truncate">{title}</div>;
 };
 
