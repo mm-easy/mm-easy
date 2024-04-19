@@ -5,28 +5,21 @@ import MainLogo from '@/assets/logo_horizontal_1.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
 import useMultilingual from '@/utils/useMultilingual';
+import ToggleLanguage from './ToggleLanguage';
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { isLoggedInAtom } from '../../store/store';
+import { isLoggedInAtom, langAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-<<<<<<< HEAD
-import { LanguageType } from '@/types/langs';
-import ToggleLanguage from './ToggleLanguage';
-=======
->>>>>>> 114d7b1b39a0f0efea22bc0149485b65d75c90c8
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-<<<<<<< HEAD
-  const [lang, setLang] = useState<LanguageType>('en');
-  const m = useMultilingual(lang);
-=======
->>>>>>> 114d7b1b39a0f0efea22bc0149485b65d75c90c8
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'header');
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -99,11 +92,7 @@ const Header = () => {
               isActive('/quiz') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-<<<<<<< HEAD
             {m('HEADER_MENU1')}
-=======
-            퀴즈
->>>>>>> 114d7b1b39a0f0efea22bc0149485b65d75c90c8
           </Link>
           <Link
             href="/typing-game"
@@ -111,7 +100,7 @@ const Header = () => {
               isActive('/typing-game') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-            타자 연습
+            {m('HEADER_MENU2')}
           </Link>
           <Link
             href="/community/list/전체"
@@ -119,7 +108,7 @@ const Header = () => {
               isActive('/community') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
-            커뮤니티
+            {m('HEADER_MENU3')}
           </Link>
           <Link
             href="/about"
@@ -127,7 +116,7 @@ const Header = () => {
               isActive('/about') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
-            서비스 소개
+            {m('HEADER_MENU4')}
           </Link>
           {currentUserEmail === 'daejang@mmeasy.com' && (
             <Link
@@ -140,14 +129,16 @@ const Header = () => {
             </Link>
           )}
         </nav>
-        <ToggleLanguage />
-        {isLoggedIn ? (
-          <ProfileDropdown />
-        ) : (
-          <Link href="/login">
-            <button>로그인</button>
-          </Link>
-        )}
+        <div className="flex justify-center items-center gap-5">
+          <ToggleLanguage />
+          {isLoggedIn ? (
+            <ProfileDropdown />
+          ) : (
+            <Link href="/login">
+              <button>로그인</button>
+            </Link>
+          )}
+        </div>
       </section>
     </header>
   );

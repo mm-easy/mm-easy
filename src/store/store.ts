@@ -3,4 +3,4 @@ import { atom } from 'jotai';
 
 export const isMenuOpenAtom = atom(false);
 export const isLoggedInAtom = atom(false);
-export const lang = atom<LanguageType>('en');
+export const langAtom = atom<LanguageType>('en');
