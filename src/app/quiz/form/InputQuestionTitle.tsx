@@ -1,3 +1,6 @@
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
 import { FormEvent } from 'react';
 
 const InputQuestionTitle = ({
@@ -11,12 +14,15 @@ const InputQuestionTitle = ({
   onInput: (e: FormEvent<HTMLInputElement>, maxLength: number) => void;
   onChange: (id: string | undefined, title: string) => void;
 }) => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quizEditor');
+
   return (
     <div className="w-full relative">
       <input
         type="text"
         className="w-full pl-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
-        placeholder="문제를 입력해 주세요. ex)Apple의 한국어 뜻으로 알맞은 것은?"
+        placeholder={m('QUESTION_TITLE_EXAMPLE')}
         value={value}
         onInput={(e) => onInput(e, 30)}
         onChange={(e) => {
