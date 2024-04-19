@@ -1,0 +1,1 @@
+const ABOUT_STRINGS = {};
