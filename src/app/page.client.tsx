@@ -69,10 +69,10 @@ const Home = ({ newSection }: { newSection: React.ReactNode }) => {
   return (
     <div>
       <Banner />
-      {newSection}
       <QuizSection />
       <RankingSection />
       <CommunitySection />
+      {newSection}
       <Footer />
       <PageUpBtn scrollPosition={scrollPosition} />
     </div>
