@@ -1,12 +1,12 @@
 'use client';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { getQuizzesReports, getPostsReports } from '@/api/admin';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { supabase } from '@/utils/supabase/supabase';
-import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/utils/supabase/supabase';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+import { getPostsReports, getQuizzesReports } from '@/api/reports';
 import LoadingImg from '@/components/common/LoadingImg';
 
 const AdminPage = () => {
@@ -34,11 +34,7 @@ const AdminPage = () => {
     queryFn: getPostsReports
   });
 
-  if (quizLoading || postsLoading) {
-    return <LoadingImg height="84vh" />;
-  }
-
-  if (isProfileLoading) {
+  if (quizLoading || postsLoading || isProfileLoading) {
     return <LoadingImg height="84vh" />;
   }
 
@@ -47,6 +43,16 @@ const AdminPage = () => {
     router.push('/');
     alert('접근할 수 없습니다.');
   }
+
+  const deduplicatedQuizReports = quizReports?.filter((report, index, self) => {
+    // self : quizReports
+    return index === self.findIndex((t) => t.target_id === report.target_id);
+  });
+
+  const deduplicatedPostsReports = postsReports?.filter((report, index, self) => {
+    // self : quizReports
+    return index === self.findIndex((t) => t.target_id === report.target_id);
+  });
 
   const handleDelete = async (id: string | undefined, target_id: string | undefined) => {
     try {
@@ -131,11 +137,11 @@ const AdminPage = () => {
               </thead>
               {activeTab === 'posts' && (
                 <tbody>
-                  {postsReports?.map((item, idx) => {
+                  {deduplicatedPostsReports?.map((item, idx) => {
                     return (
                       <tr className="bg-bg-bgColor2" key={idx}>
                         <td className="pl-6 p-4">{item.status === false ? '처리 중' : '처리 완료'}</td>
-                        <td className="pr-8" >{item.reported_user_id || '알 수 없음'}</td>
+                        <td className="pr-8">{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs pr-8 cursor-pointer">
                           <a href={`/community/list/전체/${item.target_id}`}>{item['title']}</a>
                         </td>
@@ -143,18 +149,18 @@ const AdminPage = () => {
                         <td>
                           {item.status === false ? (
                             <button
-                            onClick={() => handleDelete(item.id, item.target_id as string)}
-                            className="bg-red-500 text-white font-semibold w-28 h-8 rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                          >
-                            삭제
-                          </button>                          
+                              onClick={() => handleDelete(item.id, item.target_id as string)}
+                              className="bg-red-500 text-white font-semibold w-28 h-8 rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                            >
+                              삭제
+                            </button>
                           ) : (
                             <button
-                            onClick={() => handleRestore(item.id, item.target_id as string)}
-                            className="bg-pointColor1 text-white font-semibold w-28 h-8 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
-                          >
-                            복구
-                          </button>
+                              onClick={() => handleRestore(item.id, item.target_id as string)}
+                              className="bg-pointColor1 text-white font-semibold w-28 h-8 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
+                            >
+                              복구
+                            </button>
                           )}
                         </td>
                       </tr>
@@ -165,30 +171,30 @@ const AdminPage = () => {
 
               {activeTab === 'quizzes' && (
                 <tbody>
-                  {quizReports?.map((item, idx) => {
+                  {deduplicatedQuizReports?.map((item, idx) => {
                     return (
                       <tr className="bg-bg-bgColor2" key={idx}>
                         <td className="pl-6 p-4">{item.status === false ? '처리 중' : '처리 완료'}</td>
-                        <td className="pr-8" >{item.reported_user_id || '알 수 없음'}</td>
+                        <td className="pr-8">{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs pr-8 cursor-pointer">
                           <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
                         </td>
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td>
                           {item.status === false ? (
-                          <button
-                          onClick={() => handleDelete(item.id, item.target_id as string)}
-                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                        >
-                          삭제
-                        </button>                          
-                        ) : (
-                          <button
-                          onClick={() => handleRestore(item.id, item.target_id as string)}
-                          className="bg-pointColor1 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
-                        >
-                          복구
-                        </button>
+                            <button
+                              onClick={() => handleDelete(item.id, item.target_id as string)}
+                              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                            >
+                              삭제
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleRestore(item.id, item.target_id as string)}
+                              className="bg-pointColor1 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
+                            >
+                              복구
+                            </button>
                           )}
                         </td>
                       </tr>

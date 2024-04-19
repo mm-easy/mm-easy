@@ -1,7 +1,18 @@
-import { ReportTest } from '@/types/reports';
 import { supabase } from '@/utils/supabase/supabase';
+import type { Report } from '@/types/reports';
 
-export const getQuizzesReports = async (): Promise<ReportTest[]> => {
+export const insertReport = async (report: Report) => {
+  try {
+    const { error } = await supabase.from('test').insert([report]).select('*');
+    if (error) throw error;
+  } catch (error) {
+    console.log('신고 등록 실패', error);
+    alert('신고에 등록하지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
+export const getQuizzesReports = async (): Promise<Report[]> => {
   try {
     const { data, error } = await supabase.from('test').select('*').eq('type', 'quiz');
     if (error) throw error;
@@ -13,7 +24,7 @@ export const getQuizzesReports = async (): Promise<ReportTest[]> => {
   }
 };
 
-export const getPostsReports = async (): Promise<ReportTest[]> => {
+export const getPostsReports = async (): Promise<Report[]> => {
   try {
     const { data, error } = await supabase.from('test').select('*').eq('type', 'post');
     if (error) throw error;

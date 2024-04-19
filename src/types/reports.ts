@@ -1,4 +1,4 @@
-export type ReportTest = {
+export type Report = {
   id?: string;
   created_at?: string;
   status?: boolean;

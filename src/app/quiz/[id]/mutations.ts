@@ -4,9 +4,8 @@ import { deleteQuiz } from '@/api/quizzes';
 import { toast } from 'react-toastify';
 
 import type { QuizTry } from '@/types/quizzes';
-import type { Admin, Report } from '@/types/admin';
-import { ReportTest } from '@/types/reports';
-import { insertTest } from '@/api/test';
+import { Report } from '@/types/reports';
+import { insertReport } from '@/api/reports';
 
 export const useSubmitQuizTry = () => {
   const queryClient = useQueryClient();
@@ -54,9 +53,9 @@ export const useSubmitTest = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (test: ReportTest) => {
+    mutationFn: async (test: Report) => {
       try {
-        const result = await insertTest(test);
+        const result = await insertReport(test);
         return result;
       } catch (error) {
         console.log('신고 등록 실패', error);
