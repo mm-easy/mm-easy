@@ -9,13 +9,28 @@ export const getComment = async (postId: string | string[] | undefined) => {
       .from('comments')
       .select(`*, profiles!inner(nickname,avatar_img_url)`)
       .eq('post_id', postId)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: true });
     if (error) throw error;
     return comments || [];
   } catch (error) {
     throw error;
   }
 };
+
+/** 댓글수 가져오기 */
+export const getCommentCount = async (postId: string) => {
+  const { data, error, count } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact' })
+    .eq('post_id', postId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return count; 
+};
+
 
 /** 댓글만들기 */
 export const getInsertComment = async ({ profile, postId, content }: InsertComment) => {

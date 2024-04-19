@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { CancelButton } from '@/components/common/FormButtons';
@@ -35,6 +35,7 @@ const QuizTryPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
   const deleteQuizMutation = useDeleteQuiz();
@@ -212,20 +213,25 @@ const QuizTryPage = () => {
   /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
-    deleteQuizMutation.mutateAsync(id);
-    router.replace('/quiz-list');
+    deleteQuizMutation.mutateAsync(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
+        toast.success('퀴즈가 삭제되었습니다.');
+        router.replace('/quiz/list');
+      }
+    });
   };
 
   /** 수정 버튼 클릭 핸들러 */
-  const handleEditQuiz = (id: string) => {
-    router.push(`/quiz-form?id=${id}`);
-  };
+  // const handleEditQuiz = (id: string) => {
+  //   router.push(`/quiz/form/edit?id=${id}`);
+  // };
 
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
-        <article className="h-[76vh] text-pointColor1">
+        <article className="h-[76vh] flex flex-col justify-between text-pointColor1">
           <section>
             <Image
               src={`${storageUrl}/quiz-thumbnails/${url}`}
@@ -242,23 +248,23 @@ const QuizTryPage = () => {
                 <p>{formatToLocaleDateTimeString(created_at)}</p>
               </div>
             </section>
+            <p className="p-4">{info}</p>
           </section>
-          <p className="p-4">{info}</p>
-          <div className="flex mt-10 justify-center font-bold">
+          <div className="flex justify-center font-bold pb-4">
             {currentUserEmail === creator_id && (
-              <div className="flex gap-2 w-52">
-                <CancelButton
+              <div className="flex justify-center items-center">
+                {/* <CancelButton
                   text="수정"
                   width="w-44"
                   height="h-12"
                   border="border-2"
                   onClick={() => handleEditQuiz(id as string)}
-                />
+                /> */}
                 <CancelButton
                   text="삭제"
                   width="w-44"
                   height="h-12"
-                  border="border-2"
+                  border="border-1"
                   onClick={() => handleDeleteQuiz(id as string)}
                 />
               </div>
@@ -289,7 +295,7 @@ const QuizTryPage = () => {
                         {questionOrder + 1}/{questions.length}
                       </h3>
                     </div>
-                    {img_url !== 'tempThumbnail.png' ? (
+                    {img_url !== null ? (
                       <Image
                         src={`${storageUrl}/question-imgs/${img_url}`}
                         alt="문제 이미지"

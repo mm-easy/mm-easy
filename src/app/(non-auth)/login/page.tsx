@@ -101,11 +101,8 @@ const LoginPage = () => {
               </div>
               {error && <div className="text-red-500">{error}</div>}
               <div className="flex mt-6 justify-between">
-                <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/terms">
+                <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/signup">
                   회원가입
-                </Link>
-                <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/">
-                  아이디 찾기 | 비밀번호 찾기
                 </Link>
               </div>
               <div>
@@ -121,18 +118,18 @@ const LoginPage = () => {
             <div className="flex justify-center mt-3">
               <button
                 onClick={handleGoogleSignIn}
-                className="flex items-center justify-center w-full mr-3 px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
+                className="flex items-center justify-center w-full px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
               >
                 <FcGoogle className="mr-2" size="2em" />
                 Google 로그인
               </button>
-              <button
+              {/* <button
                 onClick={handleKakaoSignIn}
                 className="flex items-center justify-center w-full px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
               >
                 <SiKakaotalk className="mr-2 bg-black text-yellow-500" size="2em" />
                 Kakao 로그인
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

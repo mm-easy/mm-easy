@@ -156,48 +156,6 @@ a {
   color: inherit;
 }
 
-.menu-enter {
-  transform: scale(0.95);
-  opacity: 0;
-}
-
-.menu-enter-active {
-  transform: scale(1);
-  opacity: 1;
-  transition: opacity 300ms, transform 300ms;
-}
-
-.menu-exit {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.menu-exit-active {
-  transform: scale(0.95);
-  opacity: 0;
-  transition: opacity 300ms, transform 300ms;
-}
-
-.ql-editor strong,
-em {
-  font-weight: bold;
-}
-.ql-editor em {
-  font-style: italic;
-}
-
-.ql-editor h1 {
-  font-size: xx-large;
-}
-
-.ql-editor h2 {
-  font-size: x-large;
-}
-
-.about-userreview1 {
-  position: relative;
-}
-
 .about-userreview1::after {
   content: '';
   display: block;
@@ -338,3 +296,4 @@ em {
   left: 170px;
   z-index: 1;
 }
+

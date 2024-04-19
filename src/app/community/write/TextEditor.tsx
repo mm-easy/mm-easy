@@ -56,7 +56,7 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
         container: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{ list: 'ordered' }, { list: 'bullet' },],
           ['link', 'image'],
           [{ align: [] }, { color: [] }, { background: [] }]
         ],
@@ -80,7 +80,6 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
     'blockquote',
     'list',
     'bullet',
-    'indent',
     'link',
     'image',
     'align',
