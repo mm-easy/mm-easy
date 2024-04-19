@@ -46,7 +46,6 @@ export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
       console.log('No data available for the selected week.');
       return [];
     }
-    console.log(quizScores);
     return quizScores;
   } catch (error) {
     console.log('퀴즈 점수 가져오기 실패:', error);
