@@ -21,10 +21,10 @@ import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
 import LoadingImg from '@/components/common/LoadingImg';
 
-import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
+import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
 
 const QuizTryPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<Params>();
   const [resultMode, setResultMode] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
@@ -378,7 +378,7 @@ const QuizTryPage = () => {
           {resultMode && (
             <ReportButton
               targetId={id}
-              type="quizzes"
+              type="quiz"
               currentUserEmail={currentUserEmail}
               title={title}
               creatorId={creator_id}

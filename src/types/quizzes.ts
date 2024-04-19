@@ -70,3 +70,7 @@ export type QuizRank = {
   quiz_count: number;
   nickname: string;
 };
+
+export type Params = {
+  id: string;
+};
