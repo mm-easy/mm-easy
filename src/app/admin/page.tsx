@@ -56,7 +56,7 @@ const AdminPage = () => {
 
   const handleDelete = async (id: string | undefined, target_id: string | undefined) => {
     try {
-      const { error: adminError } = await supabase.from('admin').update({ status: true }).eq('id', id);
+      const { error: adminError } = await supabase.from('reports').update({ status: true }).eq('id', id);
 
       if (adminError) throw adminError;
 
@@ -85,7 +85,7 @@ const AdminPage = () => {
 
   const handleRestore = async (id: string | undefined, target_id: string | undefined) => {
     try {
-      const { error: adminError } = await supabase.from('admin').update({ status: false }).eq('id', id);
+      const { error: adminError } = await supabase.from('reports').update({ status: false }).eq('id', id);
 
       if (adminError) throw adminError;
 
