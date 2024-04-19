@@ -10,7 +10,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    if (window.confirm('정말 해당 게시글을 삭제하시겠습니까?')) {
+    if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
       try {
         await removeCommunityPost(postId);
         toast("게시글이 삭제되었습니다.")
@@ -40,7 +40,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    if (window.confirm('정말 해당 댓글을 삭제하시겠습니까?')) {
+    if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
       try {
         await handleDeleteBtn(userId);
         toast("댓글이 삭제되었습니다.")

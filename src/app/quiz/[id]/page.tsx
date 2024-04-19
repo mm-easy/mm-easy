@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { CancelButton } from '@/components/common/FormButtons';
@@ -35,6 +35,7 @@ const QuizTryPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
   const deleteQuizMutation = useDeleteQuiz();
@@ -212,8 +213,13 @@ const QuizTryPage = () => {
   /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
-    deleteQuizMutation.mutateAsync(id);
-    router.replace('/quiz/list');
+    deleteQuizMutation.mutateAsync(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
+        toast.success('퀴즈가 삭제되었습니다.');
+        router.replace('/quiz/list');
+      }
+    });
   };
 
   /** 수정 버튼 클릭 핸들러 */
