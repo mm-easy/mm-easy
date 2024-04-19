@@ -84,7 +84,7 @@ const TermsPage = () => {
         <div className="w-full bg-white p-3 rounded mx-4">
           <h1 className="text-xl font-bold text-pointColor1 text-center mt-4 mb-6">회원 가입</h1>
           <div className="col-span-6 flex items-center bg-white justify-center">
-          <div className="w-full max-w-md p-8 bg-white">
+          <div className="w-full p-8 bg-white">
               <div className="flex flex-col gap-4">
                 <div>
                   <label htmlFor="email" className="text-md font-bold text-blackColor">이메일</label>
