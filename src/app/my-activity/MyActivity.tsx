@@ -20,9 +20,9 @@ const MyActivity = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const [currentPage, setCurrentPage] = useState(1);
+  const { getCurrentUserProfile } = useAuth();
   const queryClient = useQueryClient();
   const deleteQuizMutation = useDeleteQuiz();
-  const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
 
   // 사용자 정보 확인
@@ -148,10 +148,10 @@ const MyActivity = () => {
 
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
-    deleteQuizMutation.mutateAsync(id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['quizzes'] });
-      }
+    deleteQuizMutation.mutateAsync(id).then(() => {
+      queryClient.invalidateQueries({
+        queryKey: ['userQuizzes']
+      });
     });
   };
 
