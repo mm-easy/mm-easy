@@ -39,6 +39,9 @@ const TypingGamePage = () => {
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
+  const gameoverSound = new Audio('game/gameover.mp3');
+  const wordpopSound = new Audio('game/wordpopped.mp3');
+  const gamestartSound = new Audio('game/gamestart.mp3');
 
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
@@ -107,6 +110,7 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     if (lives <= 0) {
+      gameoverSound.play();
       alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
       if (user) {
         addGameScore(score);
@@ -140,6 +144,7 @@ const TypingGamePage = () => {
       setWords(words.filter((_, index) => index !== wordIndex));
       setScore(score + 10);
       setCorrectWordsCount(correctWordsCount + 1);
+      wordpopSound.play();
     }
     setInput('');
   };
@@ -148,6 +153,7 @@ const TypingGamePage = () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
     } else {
+      gamestartSound.play();
       setGameStarted(true);
       setWords([]);
       setInput('');
