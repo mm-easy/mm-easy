@@ -21,10 +21,12 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
 import LoadingImg from '@/components/common/LoadingImg';
+import PageUpBtn from '@/components/common/PageUpBtn';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [profile, setProfile] = useState<User | null>();
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const params = useParams<Params>();
   const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
@@ -82,6 +84,18 @@ const DetailPost = () => {
       router.push(`/community/list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
     }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -153,7 +167,7 @@ const DetailPost = () => {
                     <div className="pl-3">
                       <PostDeleteButton
                         text="삭제"
-                        redirectUrl={`/community/list/${categoryNow}`}
+                        redirectUrl={'/community/list/전체'}
                         postId={post.id}
                         width="w-20"
                         height="h-12"
@@ -197,6 +211,7 @@ const DetailPost = () => {
           </div>
         )}
       </div>
+      <PageUpBtn scrollPosition={scrollPosition} />
     </div>
   );
 };
