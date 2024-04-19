@@ -72,34 +72,36 @@ const MyProfile = ({ data }: { data: User }) => {
 
   return (
     <main className="w-full h-full flex flex-col items-center">
-      <h3 className="mt-10 text-center text-pointColor1 text-xl font-semibold">프로필</h3>
-      <article className="flex gap-20 mt-5">
-        <section className="w-[230px] h-[230px]">
-          <Image
-            src={`${profileStorageUrl}/${data.avatar_img_url}`}
-            alt="사용자 프로필"
-            width={250}
-            height={250}
-            className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
-          />
-        </section>
-        <section className="flex flex-col justify-around">
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-1">
-              <p className="text-pointColor1 font-semibold">닉네임</p>
-              <p className="text-lg">{data.nickname}</p>
+      <article className="my-auto">
+        <h3 className="text-center text-pointColor1 text-xl font-semibold">프로필</h3>
+        <section className="flex gap-20 mt-5">
+          <section className="w-[230px] h-[230px]">
+            <Image
+              src={`${profileStorageUrl}/${data.avatar_img_url}`}
+              alt="사용자 프로필"
+              width={250}
+              height={250}
+              className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
+            />
+          </section>
+          <section className="flex flex-col justify-around">
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-1">
+                <p className="text-pointColor1 font-semibold">닉네임</p>
+                <p className="text-lg">{data.nickname}</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-pointColor1 font-semibold">이메일</p>
+                <p className="text-lg">{data.email}</p>
+              </div>
             </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-pointColor1 font-semibold">이메일</p>
-              <p className="text-lg">{data.email}</p>
+            <div
+              className="text-pointColor1 underline underline-offset-4 cursor-pointer"
+              onClick={() => setIsEditing(true)}
+            >
+              프로필 수정
             </div>
-          </div>
-          <div
-            className="text-pointColor1 underline underline-offset-4 cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          >
-            프로필 수정
-          </div>
+          </section>
         </section>
       </article>
       {isEditing && (

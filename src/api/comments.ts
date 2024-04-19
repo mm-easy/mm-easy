@@ -6,7 +6,7 @@ export const getMyActivityComment = async (userId: string) => {
       .from('comments')
       .select(`*, profiles!inner(nickname)`)
       .eq('author_id', userId) // 'author_id'와 사용자의 ID를 비교
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
     return comments || [];

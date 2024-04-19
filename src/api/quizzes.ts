@@ -171,7 +171,8 @@ export const fetchUserQuizzes = async (email: string) => {
         quiz_tries:quiz_tries!public_quiz_tries_quiz_id_fkey(id)
       `
       )
-      .eq('creator_id', email);
+      .eq('creator_id', email)
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
     return data;
@@ -185,7 +186,8 @@ export const userSolvedQuizzes = async (email: string) => {
     const { data, error } = await supabase
       .from('quiz_tries')
       .select(`*,quizzes:quiz_id (id, title)`)
-      .eq('user_id', email);
+      .eq('user_id', email)
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
     return data;

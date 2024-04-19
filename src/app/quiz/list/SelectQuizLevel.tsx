@@ -11,11 +11,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getQuizzes } from '@/api/quizzes';
-
-import type { Quiz } from '@/types/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+
+import type { Quiz } from '@/types/quizzes';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
@@ -32,12 +32,13 @@ const SelectQuizLevel = () => {
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
         setCurrentUser(userProfile.email);
+        console.log('읭');
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
       }
     };
     fetchData();
-  }, [getCurrentUserProfile]);
+  }, []);
 
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
@@ -101,7 +102,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] cursor-pointer ${
+              className={`w-full h-full transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-5deg] cursor-pointer ${
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
@@ -118,7 +119,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] cursor-pointer ${
+              className={`w-full h-full transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] cursor-pointer ${
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
@@ -135,7 +136,7 @@ const SelectQuizLevel = () => {
               width={350}
               height={240}
               quality={100}
-              className={`w-full h-full object-none transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 cursor-pointer ${
+              className={`w-full h-full transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-3 cursor-pointer ${
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null

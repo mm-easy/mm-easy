@@ -14,10 +14,10 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
 
-    if (!email || !email.includes('@')) {
+    if (!email && !email.includes('@')) {
       setError('유효한 이메일 주소를 입력해주세요.');
       setLoading(false);
-      return;
+      return { error: true, errorMessage: '유효한 이메일 주소를 입력해주세요.' };
     }
 
     /** 중복 이메일 검사 */

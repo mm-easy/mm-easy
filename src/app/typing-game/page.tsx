@@ -36,10 +36,38 @@ const TypingGamePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
+
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
 
+  const [gameoverSound, setGameoverSound] = useState<HTMLAudioElement | null>(null);
+  const [wordpopSound, setWordpopSound] = useState<HTMLAudioElement | null>(null);
+  const [gamestartSound, setGamestartSound] = useState<HTMLAudioElement | null>(null);
+
+  /** 게임에 필요한 오디오 파일 */
+  useEffect(() => {
+    // Audio 객체 생성
+    if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
+      const gameoverAudio = new Audio('game/gameover.mp3');
+      const wordpopAudio = new Audio('game/wordpopped.mp3');
+      const gamestartAudio = new Audio('game/gamestart.mp3');
+
+      setGameoverSound(gameoverAudio);
+      setWordpopSound(wordpopAudio);
+      setGamestartSound(gamestartAudio);
+
+      return () => {
+        // 컴포넌트가 언마운트 될 때 오디오를 멈추고 해제합니다.
+        gameoverAudio.pause();
+        gameoverAudio.currentTime = 0;
+        wordpopAudio.pause();
+        wordpopAudio.currentTime = 0;
+        gamestartAudio.pause();
+        gamestartAudio.currentTime = 0;
+      };
+    }
+  }, []);
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
   }, []);
@@ -107,6 +135,8 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     if (lives <= 0) {
+      if (!gameoverSound) return;
+      gameoverSound.play();
       alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
       if (user) {
         addGameScore(score);
@@ -140,6 +170,8 @@ const TypingGamePage = () => {
       setWords(words.filter((_, index) => index !== wordIndex));
       setScore(score + 10);
       setCorrectWordsCount(correctWordsCount + 1);
+      if (!wordpopSound) return;
+      wordpopSound.play();
     }
     setInput('');
   };
@@ -148,6 +180,8 @@ const TypingGamePage = () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
     } else {
+      if (!gamestartSound) return;
+      gamestartSound.play();
       setGameStarted(true);
       setWords([]);
       setInput('');
@@ -217,25 +251,25 @@ const TypingGamePage = () => {
     }
   };
 
-  const lifePercentage = (lives / maxLives) * 60;
+  const lifePercentage = (lives / maxLives) * 55;
 
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             난이도
           </h2>
-          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             점수
           </h2>
-          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             생명
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
