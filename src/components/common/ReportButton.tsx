@@ -28,6 +28,7 @@ const ReportButton = ({
     const report = {
       title,
       target_id: targetId,
+      type,
       reported_user_id: creatorId,
       user_id: currentUserEmail
     };
