@@ -7,18 +7,20 @@ import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteBu
 import { useAuth } from '@/hooks/useAuth';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Pagination } from './Pagination';
 import { TabName } from '@/types/pagination';
 import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
+import { toast } from 'react-toastify';
 
 const MyActivity = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const [currentPage, setCurrentPage] = useState(1);
+  const queryClient = useQueryClient();
   const deleteQuizMutation = useDeleteQuiz();
   const { getCurrentUserProfile } = useAuth();
   const router = useRouter();
@@ -146,7 +148,11 @@ const MyActivity = () => {
 
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
-    deleteQuizMutation.mutateAsync(id);
+    deleteQuizMutation.mutateAsync(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['quizzes'] });
+      }
+    });
   };
 
   // 페이지
