@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertAdmin, insertReport } from '@/api/admin';
-import { insertQuizTry, updateQuizScore  } from '@/api/tries';
+import { insertQuizTry, updateQuizScore } from '@/api/tries';
 import { deleteQuiz } from '@/api/quizzes';
 import { toast } from 'react-toastify';
 
