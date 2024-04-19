@@ -30,6 +30,11 @@ const TermsPage = () => {
     setPrivacyChecked(!privacyChecked);
   };
 
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   /** 모든 체크박스가 선택되었는지 확인 */
   useEffect(() => {
     setAllChecked(termsChecked && privacyChecked);
@@ -43,6 +48,12 @@ const TermsPage = () => {
       toast('모든 약관에 동의해야 합니다.');
       return;
     }
+
+    // 이메일 유효성 검사
+  if (!isValidEmail(email)) {
+    toast.error('유효하지 않은 이메일 주소입니다.');
+    return;
+  }
     
     // 비밀번호 일치 여부를 확인합니다.
     if (password !== confirmPassword) {
@@ -66,7 +77,7 @@ const TermsPage = () => {
     
     // 회원가입 성공 메시지를 표시하고 로그인 페이지로 이동합니다.
     toast.success('회원가입에 성공했습니다! 로그인 페이지로 이동합니다.');
-    router.push('/login');
+    // router.push('/login');
   };
   
 
