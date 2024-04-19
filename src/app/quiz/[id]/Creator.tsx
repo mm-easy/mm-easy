@@ -20,6 +20,10 @@ const Creator = ({ creator }: { creator: string }) => {
 
   const profile = data as User[];
 
+  if ( profile.length === 0) {
+    return null
+  }
+  
   const { nickname } = profile[0];
 
   return (
