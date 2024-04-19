@@ -2,7 +2,7 @@
 
 import { Dispatch, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { SetStateAction } from 'jotai';
+import { SetStateAction, useAtom } from 'jotai';
 
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { storageUrl } from '@/utils/supabase/storage';
@@ -12,6 +12,8 @@ import InputQuestionImg from './InputQuestionImg';
 import UnloadImgBtn from './UnloadImg';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const QuestionForm = ({
   questions,
@@ -23,7 +25,8 @@ const QuestionForm = ({
   deletedQuestions: string[];
 }) => {
   const [loaded, setLoaded] = useState(false);
-  console.log('이미지', questions[0].img_url);
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quizEditor');
 
   useEffect(() => {
     setLoaded(true);
@@ -180,7 +183,7 @@ const QuestionForm = ({
                   defaultChecked={true}
                   onChange={handleChangeType}
                   type={QuestionType.objective}
-                  title="선택형"
+                  title={m('QUIZ_TYPE_O')}
                 />
                 <SelectQuestionType
                   id={id}
@@ -188,7 +191,7 @@ const QuestionForm = ({
                   defaultChecked={false}
                   onChange={handleChangeType}
                   type={QuestionType.subjective}
-                  title="주관형"
+                  title={m('QUIZ_TYPE_S')}
                 />
               </section>
               <button type="button" className="text-xl" onClick={() => handleDeleteQuestion(id)}>
@@ -222,7 +225,7 @@ const QuestionForm = ({
                           <input
                             type="text"
                             className="w-full pl-4 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
-                            placeholder="선택지를 입력해 주세요."
+                            placeholder={m('QUESTION_OPTION_EXAMPLE1')}
                             value={option.content}
                             onInput={(e) => {
                               handleMaxLength(e, 25);
@@ -262,7 +265,7 @@ const QuestionForm = ({
                     <input
                       type="text"
                       className="w-full px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
-                      placeholder="정답을 입력해 주세요."
+                      placeholder={m('QUESTION_OPTION_EXAMPLE2')}
                       value={correct_answer}
                       onInput={(e) => {
                         handleMaxLength(e, 30);

@@ -15,6 +15,9 @@ import { supabase } from '@/utils/supabase/supabase';
 import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
 
 import { QuestionType, type Question } from '@/types/quizzes';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const QuizFormPage = () => {
   const [level, setLevel] = useState<number>(0);
@@ -25,6 +28,8 @@ const QuizFormPage = () => {
   const [currentUser, setCurrentUser] = useState('');
   const [deletedQuestions, setDeletedQuestions] = useState(['']);
   const { getCurrentUserProfile } = useAuth();
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quizEditor');
 
   useConfirmPageLeave();
   const router = useRouter();
@@ -210,7 +215,7 @@ const QuizFormPage = () => {
 
   return (
     <>
-      <SubHeader text="퀴즈 만들기" />
+      <SubHeader text={m('SUBHEADER_TEXT')} />
       <QuizForm
         questions={questions}
         setQuestions={setQuestions}
