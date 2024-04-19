@@ -134,7 +134,7 @@ const AboutPage = () => {
           </section>
         </section>
       </article>
-      <article className="flex flex-col text-xl font-bold w-3/6 pb-20">
+      <article className="flex flex-col text-xl font-bold w-4/6 pb-20">
         <h2 className="text-4xl font-extrabold py-16 text-pointColor1">유저후기</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center w-full pl-10 relative z-10">
@@ -201,8 +201,8 @@ const AboutPage = () => {
                     />
                   </div>
                   <h3 className="m-4 font-bold text-2xl">{member.name}</h3>
-                  <span>{member.content1}</span>
-                  <span>{member.content2}</span>
+                  <span className="w-[400px]">{member.content1}</span>
+                  <span className="w-[400px]">{member.content2}</span>
                 </div>
                 <div className="m-8">
                   {member.Github ? (
