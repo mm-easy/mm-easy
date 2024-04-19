@@ -27,7 +27,7 @@ const QuizSection = () => {
           더보기
         </Link>
       </div>
-      <section className="px-6 py-4 grid grid-cols-4 gap-5">
+      <section className="px-6 py-4 grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-5">
         {quiz?.map((quiz) => (
           <div
             key={quiz.id}
