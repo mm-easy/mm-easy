@@ -1,4 +1,4 @@
-import { useSubmitTest } from '@/app/quiz/[id]/mutations';
+import { useSubmitReport } from '@/app/quiz/[id]/mutations';
 import { supabase } from '@/utils/supabase/supabase';
 import { toast } from 'react-toastify';
 
@@ -17,7 +17,7 @@ const ReportButton = ({
   title: string;
   creatorId: string;
 }) => {
-  const insertReportMutation = useSubmitTest();
+  const insertReportMutation = useSubmitReport();
 
   const handleReport = async () => {
     if (!currentUserEmail) {
@@ -28,12 +28,13 @@ const ReportButton = ({
     const report = {
       title,
       target_id: targetId,
+      type,
       reported_user_id: creatorId,
       user_id: currentUserEmail
     };
 
     const { data: reportHistory, error } = await supabase
-      .from('test')
+      .from('reports')
       .select('*')
       .match({ user_id: currentUserEmail, target_id: targetId });
 
