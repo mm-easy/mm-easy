@@ -4,9 +4,10 @@ import { useRef } from 'react'
 
 interface PhonicsPlayerProps {
   source: string; 
+  buttonLabel: string;
 }
 
-const PhonicsPlayer: React.FC<PhonicsPlayerProps> = ( { source }) => {
+const PhonicsPlayer: React.FC<PhonicsPlayerProps> = ( { source, buttonLabel }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const playSound = () => {
@@ -16,9 +17,9 @@ const PhonicsPlayer: React.FC<PhonicsPlayerProps> = ( { source }) => {
   };
 
   return (
-    <div>
+    <div className=''>
       <audio ref={audioRef} src={source} preload="auto"></audio>
-      <button onClick={playSound}>Play Sound</button>
+      <button className='border border-solid border-black rounded-full w-20 h-20' onClick={playSound}>{buttonLabel}</button>
     </div>
   );
 }

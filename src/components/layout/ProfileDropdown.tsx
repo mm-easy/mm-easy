@@ -10,13 +10,17 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useAuth } from '@/hooks/useAuth';
-import { isLoggedInAtom } from '@/store/store';
+import { isLoggedInAtom, langAtom } from '@/store/store';
 
 import type { User } from '@/types/users';
 import { useRouter } from 'next/navigation';
+import useMultilingual from '@/utils/useMultilingual';
 
 const ProfileDropdown = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'lang');
+
   const { logout } = useAuth();
   const route = useRouter();
 
@@ -62,19 +66,20 @@ const ProfileDropdown = () => {
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem key="profile" className="h-14 gap-2">
             <p className="font-semibold">
-              반갑습니다💙
+              {m('HEADER_DROPDOWN_INTRO')}
               <br />
-              <span className="font-semibold text-pointColor1">{data?.nickname}</span>님!
+              <span className="font-semibold text-pointColor1">{data?.nickname}</span>
+              {m('HEADER_DROPDOWN_NIM')}
             </p>
           </DropdownItem>
           <DropdownItem as={Link} href="/profile">
-            나의 프로필
+            {m('HEADER_DROPDOWN_MENU1')}
           </DropdownItem>
           <DropdownItem as={Link} href="/my-activity">
-            나의 활동
+            {m('HEADER_DROPDOWN_MENU2')}
           </DropdownItem>
           <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-            로그아웃
+            {m('HEADER_DROPDOWN_LOGOUT')}
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
