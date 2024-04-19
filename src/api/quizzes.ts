@@ -1,6 +1,5 @@
 import { Option, OptionsToInsert, Question, QuestionsToInsert, Quiz, QuizRank } from '@/types/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
-import { ErrorBoundaryHandler } from 'next/dist/client/components/error-boundary';
 
 /** quiz 썸네일을 스토리지에 upload */
 export const uploadThumbnailToStorage = async (file: File, fileName: string) => {

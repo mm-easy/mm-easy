@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { insertAdmin, insertReport } from '@/api/admin';
 import { insertQuizTry, updateQuizScore } from '@/api/tries';
 import { deleteQuiz } from '@/api/quizzes';
 import { toast } from 'react-toastify';
@@ -66,48 +65,6 @@ export const useSubmitTest = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['test'] });
-    }
-  });
-
-  return mutation;
-};
-
-export const useSubmitAdmin = () => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: async (admin: Admin) => {
-      try {
-        const result = await insertAdmin(admin);
-        return result;
-      } catch (error) {
-        console.log('관리 등록 실패', error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin'] });
-    }
-  });
-
-  return mutation;
-};
-
-export const useSubmitReport = () => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: async (report: Report) => {
-      try {
-        const result = await insertReport(report);
-        return result;
-      } catch (error) {
-        console.log('신고 등록 실패', error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reports'] });
     }
   });
 
