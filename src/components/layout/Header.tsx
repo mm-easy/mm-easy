@@ -77,7 +77,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] md:px-[2vw] text-center flex justify-center items-center">
+      <Link href="/" className="w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center">
         <Image src={MainLogo} alt="로고" width={150} />
       </Link>
       <section className="w-[84%] flex justify-between px-[3vw]">
