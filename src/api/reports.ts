@@ -3,7 +3,7 @@ import type { Report } from '@/types/reports';
 
 export const insertReport = async (report: Report) => {
   try {
-    const { error } = await supabase.from('test').insert([report]).select('*');
+    const { error } = await supabase.from('reports').insert([report]).select('*');
     if (error) throw error;
   } catch (error) {
     console.log('신고 등록 실패', error);
@@ -14,7 +14,7 @@ export const insertReport = async (report: Report) => {
 
 export const getQuizzesReports = async (): Promise<Report[]> => {
   try {
-    const { data, error } = await supabase.from('test').select('*').eq('type', 'quiz');
+    const { data, error } = await supabase.from('reports').select('*').eq('type', 'quiz');
     if (error) throw error;
     return data;
   } catch (error) {
@@ -26,7 +26,7 @@ export const getQuizzesReports = async (): Promise<Report[]> => {
 
 export const getPostsReports = async (): Promise<Report[]> => {
   try {
-    const { data, error } = await supabase.from('test').select('*').eq('type', 'post');
+    const { data, error } = await supabase.from('reports').select('*').eq('type', 'post');
     if (error) throw error;
     return data;
   } catch (error) {

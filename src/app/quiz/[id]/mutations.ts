@@ -49,13 +49,13 @@ export const useUpdateQuizTry = () => {
   return mutation;
 };
 
-export const useSubmitTest = () => {
+export const useSubmitReport = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (test: Report) => {
+    mutationFn: async (report: Report) => {
       try {
-        const result = await insertReport(test);
+        const result = await insertReport(report);
         return result;
       } catch (error) {
         console.log('신고 등록 실패', error);
@@ -63,7 +63,7 @@ export const useSubmitTest = () => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['test'] });
+      queryClient.invalidateQueries({ queryKey: ['reports'] });
     }
   });
 
