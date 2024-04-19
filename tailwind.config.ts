@@ -44,8 +44,7 @@ const config: Config = {
     backgroundSize: { md: '80%', cover: 'cover' },
     screens: {
       lg: '1441px',
-      md: '861px',
-      sm: '320px'
+      md: '861px'
     },
     animation: {
       'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
