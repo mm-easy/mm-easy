@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-bgColor1 ${gothic_a1.className}`}>
-        <main className="overflow-y-hidden mx-auto bg-white lg:w-[1444px] lg:border-x-2 lg:border-solid lg:border-pointColor1 md:w-full">
+        <main className="mx-auto bg-white lg:w-[1444px] lg:border-x-2 lg:border-solid lg:border-pointColor1 md:w-full ">
           <Provider>
             <QueryProvider>
               <Header />
