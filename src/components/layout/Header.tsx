@@ -11,15 +11,11 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-import { GetStaticPropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const { t } = useTranslation();
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -92,7 +88,7 @@ const Header = () => {
               isActive('/quiz') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-            {t('header:퀴즈')}
+            퀴즈
           </Link>
           <Link
             href="/typing-game"
