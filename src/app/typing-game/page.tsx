@@ -1,26 +1,19 @@
 'use client';
 
+import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
+import { BiSolidVolumeFull } from "react-icons/bi";
+import { langAtom } from '../../store/store';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
-
-const difficultySettings: { [key: number]: DifficultySetting } = {
-  1: { label: '초보', speed: 20, interval: 5000 },
-  2: { label: '하수', speed: 30, interval: 4000 },
-  3: { label: '중수', speed: 40, interval: 3000 },
-  4: { label: '고수', speed: 70, interval: 2000 },
-  5: { label: '지존', speed: 100, interval: 1000 }
-};
-
-const maxDifficulty = Object.keys(difficultySettings).length;
 
 const TypingGamePage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -36,38 +29,34 @@ const TypingGamePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
+  const [volume, setVolume] = useState(0.5);
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'typing-game');
 
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
 
-  const [gameoverSound, setGameoverSound] = useState<HTMLAudioElement | null>(null);
-  const [wordpopSound, setWordpopSound] = useState<HTMLAudioElement | null>(null);
-  const [gamestartSound, setGamestartSound] = useState<HTMLAudioElement | null>(null);
-
-  /** 게임에 필요한 오디오 파일 */
-  useEffect(() => {
-    // Audio 객체 생성
-    if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
-      const gameoverAudio = new Audio('game/gameover.mp3');
-      const wordpopAudio = new Audio('game/wordpopped.mp3');
-      const gamestartAudio = new Audio('game/gamestart.mp3');
-
-      setGameoverSound(gameoverAudio);
-      setWordpopSound(wordpopAudio);
-      setGamestartSound(gamestartAudio);
-
-      return () => {
-        // 컴포넌트가 언마운트 될 때 오디오를 멈추고 해제합니다.
-        gameoverAudio.pause();
-        gameoverAudio.currentTime = 0;
-        wordpopAudio.pause();
-        wordpopAudio.currentTime = 0;
-        gamestartAudio.pause();
-        gamestartAudio.currentTime = 0;
-      };
-    }
-  }, []);
+   // useRef로 오디오 객체 참조를 생성합니다.
+   const gameoverSound = useRef<HTMLAudioElement | null>(null);
+   const wordpopSound = useRef<HTMLAudioElement | null>(null);
+   const gamestartSound = useRef<HTMLAudioElement | null>(null);
+ 
+   // 컴포넌트가 마운트되면 오디오 객체를 생성합니다.
+   useEffect(() => {
+     if (typeof window !== 'undefined') { 
+       gameoverSound.current = new Audio('game/gameover.mp3');
+       wordpopSound.current = new Audio('game/wordpopped.mp3');
+       gamestartSound.current = new Audio('game/gamestart.mp3');
+     }
+   }, []);
+ 
+   // 볼륨 상태가 변경될 때 오디오 볼륨을 업데이트합니다.
+   useEffect(() => {
+    if (gameoverSound.current) gameoverSound.current.volume = volume;
+    if (wordpopSound.current) wordpopSound.current.volume = volume;
+    if (gamestartSound.current) gamestartSound.current.volume = volume;
+  }, [volume]);
 
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
@@ -136,8 +125,8 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     if (lives <= 0) {
-      if (!gameoverSound) return;
-      gameoverSound.play();
+      if (gameoverSound.current) {
+      gameoverSound.current.play();
       alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
       if (user) {
         addGameScore(score);
@@ -147,6 +136,7 @@ const TypingGamePage = () => {
       setLives(maxLives);
       setWords([]);
       setCorrectWordsCount(0);
+    }
     }
   }, [lives, score, user]);
 
@@ -171,9 +161,10 @@ const TypingGamePage = () => {
       setWords(words.filter((_, index) => index !== wordIndex));
       setScore(score + 10);
       setCorrectWordsCount(correctWordsCount + 1);
-      if (!wordpopSound) return;
-      wordpopSound.play();
+      if (wordpopSound.current) {
+      wordpopSound.current.play();
     }
+  }
     setInput('');
   };
 
@@ -181,8 +172,8 @@ const TypingGamePage = () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
     } else {
-      if (!gamestartSound) return;
-      gamestartSound.play();
+      if (gamestartSound.current) {
+      gamestartSound.current.play();
       setGameStarted(true);
       setWords([]);
       setInput('');
@@ -190,6 +181,7 @@ const TypingGamePage = () => {
       setLives(maxLives);
       setCorrectWordsCount(0);
     }
+  }
   };
 
   const proceedWithoutLogin = () => {
@@ -252,26 +244,59 @@ const TypingGamePage = () => {
     }
   };
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(e.target.valueAsNumber);
+  };
+
+  const difficultySettings: { [key: number]: DifficultySetting } = {
+    1: { label: m('DIFFICULTY1'), speed: 20, interval: 5000 },
+    2: { label: m('DIFFICULTY2'), speed: 30, interval: 4000 },
+    3: { label: m('DIFFICULTY3'), speed: 40, interval: 3000 },
+    4: { label: m('DIFFICULTY4'), speed: 70, interval: 2000 },
+    5: { label: m('DIFFICULTY5'), speed: 100, interval: 1000 }
+  };
+
+  const maxDifficulty = Object.keys(difficultySettings).length;
+
   const lifePercentage = (lives / maxLives) * 55;
 
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
+      {!gameStarted && (
+      <div className="top-0 left-0 p-4 custom-volume-control">
+        <div className="volume-control flex items-center">
+        <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1"> 
+          <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1"/>: 
+          </label>
+          <input
+            type="range"
+            id="volume-slider"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="w-24"
+          />
+        </div>
+      </div>
+      )}
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            난이도
+          {m('DIFFICULTY')}
           </h2>
           <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            점수
+          {m('SCORE')}
           </h2>
           <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            생명
+          {m('LIFE')}
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
         </header>
@@ -292,21 +317,35 @@ const TypingGamePage = () => {
               onSubmit={handleSubmit}
               className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor3"
             >
+              <div className="volume-control flex items-center mr-2">
+              <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1"> 
+                <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1"/>: 
+                </label>
+                <input
+                  type="range"
+                  id="volume-slider"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                />
+              </div>
               <input
                 type="text"
                 value={input}
-                placeholder="입력창"
+                placeholder={m('INPUT_FIELD')}
                 onChange={handleInput}
                 className="w-[60vw] pl-4 text-pointColor1 border border-pointColor1 rounded-md"
               />
               <button type="submit" className="w-[10vw] bg-pointColor1 text-white rounded-md">
-                입력
+              {m('INPUT_BUTTON')}
               </button>
             </form>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <p className="mb-6 font-bold text-2xl text-pointColor1">난이도를 선택해주세요!</p>
+            <p className="mb-6 font-bold text-2xl text-pointColor1">{m('SELECT_DIFFICULTY')}</p>
             <div className="flex mb-4 items-center justify-center">
               {Array.from({ length: maxDifficulty }, (_, index) => (
                 <button
@@ -327,7 +366,7 @@ const TypingGamePage = () => {
               onClick={startGame}
               className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded animate-wave-opacity hover:animate-hover-opacity"
             >
-              시작하기
+              {m('START_BUTTON')}
             </button>
           </div>
         )}
@@ -335,14 +374,14 @@ const TypingGamePage = () => {
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-xl border-solid border-2 border-pointColor1">
-            <h2 className="font-bold text-xl mb-4">로그인이 필요합니다</h2>
-            <p className="mb-4">로그인하지 않으면 점수가 저장되지 않습니다.</p>
+            <h2 className="font-bold text-xl mb-4">{m('MODAL_TITLE')}</h2>
+            <p className="mb-4">{m('MODAL_CONTENT')}</p>
             <div className="flex justify-around">
               <button onClick={proceedWithoutLogin} className="bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                그냥 진행하기
+              {m('MODAL_BUTTON1')}
               </button>
               <button onClick={goToLogin} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
-                로그인 하러가기
+              {m('MODAL_BUTTON2')}
               </button>
             </div>
           </div>

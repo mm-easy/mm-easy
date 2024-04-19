@@ -297,3 +297,7 @@ a {
   z-index: 1;
 }
 
+.custom-volume-control {
+  position: absolute;
+  z-index: 1000;
+}
