@@ -44,8 +44,8 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const commentCounts = useQueries({
     queries: sortedItems.map((post) => ({
       queryKey: ['commentCount', post.id],
-      queryFn: () => getCommentCount(post.id),
-    })),
+      queryFn: () => getCommentCount(post.id)
+    }))
   });
 
   const totalSet = Math.ceil(Math.ceil(totalNum / pageRange) / btnRange);
@@ -55,7 +55,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
 
   return (
     <article className="w-full ">
-      <div className="bg-white p-4 w-full">
+      <div className="bg-white w-full">
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
@@ -80,7 +80,12 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || '알 수 없음'}</td>
-                  {item.title} {(commentCounts[idx]?.data ?? 0) > 0 && <span className="text-pointColor1">({commentCounts[idx].data})</span>}
+                  <td>
+                    <span>{item.title}</span>
+                    {(commentCounts[idx]?.data ?? 0) > 0 && (
+                      <span className="text-pointColor1">({commentCounts[idx].data})</span>
+                    )}
+                  </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                   <td>{item['view_count']}</td>
                 </tr>

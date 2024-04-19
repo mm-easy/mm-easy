@@ -77,10 +77,10 @@ const Header = () => {
 
   return (
     <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] text-center flex justify-center items-center">
+      <Link href="/" className="w-[16%] md:px-[2vw] text-center flex justify-center items-center">
         <Image src={MainLogo} alt="로고" width={150} />
       </Link>
-      <section className="w-[84%] flex justify-between px-10">
+      <section className="w-[84%] flex justify-between px-[3vw]">
         <nav className="flex gap-14">
           <Link
             href="/quiz/list"
@@ -101,7 +101,7 @@ const Header = () => {
           <Link
             href="/community/list/전체"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-              isActive('/community') ? 'border-b-5 border-solid border-pointColor1' : ''
+              isActive('/community') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
             커뮤니티
@@ -109,7 +109,7 @@ const Header = () => {
           <Link
             href="/about"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-              isActive('/about') ? 'border-b-5 border-solid border-pointColor1' : ''
+              isActive('/about') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
             서비스 소개
@@ -118,7 +118,7 @@ const Header = () => {
             <Link
               href="/admin"
               className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-                isActive('/admin') ? 'border-b-5 border-solid border-pointColor1' : ''
+                isActive('/admin') && 'border-b-5 border-solid border-pointColor1'
               }`}
             >
               관리자
