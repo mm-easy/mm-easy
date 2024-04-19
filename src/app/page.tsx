@@ -8,6 +8,7 @@ import Footer from './(main)/(components)/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
+import NewsPage from './(main)/(components)/NewsPage';
 
 const Home = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -69,6 +70,7 @@ const Home = () => {
   return (
     <div>
       <Banner />
+      <NewsPage />
       <QuizSection />
       <RankingSection />
       <CommunitySection />

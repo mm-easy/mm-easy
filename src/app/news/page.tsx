@@ -4,18 +4,11 @@ import { naverApi } from '@/api/naverAPI';
 export async function loader() {
   try {
     const newsData = await naverApi('한국어');
-    // console.log('newData', newsData.items);
+    console.log('newData', newsData.items);
     return newsData.items;
-    // props: {
-    //   news: newsData.items
-    // }
   } catch (error) {
     console.error('뉴스 가져오기 실패:', error);
-    return {
-      props: {
-        news: []
-      }
-    };
+    return [];
   }
 }
 
@@ -42,34 +35,3 @@ const NewsPage = async () => {
 };
 
 export default NewsPage;
-// 'use client';
-// import React, { useEffect, useState } from 'react';
-// import { loader } from './Dkandjrj';
-
-// export default function NewsPage() {
-//   const [news, setNews] = useState();
-//   useEffect(() => {
-//     const dataNow = async () => {
-//       const test = await loader();
-//       setNews(test);
-//     };
-//     dataNow();
-//   }, []);
-//   loader;
-//   return (
-//     <div>
-//       <h1>뉴스 목록</h1>
-//       <ul>
-//         {news &&
-//           news.map((article, index) => (
-//             <li key={index}>
-//               <div>
-//                 {article.title}
-//                 {article.description}
-//               </div>
-//             </li>
-//           ))}
-//       </ul>
-//     </div>
-//   );
-// }
