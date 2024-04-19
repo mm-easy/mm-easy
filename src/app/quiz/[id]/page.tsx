@@ -217,9 +217,9 @@ const QuizTryPage = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
         toast.success('퀴즈가 삭제되었습니다.');
+        router.replace('/quiz/list');
       }
     });
-    router.replace('/quiz/list');
   };
 
   /** 수정 버튼 클릭 핸들러 */
