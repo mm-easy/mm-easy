@@ -4,6 +4,7 @@ import Link from 'next/link';
 import MainLogo from '@/assets/logo_horizontal_1.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
+import useMultilingual from '@/utils/useMultilingual';
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
@@ -11,15 +12,15 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-import { GetStaticPropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { LanguageType } from '@/types/langs';
+import ToggleLanguage from './ToggleLanguage';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const { t } = useTranslation();
+  const [lang, setLang] = useState<LanguageType>('en');
+  const m = useMultilingual(lang);
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -92,7 +93,7 @@ const Header = () => {
               isActive('/quiz') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-            {t('header:퀴즈')}
+            {m('HEADER_MENU1')}
           </Link>
           <Link
             href="/typing-game"
@@ -129,6 +130,7 @@ const Header = () => {
             </Link>
           )}
         </nav>
+        <ToggleLanguage />
         {isLoggedIn ? (
           <ProfileDropdown />
         ) : (

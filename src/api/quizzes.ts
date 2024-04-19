@@ -126,10 +126,12 @@ export const getRecentQuizzes = async () => {
 };
 
 /** id에 해당하는 퀴즈 1개 가져오기 */
-export const getQuiz = async (id: string | string[]) => {
+export const getQuiz = async (id: string) => {
   try {
     const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     return data;
   } catch (error) {
     console.error('퀴즈 데이터 받아오기 실패', error);
