@@ -186,7 +186,7 @@ const DetailPost = () => {
                 <Like postId={params.id} profile={profile} />
               </div>
               <div>
-                {/* {profile && profile.email !== post.profiles.email && (
+                {profile && profile.email !== post.profiles.email && (
                   <ReportButton
                     targetId={params.id}
                     type="posts"
@@ -196,7 +196,7 @@ const DetailPost = () => {
                   >
                     신고하기
                   </ReportButton>
-                )} */}
+                )}
               </div>
             </div>
             <div className="border-solid border-t pt-3">
