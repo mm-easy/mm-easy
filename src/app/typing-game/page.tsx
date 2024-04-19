@@ -68,6 +68,7 @@ const TypingGamePage = () => {
       };
     }
   }, []);
+
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
   }, []);
