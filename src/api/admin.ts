@@ -1,9 +1,9 @@
-import { Admin, Report } from '@/types/admin';
+import { ReportTest } from '@/types/reports';
 import { supabase } from '@/utils/supabase/supabase';
 
-export const getQuizzesReports = async (): Promise<Admin[]> => {
+export const getQuizzesReports = async (): Promise<ReportTest[]> => {
   try {
-    const { data, error } = await supabase.from('admin').select('*').eq('type', 'quizzes');
+    const { data, error } = await supabase.from('test').select('*').eq('type', 'quiz');
     if (error) throw error;
     return data;
   } catch (error) {
@@ -13,9 +13,9 @@ export const getQuizzesReports = async (): Promise<Admin[]> => {
   }
 };
 
-export const getPostsReports = async (): Promise<Admin[]> => {
+export const getPostsReports = async (): Promise<ReportTest[]> => {
   try {
-    const { data, error } = await supabase.from('admin').select('*').eq('type', 'posts');
+    const { data, error } = await supabase.from('test').select('*').eq('type', 'post');
     if (error) throw error;
     return data;
   } catch (error) {
