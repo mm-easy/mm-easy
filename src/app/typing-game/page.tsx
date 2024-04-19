@@ -217,25 +217,25 @@ const TypingGamePage = () => {
     }
   };
 
-  const lifePercentage = (lives / maxLives) * 60;
+  const lifePercentage = (lives / maxLives) * 55;
 
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             난이도
           </h2>
-          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             점수
           </h2>
-          <h3 className="w-[8%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
-          <h2 className="w-[8%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             생명
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
