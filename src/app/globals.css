@@ -137,6 +137,12 @@ body {
   line-height: 1;
 }
 
+body > div {
+  min-height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -149,3 +155,145 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.about-userreview1::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  right: 90px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreview1::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  right: 90px;
+  z-index: 1;
+}
+
+.about-userreview2 {
+  position: relative;
+}
+
+.about-userreview2::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 140px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreview2::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  left: 140px;
+  z-index: 1;
+}
+
+.about-userreview3 {
+  position: relative;
+}
+
+.about-userreview3::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  right: 200px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreview3::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  right: 200px;
+  z-index: 1;
+}
+
+.about-userreview4 {
+  position: relative;
+}
+
+.about-userreview4::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 60px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreview4::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  left: 60px;
+  z-index: 1;
+}
+
+.about-userreview5 {
+  position: relative;
+}
+
+.about-userreview5::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 170px;
+  border-color: #2b84ed transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+.about-userreview5::before {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 16px 20px 16px;
+  transform: rotate(180deg);
+  bottom: -18.5px;
+  left: 170px;
+  z-index: 1;
+}
+
