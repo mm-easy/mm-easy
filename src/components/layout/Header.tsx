@@ -4,13 +4,11 @@ import Link from 'next/link';
 import MainLogo from '@/assets/logo_horizontal_1.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
-import useMultilingual from '@/utils/useMultilingual';
-import ToggleLanguage from './ToggleLanguage';
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { isLoggedInAtom, langAtom } from '../../store/store';
+import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
 
@@ -18,8 +16,6 @@ const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'header');
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -81,7 +77,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center">
+      <Link href="/" className="w-[16%] md:px-[2vw] text-center flex justify-center items-center">
         <Image src={MainLogo} alt="로고" width={150} />
       </Link>
       <section className="w-[84%] flex justify-between px-[3vw]">
@@ -92,7 +88,7 @@ const Header = () => {
               isActive('/quiz') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-            {m('HEADER_MENU1')}
+            퀴즈
           </Link>
           <Link
             href="/typing-game"
@@ -100,7 +96,7 @@ const Header = () => {
               isActive('/typing-game') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
-            {m('HEADER_MENU2')}
+            타자 연습
           </Link>
           <Link
             href="/community/list/전체"
@@ -108,7 +104,7 @@ const Header = () => {
               isActive('/community') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
-            {m('HEADER_MENU3')}
+            커뮤니티
           </Link>
           <Link
             href="/about"
@@ -116,7 +112,7 @@ const Header = () => {
               isActive('/about') && 'border-b-5 border-solid border-pointColor1'
             }`}
           >
-            {m('HEADER_MENU4')}
+            서비스 소개
           </Link>
           {currentUserEmail === 'daejang@mmeasy.com' && (
             <Link
@@ -129,16 +125,13 @@ const Header = () => {
             </Link>
           )}
         </nav>
-        <div className="flex justify-center items-center gap-5">
-          <ToggleLanguage />
-          {isLoggedIn ? (
-            <ProfileDropdown />
-          ) : (
-            <Link href="/login">
-              <button>로그인</button>
-            </Link>
-          )}
-        </div>
+        {isLoggedIn ? (
+          <ProfileDropdown />
+        ) : (
+          <Link href="/login">
+            <button>로그인</button>
+          </Link>
+        )}
       </section>
     </header>
   );

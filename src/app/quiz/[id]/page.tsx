@@ -93,13 +93,13 @@ const QuizTryPage = () => {
   } = useQuery({
     queryFn: async () => {
       try {
-        const data = await getQuiz(id as string);
+        const data = await getQuiz(id);
         return data;
       } catch (error) {
         return error;
       }
     },
-    queryKey: ['quizzes', id] // 여기
+    queryKey: ['quizzes', id]
   });
 
   const {

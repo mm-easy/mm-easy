@@ -1,12 +1,13 @@
 'use client';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getQuizzesReports, getPostsReports } from '@/api/admin';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import LoadingImg from '@/components/common/LoadingImg';
 
 const AdminPage = () => {

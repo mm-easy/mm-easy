@@ -5,7 +5,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   return (
-    <div className="bg-white h-[84vh] border-l-2 border-solid border-pointColor1">
+    <div className='bg-white h-[84vh] border-l-2 border-solid border-pointColor1'>
       <Suspense>
         <CommunityMain />
       </Suspense>

@@ -29,17 +29,17 @@ const config: Config = {
         'hover-opacity': {
           'from, to': { opacity: 1 as any }
         },
-        slash: {
-          from: {
-            transform: 'rotate(-45deg) translateX(-100%)',
+          slash: {
+          'from': {
+            transform: 'rotate(-45deg) translateX(-100%)', 
             opacity: 0 as any
           },
-          to: {
+          'to': {
             transform: 'rotate(-45deg) translateX(100%)',
             opacity: 1 as any
           }
         }
-      }
+      },
     },
     backgroundSize: { md: '80%', cover: 'cover' },
     screens: {
