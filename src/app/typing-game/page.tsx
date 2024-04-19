@@ -45,15 +45,29 @@ const TypingGamePage = () => {
   const [wordpopSound, setWordpopSound] = useState<HTMLAudioElement | null>(null);
   const [gamestartSound, setGamestartSound] = useState<HTMLAudioElement | null>(null);
 
+  /** 게임에 필요한 오디오 파일 */
   useEffect(() => {
     // Audio 객체 생성
-    if (typeof Audio !== 'undefined') {
-      setGameoverSound(new Audio('game/gameover.mp3'));
-      setWordpopSound(new Audio('game/wordpopped.mp3'));
-      setGamestartSound(new Audio('game/gamestart.mp3'));
+    if (typeof window !== 'undefined' && typeof Audio !== 'undefined') {
+      const gameoverAudio = new Audio('game/gameover.mp3');
+      const wordpopAudio = new Audio('game/wordpopped.mp3');
+      const gamestartAudio = new Audio('game/gamestart.mp3');
+
+      setGameoverSound(gameoverAudio);
+      setWordpopSound(wordpopAudio);
+      setGamestartSound(gamestartAudio);
+
+      return () => {
+        // 컴포넌트가 언마운트 될 때 오디오를 멈추고 해제합니다.
+        gameoverAudio.pause();
+        gameoverAudio.currentTime = 0;
+        wordpopAudio.pause();
+        wordpopAudio.currentTime = 0;
+        gamestartAudio.pause();
+        gamestartAudio.currentTime = 0;
+      };
     }
   }, []);
-
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
   }, []);

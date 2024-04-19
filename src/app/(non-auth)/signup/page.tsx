@@ -77,7 +77,7 @@ const TermsPage = () => {
     
     // 회원가입 성공 메시지를 표시하고 로그인 페이지로 이동합니다.
     toast.success('회원가입에 성공했습니다! 로그인 페이지로 이동합니다.');
-    // router.push('/login');
+    router.push('/login');
   };
   
 
