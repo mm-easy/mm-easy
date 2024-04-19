@@ -2,7 +2,7 @@ import MyActivity from "./MyActivity";
 
 const MyActivityPage = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="no-scrollbar">
       <MyActivity />
     </div>
   );
