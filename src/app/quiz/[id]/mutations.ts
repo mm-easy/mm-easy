@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 
 import type { QuizTry } from '@/types/quizzes';
 import type { Admin, Report } from '@/types/admin';
+import { ReportTest } from '@/types/reports';
+import { insertTest } from '@/api/test';
 
 export const useSubmitQuizTry = () => {
   const queryClient = useQueryClient();
@@ -43,6 +45,27 @@ export const useUpdateQuizTry = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['quiz_tries'] });
+    }
+  });
+
+  return mutation;
+};
+
+export const useSubmitTest = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (test: ReportTest) => {
+      try {
+        const result = await insertTest(test);
+        return result;
+      } catch (error) {
+        console.log('신고 등록 실패', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['test'] });
     }
   });
 
