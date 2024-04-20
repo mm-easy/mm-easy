@@ -120,7 +120,7 @@ const TermsPage = () => {
                       type="password"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="비밀번호를 입력해주세요"
+                      placeholder="비밀번호를 입력해주세요 ( 6자 이상 )"
                       autoComplete="new-password"
                       value={password}
                       onChange={handlePasswordChange}
