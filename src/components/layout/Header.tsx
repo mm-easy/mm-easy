@@ -122,7 +122,7 @@ const Header = () => {
             <Link
               href="/admin"
               className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-                isActive('/admin') && 'border-b-5 border-solid border-pointColor1'
+                isActive('/admin') && 'border-b-5 border-solid border-pointColor2'
               }`}
             >
               관리자
