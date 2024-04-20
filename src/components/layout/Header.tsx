@@ -125,7 +125,7 @@ const Header = () => {
                 isActive('/admin') && 'border-b-5 border-solid border-pointColor2'
               }`}
             >
-              관리자
+              {m('HEADER_MENU5')}
             </Link>
           )}
         </nav>
@@ -135,7 +135,7 @@ const Header = () => {
             <ProfileDropdown />
           ) : (
             <Link href="/login">
-              <button>로그인</button>
+              <button>{m('HEADER_LOGIN')}</button>
             </Link>
           )}
         </div>
