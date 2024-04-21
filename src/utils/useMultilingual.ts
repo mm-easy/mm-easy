@@ -5,6 +5,7 @@ import COMMUNITY_SECTION_STRINGS from '@/constant/locales/home/community-section
 import QUIZ_SECTION_STRINGS from '@/constant/locales/home/quiz-section';
 import RANKING_SECTION_STRINGS from '@/constant/locales/home/ranking-section';
 import MY_PROFILE_STRINGS from '@/constant/locales/my-page/my-profile';
+import MY_ACTIVITY_STRINGS from '@/constant/locales/my-page/my-activity';
 
 export type LanguageType = 'ko' | 'en';
 
@@ -27,6 +28,8 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = RANKING_SECTION_STRINGS;
   } else if (assets === 'my-profile') {
     assetsObject = MY_PROFILE_STRINGS;
+  } else if (assets === 'my-activity') {
+    assetsObject = MY_ACTIVITY_STRINGS;
   }
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];
