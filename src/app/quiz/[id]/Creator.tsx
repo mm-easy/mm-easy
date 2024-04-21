@@ -2,7 +2,7 @@ import { getProfile } from '@/api/profiles';
 import { User } from '@/types/users';
 import { useQuery } from '@tanstack/react-query';
 
-const Creator = ({ creator }: { creator: string }) => {
+const Creator = ({ creator, creatorText }: { creator: string; creatorText: string }) => {
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
       try {
@@ -20,15 +20,15 @@ const Creator = ({ creator }: { creator: string }) => {
 
   const profile = data as User[];
 
-  if ( profile.length === 0) {
-    return null
+  if (profile.length === 0) {
+    return null;
   }
-  
+
   const { nickname } = profile[0];
 
   return (
     <div>
-      <h4>작성자</h4>
+      <h4>{creatorText}</h4>
       <p>{nickname}</p>
     </div>
   );
