@@ -8,7 +8,7 @@ import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
 const CommunitySection = () => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'community-section');
 
   const { data: posts, isLoading: postsLoading } = useQuery({
@@ -30,14 +30,14 @@ const CommunitySection = () => {
   return (
     <>
       <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
-      {m('RECENT_POSTS')}
+        {m('RECENT_POSTS')}
       </p>
       <section className="flex">
         <div className="w-1/2 p-8 border-r border-solid border-pointColor1">
           <div className="flex justify-between">
             <h2 className="mb-4 text-lg font-bold">{m('NOTICE')}</h2>
             <Link href={`/community/list/공지`} className="font-semibold text-pointColor1">
-            {m('MORE')}
+              {m('MORE')}
             </Link>
           </div>
           <div>
@@ -48,7 +48,9 @@ const CommunitySection = () => {
               >
                 <Link href={`/community/list/전체/${notice.id}`} className="flex flex-col gap-2">
                   <h2 className="text-lg font-bold truncate">{notice.title}</h2>
-                  <time>{m('DATE_CREATION')}: {formatToLocaleDateTimeString(notice.created_at)}</time>
+                  <time>
+                    {m('DATE_CREATION')}: {formatToLocaleDateTimeString(notice.created_at)}
+                  </time>
                 </Link>
               </div>
             ))}
@@ -58,7 +60,7 @@ const CommunitySection = () => {
           <div className="flex justify-between">
             <h2 className="mb-4 text-lg font-bold">{m('USER_POSTS')}</h2>
             <Link href={`/community/list/전체`} className="font-semibold text-pointColor1">
-            {m('MORE')}
+              {m('MORE')}
             </Link>
           </div>
           <div>
@@ -69,7 +71,9 @@ const CommunitySection = () => {
               >
                 <Link href={`/community/list/전체/${post.id}`} className="flex flex-col gap-2">
                   <h2 className="text-lg font-bold truncate">{post.title}</h2>
-                  <time>{m('DATE_CREATION')}: {formatToLocaleDateTimeString(post.created_at)}</time>
+                  <time>
+                    {m('DATE_CREATION')}: {formatToLocaleDateTimeString(post.created_at)}
+                  </time>
                 </Link>
               </div>
             ))}

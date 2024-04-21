@@ -14,7 +14,7 @@ const InputQuestionTitle = ({
   onInput: (e: FormEvent<HTMLInputElement>, maxLength: number) => void;
   onChange: (id: string | undefined, title: string) => void;
 }) => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quizEditor');
 
   return (

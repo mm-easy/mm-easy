@@ -32,11 +32,11 @@ const MY_PROFILE_STRINGS = {
     en: "You've solved "
   },
   MY_QUIZ_INFO_TEXT2: {
-    ko: ' 개 중 ',
+    ko: '개 중 ',
     en: ' out of the '
   },
   MY_QUIZ_INFO_TEXT3: {
-    ko: ' 개의 퀴즈를 풀었어요!',
+    ko: '개의 퀴즈를 풀었어요!',
     en: ' quizzes posted so far!'
   },
   LEVEL: {
