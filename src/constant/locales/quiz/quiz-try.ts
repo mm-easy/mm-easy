@@ -36,8 +36,8 @@ const QUIZ_TRY_STRINGS = {
     en: 'Solve it again'
   },
   RESULT_TEXT1: {
-    ko: '개 중에',
-    en: ' out of'
+    ko: '개 중에 ',
+    en: ' out of '
   },
   RESULT_TEXT2: {
     ko: '개 맞았습니다!',

@@ -288,7 +288,8 @@ const QuizTryPage = () => {
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {lang === 'en' ? score : questions.length}
-              {m('RESULT_TEXT1')} {lang === 'en' ? questions.length : score}
+              {m('RESULT_TEXT1')}
+              {lang === 'en' ? questions.length : score}
               {m('RESULT_TEXT2')} 🎉
             </h1>
           )}

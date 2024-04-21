@@ -77,7 +77,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
       <div className="text-xl font-semibold">
         <span>{m('MY_QUIZ_INFO_TEXT1')}</span>
         <span className="text-pointColor1">{lang === 'en' ? myQuizScores?.length : quizData?.length}</span>
-        {m('MY_QUIZ_INFO_TEXT2')}
+        <span>{m('MY_QUIZ_INFO_TEXT2')}</span>
         <span className="text-pointColor1">{lang === 'en' ? quizData?.length : myQuizScores?.length}</span>
         <span>{m('MY_QUIZ_INFO_TEXT3')}</span>
       </div>
