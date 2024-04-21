@@ -8,7 +8,7 @@ import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
-import { BiSolidVolumeFull } from "react-icons/bi";
+import { BiSolidVolumeFull } from 'react-icons/bi';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
@@ -43,22 +43,22 @@ const TypingGamePage = () => {
   const maxLives = 5;
   const wordHeight = 80;
 
-   // useRef로 오디오 객체 참조를 생성합니다.
-   const gameoverSound = useRef<HTMLAudioElement | null>(null);
-   const wordpopSound = useRef<HTMLAudioElement | null>(null);
-   const gamestartSound = useRef<HTMLAudioElement | null>(null);
- 
-   // 컴포넌트가 마운트되면 오디오 객체를 생성합니다.
-   useEffect(() => {
-     if (typeof window !== 'undefined') { 
-       gameoverSound.current = new Audio('game/gameover.mp3');
-       wordpopSound.current = new Audio('game/wordpopped.mp3');
-       gamestartSound.current = new Audio('game/gamestart.mp3');
-     }
-   }, []);
- 
-   // 볼륨 상태가 변경될 때 오디오 볼륨을 업데이트합니다.
-   useEffect(() => {
+  // useRef로 오디오 객체 참조를 생성합니다.
+  const gameoverSound = useRef<HTMLAudioElement | null>(null);
+  const wordpopSound = useRef<HTMLAudioElement | null>(null);
+  const gamestartSound = useRef<HTMLAudioElement | null>(null);
+
+  // 컴포넌트가 마운트되면 오디오 객체를 생성합니다.
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      gameoverSound.current = new Audio('game/gameover.mp3');
+      wordpopSound.current = new Audio('game/wordpopped.mp3');
+      gamestartSound.current = new Audio('game/gamestart.mp3');
+    }
+  }, []);
+
+  // 볼륨 상태가 변경될 때 오디오 볼륨을 업데이트합니다.
+  useEffect(() => {
     if (gameoverSound.current) gameoverSound.current.volume = volume;
     if (wordpopSound.current) wordpopSound.current.volume = volume;
     if (gamestartSound.current) gamestartSound.current.volume = volume;
@@ -132,17 +132,17 @@ const TypingGamePage = () => {
   useEffect(() => {
     if (lives <= 0) {
       if (gameoverSound.current) {
-      gameoverSound.current.play();
-      alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
-      if (user) {
-        addGameScore(score);
+        gameoverSound.current.play();
+        alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+        if (user) {
+          addGameScore(score);
+        }
+        setGameStarted(false);
+        setScore(0);
+        setLives(maxLives);
+        setWords([]);
+        setCorrectWordsCount(0);
       }
-      setGameStarted(false);
-      setScore(0);
-      setLives(maxLives);
-      setWords([]);
-      setCorrectWordsCount(0);
-    }
     }
   }, [lives, score, user]);
 
@@ -168,9 +168,9 @@ const TypingGamePage = () => {
       setScore(score + 10);
       setCorrectWordsCount(correctWordsCount + 1);
       if (wordpopSound.current) {
-      wordpopSound.current.play();
+        wordpopSound.current.play();
+      }
     }
-  }
     setInput('');
   };
 
@@ -179,7 +179,21 @@ const TypingGamePage = () => {
       setShowLoginModal(true);
     } else {
       if (gamestartSound.current) {
+        gamestartSound.current.play();
+        setGameStarted(true);
+        setWords([]);
+        setInput('');
+        setScore(0);
+        setLives(maxLives);
+        setCorrectWordsCount(0);
+      }
+    }
+  };
+
+  const proceedWithoutLogin = () => {
+    if (gamestartSound.current) {
       gamestartSound.current.play();
+      setShowLoginModal(false);
       setGameStarted(true);
       setWords([]);
       setInput('');
@@ -187,17 +201,6 @@ const TypingGamePage = () => {
       setLives(maxLives);
       setCorrectWordsCount(0);
     }
-  }
-  };
-
-  const proceedWithoutLogin = () => {
-    setShowLoginModal(false);
-    setGameStarted(true);
-    setWords([]);
-    setInput('');
-    setScore(0);
-    setLives(maxLives);
-    setCorrectWordsCount(0);
   };
 
   const goToLogin = () => {
@@ -259,23 +262,23 @@ const TypingGamePage = () => {
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
       {!gameStarted && (
-      <div className="top-0 left-0 p-4 custom-volume-control">
-        <div className="volume-control flex items-center">
-        <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1"> 
-          <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1"/>: 
-          </label>
-          <input
-            type="range"
-            id="volume-slider"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-24"
-          />
+        <div className="top-0 left-0 p-4 custom-volume-control">
+          <div className="volume-control flex items-center">
+            <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
+              <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
+            </label>
+            <input
+              type="range"
+              id="volume-slider"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+              className="w-24"
+            />
+          </div>
         </div>
-      </div>
       )}
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
@@ -314,8 +317,8 @@ const TypingGamePage = () => {
               className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor3"
             >
               <div className="volume-control flex items-center mr-2">
-              <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1"> 
-                <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1"/>: 
+                <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
+                  <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
                 </label>
                 <input
                   type="range"
