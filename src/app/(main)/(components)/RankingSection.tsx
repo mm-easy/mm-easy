@@ -1,26 +1,40 @@
 import Image from 'next/image';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import { useState } from 'react';
+import { SlRefresh } from "react-icons/sl";
 
 const RankingSection = () => {
-  const { data: gameScores, isLoading: isLoadingGameScores } = useQuery({
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'ranking-section');
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const { data: gameScores, isLoading: isLoadingGameScores, refetch: refetchGameScores } = useQuery({
     queryKey: ['getScore'],
     queryFn: getGameScore
   });
 
-  const { data: quizRank, isLoading: isLoadingQuizRank } = useQuery({
+  const { data: quizRank, isLoading: isLoadingQuizRank, refetch: refetchQuizRank } = useQuery({
     queryKey: ['getQuizRanking'],
     queryFn: getQuizRank
   });
 
-  const { data: quizScoreRank, isLoading: isLoadingQuizScoreRank } = useQuery({
+  const { data: quizScoreRank, isLoading: isLoadingQuizScoreRank, refetch: refetchQuizScoreRank } = useQuery({
     queryKey: ['topQuizScores'],
     queryFn: getTopQuizScores
   });
+
+  const refreshAllData = async () => {
+    await Promise.all([refetchGameScores(), refetchQuizRank(), refetchQuizScoreRank()]);
+    setRefreshKey(prevKey => prevKey + 1); // Increment the key to trigger re-render
+  };
 
   if (isLoadingGameScores || isLoadingQuizRank || isLoadingQuizScoreRank) {
     return <LoadingImg height="400px" />;
@@ -28,19 +42,27 @@ const RankingSection = () => {
 
   return (
     <>
-      <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
-        명예의 전당
-      </p>
-      <section className="flex">
+      <div className="flex justify-between items-center w-[1440px] px-6 py-4 bg-bgColor1 border-y-2 border-solid border-pointColor1">
+        <p className="text-lg font-bold text-pointColor1">
+          {m('HALL_OF_FAME')}
+        </p>
+        <button
+          onClick={refreshAllData}
+          className="flex items-center text-pointColor1 text-xl"
+        >
+          <SlRefresh className="hover:animate-spin-slow"/>
+        </button>
+      </div> 
+      <section className="flex" key={refreshKey}>
         <div className="w-1/3 p-8 border-r border-solid border-pointColor1">
           <div className="flex">
-            <h2 className="mb-4 text-lg font-bold">이번주 퀴즈 만들기 장인</h2>
+            <h2 className="mb-4 text-lg font-bold">{m('QUIZ_CREATOR')}</h2>
           </div>
           {quizRank &&
             quizRank.map((item, index) => (
               <div
                 key={index}
-                className={`mt-4 pb-4 flex items-center ${
+                className={`mt-4 pb-4 flex items-center animate-drop-in ${
                   index !== quizRank.length - 1 && 'border-b border-solid border-pointColor1'
                 }`}
               >
@@ -57,20 +79,20 @@ const RankingSection = () => {
                 )}
                 <div className="flex flex-col">
                   <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
-                  <h2 className="text-pointColor1">만든 퀴즈수: {item.quiz_count}</h2>
+                  <h2 className="text-pointColor1">{m('COUNT')} {item.quiz_count}</h2>
                 </div>
               </div>
             ))}
         </div>
         <div className="w-1/3 p-8 border-r border-solid border-pointColor1">
           <div className="flex">
-            <h2 className="mb-4 text-lg font-bold">이번주 퀴즈 마스터</h2>
+            <h2 className="mb-4 text-lg font-bold">{m('QUIZ_MASTER')}</h2>
           </div>
           {quizScoreRank &&
             quizScoreRank.map((item, index) => (
               <div
                 key={index}
-                className={`mt-4 pb-4 flex items-center ${
+                className={`mt-4 pb-4 flex items-center animate-drop-in ${
                   index !== quizScoreRank.length - 1 && 'border-b border-solid border-pointColor1'
                 }`}
               >
@@ -87,20 +109,20 @@ const RankingSection = () => {
                 )}
                 <div className="flex flex-col">
                   <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
-                  <h2 className="text-pointColor1">점수: {item.score}</h2>
+                  <h2 className="text-pointColor1">{m('SCORE')} {item.score}</h2>
                 </div>
               </div>
             ))}
         </div>
         <div className="w-1/3 p-8 border-solid border-pointColor1">
           <div className="flex">
-            <h2 className="mb-4 text-lg font-bold">이번주 키보드 워리어</h2>
+            <h2 className="mb-4 text-lg font-bold">{m('KEYBOARD_WARRIOR')}</h2>
           </div>
           {gameScores &&
             gameScores.map((score, index) => (
               <div
                 key={index}
-                className={`mt-4 pb-4 flex items-center ${
+                className={`mt-4 pb-4 flex items-center animate-drop-in ${
                   index !== gameScores.length - 1 && 'border-b border-solid border-pointColor1'
                 }`}
               >
@@ -117,7 +139,7 @@ const RankingSection = () => {
                 )}
                 <div className="flex flex-col">
                   <h3 className="text-xl font-medium mb-1">{score.nickname}</h3>
-                  <h2 className="text-pointColor1">점수: {score.score}</h2>
+                  <h2 className="text-pointColor1">{m('SCORE')} {score.score}</h2>
                 </div>
               </div>
             ))}
