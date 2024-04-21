@@ -1,4 +1,6 @@
-import ABOUT_STRINGS from '@/constant/locales/about/about';
+import COMMUNITY_DETAIL_STRINGS from '@/constant/locales/community/communityDetail';
+import COMMUNITY_LIST_STRINGS from '@/constant/locales/community/communityList';
+import COMMUNITY_POST_STRINGS from '@/constant/locales/community/communityPost';
 import HEADER_STRINGS from '@/constant/locales/components/header';
 import QUIZEDITOR_STRINGS from '@/constant/locales/quiz/quiz-editor';
 import TYPING_GAME_STRINGS from '@/constant/locales/typing-game/typing-game';
@@ -13,6 +15,7 @@ import NEWS_SECTION_STRINGS from '@/constant/locales/home/news-section';
 import type { StringEssetType } from '@/types/langs';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
+import ABOUT_STRINGS from '@/constant/locales/about/about';
 
 export default function useMultilingual(assets: string) {
   const [lang] = useAtom(langAtom);
@@ -42,6 +45,12 @@ export default function useMultilingual(assets: string) {
     assetsObject = ABOUT_STRINGS;
   } else if (assets === 'news-section') {
     assetsObject = NEWS_SECTION_STRINGS;
+  } else if (assets === 'communityList') {
+    assetsObject = COMMUNITY_LIST_STRINGS;
+  } else if (assets === 'communityDetail') {
+    assetsObject = COMMUNITY_DETAIL_STRINGS;
+  } else if (assets === 'communityPost') {
+    assetsObject = COMMUNITY_POST_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }

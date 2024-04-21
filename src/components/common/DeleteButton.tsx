@@ -1,19 +1,24 @@
+import useMultilingual from '@/utils/useMultilingual';
 import { handleDeleteBtn } from '@/api/comments';
 import { removeCommunityPost } from '@/api/posts';
 import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { langAtom } from '@/store/store';
+import { useAtom } from 'jotai';
 
 export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'communityPost');
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
+    if (window.confirm(m('COMMUNITY_POST_DELETE'))) {
       try {
         await removeCommunityPost(postId);
-        toast("게시글이 삭제되었습니다.")
+        toast(m('COMMUNITY_POST_DELETE_COMPLETE'))
         if (redirectUrl) {
           router.replace(redirectUrl);
         }
