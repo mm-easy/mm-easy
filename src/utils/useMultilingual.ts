@@ -1,3 +1,6 @@
+import COMMUNITY_DETAIL_STRINGS from '@/constant/locales/community/communityDetail';
+import COMMUNITY_LIST_STRINGS from '@/constant/locales/community/communityList';
+import COMMUNITY_POST_STRINGS from '@/constant/locales/community/communityPost';
 import HEADER_STRINGS from '@/constant/locales/components/header';
 
 export type LanguageType = 'ko' | 'en';
@@ -9,8 +12,14 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
 
   if (assets === 'header') {
     assetsObject = HEADER_STRINGS;
+  } else if (assets === 'communityList') {
+    assetsObject = COMMUNITY_LIST_STRINGS;
+  } else if (assets === 'communityDetail') {
+    assetsObject = COMMUNITY_DETAIL_STRINGS;
+  } else if (assets === 'communityPost') {
+    assetsObject = COMMUNITY_POST_STRINGS;
   } else {
-    assetsObject = HEADER_STRINGS; //여긴 임시로 넣어놓은건데 추가하실 때 else if 로 위에 header 경우랑 똑같이 넣어주시면돼요
+    assetsObject = HEADER_STRINGS;
   }
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];

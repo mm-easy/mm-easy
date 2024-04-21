@@ -4,13 +4,20 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useDeleteLike, useInsertLike } from '../../../mutations';
 import { getLike } from '@/api/likes';
 import { useQuery } from '@tanstack/react-query';
+import { langAtom } from '@/store/store';
 
 import type { LikeParams, LikeProps, LikeType } from '@/types/posts';
+import { useAtom } from 'jotai';
+import useMultilingual from '@/utils/useMultilingual';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'communityDetail');
+  
   const userId = profile?.id;
   const insertLike = useInsertLike();
   const deleteLike = useDeleteLike();
+  
 
   const { data: nowLike = [] } = useQuery<LikeType[]>({
     queryKey: ['like'],
@@ -30,7 +37,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   /**좋아요 토글*/
   const handleLikeToggle = async () => {
     if (!userId) {
-      toast.warning('로그인 후 이용해 주세요.');
+      toast.warning(m('COMMUNITY_LIKE_CHECK_LOGIN'));
       return;
     }
 
@@ -66,7 +73,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
           offIcon={<AiOutlineHeart />}
         />
       </div>
-      <p>좋아요 {likeCount}</p>
+      <p>{m('COMMUNITY_LIKES')} {likeCount}</p>
     </div>
   );
 };

@@ -297,3 +297,18 @@ a {
   z-index: 1;
 }
 
+.ql-editor strong,
+em {
+  font-weight: bold;
+}
+.ql-editor em {
+  font-style: italic;
+}
+
+.ql-editor h1 {
+  font-size: xx-large;
+}
+
+.ql-editor h2 {
+  font-size: x-large;
+}
