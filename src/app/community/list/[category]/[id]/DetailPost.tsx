@@ -20,11 +20,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { langAtom } from '@/store/store';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -34,8 +32,7 @@ const DetailPost = () => {
   const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityDetail');
+  const m = useMultilingual('communityDetail');
 
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
@@ -138,7 +135,9 @@ const DetailPost = () => {
           <div>
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
-              <p className="text-sm">{m('COMMUNITY_VIEWS')} {post.view_count}</p>
+              <p className="text-sm">
+                {m('COMMUNITY_VIEWS')} {post.view_count}
+              </p>
             </div>
             <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>
             <div className="flex border-solid border-b justify-between ">

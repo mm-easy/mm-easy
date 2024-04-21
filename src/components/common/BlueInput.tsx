@@ -1,6 +1,4 @@
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
 
 interface BlueInputProps {
   value: string;
@@ -52,8 +50,7 @@ export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) =
 };
 
 export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChange }) => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   const handleChange = (selectedValue: number) => {
     onChange(selectedValue);

@@ -1,3 +1,3 @@
-import { StringEssetType } from '@/utils/useMultilingual';
+// import { StringEssetType } from '@/utils/useMultilingual';
 
-export type MultilingualFunction = (key: keyof StringEssetType) => string;
+export type MultilingualFunction = (key: string) => string;

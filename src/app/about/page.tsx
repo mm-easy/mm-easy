@@ -8,22 +8,19 @@ import InfoIcon1 from '@/assets/info_icon_1.png';
 import InfoIcon2 from '@/assets/info_icon_2.png';
 import InfoIcon3 from '@/assets/info_icon_3.png';
 import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
-import { useAtom } from 'jotai';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
 import { createManagerData } from '@/utils/managerData';
-import { langAtom } from '@/store/store';
 
 import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 
 const AboutPage = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'about');
+  const m = useMultilingual('about');
   const managerData = createManagerData(m);
 
   const { data: quizNum } = useQuery<Quiz[]>({

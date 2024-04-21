@@ -7,8 +7,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useMemo } from 'react';
 import { getCommentCount } from '@/api/comment';
 import { useQueries } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 import type { CommunityFormProps } from '@/types/posts';
 
@@ -21,8 +19,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   btnRange,
   category
 }) => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityList');
+  const m = useMultilingual('communityList');
   const router = useRouter();
 
   const sortedItems = useMemo(() => {
@@ -64,11 +61,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="pl-6 p-4 w-[10%]">{m("COMMUNITY_TABLE_HEADER1")}</th>
-              <th className="w-[16%]">{m("COMMUNITY_TABLE_HEADER2")}</th>
-              <th className="w-[56%]">{m("COMMUNITY_TABLE_HEADER3")}</th>
-              <th className="w-[13%]">{m("COMMUNITY_TABLE_HEADER4")}</th>
-              <th className="w-[5%]">{m("COMMUNITY_TABLE_HEADER5")}</th>
+              <th className="pl-6 p-4 w-[10%]">{m('COMMUNITY_TABLE_HEADER1')}</th>
+              <th className="w-[16%]">{m('COMMUNITY_TABLE_HEADER2')}</th>
+              <th className="w-[56%]">{m('COMMUNITY_TABLE_HEADER3')}</th>
+              <th className="w-[13%]">{m('COMMUNITY_TABLE_HEADER4')}</th>
+              <th className="w-[5%]">{m('COMMUNITY_TABLE_HEADER5')}</th>
             </tr>
           </thead>
           <tbody>

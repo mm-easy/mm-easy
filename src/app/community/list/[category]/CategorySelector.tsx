@@ -4,13 +4,10 @@ import useMultilingual from '@/utils/useMultilingual';
 import { useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const router = useRouter();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityList');
+  const m = useMultilingual('communityList');
 
   const categoryMenu: Record<string, string> = {
     [m('COMMUNITY_CATEGORY_ALL')]: '전체',
@@ -56,7 +53,11 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
             <button className="text-lg w-full text-left flex">
               {category}
               <div className="pl-2">
-                {category === m('COMMUNITY_CATEGORY_ALL') ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
+                {category === m('COMMUNITY_CATEGORY_ALL')
+                  ? ''
+                  : postNum[category] !== undefined
+                    ? `(${postNum[category]})`
+                    : ''}
               </div>
             </button>
           </li>

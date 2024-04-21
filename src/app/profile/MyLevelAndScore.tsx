@@ -14,7 +14,7 @@ import { langAtom } from '@/store/store';
 
 const MyLevelAndScore = ({ data }: { data: User }) => {
   const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'my-profile');
+  const m = useMultilingual('my-profile');
 
   /** 등록된 퀴즈 가져오기 */
   const { data: quizData } = useQuery<Quiz[]>({

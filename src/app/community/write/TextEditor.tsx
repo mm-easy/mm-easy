@@ -1,12 +1,10 @@
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill, { Quill } from 'react-quill';
 import useMultilingual from '@/utils/useMultilingual';
-import { langAtom } from '@/store/store';
 import { ReactElement, useMemo, useRef } from 'react';
 import { uploadPostImageToStorage } from '@/api/posts';
 import { ImageActions } from '@xeger/quill-image-actions';
 import { ImageFormats } from '@xeger/quill-image-formats';
-import { useAtom } from 'jotai';
 
 Quill.register('modules/imageActions', ImageActions);
 Quill.register('modules/imageFormats', ImageFormats);
@@ -18,8 +16,7 @@ interface TextEditorProps {
 
 const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
   const quillRef = useRef<any | null>(null);
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityPost');
+  const m = useMultilingual('communityPost');
 
   // 이미지 업로드
   const imageHandler = async () => {
@@ -61,7 +58,7 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
         container: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' },],
+          [{ list: 'ordered' }, { list: 'bullet' }],
           ['link', 'image'],
           [{ align: [] }, { color: [] }, { background: [] }]
         ],

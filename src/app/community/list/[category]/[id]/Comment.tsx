@@ -5,10 +5,8 @@ import { useDeleteComment, useInsertComment, useUpdateComment } from '../../../m
 import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
-import { langAtom } from '@/store/store';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { useAtom } from 'jotai';
 import useMultilingual from '@/utils/useMultilingual';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
@@ -16,8 +14,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState<string>('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityDetail');
+  const m = useMultilingual('communityDetail');
 
   const insertCommentMutation = useInsertComment();
   const updateCommentMutation = useUpdateComment();

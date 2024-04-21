@@ -15,8 +15,6 @@ import { getQuizzes } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 import type { Quiz } from '@/types/quizzes';
 
@@ -26,8 +24,7 @@ const SelectQuizLevel = () => {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quiz-list');
+  const m = useMultilingual('quiz-list');
 
   useEffect(() => {
     const fetchData = async () => {

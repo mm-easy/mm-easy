@@ -1,12 +1,9 @@
-'use client'
+'use client';
 
 import React from 'react';
 import CategorySelector from '@/app/community/list/[category]/CategorySelector';
 import Link from 'next/link';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
-
 
 type Props = {
   children: React.ReactNode;
@@ -17,9 +14,8 @@ type Props = {
 
 const Layout = ({ children, params }: Props) => {
   const category = decodeURIComponent(params.category);
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityList');
-  
+  const m = useMultilingual('communityList');
+
   return (
     <main className="bg-bgColor1 grid grid-cols-[16%_84%] h-[84%]">
       <section className="h-[84vh] justify-between bg-bgColor1">

@@ -6,9 +6,7 @@ import ReactQuill from 'react-quill';
 import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
-import { langAtom } from '@/store/store';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
-import { useAtom } from 'jotai';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 
@@ -20,8 +18,7 @@ type Props = {
 
 const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
   const { getCurrentUserProfile } = useAuth();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityPost');
+  const m = useMultilingual('communityPost');
 
   const baseCategories = [
     { id: 'question', value: '질문', label: '질문' },

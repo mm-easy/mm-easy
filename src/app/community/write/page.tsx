@@ -10,15 +10,13 @@ import { useEffect } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
 import { isLoggedInAtom } from '@/store/store';
 import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
 
 const PostPage = () => {
   const { getCurrentUserProfile } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const router = useRouter();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityPost');
+  const m = useMultilingual('communityPost');
 
   const {
     data: userProfile,

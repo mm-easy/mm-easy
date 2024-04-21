@@ -12,13 +12,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { fetchPost, updateCommunityPost } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
-import { langAtom } from '@/store/store';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const { getCurrentUserProfile } = useAuth();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'communityPost');
+  const m = useMultilingual('communityPost');
   const postId = params.id;
   const router = useRouter();
 
