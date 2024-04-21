@@ -4,6 +4,8 @@ import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
 import ReportButton from '@/components/common/ReportButton';
+import LoadingImg from '@/components/common/LoadingImg';
+import PageUpBtn from '@/components/common/PageUpBtn';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
@@ -20,8 +22,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import LoadingImg from '@/components/common/LoadingImg';
-import PageUpBtn from '@/components/common/PageUpBtn';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
