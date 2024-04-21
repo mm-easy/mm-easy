@@ -18,7 +18,7 @@ const NewsSection = async () => {
           news.map((newsData: NewsType, index: number) => (
             <div
               key={index}
-              className="p-4 flex flex-col my-5 border border-solid border-pointColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform"
+              className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform"
             >
               <p className="font-bold text-lg mt-4 mb-3 truncate">
                 {newsData.title
@@ -28,7 +28,7 @@ const NewsSection = async () => {
               </p>
               <div className="flex flex-col gap-3">
                 <span>{formatToLocaleDateTimeString(newsData.pubDate)}</span>
-                <span className="leading-4">
+                <span className="leading-5">
                   {newsData.description
                     .replace(/<[^>]+>/g, '')
                     .replace(/&quot;/g, '"')
