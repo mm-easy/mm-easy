@@ -13,8 +13,6 @@ import { useUpdateProfile } from './mutations';
 import type { User } from '@/types/users';
 import { useQueryClient } from '@tanstack/react-query';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 const MyProfile = ({ data }: { data: User }) => {
   const m = useMultilingual('my-profile');

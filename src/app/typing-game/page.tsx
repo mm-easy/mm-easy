@@ -7,7 +7,7 @@ import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
-import { isLoggedInAtom, langAtom } from '@/store/store';
+import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
 

@@ -3,8 +3,6 @@ import { loader } from '@/api/naverAPI';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { NewsType } from '@/types/posts';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
 
 const NewsSection = async () => {

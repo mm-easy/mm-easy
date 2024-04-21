@@ -14,8 +14,6 @@ import { Pagination } from './Pagination';
 import { TabName } from '@/types/pagination';
 import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
 
 const MyActivity = () => {

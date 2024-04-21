@@ -6,8 +6,6 @@ import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 import { useState } from 'react';
 import { SlRefresh } from 'react-icons/sl';
 

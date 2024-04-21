@@ -2,7 +2,7 @@
 
 import { Dispatch, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { SetStateAction, useAtom } from 'jotai';
+import { SetStateAction } from 'jotai';
 
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { storageUrl } from '@/utils/supabase/storage';
@@ -12,7 +12,6 @@ import InputQuestionImg from './InputQuestionImg';
 import UnloadImgBtn from './UnloadImg';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
 
 const QuestionForm = ({

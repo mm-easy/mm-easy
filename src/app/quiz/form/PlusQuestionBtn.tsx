@@ -1,6 +1,4 @@
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
 
 interface PlusQuestionBtnProps {
   disabled: boolean;

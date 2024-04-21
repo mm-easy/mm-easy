@@ -6,8 +6,6 @@ import useMultilingual from '@/utils/useMultilingual';
 import { getRecentQuizzes } from '@/api/quizzes';
 import { useQuery } from '@tanstack/react-query';
 import { storageUrl } from '@/utils/supabase/storage';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 import type { Quiz } from '@/types/quizzes';
 

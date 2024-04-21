@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useAuth } from '@/hooks/useAuth';
-import { isLoggedInAtom, langAtom } from '@/store/store';
+import { isLoggedInAtom } from '@/store/store';
 
 import type { User } from '@/types/users';
 import { useRouter } from 'next/navigation';
