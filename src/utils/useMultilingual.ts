@@ -1,3 +1,4 @@
+import ABOUT_STRINGS from '@/constant/locales/about/about';
 import HEADER_STRINGS from '@/constant/locales/components/header';
 import QUIZEDITOR_STRINGS from '@/constant/locales/quiz/quiz-editor';
 import TYPING_GAME_STRINGS from '@/constant/locales/typing-game/typing-game';
@@ -15,7 +16,9 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = QUIZEDITOR_STRINGS;
   } else if (assets === 'typing-game') {
     assetsObject = TYPING_GAME_STRINGS;
-  }  
+  } else if (assets === 'about') {
+    assetsObject = ABOUT_STRINGS;
+  }
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];
   };
