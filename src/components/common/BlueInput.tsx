@@ -52,7 +52,7 @@ export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) =
 };
 
 export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChange }) => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quizEditor');
 
   const handleChange = (selectedValue: number) => {

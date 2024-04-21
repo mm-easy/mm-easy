@@ -26,7 +26,7 @@ const SelectQuizLevel = () => {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quiz-list');
 
   useEffect(() => {
@@ -111,8 +111,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -128,8 +128,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -145,8 +145,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />

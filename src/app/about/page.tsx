@@ -22,7 +22,7 @@ import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 
 const AboutPage = () => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'about');
   const managerData = createManagerData(m);
 

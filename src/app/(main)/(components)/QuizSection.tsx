@@ -12,7 +12,7 @@ import { langAtom } from '@/store/store';
 import type { Quiz } from '@/types/quizzes';
 
 const QuizSection = () => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quiz-section');
 
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
@@ -30,7 +30,7 @@ const QuizSection = () => {
       <div className="w-[1440px] px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1">
         <p className="">{m('RECENT_QUIZZES')}</p>
         <Link href={`/quiz/list`} className="font-semibold text-pointColor1">
-        {m('MORE')}
+          {m('MORE')}
         </Link>
       </div>
       <section className="px-6 py-4 grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-5">

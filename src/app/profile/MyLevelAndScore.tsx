@@ -13,7 +13,7 @@ import useMultilingual from '@/utils/useMultilingual';
 import { langAtom } from '@/store/store';
 
 const MyLevelAndScore = ({ data }: { data: User }) => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'my-profile');
 
   /** 등록된 퀴즈 가져오기 */

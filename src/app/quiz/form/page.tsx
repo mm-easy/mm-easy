@@ -28,7 +28,7 @@ const QuizFormPage = () => {
   const [currentUser, setCurrentUser] = useState('');
   const [deletedQuestions, setDeletedQuestions] = useState(['']);
   const { getCurrentUserProfile } = useAuth();
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quizEditor');
 
   useConfirmPageLeave();

@@ -17,7 +17,7 @@ import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
 const MyProfile = ({ data }: { data: User }) => {
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'my-profile');
 
   const [isEditing, setIsEditing] = useState(false);
