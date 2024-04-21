@@ -38,6 +38,24 @@ const config: Config = {
             transform: 'rotate(-45deg) translateX(100%)',
             opacity: 1 as any
           }
+        },
+        spin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+        dropIn: {
+          '0%': {
+            opacity: 0 as any,
+            transform: 'translateY(-50px)'
+          },
+          '50%': {
+            opacity: 0.5 as any,
+            transform: 'translateY(10px)'
+          },
+          '100%': {
+            opacity: 1 as any,
+            transform: 'translateY(0)'
+          }
         }
       }
     },
@@ -49,7 +67,9 @@ const config: Config = {
     animation: {
       'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
       'hover-opacity': 'hover-opacity 0.3s ease-out',
-      slash: 'slash 0.75s ease-out forwards'
+      slash: 'slash 0.75s ease-out forwards',
+      'drop-in': 'dropIn 0.8s ease-out forwards',
+      'spin-slow': 'spin 2s linear infinite'
     }
   },
   darkMode: 'class',
