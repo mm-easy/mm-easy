@@ -22,8 +22,6 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = QUIZEDITOR_STRINGS;
   } else if (assets === 'typing-game') {
     assetsObject = TYPING_GAME_STRINGS;
-  } else if (assets === 'about') {
-    assetsObject = ABOUT_STRINGS;
   } else if (assets === 'community-section') {
     assetsObject = COMMUNITY_SECTION_STRINGS;
   } else if (assets === 'quiz-section') {
@@ -36,6 +34,8 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = MY_ACTIVITY_STRINGS;
   } else if (assets === 'quiz-list') {
     assetsObject = QUIZLIST_STRINGS;
+  } else if (assets === 'about') {
+    assetsObject = ABOUT_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }
