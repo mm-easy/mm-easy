@@ -12,8 +12,7 @@ import { useState } from 'react';
 import { SlRefresh } from 'react-icons/sl';
 
 const RankingSection = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'ranking-section');
+  const m = useMultilingual('ranking-section');
   const [refreshKey, setRefreshKey] = useState(0);
 
   const {

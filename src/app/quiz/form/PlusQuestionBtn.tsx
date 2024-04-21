@@ -8,8 +8,7 @@ interface PlusQuestionBtnProps {
 }
 
 const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ disabled, onClick }) => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   return (
     <div className="flex justify-center">

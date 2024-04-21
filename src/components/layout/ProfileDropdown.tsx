@@ -18,8 +18,7 @@ import useMultilingual from '@/utils/useMultilingual';
 
 const ProfileDropdown = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'header');
+  const m = useMultilingual('header');
 
   const { logout } = useAuth();
   const route = useRouter();

@@ -29,8 +29,7 @@ const TypingGamePage = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'typing-game');
+  const m = useMultilingual('typing-game');
 
   const router = useRouter();
   const maxLives = 5;

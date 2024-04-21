@@ -1,18 +1,22 @@
-import React from 'react';
 import Link from 'next/link';
 import { loader } from '@/api/naverAPI';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { NewsType } from '@/types/posts';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const NewsSection = async () => {
+  // const [lang] = useAtom(langAtom);
+  // const m = useMultilingual('news-section');
   const news = await loader();
+
   return (
     <div>
       <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
         한국은 지금
       </p>
-
       <section className="px-6 py-4 grid grid-cols-4 gap-5">
         {news &&
           news.map((newsData: NewsType, index: number) => (

@@ -12,8 +12,7 @@ import { langAtom } from '@/store/store';
 import type { Quiz } from '@/types/quizzes';
 
 const QuizSection = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quiz-section');
+  const m = useMultilingual('quiz-section');
 
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
     queryKey: ['recentQuiz'],

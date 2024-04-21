@@ -19,8 +19,7 @@ import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
 
 const MyActivity = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'my-activity');
+  const m = useMultilingual('my-activity');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const [currentPage, setCurrentPage] = useState(1);

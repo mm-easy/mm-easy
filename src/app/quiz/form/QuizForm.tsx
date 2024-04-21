@@ -58,8 +58,7 @@ const QuizForm = ({
 }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { getCurrentUserProfile } = useAuth();
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   useConfirmPageLeave();
   const router = useRouter();

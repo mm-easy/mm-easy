@@ -25,8 +25,7 @@ const QuestionForm = ({
   deletedQuestions: string[];
 }) => {
   const [loaded, setLoaded] = useState(false);
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   useEffect(() => {
     setLoaded(true);

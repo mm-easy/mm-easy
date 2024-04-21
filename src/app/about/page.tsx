@@ -22,8 +22,7 @@ import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 
 const AboutPage = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'about');
+  const m = useMultilingual('about');
   const managerData = createManagerData(m);
 
   const { data: quizNum } = useQuery<Quiz[]>({
