@@ -5,7 +5,9 @@ import InfoSH from '@/assets/team/info_SH.png';
 import InfoYJ from '@/assets/team/info_YJ.png';
 import InfoYS from '@/assets/team/info_YS.png';
 
-export const createManagerData = (m) => [
+import type { MultilingualFunction } from '@/types/manager';
+
+export const createManagerData = (m: MultilingualFunction) => [
   {
     name: m('ABOUT_MANAGERDATA1_NAME'),
     content1: m('ABOUT_MANAGERDATA1_CONTENT1'),

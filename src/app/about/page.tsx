@@ -14,7 +14,7 @@ import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useQuery } from '@tanstack/react-query';
-import { createManagerData, managerData } from '@/utils/managerData';
+import { createManagerData } from '@/utils/managerData';
 import { langAtom } from '@/store/store';
 
 import type { Post } from '@/types/posts';
