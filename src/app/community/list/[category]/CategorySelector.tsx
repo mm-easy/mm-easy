@@ -1,21 +1,25 @@
 'use client';
 
-import React from 'react';
+import useMultilingual from '@/utils/useMultilingual';
 import { useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const router = useRouter();
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'communityList');
 
   const categoryMenu: Record<string, string> = {
-    전체: '전체',
-    공지: '공지',
-    질문: '질문',
-    잡담: '잡담',
-    공부: '공부',
-    일기: '일기',
-    이벤트: '이벤트'
+    [m('COMMUNITY_CATEGORY_ALL')]: '전체',
+    [m('COMMUNITY_CATEGORY_NOTICE')]: '공지',
+    [m('COMMUNITY_CATEGORY_QUESTION')]: '질문',
+    [m('COMMUNITY_CATEGORY_CHAT')]: '잡담',
+    [m('COMMUNITY_CATEGORY_STUDY')]: '공부',
+    [m('COMMUNITY_CATEGORY_DIARY')]: '일기',
+    [m('COMMUNITY_CATEGORY_EVENT')]: '이벤트'
   };
 
   const { data: postNum = {} } = useQuery<Record<string, number>>({
@@ -45,14 +49,14 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
           <li
             key={category}
             className={`h-[8vh] flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
-              categoryNow === category ? 'bg-pointColor1 text-white' : 'bg-white'
+              categoryNow === categoryMenu[category] ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
           >
             <button className="text-lg w-full text-left flex">
               {category}
               <div className="pl-2">
-                {category === '전체' ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
+                {category === m('COMMUNITY_CATEGORY_ALL') ? '' : postNum[category] !== undefined ? `(${postNum[category]})` : ''}
               </div>
             </button>
           </li>
