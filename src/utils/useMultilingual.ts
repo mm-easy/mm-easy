@@ -6,6 +6,7 @@ import QUIZ_SECTION_STRINGS from '@/constant/locales/home/quiz-section';
 import RANKING_SECTION_STRINGS from '@/constant/locales/home/ranking-section';
 import MY_PROFILE_STRINGS from '@/constant/locales/my-page/my-profile';
 import MY_ACTIVITY_STRINGS from '@/constant/locales/my-page/my-activity';
+import QUIZLIST_STRINGS from '@/constant/locales/quiz/quiz-list';
 
 export type LanguageType = 'ko' | 'en';
 
@@ -30,6 +31,10 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = MY_PROFILE_STRINGS;
   } else if (assets === 'my-activity') {
     assetsObject = MY_ACTIVITY_STRINGS;
+  } else if (assets === 'quiz-list') {
+    assetsObject = QUIZLIST_STRINGS;
+  } else {
+    assetsObject = QUIZLIST_STRINGS;
   }
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];
