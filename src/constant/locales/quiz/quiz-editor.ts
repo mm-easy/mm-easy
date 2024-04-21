@@ -7,6 +7,18 @@ const QUIZEDITOR_STRINGS = {
     ko: '난이도',
     en: 'Difficulty'
   },
+  QUIZ_LEVEL_1: {
+    ko: '순한맛',
+    en: 'EASY'
+  },
+  QUIZ_LEVEL_2: {
+    ko: '중간맛',
+    en: 'MEDIUM'
+  },
+  QUIZ_LEVEL_3: {
+    ko: '매운맛',
+    en: 'HARD'
+  },
   QUIZ_TITLE: {
     ko: '퀴즈 제목',
     en: 'Quiz Title'

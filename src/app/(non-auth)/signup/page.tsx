@@ -61,11 +61,11 @@ const TermsPage = () => {
       return;
     }
     
-    // 비밀번호 길이를 확인합니다.
-    if (password.length < 6) {
-      toast.error('비밀번호는 최소 6자 이상이어야 합니다.');
-      return;
-    }
+     // 비밀번호 길이와 조합을 확인합니다.
+  if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password)) {
+    toast.error('비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.');
+    return;
+  }
     
     // 회원가입을 시도하고 결과를 처리합니다.
     const signUpResult = await signUp(email, password);
@@ -120,7 +120,7 @@ const TermsPage = () => {
                       type="password"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="비밀번호를 입력해주세요"
+                      placeholder="비밀번호를 입력해주세요 ( 영문,숫자,특수문자 조합 8자 이상 )"
                       autoComplete="new-password"
                       value={password}
                       onChange={handlePasswordChange}

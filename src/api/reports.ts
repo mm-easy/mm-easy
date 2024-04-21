@@ -1,18 +1,5 @@
-import { Admin, Report } from '@/types/admin';
 import { supabase } from '@/utils/supabase/supabase';
-
-export const insertAdmin = async (admin: Admin) => {
-  try {
-    const { data, error } = await supabase.from('admin').insert([admin]).select('*');
-    if (error) throw error;
-    const adminId = data[0].id;
-    return adminId;
-  } catch (error) {
-    console.log('관리 등록 실패', error);
-    alert('관리 대상에 등록하지 못했습니다. 다시 시도하세요.');
-    throw error;
-  }
-};
+import type { Report } from '@/types/reports';
 
 export const insertReport = async (report: Report) => {
   try {
@@ -25,9 +12,9 @@ export const insertReport = async (report: Report) => {
   }
 };
 
-export const getQuizzesReports = async (): Promise<Admin[]> => {
+export const getQuizzesReports = async (): Promise<Report[]> => {
   try {
-    const { data, error } = await supabase.from('admin').select('*').eq('type', 'quizzes');
+    const { data, error } = await supabase.from('reports').select('*').eq('type', 'quiz');
     if (error) throw error;
     return data;
   } catch (error) {
@@ -37,9 +24,9 @@ export const getQuizzesReports = async (): Promise<Admin[]> => {
   }
 };
 
-export const getPostsReports = async (): Promise<Admin[]> => {
+export const getPostsReports = async (): Promise<Report[]> => {
   try {
-    const { data, error } = await supabase.from('admin').select('*').eq('type', 'posts');
+    const { data, error } = await supabase.from('reports').select('*').eq('type', 'post');
     if (error) throw error;
     return data;
   } catch (error) {

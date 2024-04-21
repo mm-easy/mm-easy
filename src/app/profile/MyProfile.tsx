@@ -12,8 +12,14 @@ import { useUpdateProfile } from './mutations';
 
 import type { User } from '@/types/users';
 import { useQueryClient } from '@tanstack/react-query';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const MyProfile = ({ data }: { data: User }) => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'my-profile');
+
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState(data.nickname);
   const [file, setFile] = useState<File | null>(null);
@@ -82,7 +88,7 @@ const MyProfile = ({ data }: { data: User }) => {
   return (
     <main className="w-full h-full flex flex-col items-center">
       <article className="my-auto">
-        <h3 className="text-center text-pointColor1 text-xl font-semibold">프로필</h3>
+        <h3 className="text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
         <section className="flex gap-20 mt-5">
           <section className="w-[230px] h-[230px]">
             <Image
@@ -96,11 +102,11 @@ const MyProfile = ({ data }: { data: User }) => {
           <section className="flex flex-col justify-around">
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">닉네임</p>
+                <p className="text-pointColor1 font-semibold">{m('NICKNAME')}</p>
                 <p className="text-lg">{data.nickname}</p>
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">이메일</p>
+                <p className="text-pointColor1 font-semibold">{m('EMAIL')}</p>
                 <p className="text-lg">{data.email}</p>
               </div>
             </div>
@@ -108,7 +114,7 @@ const MyProfile = ({ data }: { data: User }) => {
               className="text-pointColor1 underline underline-offset-4 cursor-pointer"
               onClick={() => setIsEditing(true)}
             >
-              프로필 수정
+              {m('PROFILE_EDIT')}
             </div>
           </section>
         </section>
@@ -116,7 +122,7 @@ const MyProfile = ({ data }: { data: User }) => {
       {isEditing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white border-solid border-2 border-pointColor1 p-6 rounded-xl flex flex-col w-[330px]">
-            <h2 className="mb-4 text-center text-xl font-bold text-pointColor1">프로필 수정</h2>
+            <h2 className="mb-4 text-center text-xl font-bold text-pointColor1">{m('PROFILE_EDIT_HEADER')}</h2>
             <form
               className="flex flex-col gap-5 justify-center items-center"
               onSubmit={(e) => {
@@ -150,13 +156,13 @@ const MyProfile = ({ data }: { data: User }) => {
                   className="w-[120px] bg-gray-300 text-black font-bold tracking-wider py-2 px-4 rounded-md"
                   onClick={handleCancelBtn}
                 >
-                  취소하기
+                  {m('CANCEL_BTN')}
                 </button>
                 <button
                   type="submit"
                   className="w-[120px] bg-pointColor1 text-white font-bold tracking-wider py-2 px-4 rounded-md"
                 >
-                  수정완료
+                  {m('COMPLETE_BTN')}
                 </button>
               </div>
             </form>

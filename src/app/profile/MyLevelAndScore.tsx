@@ -8,8 +8,14 @@ import { getMyQuizScore } from '@/api/tries';
 
 import type { Quiz, Score } from '@/types/quizzes';
 import type { User } from '@/types/users';
+import { useAtom } from 'jotai';
+import useMultilingual from '@/utils/useMultilingual';
+import { langAtom } from '@/store/store';
 
 const MyLevelAndScore = ({ data }: { data: User }) => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'my-profile');
+
   /** 등록된 퀴즈 가져오기 */
   const { data: quizData } = useQuery<Quiz[]>({
     queryKey: ['quizzes'],
@@ -69,32 +75,35 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
   return (
     <main className="w-full h-full flex flex-col justify-center items-center bg-bgColor2 border-solid border-t border-pointColor1">
       <div className="text-xl font-semibold">
-        전체 올라온 퀴즈 <span className="text-pointColor1">{quizData?.length}</span>개 중{' '}
-        <span className="text-pointColor1">{myQuizScores?.length}</span>개의 퀴즈를 풀었어요!
+        <span>{m('MY_QUIZ_INFO_TEXT1')}</span>
+        <span className="text-pointColor1">{lang === 'en' ? myQuizScores?.length : quizData?.length}</span>
+        {m('MY_QUIZ_INFO_TEXT2')}
+        <span className="text-pointColor1">{lang === 'en' ? quizData?.length : myQuizScores?.length}</span>
+        <span>{m('MY_QUIZ_INFO_TEXT3')}</span>
       </div>
       <div className="flex gap-7 mt-10 font-semibold">
         <div className="flex flex-col items-center w-32">
-          <p>레벨</p>
+          <p>{m('LEVEL')}</p>
           <p className="mt-5 text-3xl text-pointColor1">Lv. {myLevel}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
-          <p>퀴즈 점수</p>
+          <p>{m('QUIZ_SCORE')}</p>
           <p className="mt-5 text-3xl text-pointColor1">{totalQuizScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
-        <div className="flex flex-col items-center w-32">
-          <p>타자연습 점수</p>
+        <div className={`flex flex-col items-center ${lang === 'en' ? '48' : 'w-32'}`}>
+          <p>{m('TYPING_GAME_SCORE')}</p>
           <p className="mt-5 text-3xl text-pointColor1">{myGameScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
         <div className="flex flex-col items-center w-32">
-          <p>총 점수</p>
+          <p>{m('TOTAL_SCORE')}</p>
           <p className="mt-5 text-3xl text-pointColor1">{myTotalScore}</p>
         </div>
       </div>
       <div className="text-center mt-10 text-pointColor1 underline underline-offset-4">
-        <Link href="/my-activity">나의 활동 보러가기</Link>
+        <Link href="/my-activity">{m('TO_MY_ACTIVITY')}</Link>
       </div>
     </main>
   );

@@ -14,9 +14,13 @@ import { Pagination } from './Pagination';
 import { TabName } from '@/types/pagination';
 import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
-import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const MyActivity = () => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'my-activity');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
   const [currentPage, setCurrentPage] = useState(1);
@@ -168,58 +172,58 @@ const MyActivity = () => {
 
   return (
     <main className="h-[84vh] px-[20%] flex flex-col justify-center items-center">
-      <nav className="w-full flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 pb-[4vh] cursor-pointer">
-        <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid ">
+      <nav className="w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
+        <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid">
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' ? 'font-bold border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' && 'font-bold border-solid border-b-3'}`}
             onClick={() => changeTab('solvedQuizzes')}
           >
-            내가 푼 퀴즈
+            {m('QUIZ_I_SOLVED')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'quizzes' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'quizzes' && 'font-bold  border-solid border-b-3'}`}
             onClick={() => changeTab('quizzes')}
           >
-            내가 만든 퀴즈
+            {m('QUIZ_I_MADE')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'posts' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'posts' && 'font-bold  border-solid border-b-3'}`}
             onClick={() => changeTab('posts')}
           >
-            내가 쓴 글
+            {m('MY_WRITING')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'comments' ? 'font-bold  border-solid border-b-3' : ''}`}
+            className={`w-[25%] pb-3 ${activeTab === 'comments' && 'font-bold  border-solid border-b-3'}`}
             onClick={() => changeTab('comments')}
           >
-            내가 쓴 댓글
+            {m('MY_COMMENT')}
           </li>
         </ul>
       </nav>
       <article className="w-full h-[calc(302px+16vh)]">
         {activeTab === 'solvedQuizzes' && (
           <div className="w-full flex justify-center">
-            <table className="w-full font-medium">
+            <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">제목</th>
-                  <th className="w-[13%]">점수</th>
-                  <th>푼 날짜</th>
+                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="w-[13%]">{m('SCORE')}</th>
+                  <th>{m('DATE_SOLVED')}</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="font-medium">
                 {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
                   currentSolvedQuizzes.map((quiz, index) => (
-                    <tr key={index} className="bg-white border-b border-solid border-grayColor2">
+                    <tr key={index} className="border-b border-solid border-grayColor2">
                       <td className="w-24">{quiz.quizzes.title}</td>
                       <td>{quiz.score}</td>
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <td className="text-right py-[1vh]">
                         <button
-                          className="h-8 w-28 border border-solid border-pointColor1 px-4 rounded-md font-bold text-pointColor1"
+                          className="w-28 h-8 border border-solid border-pointColor1 rounded-md font-bold text-pointColor1"
                           onClick={() => navigateToQuiz(quiz.quizzes.id)}
                         >
-                          다시 풀기
+                          {m('RETRY_BTN')}
                         </button>
                       </td>
                     </tr>
@@ -227,7 +231,7 @@ const MyActivity = () => {
                 ) : (
                   <tr>
                     <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                      푼 퀴즈가 없습니다.
+                      {m('NO_QUIZZES_YOU_SOLVED')}
                     </td>
                   </tr>
                 )}
@@ -237,18 +241,18 @@ const MyActivity = () => {
         )}
         {activeTab === 'quizzes' && (
           <div className="w-full flex justify-center">
-            <table className="w-full font-medium">
+            <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">제목</th>
-                  <th className="w-[13%]">완료수</th>
-                  <th>작성 날짜</th>
+                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="w-[13%]">{m('SOLVED_COUNT')}</th>
+                  <th>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="font-medium">
                 {currentQuizzes && currentQuizzes.length > 0 ? (
                   currentQuizzes.map((quiz, index) => (
-                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                    <tr key={index} className="border-b border-solid border-grayColor2">
                       <td className="w-24">
                         <a href={`/quiz/${quiz.id}`}>{quiz.title}</a>
                       </td>
@@ -256,7 +260,7 @@ const MyActivity = () => {
                       <td>{formatToLocaleDateTimeString(quiz.created_at)}</td>
                       <td className="text-right font-bold bg-point py-[1vh]">
                         <CancelButton
-                          text="삭제"
+                          text={m('DELETE_BTN')}
                           width="w-28"
                           height="h-8"
                           border="border"
@@ -268,7 +272,7 @@ const MyActivity = () => {
                 ) : (
                   <tr>
                     <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                      만든 퀴즈가 없습니다.
+                      {m('NO_QUIZZES_YOU_MADE')}
                     </td>
                   </tr>
                 )}
@@ -281,29 +285,29 @@ const MyActivity = () => {
             <table className="w-full font-medium">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">제목</th>
-                  <th className="w-[13%]">조회수</th>
-                  <th>작성 날짜</th>
+                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="w-[13%]">{m('VIEW_COUNT')}</th>
+                  <th>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
               <tbody>
                 {currentPosts && currentPosts.length > 0 ? (
                   currentPosts.map((post, index) => (
-                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                    <tr key={index} className="border-b border-solid border-grayColor2">
                       <td className="truncate max-w-xs pr-12 w-24">
                         <a href={`/community/list/${post.category}/${post.id}`}>{post.title}</a>
                       </td>
                       <td>{post.view_count}</td>
                       <td>{formatToLocaleDateTimeString(post.created_at)}</td>
                       <td className="text-right py-[1vh]">
-                        <PostDeleteButton text="삭제" postId={post.id} width="w-28" height="h-8" />
+                        <PostDeleteButton text={m('DELETE_BTN')} postId={post.id} width="w-28" height="h-8" />
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
                     <td colSpan={4} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                      게시글이 없습니다.
+                      {m('NO_POSTS')}
                     </td>
                   </tr>
                 )}
@@ -316,25 +320,25 @@ const MyActivity = () => {
             <table className="w-full font-medium">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">내용</th>
-                  <th>작성 날짜</th>
+                  <th className="pb-2 w-[55%]">{m('CONTENT')}</th>
+                  <th>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
               <tbody>
                 {currentComments && currentComments.length > 0 ? (
                   currentComments.map((comment, index) => (
-                    <tr className="bg-white border-b border-solid border-grayColor2" key={index}>
+                    <tr key={index} className="border-b border-solid border-grayColor2">
                       <td className="truncate max-w-xs w-24">{comment.content}</td>
                       <td>{formatToLocaleDateTimeString(comment.created_at)}</td>
                       <td className="text-right py-[1vh]">
-                        <CommentDeleteBtn text="삭제" userId={comment.id} width="w-28" height="h-8" />
+                        <CommentDeleteBtn text={m('DELETE_BTN')} userId={comment.id} width="w-28" height="h-8" />
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
                     <td colSpan={3} className="text-center py-6 text-pointColor1 font-bold text-lg">
-                      댓글이 없습니다.
+                      {m('NO_COMMTENTS')}
                     </td>
                   </tr>
                 )}

@@ -15,6 +15,14 @@ const HEADER_STRINGS = {
     ko: '서비스 소개',
     en: 'About us'
   },
+  HEADER_MENU5: {
+    ko: '관리자',
+    en: 'Admin'
+  },
+  HEADER_LOGIN: {
+    ko: '로그인',
+    en: 'Login'
+  },
   HEADER_DROPDOWN_INTRO: {
     ko: '반갑습니다💙',
     en: 'Welcome💙'
