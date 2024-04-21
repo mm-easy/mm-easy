@@ -1,10 +1,16 @@
 import Link from 'next/link';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const CommunitySection = () => {
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'community-section');
+
   const { data: posts, isLoading: postsLoading } = useQuery({
     queryKey: ['recentPosts'],
     queryFn: getRecentPosts,
@@ -24,14 +30,14 @@ const CommunitySection = () => {
   return (
     <>
       <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
-        최근 올라온 글
+        {m('RECENT_POSTS')}
       </p>
       <section className="flex">
         <div className="w-1/2 p-8 border-r border-solid border-pointColor1">
           <div className="flex justify-between">
-            <h2 className="mb-4 text-lg font-bold">공지</h2>
+            <h2 className="mb-4 text-lg font-bold">{m('NOTICE')}</h2>
             <Link href={`/community/list/공지`} className="font-semibold text-pointColor1">
-              더보기
+              {m('MORE')}
             </Link>
           </div>
           <div>
@@ -42,7 +48,9 @@ const CommunitySection = () => {
               >
                 <Link href={`/community/list/전체/${notice.id}`} className="flex flex-col gap-2">
                   <h2 className="text-lg font-bold truncate">{notice.title}</h2>
-                  <time>작성일: {formatToLocaleDateTimeString(notice.created_at)}</time>
+                  <time>
+                    {m('DATE_CREATION')}: {formatToLocaleDateTimeString(notice.created_at)}
+                  </time>
                 </Link>
               </div>
             ))}
@@ -50,9 +58,9 @@ const CommunitySection = () => {
         </div>
         <div className="w-1/2 p-8">
           <div className="flex justify-between">
-            <h2 className="mb-4 text-lg font-bold">유저가 쓴 글</h2>
+            <h2 className="mb-4 text-lg font-bold">{m('USER_POSTS')}</h2>
             <Link href={`/community/list/전체`} className="font-semibold text-pointColor1">
-              더보기
+              {m('MORE')}
             </Link>
           </div>
           <div>
@@ -63,7 +71,9 @@ const CommunitySection = () => {
               >
                 <Link href={`/community/list/전체/${post.id}`} className="flex flex-col gap-2">
                   <h2 className="text-lg font-bold truncate">{post.title}</h2>
-                  <time>작성일: {formatToLocaleDateTimeString(post.created_at)}</time>
+                  <time>
+                    {m('DATE_CREATION')}: {formatToLocaleDateTimeString(post.created_at)}
+                  </time>
                 </Link>
               </div>
             ))}

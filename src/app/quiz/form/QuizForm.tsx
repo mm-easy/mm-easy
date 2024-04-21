@@ -17,7 +17,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import { SetStateAction } from 'jotai';
+import { SetStateAction, useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const QuizForm = ({
   questions,
@@ -56,6 +58,8 @@ const QuizForm = ({
 }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { getCurrentUserProfile } = useAuth();
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quizEditor');
 
   useConfirmPageLeave();
   const router = useRouter();
@@ -181,11 +185,11 @@ const QuizForm = ({
             </div>
             <div className="flex flex-col justify-between">
               <div className="flex flex-col gap-1">
-                <p className="text-xs text-pointColor1">난이도</p>
+                <p className="text-xs text-pointColor1">{m('QUIZ_LEVEL')}</p>
                 <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-xs text-pointColor1">퀴즈 제목</p>
+                <p className="text-xs text-pointColor1">{m('QUIZ_TITLE')}</p>
                 <BlueInput
                   value={title}
                   width="w-[385px] pr-16"
@@ -197,7 +201,7 @@ const QuizForm = ({
             </div>
           </div>
           <div className="flex flex-col gap-1 w-auto">
-            <p className="text-xs text-pointColor1">퀴즈 설명</p>
+            <p className="text-xs text-pointColor1">{m('QUIZ_INFO')}</p>
             <BlueInput
               value={info}
               width="w-[570px]"
@@ -210,8 +214,8 @@ const QuizForm = ({
         <QuestionForm questions={questions} setQuestions={setQuestions} deletedQuestions={deletedQuestions} />
         <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
         <div className="bg-white flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t-2 border-pointColor1">
-          <CancelButton text="취소하기" onClick={handleCancelBtn} width="w-[275px]" />
-          <SubmitButton text="등록하기" onClick={handleSubmitBtn} width="w-[275px]" />
+          <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="w-[275px]" />
+          <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="w-[275px]" />
         </div>
       </form>
       <PageUpBtn scrollPosition={scrollPosition} />

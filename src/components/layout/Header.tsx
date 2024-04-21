@@ -13,12 +13,14 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom, langAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/api/users';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const [lang, setLang] = useAtom(langAtom);
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'header');
 
   /** 현재 로그인되어 있는지 확인 */
@@ -122,10 +124,10 @@ const Header = () => {
             <Link
               href="/admin"
               className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-                isActive('/admin') && 'border-b-5 border-solid border-pointColor1'
+                isActive('/admin') && 'border-b-5 border-solid border-pointColor2'
               }`}
             >
-              관리자
+              {m('HEADER_MENU5')}
             </Link>
           )}
         </nav>
@@ -135,7 +137,7 @@ const Header = () => {
             <ProfileDropdown />
           ) : (
             <Link href="/login">
-              <button>로그인</button>
+              <button>{m('HEADER_LOGIN')}</button>
             </Link>
           )}
         </div>

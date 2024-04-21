@@ -194,7 +194,7 @@ const DetailPost = () => {
                 {profile && profile.email !== post.profiles.email && (
                   <ReportButton
                     targetId={params.id}
-                    type="posts"
+                    type="post"
                     currentUserEmail={profile.email}
                     title={post.title}
                     creatorId={post.profiles.email}

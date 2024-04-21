@@ -21,10 +21,15 @@ import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
 import LoadingImg from '@/components/common/LoadingImg';
 
-import { QuestionType, type Question, Answer, Quiz } from '@/types/quizzes';
+import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
 
 const QuizTryPage = () => {
-  const { id } = useParams();
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quiz-try');
+  const { id } = useParams<Params>();
   const [resultMode, setResultMode] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [score, setScore] = useState(0);
@@ -157,7 +162,7 @@ const QuizTryPage = () => {
 
       if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
-        toast.warn('모든 문제를 풀어줘!');
+        toast.warn('모든 문제를 풀어주세요!');
       } else {
         let countCorrect = 0;
         for (const usersAnswer of usersAnswers) {
@@ -229,7 +234,15 @@ const QuizTryPage = () => {
 
   return (
     <>
-      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
+      <Header
+        level={level}
+        title={title}
+        isAnswerWritten={usersAnswers.length}
+        resultMode={resultMode}
+        headerText={m('HEADER')}
+        levelText={m('LEVEL')}
+        titleText={m('TITLE')}
+      />
       <div className="grid grid-cols-[16%_84%] bg-bgColor1">
         <article className="h-[76vh] flex flex-col justify-between text-pointColor1">
           <section>
@@ -242,9 +255,9 @@ const QuizTryPage = () => {
               className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
-              <Creator creator={creator_id} />
+              <Creator creator={creator_id} creatorText={m('CREATOR')} />
               <div>
-                <h4>등록일</h4>
+                <h4>{m('DATE_CREATED')}</h4>
                 <p>{formatToLocaleDateTimeString(created_at)}</p>
               </div>
             </section>
@@ -274,7 +287,10 @@ const QuizTryPage = () => {
         <main className="py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
           {resultMode && (
             <h1 className="text-2xl">
-              🎉 {questions.length}개 중에 {score}개 맞았습니다! 🎉
+              🎉 {lang === 'en' ? score : questions.length}
+              {m('RESULT_TEXT1')}
+              {lang === 'en' ? questions.length : score}
+              {m('RESULT_TEXT2')} 🎉
             </h1>
           )}
           <article className="flex flex-col justify-between gap-8">
@@ -344,26 +360,28 @@ const QuizTryPage = () => {
             })}
             <section className="w-[570px] flex flex-col justify-between gap-3">
               {!resultMode && questions.length > 1 && (
-                <div className="flex justify-between gap-3">
+                <div className="flex justify-between gap-3 font-semibold">
                   <button
                     disabled={page === 0}
                     className={`w-full py-[9px] ${
-                      page === 0 ? 'text-white bg-grayColor2' : 'border border-solid border-pointColor1'
+                      page === 0
+                        ? 'text-white bg-grayColor2'
+                        : 'text-pointColor1 border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handlePrevPage}
                   >
-                    이전 페이지
+                    {m('PREV_QUESTION_BTN')}
                   </button>
                   <button
                     disabled={page === questions.length - 1}
                     className={`w-full py-[9px] ${
                       page === questions.length - 1
                         ? 'text-white bg-grayColor2'
-                        : 'border border-solid border-pointColor1'
+                        : 'text-pointColor1 border border-solid border-pointColor1'
                     } rounded-md`}
                     onClick={handleNextPage}
                   >
-                    다음 페이지
+                    {m('NEXT_QUESTION_BTN')}
                   </button>
                 </div>
               )}
@@ -371,19 +389,19 @@ const QuizTryPage = () => {
                 className="w-full py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
                 onClick={handleResultMode}
               >
-                {resultMode ? '다시 풀기' : '제출하기'}
+                {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}
               </button>
             </section>
           </article>
           {resultMode && (
             <ReportButton
               targetId={id}
-              type="quizzes"
+              type="quiz"
               currentUserEmail={currentUserEmail}
               title={title}
               creatorId={creator_id}
             >
-              🚨 퀴즈에 오류가 있나요?
+              🚨 {m('REPORT_BTN')}
             </ReportButton>
           )}
         </main>

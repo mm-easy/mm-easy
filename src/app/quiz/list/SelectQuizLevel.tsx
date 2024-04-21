@@ -6,6 +6,7 @@ import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -14,6 +15,8 @@ import { getQuizzes } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 import type { Quiz } from '@/types/quizzes';
 
@@ -23,6 +26,8 @@ const SelectQuizLevel = () => {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quiz-list');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,16 +88,16 @@ const SelectQuizLevel = () => {
     <>
       <main className="w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
         <div className="mt-5 absolute top-20 z-10 flex flex-col items-center">
-          <p className="text-pointColor1 text-3xl font-bold">난이도를 골라보세요!</p>
+          <p className="text-pointColor1 text-3xl font-bold">{m('SELECT_LEVEL_TITLE')}</p>
           <p
             className="text-pointColor1 underline underline-offset-4 text-lg font-bold mt-5 cursor-pointer"
             onClick={() => handleSelectLevel(null)}
           >
-            전체보기
+            {m('SEE_ALL_QUIZZES')}
           </p>
         </div>
         <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
-          <WhiteButton text="퀴즈 만들기" onClick={() => handleMakeQuizBtn()} width="w-36" />
+          <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
         <div className="flex items-end overflow-hidden mt-30">
           <div className="rotate-[-5deg] ml-5">
@@ -106,8 +111,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -123,8 +128,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -140,8 +145,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />

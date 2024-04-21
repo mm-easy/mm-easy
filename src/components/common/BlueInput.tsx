@@ -1,4 +1,6 @@
-import React from 'react';
+import { langAtom } from '@/store/store';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
 
 interface BlueInputProps {
   value: string;
@@ -50,6 +52,9 @@ export const BlueTextArea: React.FC<BlueTextareaProps> = ({ value, onChange }) =
 };
 
 export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChange }) => {
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'quizEditor');
+
   const handleChange = (selectedValue: number) => {
     onChange(selectedValue);
   };
@@ -70,7 +75,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 1 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        순한맛
+        {m('QUIZ_LEVEL_1')}
       </label>
       <input
         type="radio"
@@ -87,7 +92,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 2 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        중간맛
+        {m('QUIZ_LEVEL_2')}
       </label>
       <input
         type="radio"
@@ -104,7 +109,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
           value === 3 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
-        매운맛
+        {m('QUIZ_LEVEL_3')}
       </label>
     </div>
   );
