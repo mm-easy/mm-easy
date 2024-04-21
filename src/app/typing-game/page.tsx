@@ -370,8 +370,8 @@ const TypingGamePage = () => {
             >
               {m('START_BUTTON')}
             </button>
-            <div className="mt-10">
-              <p>200점을 달성하면 다음 난이도로 넘어갑니다.</p>
+            <div className="mt-10 font-semibold text-pointColor1">
+              <p>{m('GAME_GUIDE')}</p>
             </div>
           </div>
         )}
