@@ -1,5 +1,6 @@
 'use client';
 
+import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useRef } from 'react';
 import { wordLists } from '@/utils/wordList';
@@ -9,19 +10,10 @@ import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
+import { langAtom } from '../../store/store';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
-
-const difficultySettings: { [key: number]: DifficultySetting } = {
-  1: { label: '초보', speed: 20, interval: 5000 },
-  2: { label: '하수', speed: 30, interval: 4000 },
-  3: { label: '중수', speed: 40, interval: 3000 },
-  4: { label: '고수', speed: 70, interval: 2000 },
-  5: { label: '지존', speed: 100, interval: 1000 }
-};
-
-const maxDifficulty = Object.keys(difficultySettings).length;
 
 const TypingGamePage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -38,6 +30,8 @@ const TypingGamePage = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'typing-game');
 
   const router = useRouter();
   const maxLives = 5;
@@ -257,6 +251,16 @@ const TypingGamePage = () => {
     setVolume(e.target.valueAsNumber);
   };
 
+  const difficultySettings: { [key: number]: DifficultySetting } = {
+    1: { label: m('DIFFICULTY1'), speed: 20, interval: 5000 },
+    2: { label: m('DIFFICULTY2'), speed: 30, interval: 4000 },
+    3: { label: m('DIFFICULTY3'), speed: 40, interval: 3000 },
+    4: { label: m('DIFFICULTY4'), speed: 70, interval: 2000 },
+    5: { label: m('DIFFICULTY5'), speed: 100, interval: 1000 }
+  };
+
+  const maxDifficulty = Object.keys(difficultySettings).length;
+
   const lifePercentage = (lives / maxLives) * 55;
 
   return (
@@ -283,19 +287,19 @@ const TypingGamePage = () => {
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            난이도
+            {m('DIFFICULTY')}
           </h2>
           <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            점수
+            {m('SCORE')}
           </h2>
           <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
           <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
-            생명
+            {m('LIFE')}
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
         </header>
@@ -333,18 +337,18 @@ const TypingGamePage = () => {
               <input
                 type="text"
                 value={input}
-                placeholder="입력창"
+                placeholder={m('INPUT_FIELD')}
                 onChange={handleInput}
                 className="w-[60vw] pl-4 text-pointColor1 border border-pointColor1 rounded-md"
               />
               <button type="submit" className="w-[10vw] bg-pointColor1 text-white rounded-md">
-                입력
+                {m('INPUT_BUTTON')}
               </button>
             </form>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
-            <p className="mb-6 font-bold text-2xl text-pointColor1">난이도를 선택해주세요!</p>
+            <p className="mb-6 font-bold text-2xl text-pointColor1">{m('SELECT_DIFFICULTY')}</p>
             <div className="flex mb-4 items-center justify-center">
               {Array.from({ length: maxDifficulty }, (_, index) => (
                 <button
@@ -365,7 +369,7 @@ const TypingGamePage = () => {
               onClick={startGame}
               className="w-[25%] bg-pointColor1 text-white text-lg font-bold p-4 rounded animate-wave-opacity hover:animate-hover-opacity"
             >
-              시작하기
+              {m('START_BUTTON')}
             </button>
           </div>
         )}
@@ -373,14 +377,14 @@ const TypingGamePage = () => {
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-xl border-solid border-2 border-pointColor1">
-            <h2 className="font-bold text-xl mb-4">로그인이 필요합니다</h2>
-            <p className="mb-4">로그인하지 않으면 점수가 저장되지 않습니다.</p>
+            <h2 className="font-bold text-xl mb-4">{m('MODAL_TITLE')}</h2>
+            <p className="mb-4">{m('MODAL_CONTENT')}</p>
             <div className="flex justify-around">
               <button onClick={proceedWithoutLogin} className="bg-gray-300 text-black font-bold py-2 px-4 rounded">
-                그냥 진행하기
+                {m('MODAL_BUTTON1')}
               </button>
               <button onClick={goToLogin} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
-                로그인 하러가기
+                {m('MODAL_BUTTON2')}
               </button>
             </div>
           </div>
