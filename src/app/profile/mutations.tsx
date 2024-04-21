@@ -17,9 +17,6 @@ export const useUpdateProfile = () => {
         console.error('프로필 업데이트 실패', error);
         throw error;
       }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['loggedInUser'] });
     }
   });
 

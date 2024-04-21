@@ -11,6 +11,7 @@ import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useUpdateProfile } from './mutations';
 
 import type { User } from '@/types/users';
+import { useQueryClient } from '@tanstack/react-query';
 
 const MyProfile = ({ data }: { data: User }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -20,6 +21,7 @@ const MyProfile = ({ data }: { data: User }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const updateProfileMutation = useUpdateProfile();
+  const queryClient = useQueryClient();
 
   /** 수정 모달에서 취소하기 버튼 클릭 시 */
   const handleCancelBtn = () => {
@@ -62,9 +64,16 @@ const MyProfile = ({ data }: { data: User }) => {
         nickname,
         avatar_img_url: imgUrl
       };
-      await updateProfileMutation.mutateAsync({ id: data.id, newProfile: newProfile });
-      toast.success('프로필이 수정되었습니다.');
-      setIsEditing(false);
+      await updateProfileMutation.mutateAsync(
+        { id: data.id, newProfile: newProfile },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['loggedInUser'] });
+            toast.success('프로필이 수정되었습니다.');
+            setIsEditing(false);
+          }
+        }
+      );
     } catch (error) {
       toast.error('이미지 업로드 중 오류발생! 다시 시도하세요.');
     }
