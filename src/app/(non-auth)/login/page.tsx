@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPasswordImage, setShowPasswordImage] = useState(false);
-  const { signIn, loading, error, signInWithGoogle, signInWithKakao } = useAuth();
+  const { signIn, loading, error, signInWithGoogle } = useAuth();
   const router = useRouter();
   const [lang, setLang] = useAtom(langAtom);
   const m = useMultilingual('login');
