@@ -309,7 +309,7 @@ const TypingGamePage = () => {
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
         </header>
       )}
-      <div className="h-[80vh] flex-grow relative">
+      <div className={`${gameStarted ? 'h-[84vh]' : 'h-[80vh]'} flex-grow relative`}>
         {gameStarted ? (
           <div>
             {words.map((word) => (
