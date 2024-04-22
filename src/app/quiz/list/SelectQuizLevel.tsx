@@ -6,12 +6,11 @@ import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
 import LoadingImg from '@/components/common/LoadingImg';
-import useMultilingual from '@/utils/useMultilingual';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { getQuizzes } from '@/api/quizzes';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getQuizzes, getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -19,6 +18,7 @@ import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
 import type { Quiz } from '@/types/quizzes';
+import useMultilingual from '@/utils/useMultilingual';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
@@ -54,31 +54,31 @@ const SelectQuizLevel = () => {
     router.push('/quiz/form');
   };
 
-  /** quizzes 테이블에서 리스트 가져오기 */
-  const { data, isLoading, isError } = useQuery<Quiz[]>({
-    queryFn: async () => {
-      try {
-        const data = await getQuizzes();
-        setQuizLevelSelected(data);
-        return data;
-      } catch (error) {
-        return [];
-      }
-    },
+  /** quizzes 테이블에서 페이지 */
+  const { data, isLoading, fetchNextPage, ...rest } = useInfiniteQuery({
     queryKey: ['quizzes'],
-    refetchOnWindowFocus: false
+    queryFn: ({ pageParam }) => getQuizzesPaged(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages, lastPageParam) => {
+      return lastPageParam + 1;
+      // const currentDataLength = pages.flatMap((page) => page).length;
+      // if (currentDataLength >= 12) {
+      //   return pages.length + 1;
+      // }
+      // return null;
+    },
+    retry: 0
   });
+  console.log('뭔데...', data);
 
-  if (isLoading) return <LoadingImg height="84vh" />;
-  if (isError) return <div>데이터 로드 실패</div>;
-  if (!data) return;
+  if (!data) return <LoadingImg height="84vh" />;
 
   /** 클릭하여 퀴즈 레벨 필터링 */
   const handleSelectLevel = (level: number | null) => {
     if (level === null) {
-      setQuizLevelSelected(data);
+      setQuizLevelSelected(data.pages.flatMap((page) => page));
     } else {
-      const filteredQuizzes = data.filter((item) => item.level === level);
+      const filteredQuizzes = data.pages.flatMap((page) => page).filter((item) => item.level === level);
       setQuizLevelSelected(filteredQuizzes);
     }
     setSelectedLevel(level);
@@ -97,6 +97,13 @@ const SelectQuizLevel = () => {
           </p>
         </div>
         <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
+          <button
+            onClick={() => {
+              fetchNextPage();
+            }}
+          >
+            테스트
+          </button>
           <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
         <div className="flex items-end overflow-hidden mt-30">
