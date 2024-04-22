@@ -6,6 +6,8 @@ import QUIZ_SECTION_STRINGS from '@/constant/locales/home/quiz-section';
 import RANKING_SECTION_STRINGS from '@/constant/locales/home/ranking-section';
 import LOG_IN_STRINGS from '@/constant/locales/login/login';
 import SIGN_UP_STRINGS from '@/constant/locales/login/signup';
+import PRIVACY_POLICY_STRINGS from '@/constant/locales/login/privacypolicy';
+import TERMS_STRINGS from '@/constant/locales/login/terms';
 
 export type LanguageType = 'ko' | 'en';
 
@@ -30,7 +32,12 @@ export default function useMultilingual(lang: LanguageType, assets: string) {
     assetsObject = LOG_IN_STRINGS;
   } else if (assets === 'signup') {
     assetsObject = SIGN_UP_STRINGS;
+  } else if (assets === 'privacypolicy') {
+    assetsObject = PRIVACY_POLICY_STRINGS; 
+  } else if (assets === 'terms') {
+    assetsObject = TERMS_STRINGS;
   }
+
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];
   };

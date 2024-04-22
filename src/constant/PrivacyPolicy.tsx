@@ -1,27 +1,34 @@
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+
 const PrivacyPolicy = () => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'privacypolicy');
+
     return (
         <p className="text-sm">
-        제 1조: 수집 및 이용목적<br/><br/>
-        우리 사이트는 아이디(이메일), 닉네임을 수집하여 회원가입을 위한 목적으로 사용합니다.<br/>
-        또한, 구글/카카오 소셜 로그인을 지원하며, 해당 서비스를 통해 수집된 정보도 회원 관리에 활용됩니다.<br/>
-        입력하신 비밀번호는 암호화되어 저장되므로 운영진도 알 수 없습니다.<br/><br/>
-        제 2조: 정보 보안<br/><br/>
-        수집된 개인정보는 회원 관리용으로만 사용되며, 그 외 마케팅 용도로 사용되지 않습니다.<br/><br/>
-        제 3조: 제3자 제공<br/><br/>
-        회원의 동의 없이 수집된 개인정보는 제3자에게 제공되지 않습니다.<br/>
-        법령에 의한 경우나 회원의 동의가 있는 경우를 제외하고는 개인정보를 외부에 제공하지 않습니다.<br/><br/>
-        제 4조: 개인정보의 보유 및 파기<br/><br/>
-        회원탈퇴 등 회원의 요청이 있을 시에는 수집된 개인정보를 즉시 파기합니다.<br/>
-        다만, 관련 법령에 따라 보존이 필요한 경우에는 해당 법령에서 정한 기간 동안 보관 후 파기합니다.<br/><br/>
-        제 5조: 개인정보 보호책임자<br/><br/>
-        개인정보 관련 문의 및 민원 처리를 위해 개인정보 보호책임자를 지정하여 안내합니다.<br/>
-        문의 사항이 있을 시 언제든지 연락 주시기 바랍니다.<br/><br/>
-        문의: redberry0217@gmail.com<br/><br/>
-        제 6조: 약관의 변경<br/><br/>
-        개인정보 처리 방침은 법령 및 사이트 정책에 따라 변경될 수 있으며, 변경 시 사이트 내 공지합니다. 변경된 약관은 공지 후 7일 이내에 시행됩니다.<br/><br/>
-        제 7조: 유의사항<br/><br/>
-        회원은 개인정보를 최신 정보로 유지하고, 타인의 정보를 무단으로 이용하지 않도록 주의하여야 합니다.<br/>
-        본 약관에 동의함으로써 회원은 개인정보 처리에 대해 동의한 것으로 간주됩니다.
+        <span className="font-bold">{m('ARTICLE_1')}</span><br/><br/>
+        {m('EMAIL_NICK_PURPOSE')}<br/>
+        {m('SUPPORT_GOOGLE')}<br/>
+        {m('PW_ENCRYPTED')}<br/><br/>
+        <span className="font-bold">{m('ARTICLE_2')}</span><br/><br/>
+        {m('PERSONAL_INFORM_PURPOSE')}<br/><br/>
+        <span className="font-bold">{m('ARTICLE_3')}</span><br/><br/>
+        {m('COLLECTED_INFORM_PROVIDE')}<br/>
+        {m('WILL_NOT_PROVIDE')}<br/><br/>
+        <span className="font-bold">{m('ARTICLE_4')}</span><br/><br/>
+        {m('IF_YOU_REQUEST')}<br/>
+        {m('IF_RELEVANT_LAW')}<br/><br/>
+        <span className="font-bold">{m('ARTICLE_5')}</span><br/><br/>
+        {m('INFORM_PROTECT_OFFICER')}<br/>
+        {m('IF_HAVE_INQUIRIES')}<br/><br/>
+        <span className="font-bold">{m('CONTACT_US')}</span><br/><br/>
+        <span className="font-bold">{m('ARTICLE_6')}</span><br/><br/>
+        {m('IF_CHANGED_INFORM')}<br/><br/>
+        <span className="font-bold">{m('ARTICLE_7')}</span><br/><br/>
+        {m('KEEP_INFORM_UPTODATE')}<br/>
+        {m('IF_YOU_AGREE_TERMS')}
       </p>
     );
 };

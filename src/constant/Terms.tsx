@@ -1,76 +1,81 @@
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+
 const Terms = () => {
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'terms');
+
   return (
     <p className="text-sm">
-      여러분을 환영합니다! 뭔말이지? 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 뭔말이지? 서비스 이용에 도움이
-      될 수 있는 유익한 정보를 포함하고 있습니다.
+      <span className="font-bold">{m('WELCOME_MESSAGE')}</span>
       <br />
       <br />
-      뭔말이지? 서비스를 이용하시거나 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게
-      되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.
+      {m('PLEASE_ATTENTION')}
       <br />
       <br />
-      제 1조: 용어의 정의
+      <span className="font-bold">{m('ARTICLE_1')}</span>
       <br />
       <br />
-      &quot;사이트&quot;: 저희가 운영하는 웹사이트를 말합니다.
+      &quot;{m('SITE')}&quot;{m('WHAT_IS_SITE')}
       <br />
-      &quot;이용자&quot;: 사이트를 이용하는 모든 분들을 의미합니다.
-      <br />
-      <br />
-      제 2조: 이용약관의 적용
+      &quot;{m('USER')}&quot;{m('WHAT_IS_USER')}
       <br />
       <br />
-      이용자는 사이트 이용 시 이 약관에 동의합니다.
-      <br />
-      즐겁게 이용하시고, 저희 사이트를 소중히 다루어주세요.
+      <span className="font-bold">{m('ARTICLE_2')}</span>
       <br />
       <br />
-      제 3조: 서비스 제공 및 이용
+      {m('AGREE_TERMS')}
+      <br />
+      {m('PLZ_GUYS')}
       <br />
       <br />
-      사이트는 최신 정보를 제공하기 위해 최선을 다하겠습니다.
-      <br />
-      이용자는 자유롭게 사이트를 즐기시길 바라며, 운영진은 이용자 여러분들로부터의 적극적인 피드백을 환영합니다.
+      <span className="font-bold">{m('ARTICLE_3')}</span>
       <br />
       <br />
-      제 4조: 책임과 의무
+      {m('TRY_OUR_BEST')}
+      <br />
+      {m('ENJOY_FREE')}
       <br />
       <br />
-      사이트는 이용자의 정보를 소중히 다루며, 보안에 최선을 다하겠습니다.
-      <br />
-      이용자는 서비스 이용 시 타인의 권리를 존중해주세요.
+      <span className="font-bold">{m('ARTICLE_4')}</span>
       <br />
       <br />
-      제 5조: 분쟁 해결
+      {m('TREAT_INFORM_CARE')}
+      <br />
+      {m('RESPECT_OTHER_RIGHTS')}
       <br />
       <br />
-      이용자와 사이트 간의 분쟁은 웃음과 이해를 통해 해결하도록 합니다.
-      <br />
-      서로의 의견을 존중하며 상호 협력하여 해결해나갑시다.
+      <span className="font-bold">{m('ARTICLE_5')}</span>
       <br />
       <br />
-      제 6조: 약관의 변경
+      {m('WITH_LAUGHTER_UNDERSTANDING')}
+      <br />
+      {m('RESPECT_EACH_OTHER')}
       <br />
       <br />
-      사이트는 필요 시 약관을 변경할 수 있습니다.
-      <br />
-      변경 사항이 있을 시 사이트에 공지하여 이용자의 동의를 얻을 것입니다.
+      <span className="font-bold">{m('ARTICLE_6')}</span>
       <br />
       <br />
-      제 7조: 재미있는 추가 사항
+      {m('TERMS_CAN_CHANGE')}
+      <br />
+      {m('IF_THERES_CHANGE')}
       <br />
       <br />
-      이용자는 사이트 이용 시 재미있는 이벤트와 콘텐츠를 기대할 수 있습니다.
-      <br />
-      함께 즐기며, 행복한 추억을 만들어봅시다!
+      <span className="font-bold">{m('ARTICLE_7')}</span>
       <br />
       <br />
-      제 8조: 유쾌한 마무리
+      {m('CAN_EXPECT_EVENTS_CONTENT')}
+      <br />
+      {m('BE_ENJOY_AND_HAPPY')}
       <br />
       <br />
-      우리는 이용자 여러분을 감사하며, 항상 유쾌한 서비스를 제공할 것을 약속합니다.
+      <span className="font-bold">{m('ARTICLE_8')}</span>
       <br />
-      뭔말이지? 서비스와 함께하는 모든 순간이 행복하길 바랍니다!
+      <br />
+      {m('THANK_AND_PROMISE')}
+      <br />
+      {m('WE_HOPE_YOU_HAPPY')}
     </p>
   );
 };
