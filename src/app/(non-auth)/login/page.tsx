@@ -34,9 +34,9 @@ const LoginPage = () => {
     await signInWithGoogle();
   };
 
-  const handleKakaoSignIn = async () => {
-    await signInWithKakao();
-  };
+  // const handleKakaoSignIn = async () => {
+  //   await signInWithKakao();
+  // };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
