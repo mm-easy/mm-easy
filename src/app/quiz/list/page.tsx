@@ -1,11 +1,7 @@
 import SelectQuizLevel from './SelectQuizLevel';
 
 const QuizListPage = () => {
-  return (
-    <main className="h-full">
-      <SelectQuizLevel />
-    </main>
-  );
+  return <SelectQuizLevel />;
 };
 
 export default QuizListPage;
