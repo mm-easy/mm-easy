@@ -7,7 +7,7 @@ import { wordLists } from '@/utils/wordList';
 import { Word } from '@/types/word';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
-import { isLoggedInAtom, langAtom } from '@/store/store';
+import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
 
@@ -29,8 +29,7 @@ const TypingGamePage = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'typing-game');
+  const m = useMultilingual('typing-game');
 
   const router = useRouter();
   const maxLives = 5;
@@ -371,8 +370,8 @@ const TypingGamePage = () => {
             >
               {m('START_BUTTON')}
             </button>
-            <div className="mt-10">
-              <p>200점을 달성하면 다음 난이도로 넘어갑니다.</p>
+            <div className="mt-10 font-semibold text-pointColor1">
+              <p>{m('GAME_GUIDE')}</p>
             </div>
           </div>
         )}

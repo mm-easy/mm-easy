@@ -2,6 +2,7 @@
 
 import PostEditor from '@/app/community/write/PostEditor';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
@@ -15,6 +16,7 @@ import { supabase } from '@/utils/supabase/supabase';
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const { getCurrentUserProfile } = useAuth();
+  const m = useMultilingual('communityPost');
   const postId = params.id;
   const router = useRouter();
 
@@ -36,7 +38,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
           router.push('/login');
-          toast('로그인 후 이용하세요.');
+          toast(m('COMMUNITY_POST_CHECK_LOGIN'));
           return;
         }
         const userProfile = await getCurrentUserProfile();
@@ -46,12 +48,12 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
           console.log('author_id', post.author_id);
           console.log('userProfile.id', userProfile.id);
           router.push('/');
-          toast('수정 권한이 없습니다.');
+          toast(m('COMMUNITY_EDIT_ACCESS'));
           return;
         }
         setIsLoggedIn(true);
       } catch (error) {
-        toast('프로필 정보를 찾을 수 없습니다.');
+        toast(m('COMMUNITY_POST_PROFILE_NOT_FOUND'));
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
       }
     };
@@ -68,7 +70,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   };
 
   const handleCancel = () => {
-    const confirmLeave = window.confirm('작성 중인 내용이 사라집니다. 정말 페이지를 나가시겠습니까?');
+    const confirmLeave = window.confirm(m('COMMUNITY_POST_LEAVE_CONFIRM'));
     if (confirmLeave) {
       router.push('/community/list/전체');
     }
@@ -86,7 +88,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         onCancel={handleCancel}
         onSubmit={async ({ category, title, content }) => {
           await updateCommunityPost(postId, title, content as unknown as string, category);
-          toast('수정이 완료되었습니다.');
+          toast(m('COMMUNITY_EDIT_COMPLETE'));
           navigateToCreatedPost(postId);
           console.log('content => ', content);
         }}

@@ -7,12 +7,14 @@ import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
+import useMultilingual from '@/utils/useMultilingual';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState<string>('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
+  const m = useMultilingual('communityDetail');
 
   const insertCommentMutation = useInsertComment();
   const updateCommentMutation = useUpdateComment();
@@ -34,7 +36,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const handleSubmitBtn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) {
-      toast.warning('로그인후 작성해주세요');
+      toast.warning(m('COMMUNITY_COMMENT_CHECK_LOGIN'));
       setContent('');
       return;
     }
@@ -44,7 +46,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
 
   /**해당 댓글 수정하기 */
   const handleUpdateBtn = async (id: string) => {
-    const nowReal = window.confirm('댓글을 수정하시겠습니까?');
+    const nowReal = window.confirm(m('COMMUNITY_COMMENT_EDIT_CONFIRM'));
     if (nowReal) {
       updateCommentMutation.mutate({ contentChange, id });
       setBtnChange(!btnChange);
@@ -55,7 +57,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
 
   /**해당 댓글 삭제하기*/
   const handleDeleteBtn = async (id: string) => {
-    const nowReal = window.confirm('댓글을 삭제하시겠습니까?');
+    const nowReal = window.confirm(m('COMMUNITY_COMMENT_DELETE_CONFIRM'));
     if (nowReal) {
       deleteCommentMutation.mutate(id);
     } else {
@@ -100,7 +102,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     btnChange ? (
                       <>
                         <button className="pr-2" onClick={() => handleUpdateBtn(prev.id)}>
-                          수정완료
+                          {m('COMMUNITY_COMMENT_SAVE')}
                         </button>
                         |
                         <button
@@ -110,7 +112,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                             setContentChange(prev.content);
                           }}
                         >
-                          취소
+                          {m('COMMUNITY_COMMENT_CANCEL')}
                         </button>
                       </>
                     ) : (
@@ -123,11 +125,11 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                             setNowCommentId(prev.id);
                           }}
                         >
-                          수정
+                          {m('COMMUNITY_COMMENT_EDIT')}
                         </button>
                         |
                         <button className="pl-2" onClick={() => handleDeleteBtn(prev.id)}>
-                          삭제
+                          {m('COMMUNITY_COMMENT_DELETE')}
                         </button>
                       </>
                     )
@@ -149,7 +151,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   className="resize-none pt-3 w-full focus:outline-none"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="댓글을 남겨보세요"
+                  placeholder={m('COMMUNITY_COMMENT_PLACEHOLDER')}
                 />
               </div>
             </div>
@@ -159,7 +161,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
               className="w-20 h-12 mt-4 p-2 font-bold rounded-md text-white border-solid border border-white bg-pointColor1"
               type="submit"
             >
-              등록
+              {m('COMMUNITY_COMMENT_SUBMIT')}
             </button>
           </div>
         </form>

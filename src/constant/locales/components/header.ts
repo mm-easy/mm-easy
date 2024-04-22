@@ -21,7 +21,7 @@ const HEADER_STRINGS = {
   },
   HEADER_LOGIN: {
     ko: '로그인',
-    en: 'Login'
+    en: 'Log in'
   },
   HEADER_DROPDOWN_INTRO: {
     ko: '반갑습니다💙',

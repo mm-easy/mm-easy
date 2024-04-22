@@ -13,8 +13,8 @@ import useMultilingual from '@/utils/useMultilingual';
 import { langAtom } from '@/store/store';
 
 const MyLevelAndScore = ({ data }: { data: User }) => {
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'my-profile');
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual('my-profile');
 
   /** 등록된 퀴즈 가져오기 */
   const { data: quizData } = useQuery<Quiz[]>({
@@ -77,7 +77,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
       <div className="text-xl font-semibold">
         <span>{m('MY_QUIZ_INFO_TEXT1')}</span>
         <span className="text-pointColor1">{lang === 'en' ? myQuizScores?.length : quizData?.length}</span>
-        {m('MY_QUIZ_INFO_TEXT2')}
+        <span>{m('MY_QUIZ_INFO_TEXT2')}</span>
         <span className="text-pointColor1">{lang === 'en' ? quizData?.length : myQuizScores?.length}</span>
         <span>{m('MY_QUIZ_INFO_TEXT3')}</span>
       </div>

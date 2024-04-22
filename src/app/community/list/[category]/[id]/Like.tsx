@@ -6,8 +6,11 @@ import { getLike } from '@/api/likes';
 import { useQuery } from '@tanstack/react-query';
 
 import type { LikeParams, LikeProps, LikeType } from '@/types/posts';
+import useMultilingual from '@/utils/useMultilingual';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
+  const m = useMultilingual('communityDetail');
+
   const userId = profile?.id;
   const insertLike = useInsertLike();
   const deleteLike = useDeleteLike();
@@ -30,7 +33,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   /**좋아요 토글*/
   const handleLikeToggle = async () => {
     if (!userId) {
-      toast.warning('로그인 후 이용해 주세요.');
+      toast.warning(m('COMMUNITY_LIKE_CHECK_LOGIN'));
       return;
     }
 
@@ -66,7 +69,9 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
           offIcon={<AiOutlineHeart />}
         />
       </div>
-      <p>좋아요 {likeCount}</p>
+      <p>
+        {m('COMMUNITY_LIKES')} {likeCount}
+      </p>
     </div>
   );
 };

@@ -141,3 +141,11 @@ export type LikeType = {
   user_id: string | undefined;
   post_id: string;
 };
+
+export type NewsType = {
+  title: string;
+  originallink: string;
+  link: string;
+  description: string;
+  pubDate: string;
+};

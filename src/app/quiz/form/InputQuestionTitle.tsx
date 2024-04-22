@@ -1,6 +1,4 @@
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
 import { FormEvent } from 'react';
 
 const InputQuestionTitle = ({
@@ -14,8 +12,7 @@ const InputQuestionTitle = ({
   onInput: (e: FormEvent<HTMLInputElement>, maxLength: number) => void;
   onChange: (id: string | undefined, title: string) => void;
 }) => {
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   return (
     <div className="w-full relative">

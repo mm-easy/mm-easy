@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import useMultilingual from '@/utils/useMultilingual';
 import { useRouter } from 'next/navigation';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useMemo } from 'react';
@@ -18,6 +19,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   btnRange,
   category
 }) => {
+  const m = useMultilingual('communityList');
   const router = useRouter();
 
   const sortedItems = useMemo(() => {
@@ -59,11 +61,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="pl-6 p-4 w-[10%]">구분</th>
-              <th className="w-[16%]">닉네임</th>
-              <th className="w-[56%]">제목</th>
-              <th className="w-[13%]">날짜</th>
-              <th className="w-[5%]">조회수</th>
+              <th className="pl-6 p-4 w-[10%]">{m('COMMUNITY_TABLE_HEADER1')}</th>
+              <th className="w-[16%]">{m('COMMUNITY_TABLE_HEADER2')}</th>
+              <th className="w-[56%]">{m('COMMUNITY_TABLE_HEADER3')}</th>
+              <th className="w-[13%]">{m('COMMUNITY_TABLE_HEADER4')}</th>
+              <th className="w-[5%]">{m('COMMUNITY_TABLE_HEADER5')}</th>
             </tr>
           </thead>
           <tbody>
@@ -79,7 +81,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                   onClick={() => navigateToDetailPost(item)}
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
-                  <td>{item.profiles?.nickname || '알 수 없음'}</td>
+                  <td>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</td>
                   <td>
                     <span>{item.title}</span>
                     {(commentCounts[idx]?.data ?? 0) > 0 && (
@@ -93,7 +95,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             ) : (
               <tr className="bg-white">
                 <td colSpan={5} className="text-center py-4">
-                  게시글이 없습니다.
+                  {m('COMMUNITY_NO_POSTS')}
                 </td>
               </tr>
             )}

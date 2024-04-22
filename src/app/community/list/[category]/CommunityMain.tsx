@@ -61,7 +61,6 @@ const CommunityMain = () => {
     const fetchData = async () => {
       if (isLoggedIn) {
         const userProfile = await getCurrentUserProfile();
-        console.log('로그인한 자의 프로필..', userProfile);
       }
     };
 

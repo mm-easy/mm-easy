@@ -4,6 +4,9 @@ import DOMPurify from 'dompurify';
 import Comment from './Comment';
 import Like from './Like';
 import ReportButton from '@/components/common/ReportButton';
+import LoadingImg from '@/components/common/LoadingImg';
+import PageUpBtn from '@/components/common/PageUpBtn';
+import useMultilingual from '@/utils/useMultilingual';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
@@ -20,8 +23,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { Params, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import LoadingImg from '@/components/common/LoadingImg';
-import PageUpBtn from '@/components/common/PageUpBtn';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -31,6 +32,7 @@ const DetailPost = () => {
   const categoryNow = decodeURIComponent(params.category);
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
+  const m = useMultilingual('communityDetail');
 
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
@@ -68,7 +70,7 @@ const DetailPost = () => {
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
     if (nowPostNum + 1 === nextBeforePost.length) {
-      toast.warning('첫 게시물 입니다!');
+      toast.warning(m('COMMUNITY_NO_MORE_POST'));
       return;
     } else {
       router.push(`/community/list/${categoryNow}/${nextBeforePost[nowPostNum + 1].id}`);
@@ -78,7 +80,7 @@ const DetailPost = () => {
   const nextPostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
     if (nowPostNum - 1 < 0) {
-      toast.warning('가장 최신글 입니다!');
+      toast.warning(m('COMMUNITY_LATEST_POST'));
       return;
     } else {
       router.push(`/community/list/${categoryNow}/${nextBeforePost[nowPostNum - 1].id}`);
@@ -133,7 +135,9 @@ const DetailPost = () => {
           <div>
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
-              <p className="text-sm">조회수 {post.view_count}</p>
+              <p className="text-sm">
+                {m('COMMUNITY_VIEWS')} {post.view_count}
+              </p>
             </div>
             <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>
             <div className="flex border-solid border-b justify-between ">
@@ -157,7 +161,7 @@ const DetailPost = () => {
                   <div className="flex">
                     <div>
                       <PostEditButton
-                        text="수정"
+                        text={m('COMMUNITY_POST_EDIT')}
                         postId={post.id}
                         redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
                         width="w-20"
@@ -166,7 +170,7 @@ const DetailPost = () => {
                     </div>
                     <div className="pl-3">
                       <PostDeleteButton
-                        text="삭제"
+                        text={m('COMMUNITY_POST_DELETE')}
                         redirectUrl={'/community/list/전체'}
                         postId={post.id}
                         width="w-20"
@@ -194,18 +198,18 @@ const DetailPost = () => {
                     title={post.title}
                     creatorId={post.profiles.email}
                   >
-                    신고하기
+                    {m('COMMUNITY_REPORTS')}
                   </ReportButton>
                 )}
               </div>
             </div>
             <div className="border-solid border-t pt-3">
-              <span className="text-lg font-bold">댓글</span>
+              <span className="text-lg font-bold">{m('COMMUNITY_COMMENTS')}</span>
               <Comment postId={params.id} profile={profile} />
             </div>
             <div className="pt-10 flex justify-center item items-center font-bold gap-10">
               <button onClick={() => nextPostBtn(post.id)}>&#9664;</button>
-              <Link href={`/community/list/${categoryNow}`}>목록으로</Link>
+              <Link href={`/community/list/${categoryNow}`}>{m('COMMUNITY_BACK_TO_LIST')}</Link>
               <button onClick={() => beforePostBtn(post.id)}>&#9654;</button>
             </div>
           </div>
