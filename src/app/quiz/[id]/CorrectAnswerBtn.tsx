@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { FaHighlighter } from 'react-icons/fa';
 
 const CorrectAnswerBtn = ({
   showCorrectAnswer,
@@ -11,7 +12,11 @@ const CorrectAnswerBtn = ({
     setShowCorrectAnswer(!showCorrectAnswer);
   };
 
-  return <button onClick={handleShowCorrectAnswer}>💡</button>;
+  return (
+    <button onClick={handleShowCorrectAnswer}>
+      <FaHighlighter className="text-pointColor1 text-lg" />
+    </button>
+  );
 };
 
 export default CorrectAnswerBtn;

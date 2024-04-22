@@ -338,7 +338,7 @@ const QuizTryPage = () => {
                             >
                               {usersAnswer?.answer}
                             </p>
-                            <section className="flex justify-end gap-4">
+                            <section className="h-5 flex justify-end gap-2 leading-5 text-pointColor1">
                               {showCorrectAnswer && <p>{correct_answer}</p>}
                               <CorrectAnswerBtn
                                 showCorrectAnswer={showCorrectAnswer}
