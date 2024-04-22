@@ -49,7 +49,7 @@ const COMMUNITY_LIST_STRINGS = {
   },
   COMMUNITY_CREATE_POST: {
     ko: '글쓰기',
-    en: 'Writing'
+    en: 'Write'
   },
   COMMUNITY_NICKNAME_UNKNOWN: {
     ko: '알 수 없음',
