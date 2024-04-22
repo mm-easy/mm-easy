@@ -4,7 +4,7 @@ import { langAtom } from '@/store/store';
 
 const Terms = () => {
   const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'terms');
+  const m = useMultilingual('terms');
 
   return (
     <p className="text-sm">

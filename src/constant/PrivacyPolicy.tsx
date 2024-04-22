@@ -4,7 +4,7 @@ import { langAtom } from '@/store/store';
 
 const PrivacyPolicy = () => {
   const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'privacypolicy');
+  const m = useMultilingual('privacypolicy');
 
     return (
         <p className="text-sm">

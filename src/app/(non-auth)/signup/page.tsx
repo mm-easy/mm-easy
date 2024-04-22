@@ -22,7 +22,7 @@ const TermsPage = () => {
   const { signUp, error } = useAuth();
   const router = useRouter();
   const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'signup');
+  const m = useMultilingual('signup');
 
   useEffect(() => {
     setTermsChecked(allChecked);
@@ -97,6 +97,9 @@ const TermsPage = () => {
     setConfirmPassword(e.target.value);
   };
 
+  const match = password === confirmPassword && confirmPassword.length > 0;
+  const noMatch = password !== confirmPassword && confirmPassword.length > 0;
+
   return (
     <article className="min-h-screen flex items-center justify-center">
       <div className="flex w-[600px] items-center justify-center">
@@ -153,9 +156,9 @@ const TermsPage = () => {
                       onChange={handleConfirmPasswordChange}
                     />
                     {password === confirmPassword && confirmPassword.length > 0 ? (
-                    <div className="flex items-center"><FaCheckCircle className="text-green-500 text-lg mr-1"/><span className="text-sm text-green-500">{m('IF_PW_MATCH')}</span></div>
+                    <div className={`flex items-center animate-fadein`}><FaCheckCircle className="text-green-500 text-lg mr-1"/><span className="text-sm text-green-500">{m('IF_PW_MATCH')}</span></div>
                   ) : password !== confirmPassword && confirmPassword.length > 0 && (
-                    <div className="flex items-center"><IoIosCloseCircle className="text-red-500 text-lg mr-1"/><span className="text-sm text-red-500">{m('IF_PW_NOT_MATCH')}</span></div>
+                    <div className={`flex items-center animate-fadein`}><IoIosCloseCircle className="text-red-500 text-lg mr-1"/><span className="text-sm text-red-500">{m('IF_PW_NOT_MATCH')}</span></div>
                   )}
                   </div>
                 </div>

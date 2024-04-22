@@ -57,6 +57,10 @@ const config: Config = {
             transform: 'translateY(0)'
           }
         },
+        fadein: {
+          '0%': { opacity: 0 as any },
+          '100%': { opacity: 1 as any }
+        }
       }
     },
     backgroundSize: { md: '80%', cover: 'cover' },
@@ -69,7 +73,8 @@ const config: Config = {
       'hover-opacity': 'hover-opacity 0.3s ease-out',
       slash: 'slash 0.75s ease-out forwards',
       'drop-in': 'dropIn 0.8s ease-out forwards',
-      'spin-slow': 'spin 2s linear infinite'
+      'spin-slow': 'spin 2s linear infinite',
+      'fadein': 'fadein 0.5s ease-out'
     }
   },
   darkMode: 'class',
