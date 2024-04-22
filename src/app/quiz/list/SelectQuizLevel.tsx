@@ -10,7 +10,7 @@ import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getQuizzes, getQuizzesPaged } from '@/api/quizzes';
+import { getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -35,7 +35,6 @@ const SelectQuizLevel = () => {
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
         setCurrentUser(userProfile.email);
-        console.log('읭');
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
       }
@@ -45,7 +44,7 @@ const SelectQuizLevel = () => {
 
   /** 스크롤에 따라 다음 데이터 페이지 불러오도록 fetchNextPage 호출 */
   const handleScroll = () => {
-    const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    const isAtBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.body.offsetHeight;
     if (isAtBottom && !isLoading && hasNextPage) {
       fetchNextPage();
     }
@@ -119,8 +118,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -136,8 +135,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -153,8 +152,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />

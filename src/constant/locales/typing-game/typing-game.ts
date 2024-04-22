@@ -63,9 +63,13 @@ const TYPING_GAME_STRINGS = {
     ko: '로그인 하러가기',
     en: 'Go to login'
   },
-  GAME_GUIDE: {
+  GAME_GUIDE1: {
     ko: '200점을 달성하면 다음 난이도로 넘어갑니다.',
-    en: 'If you score 200 points, you move to the next level.'
+    en: 'If you score 200 points, you will move to the next level.'
+  },
+  GAME_GUIDE2: {
+    ko: '주어지는 생명 5개가 모두 소진되면 게임이 종료됩니다.',
+    en: 'The game ends when all 5 lives are used up.'
   }
 };
 

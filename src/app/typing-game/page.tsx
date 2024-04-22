@@ -47,6 +47,12 @@ const TypingGamePage = () => {
       gameoverSound.current = new Audio('game/gameover.mp3');
       wordpopSound.current = new Audio('game/wordpopped.mp3');
       gamestartSound.current = new Audio('game/gamestart.mp3');
+
+      return () => {
+        if (gameoverSound.current) gameoverSound.current.pause();
+        if (wordpopSound.current) wordpopSound.current.pause();
+        if (gamestartSound.current) gamestartSound.current.pause();
+      };
     }
   }, []);
 
@@ -266,7 +272,7 @@ const TypingGamePage = () => {
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
       {!gameStarted && (
-        <div className="top-0 left-0 p-4 custom-volume-control">
+        <div className="top-0 left-0 p-4 h-[4vh] custom-volume-control">
           <div className="volume-control flex items-center">
             <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
               <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
@@ -304,7 +310,7 @@ const TypingGamePage = () => {
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
         </header>
       )}
-      <div className="h-[84vh] flex-grow relative">
+      <div className={`${gameStarted ? 'h-[84vh]' : 'h-[80vh]'} flex-grow relative`}>
         {gameStarted ? (
           <div>
             {words.map((word) => (
@@ -372,7 +378,11 @@ const TypingGamePage = () => {
               {m('START_BUTTON')}
             </button>
             <div className="mt-10 font-semibold text-pointColor1">
-              <p>{m('GAME_GUIDE')}</p>
+              <p className="leading-7 text-center">
+                {m('GAME_GUIDE1')}
+                <br />
+                {m('GAME_GUIDE2')}
+              </p>
             </div>
           </div>
         )}

@@ -1,5 +1,6 @@
 import { useSubmitReport } from '@/app/quiz/[id]/mutations';
 import { supabase } from '@/utils/supabase/supabase';
+import useMultilingual from '@/utils/useMultilingual';
 import { toast } from 'react-toastify';
 
 const ReportButton = ({
@@ -17,37 +18,49 @@ const ReportButton = ({
   title: string;
   creatorId: string;
 }) => {
+  const m = useMultilingual('report');
   const insertReportMutation = useSubmitReport();
 
   const handleReport = async () => {
     if (!currentUserEmail) {
-      toast.warn('로그인이 필요합니다.');
+      toast.warn(m('NOTIFY_TO_LOGIN'));
       return;
     }
-
-    const report = {
-      title,
-      target_id: targetId,
-      type,
-      reported_user_id: creatorId,
-      user_id: currentUserEmail
-    };
-
-    const { data: reportHistory, error } = await supabase
+    const { data: reportHistory, error } = await supabase // 신고한 이력이 있는지 조회
       .from('reports')
       .select('*')
       .match({ user_id: currentUserEmail, target_id: targetId });
 
     if (error) {
-      toast.warn('신고 이력 조회에 오류가 있습니다.');
+      console.log('신고 이력 조회에 오류가 있습니다.');
       return;
     }
 
-    if (reportHistory.length === 0) {
-      insertReportMutation.mutate(report);
-      toast.success('신고가 등록되었습니다.');
+    if (reportHistory?.length !== 0) {
+      // 이력이 있다면 알림
+      toast.warn(
+        `${m('NOTIFY_ALREADY_REPORT1')}${type === 'quiz' ? m('NOTIFY_ALREADY_REPORT_QUIZ') : m('NOTIFY_ALREADY_REPORT_POST')}`
+      );
     } else {
-      toast.warn(`이미 신고한 ${type === 'quiz' ? '퀴즈' : '포스트'}입니다.`);
+      const reasonForReport = window.prompt(m('ASK_TO_REASON')); // 없다면 사유를 받음
+
+      if (reasonForReport) {
+        const report = {
+          title,
+          target_id: targetId,
+          type,
+          reason: reasonForReport,
+          reported_user_id: creatorId,
+          user_id: currentUserEmail
+        };
+
+        insertReportMutation.mutate(report);
+        toast.success(m('NOTIFY_TO_REPORT'));
+      } else if (reasonForReport === null) {
+        return;
+      } else {
+        toast.warn(m('ASK_TO_REASON'));
+      }
     }
   };
 

@@ -45,7 +45,7 @@ const Header = ({
           <h3 className="pl-[2%]">{title}</h3>
         </div>
         <button
-          className="w-[6%] float-right h-[calc(8vh-2px)] font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1"
+          className="w-[6%] float-right h-[calc(8vh-2px)] text-3xl font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1"
           onClick={handleExitBtn}
         >
           ✕
