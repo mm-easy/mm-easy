@@ -29,6 +29,7 @@ const SelectQuizLevel = () => {
   const [lang, setLang] = useAtom(langAtom);
   const m = useMultilingual(lang, 'quiz-list');
 
+  /** 로그인한 유저의 정보를 불러옴 */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +46,22 @@ const SelectQuizLevel = () => {
     fetchData();
   }, []);
 
+  /** 스크롤에 따라 다음 데이터 페이지 불러오도록 fetchNextPage 호출 */
+  const handleScroll = () => {
+    const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    if (isAtBottom && !isLoading && hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  /** 스크롤 추적 이벤트 */
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
     if (!currentUser) {
@@ -54,31 +71,31 @@ const SelectQuizLevel = () => {
     router.push('/quiz/form');
   };
 
-  /** quizzes 테이블에서 페이지 */
-  const { data, isLoading, fetchNextPage, ...rest } = useInfiniteQuery({
+  /** quizzes 테이블에서 페이지네이션 된 데이터 가져오기 */
+  const {
+    data: allQuizzes,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    ...rest
+  } = useInfiniteQuery({
     queryKey: ['quizzes'],
     queryFn: ({ pageParam }) => getQuizzesPaged(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
       return lastPageParam + 1;
-      // const currentDataLength = pages.flatMap((page) => page).length;
-      // if (currentDataLength >= 12) {
-      //   return pages.length + 1;
-      // }
-      // return null;
     },
     retry: 0
   });
-  console.log('뭔데...', data);
 
-  if (!data) return <LoadingImg height="84vh" />;
+  if (!allQuizzes) return <LoadingImg height="84vh" />;
 
   /** 클릭하여 퀴즈 레벨 필터링 */
   const handleSelectLevel = (level: number | null) => {
     if (level === null) {
-      setQuizLevelSelected(data.pages.flatMap((page) => page));
+      setQuizLevelSelected(allQuizzes.pages.flatMap((page) => page));
     } else {
-      const filteredQuizzes = data.pages.flatMap((page) => page).filter((item) => item.level === level);
+      const filteredQuizzes = allQuizzes.pages.flatMap((page) => page).filter((item) => item.level === level);
       setQuizLevelSelected(filteredQuizzes);
     }
     setSelectedLevel(level);
@@ -160,7 +177,7 @@ const SelectQuizLevel = () => {
           </div>
         </div>
       </main>
-      <QuizList quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
+      <QuizList allQuizzes={allQuizzes.pages} quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
     </>
   );
 };

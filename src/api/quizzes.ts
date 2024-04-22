@@ -98,7 +98,7 @@ export const getQuizzes = async () => {
 };
 
 /** quizzes 테이블에서 페이지 나뉜 전체 데이터 가져오기 */
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 8;
 export const getQuizzesPaged = async (pageParam: number) => {
   try {
     const { data, error } = await supabase
