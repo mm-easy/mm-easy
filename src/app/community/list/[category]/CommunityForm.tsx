@@ -89,7 +89,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                     )}
                   </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
-                  <td>{item['view_count'].length}</td>
+                  <td>{item['view_count']}</td>
                 </tr>
               ))
             ) : (

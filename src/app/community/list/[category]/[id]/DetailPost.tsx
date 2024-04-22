@@ -142,7 +142,7 @@ const DetailPost = () => {
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
               <p className="text-sm">
-                {m('COMMUNITY_VIEWS')} {post.view_count?.length ?? 0}
+                {m('COMMUNITY_VIEWS')} {post.view_count}
               </p>
             </div>
             <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>

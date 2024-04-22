@@ -1,3 +1,4 @@
+/** 네이버 API 가져오기  */
 export const naverApi = async (query: string) => {
   const clientId = process.env.NEXT_PUBLIC_API_KEY_NAVER_ID;
   const clientSecret = process.env.NEXT_PUBLIC_API_KEY_NAVER_PW;
@@ -23,7 +24,7 @@ export const naverApi = async (query: string) => {
 
   return response.json();
 };
-
+/** 가져온 API 한국어 관련 검색 */
 export async function loader() {
   try {
     const newsData = await naverApi('한국어');
