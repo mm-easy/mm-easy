@@ -17,6 +17,7 @@
     "@types/uuid": "^9.0.8",
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
+    "cookies-next": "^4.1.1",
     "dompurify": "^3.0.11",
     "framer-motion": "^11.0.27",
     "jotai": "^2.7.1",
