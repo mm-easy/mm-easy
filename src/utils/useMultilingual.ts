@@ -7,6 +7,10 @@ import TYPING_GAME_STRINGS from '@/constant/locales/typing-game/typing-game';
 import COMMUNITY_SECTION_STRINGS from '@/constant/locales/home/community-section';
 import QUIZ_SECTION_STRINGS from '@/constant/locales/home/quiz-section';
 import RANKING_SECTION_STRINGS from '@/constant/locales/home/ranking-section';
+import LOG_IN_STRINGS from '@/constant/locales/login/login';
+import SIGN_UP_STRINGS from '@/constant/locales/login/signup';
+import PRIVACY_POLICY_STRINGS from '@/constant/locales/login/privacypolicy';
+import TERMS_STRINGS from '@/constant/locales/login/terms';
 import MY_PROFILE_STRINGS from '@/constant/locales/my-page/my-profile';
 import MY_ACTIVITY_STRINGS from '@/constant/locales/my-page/my-activity';
 import QUIZLIST_STRINGS from '@/constant/locales/quiz/quiz-list';
@@ -33,6 +37,14 @@ export default function useMultilingual(assets: string) {
     assetsObject = QUIZ_SECTION_STRINGS;
   } else if (assets === 'ranking-section') {
     assetsObject = RANKING_SECTION_STRINGS;
+  } else if (assets === 'login') {
+    assetsObject = LOG_IN_STRINGS;
+  } else if (assets === 'signup') {
+    assetsObject = SIGN_UP_STRINGS;
+  } else if (assets === 'privacypolicy') {
+    assetsObject = PRIVACY_POLICY_STRINGS; 
+  } else if (assets === 'terms') {
+    assetsObject = TERMS_STRINGS;
   } else if (assets === 'my-profile') {
     assetsObject = MY_PROFILE_STRINGS;
   } else if (assets === 'my-activity') {
@@ -54,6 +66,7 @@ export default function useMultilingual(assets: string) {
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }
+
   return (key: keyof typeof assetsObject) => {
     return assetsObject[key][lang];
   };

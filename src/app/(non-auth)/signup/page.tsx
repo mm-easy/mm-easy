@@ -1,10 +1,16 @@
 'use client';
 import Terms from '@/constant/Terms';
 import PrivacyPolicy from '@/constant/PrivacyPolicy';
+import useMultilingual from '@/utils/useMultilingual';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import { HiMiniInformationCircle } from "react-icons/hi2";
+import { FaCheckCircle } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const TermsPage = () => {
   const [allChecked, setAllChecked] = useState(false);
@@ -15,6 +21,8 @@ const TermsPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const { signUp, error } = useAuth();
   const router = useRouter();
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual('signup');
 
   useEffect(() => {
     setTermsChecked(allChecked);
@@ -89,23 +97,26 @@ const TermsPage = () => {
     setConfirmPassword(e.target.value);
   };
 
+  const match = password === confirmPassword && confirmPassword.length > 0;
+  const noMatch = password !== confirmPassword && confirmPassword.length > 0;
+
   return (
     <article className="min-h-screen flex items-center justify-center">
       <div className="flex w-[600px] items-center justify-center">
         <div className="w-full bg-white p-3 rounded mx-4">
-          <h1 className="text-xl font-bold text-pointColor1 text-center mt-4 mb-6">회원 가입</h1>
+          <h1 className="text-xl font-bold text-pointColor1 text-center mt-4 mb-6">{m('SIGN_UP_LOGO')}</h1>
           <div className="col-span-6 flex items-center bg-white justify-center">
           <div className="w-full mb-4 bg-white">
               <div className="flex flex-col gap-4">
                 <div>
-                  <label htmlFor="email" className="text-md font-bold text-blackColor">이메일</label>
+                  <label htmlFor="email" className="text-md font-bold text-blackColor">{m('EMAIL_INPUT')}</label>
                   <div className="mt-1">
                     <input
                       id="email"
                       type="email"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="이메일을 입력해주세요"
+                      placeholder={m('EMAIL_INPUT_PLACEHOLDER')}
                       autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -113,33 +124,42 @@ const TermsPage = () => {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="password" className="text-md font-bold text-blackColor">비밀번호</label>
-                  <div className="mt-1">
+                  <label htmlFor="password" className="text-md font-bold text-blackColor">{m('PASSWORD_INPUT')}</label>
+                  <div className="my-1">
                     <input
                       id="password"
                       type="password"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="비밀번호를 입력해주세요 ( 영문,숫자,특수문자 조합 8자 이상 )"
+                      placeholder={m('PASSWORD_INPUT_PLACEHOLDER')}
                       autoComplete="new-password"
                       value={password}
                       onChange={handlePasswordChange}
                     />
                   </div>
+                  <div className="flex items-center">
+                  <HiMiniInformationCircle className='mr-1 text-lg text-pointColor1'/>
+                  <span className="text-blackColor text-sm">{m('PASSWORD_CONDITION')}</span>
+                  </div>
                 </div>
                 <div>
-                  <label htmlFor="confirm-password" className="text-md font-bold text-blackColor">비밀번호 확인</label>
+                  <label htmlFor="confirm-password" className="text-md font-bold text-blackColor">{m('PASSWORD_CONFIRM_INPUT')}</label>
                   <div className="mt-1">
                     <input
                       id="confirm-password"
                       type="password"
                       required
-                      className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="비밀번호를 다시 입력해주세요"
+                      className="w-full px-3 py-4 mb-2 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                      placeholder={m('PASSWORD_CONFIRM_INPUT_PLACEHOLDER')}
                       autoComplete="new-password"
                       value={confirmPassword}
                       onChange={handleConfirmPasswordChange}
                     />
+                    {password === confirmPassword && confirmPassword.length > 0 ? (
+                    <div className={`flex items-center animate-fadein`}><FaCheckCircle className="text-green-500 text-lg mr-1"/><span className="text-sm text-green-500">{m('IF_PW_MATCH')}</span></div>
+                  ) : password !== confirmPassword && confirmPassword.length > 0 && (
+                    <div className={`flex items-center animate-fadein`}><IoIosCloseCircle className="text-red-500 text-lg mr-1"/><span className="text-sm text-red-500">{m('IF_PW_NOT_MATCH')}</span></div>
+                  )}
                   </div>
                 </div>
               </div>
@@ -166,7 +186,7 @@ const TermsPage = () => {
                 )}
               </span>
               <label htmlFor="privacy-checkbox" className="ml-2 text-md font-bold">
-              <span className="text-pointColor1 text-md font-bold">[필수]</span> 뭔말Easy? 이용약관
+              <span className="text-pointColor1 text-md mr-1 font-bold">{m('REQUIRED')}</span>{m('TERMS_LABEL')}
                 </label>
             </label>
             </div>
@@ -190,7 +210,7 @@ const TermsPage = () => {
                 )}
               </span>
               <label htmlFor="privacy-checkbox" className="ml-2 text-md font-bold">
-                <span className="text-pointColor1 text-md font-bold">[필수]</span> 개인정보 수집 및 이용
+                <span className="text-pointColor1 text-md mr-1 font-bold">{m('REQUIRED')}</span>{m('PRIVACY_POLICY_LABEL')}
               </label>
             </label>
             </div>
@@ -214,7 +234,7 @@ const TermsPage = () => {
                 )}
               </span> 
               <label htmlFor="all-checkbox" className="ml-2 text-md font-bold leading-tight">
-                전체 동의하기
+              {m('AGREE_ALL')}
               </label>
               </label>
             </div>
@@ -223,7 +243,7 @@ const TermsPage = () => {
                 type="submit"
                 className="w-full px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-bold text-white bg-pointColor1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pointColor1"
               >
-                가입 완료
+              {m('SIGN_UP_BUTTON')}
               </button>
             </div>
           </form>
