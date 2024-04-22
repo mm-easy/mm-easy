@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getOptions } from '@/api/question_options';
+import { Dispatch, SetStateAction } from 'react';
 import type { Answer, Option } from '@/types/quizzes';
+import CorrectAnswerBtn from './CorrectAnswerBtn';
 
 const Options = ({
   id: questionId,
@@ -30,6 +32,8 @@ const Options = ({
 
   const options = data as Option[];
 
+  const correctAnswer = options.find((option) => option.is_answer === true)?.content;
+
   return (
     <section className="w-full flex flex-col gap-4">
       {options.map((option) => {
@@ -56,6 +60,7 @@ const Options = ({
           </label>
         );
       })}
+      {resultMode && <CorrectAnswerBtn answer={correctAnswer} />}
     </section>
   );
 };
