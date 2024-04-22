@@ -57,7 +57,7 @@ const RankingSection = () => {
           <SlRefresh className="hover:animate-spin-slow" />
         </button>
       </div>
-      <section className="flex" key={refreshKey}>
+      <section className="flex bg-sky-50" key={refreshKey}>
         <div className="w-1/3 p-8 border-r border-solid border-pointColor1">
           <div className="flex">
             <h2 className="mb-4 text-lg font-bold">{m('QUIZ_CREATOR')}</h2>
@@ -77,7 +77,7 @@ const RankingSection = () => {
                       alt="프로필 이미지"
                       width={60}
                       height={60}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover bg-white"
                     />
                   </div>
                 )}
@@ -109,7 +109,7 @@ const RankingSection = () => {
                       alt="프로필 이미지"
                       width={60}
                       height={60}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover bg-white"
                     />
                   </div>
                 )}
@@ -141,7 +141,7 @@ const RankingSection = () => {
                       alt="프로필 이미지"
                       width={60}
                       height={60}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover bg-white"
                     />
                   </div>
                 )}

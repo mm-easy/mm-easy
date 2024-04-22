@@ -8,6 +8,7 @@ import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
 import useMultilingual from '@/utils/useMultilingual';
+import { formatCommentDateToLocal } from '@/utils/date';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
@@ -21,7 +22,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const deleteCommentMutation = useDeleteComment();
 
   const { data: postCommentList } = useQuery<PostDetailCommentType[]>({
-    queryKey: ['comments'],
+    queryKey: ['comments', postId],
     queryFn: async () => {
       try {
         const data = await getComment(postId);
@@ -96,46 +97,53 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   <p>{prev.content}</p>
                 )}
               </div>
-              <div className="ml-auto">
+              <div className="flex flex-col justify-between ml-auto">
                 {profile &&
                   (profile.id === prev.author_id ? (
                     btnChange ? (
                       <>
-                        <button className="pr-2" onClick={() => handleUpdateBtn(prev.id)}>
-                          {m('COMMUNITY_COMMENT_SAVE')}
-                        </button>
-                        |
-                        <button
-                          className="pl-2"
-                          onClick={() => {
-                            setBtnChange(!btnChange);
-                            setContentChange(prev.content);
-                          }}
-                        >
-                          {m('COMMUNITY_COMMENT_CANCEL')}
-                        </button>
+                        <div className='flex justify-end'>
+                          <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
+                            {m('COMMUNITY_COMMENT_SAVE')}
+                          </button>
+                          |
+                          <button
+                            className="pl-2 font-bold"
+                            onClick={() => {
+                              setBtnChange(!btnChange);
+                              setContentChange(prev.content);
+                            }}
+                          >
+                            {m('COMMUNITY_COMMENT_CANCEL')}
+                          </button>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <button
-                          className="pr-2"
-                          onClick={() => {
-                            setBtnChange(!btnChange);
-                            setContentChange(prev.content);
-                            setNowCommentId(prev.id);
-                          }}
-                        >
-                          {m('COMMUNITY_COMMENT_EDIT')}
-                        </button>
-                        |
-                        <button className="pl-2" onClick={() => handleDeleteBtn(prev.id)}>
-                          {m('COMMUNITY_COMMENT_DELETE')}
-                        </button>
+                        <div className="flex justify-end">
+                          <button
+                            className="pr-2 font-bold"
+                            onClick={() => {
+                              setBtnChange(!btnChange);
+                              setContentChange(prev.content);
+                              setNowCommentId(prev.id);
+                            }}
+                          >
+                            {m('COMMUNITY_COMMENT_EDIT')}
+                          </button>
+                          |
+                          <button className="pl-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
+                            {m('COMMUNITY_COMMENT_DELETE')}
+                          </button>
+                        </div>
                       </>
                     )
                   ) : (
-                    <></>
+                    <div></div>
                   ))}
+                <div className='text-gray-400 mb-2'>
+                  <p>{formatCommentDateToLocal(prev.created_at)}</p>
+                </div>
               </div>
             </div>
           );
