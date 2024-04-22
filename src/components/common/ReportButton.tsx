@@ -24,16 +24,7 @@ const ReportButton = ({
       toast.warn('로그인이 필요합니다.');
       return;
     }
-
-    const report = {
-      title,
-      target_id: targetId,
-      type,
-      reported_user_id: creatorId,
-      user_id: currentUserEmail
-    };
-
-    const { data: reportHistory, error } = await supabase
+    const { data: reportHistory, error } = await supabase // 신고한 이력이 있는지 조회
       .from('reports')
       .select('*')
       .match({ user_id: currentUserEmail, target_id: targetId });
@@ -43,11 +34,29 @@ const ReportButton = ({
       return;
     }
 
-    if (reportHistory.length === 0) {
-      insertReportMutation.mutate(report);
-      toast.success('신고가 등록되었습니다.');
-    } else {
+    if (reportHistory?.length !== 0) {
+      // 이력이 있다면 알림
       toast.warn(`이미 신고한 ${type === 'quiz' ? '퀴즈' : '포스트'}입니다.`);
+    } else {
+      const reasonForReport = window.prompt('신고 사유를 입력해 주세요.'); // 없다면 사유를 받음
+
+      if (reasonForReport) {
+        const report = {
+          title,
+          target_id: targetId,
+          type,
+          reason: reasonForReport,
+          reported_user_id: creatorId,
+          user_id: currentUserEmail
+        };
+
+        insertReportMutation.mutate(report);
+        toast.success('신고가 등록되었습니다.');
+      } else if (reasonForReport === null) {
+        return;
+      } else {
+        toast.warn(`신고 사유를 입력해 주세요.`);
+      }
     }
   };
 
