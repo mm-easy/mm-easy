@@ -43,12 +43,8 @@ const DetailPost = () => {
         let data;
         if (categoryNow === '전체') {
           data = await getPostDetail(params.id);
-          queryClient.invalidateQueries({ queryKey: ['posts'] });
-          router.refresh();
         } else {
           data = await getPostCategoryDetail(categoryNow, params.id);
-          queryClient.invalidateQueries({ queryKey: ['posts'] });
-          router.refresh();
         }
         return data;
       } catch (error) {
