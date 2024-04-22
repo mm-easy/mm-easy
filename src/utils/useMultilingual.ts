@@ -20,6 +20,7 @@ import type { StringEssetType } from '@/types/langs';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 import ABOUT_STRINGS from '@/constant/locales/about/about';
+import REPORT_STRINGS from '@/constant/locales/admin/reports';
 
 export default function useMultilingual(assets: string) {
   const [lang] = useAtom(langAtom);
@@ -42,7 +43,7 @@ export default function useMultilingual(assets: string) {
   } else if (assets === 'signup') {
     assetsObject = SIGN_UP_STRINGS;
   } else if (assets === 'privacypolicy') {
-    assetsObject = PRIVACY_POLICY_STRINGS; 
+    assetsObject = PRIVACY_POLICY_STRINGS;
   } else if (assets === 'terms') {
     assetsObject = TERMS_STRINGS;
   } else if (assets === 'my-profile') {
@@ -63,6 +64,8 @@ export default function useMultilingual(assets: string) {
     assetsObject = COMMUNITY_DETAIL_STRINGS;
   } else if (assets === 'communityPost') {
     assetsObject = COMMUNITY_POST_STRINGS;
+  } else if (assets === 'report') {
+    assetsObject = REPORT_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }
