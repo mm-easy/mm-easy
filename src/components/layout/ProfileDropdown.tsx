@@ -28,7 +28,7 @@ const ProfileDropdown = () => {
   const handleLogout = async () => {
     await logout();
     setIsLoggedIn(false);
-    deleteCookie('myCookie', { path: '/' });
+    deleteCookie('PostCookie', { path: '/' });
     route.push('/');
     toast.success('로그아웃되었습니다.');
   };

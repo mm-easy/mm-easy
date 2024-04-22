@@ -122,7 +122,7 @@ export const getFilterPosts = async (category: string | null) => {
 
 export const getPostDetail = async (postId: string) => {
   try {
-    const myCookie = getCookie('myCookie');
+    const myCookie = getCookie('PostCookie');
     const { data: post, error } = await supabase
       .from('posts')
       .select(`*, profiles!inner(nickname,avatar_img_url,email)`)
@@ -140,7 +140,7 @@ export const getPostDetail = async (postId: string) => {
         if (updateError) {
           console.error('조회수 업데이트 실패:', updateError);
         }
-        setCookie('myCookie', 'post', { maxAge: 60 * 60, path: '/' });
+        setCookie('PostCookie', 'post', { maxAge: 60 * 60, path: '/' });
       }
       return getPost || [];
     }
