@@ -308,7 +308,7 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className="absolute bg-pointColor1 text-white p-2 rounded"
+                className="absolute bg-bgColor1 text-blackColor1 font-bold p-2 rounded border border-solid border-pointColor1"
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
                 {word.text}
