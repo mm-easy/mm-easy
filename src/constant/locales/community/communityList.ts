@@ -19,6 +19,10 @@ const COMMUNITY_LIST_STRINGS = {
     ko: '조회수',
     en: 'Views'
   },
+  COMMUNITY_TABLE_HEADER6: {
+    ko: '좋아요',
+    en: 'Likes'
+  },
   COMMUNITY_CATEGORY_ALL: {
     ko: '전체',
     en: 'All'
