@@ -13,7 +13,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostEditButton } from '@/components/common/EditButton';
 import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { useAuth } from '@/hooks/useAuth';
@@ -34,6 +34,8 @@ const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();
   const m = useMultilingual('communityDetail');
 
+  const queryClient = useQueryClient();
+
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
     queryFn: async () => {
@@ -41,8 +43,12 @@ const DetailPost = () => {
         let data;
         if (categoryNow === '전체') {
           data = await getPostDetail(params.id);
+          queryClient.invalidateQueries({ queryKey: ['posts'] });
+          router.refresh();
         } else {
           data = await getPostCategoryDetail(categoryNow, params.id);
+          queryClient.invalidateQueries({ queryKey: ['posts'] });
+          router.refresh();
         }
         return data;
       } catch (error) {
@@ -136,7 +142,7 @@ const DetailPost = () => {
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
               <p className="text-sm">
-                {m('COMMUNITY_VIEWS')} {post.view_count}
+                {m('COMMUNITY_VIEWS')} {post.view_count?.length ?? 0}
               </p>
             </div>
             <h1 className="text-3xl py-2 font-bolder font-bold text-blackColor ">{post.title}</h1>

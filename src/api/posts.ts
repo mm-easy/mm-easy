@@ -122,7 +122,6 @@ export const getFilterPosts = async (category: string | null) => {
 
 export const getPostDetail = async (postId: string) => {
   try {
-    const myCookie = getCookie('PostCookie');
     const { data: post, error } = await supabase
       .from('posts')
       .select(`*, profiles!inner(nickname,avatar_img_url,email)`)
@@ -131,17 +130,24 @@ export const getPostDetail = async (postId: string) => {
       throw error;
     } else {
       const getPost = post[0];
-      if (getPost && !myCookie) {
-        const { error: updateError } = await supabase
-          .from('posts')
-          .update({ view_count: (getPost.view_count ?? 0) + 1 })
-          .eq('id', postId);
+      let myCookie = getCookie('PostCookie');
+      if (!myCookie) {
+        const cookieValue = crypto.randomUUID();
+        setCookie('PostCookie', cookieValue, { maxAge: 60 * 60, path: '/' });
+        myCookie = cookieValue;
+      }
+
+      const viewArray = getPost.view_count || [];
+      const cookieIncludes = viewArray.includes(myCookie);
+      if (getPost && !cookieIncludes) {
+        const newView = [...viewArray, myCookie];
+        const { error: updateError } = await supabase.from('posts').update({ view_count: newView }).eq('id', postId);
 
         if (updateError) {
           console.error('조회수 업데이트 실패:', updateError);
         }
-        setCookie('PostCookie', 'post', { maxAge: 60 * 60, path: '/' });
       }
+
       return getPost || [];
     }
   } catch (error) {
@@ -160,11 +166,18 @@ export const getPostCategoryDetail = async (categoryNow: string | null, postId: 
       throw error;
     } else {
       const getPost = post[0];
-      if (getPost) {
-        const { error: updateError } = await supabase
-          .from('posts')
-          .update({ view_count: (getPost.view_count ?? 0) + 1 })
-          .eq('id', postId);
+      let myCookie = getCookie('PostCookie');
+      if (!myCookie) {
+        const cookieValue = crypto.randomUUID();
+        setCookie('PostCookie', cookieValue, { maxAge: 60 * 60, path: '/' });
+        myCookie = cookieValue;
+      }
+
+      const viewArray = getPost.view_count || [];
+      const cookieIncludes = viewArray.includes(myCookie);
+      if (getPost && !cookieIncludes) {
+        const newView = [...viewArray, myCookie];
+        const { error: updateError } = await supabase.from('posts').update({ view_count: newView }).eq('id', postId);
 
         if (updateError) {
           console.error('조회수 업데이트 실패:', updateError);
