@@ -17,8 +17,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import { SetStateAction, useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
+import { SetStateAction } from 'jotai';
 import useMultilingual from '@/utils/useMultilingual';
 
 const QuizForm = ({
@@ -58,8 +57,7 @@ const QuizForm = ({
 }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { getCurrentUserProfile } = useAuth();
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   useConfirmPageLeave();
   const router = useRouter();

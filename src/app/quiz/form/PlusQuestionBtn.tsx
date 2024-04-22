@@ -1,6 +1,4 @@
-import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
 
 interface PlusQuestionBtnProps {
   disabled: boolean;
@@ -8,8 +6,7 @@ interface PlusQuestionBtnProps {
 }
 
 const PlusQuestionBtn: React.FC<PlusQuestionBtnProps> = ({ disabled, onClick }) => {
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quizEditor');
+  const m = useMultilingual('quizEditor');
 
   return (
     <div className="flex justify-center">

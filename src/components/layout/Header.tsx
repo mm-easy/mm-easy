@@ -13,13 +13,15 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom, langAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/api/users';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'header');
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual('header');
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {

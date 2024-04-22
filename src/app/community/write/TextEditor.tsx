@@ -1,5 +1,6 @@
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill, { Quill } from 'react-quill';
+import useMultilingual from '@/utils/useMultilingual';
 import { ReactElement, useMemo, useRef } from 'react';
 import { uploadPostImageToStorage } from '@/api/posts';
 import { ImageActions } from '@xeger/quill-image-actions';
@@ -15,6 +16,7 @@ interface TextEditorProps {
 
 const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
   const quillRef = useRef<any | null>(null);
+  const m = useMultilingual('communityPost');
 
   // 이미지 업로드
   const imageHandler = async () => {
@@ -56,7 +58,7 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
         container: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' },],
+          [{ list: 'ordered' }, { list: 'bullet' }],
           ['link', 'image'],
           [{ align: [] }, { color: [] }, { background: [] }]
         ],
@@ -69,7 +71,6 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
   );
 
   const formats = [
-    // 'float',
     'height',
     'width',
     'header',
@@ -96,7 +97,7 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
         onChange={onChange}
         modules={modules}
         formats={formats}
-        placeholder="내용을 입력해 주세요."
+        placeholder={m('COMMUNITY_POST_CONTENT_PLACEHOLDER')}
         style={{ height: '400px' }}
       />
     </div>

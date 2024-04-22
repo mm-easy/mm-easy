@@ -1,10 +1,11 @@
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
@@ -17,6 +18,7 @@ type Props = {
 
 const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
   const { getCurrentUserProfile } = useAuth();
+  const m = useMultilingual('communityPost');
 
   const baseCategories = [
     { id: 'question', value: '질문', label: '질문' },
@@ -91,7 +93,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
           onChange={(event) => {
             setTitle(event.target.value);
           }}
-          placeholder=" 제목을 입력하세요."
+          placeholder={m('COMMUNITY_POST_TITLE_PLACEHOLDER')}
           maxLength={36}
         />
       </div>
@@ -99,8 +101,8 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
         <TextEditor value={textEditorValue} onChange={setTextEditorValue} />
       </div>
       <div className="mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
-        <CancelButton text="취소" onClick={onCancel} width="w-[15%]" border="border-2" />
-        <SubmitButton text="제출" width="w-[15%]" />
+        <CancelButton text={m('COMMUNITY_POST_CANCEL')} onClick={onCancel} width="w-[15%]" border="border-2" />
+        <SubmitButton text={m('COMMUNITY_POST_SUBMIT')} width="w-[15%]" />
       </div>
     </form>
   );
