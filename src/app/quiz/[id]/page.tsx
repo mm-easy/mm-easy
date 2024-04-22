@@ -165,7 +165,7 @@ const QuizTryPage = () => {
 
       if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
-        toast.warn('모든 문제를 풀어주세요!');
+        toast.warn(m('NOTIFY_TO_SOLVE'));
       } else {
         let countCorrect = 0;
         for (const usersAnswer of usersAnswers) {
@@ -220,11 +220,11 @@ const QuizTryPage = () => {
 
   /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    if (!window.confirm(m('ASK_TO_DELETE'))) return;
     deleteQuizMutation.mutateAsync(id, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
-        toast.success('퀴즈가 삭제되었습니다.');
+        toast.success(m('NOTIFY_TO_DELETE'));
         router.replace('/quiz/list');
       }
     });
@@ -277,7 +277,7 @@ const QuizTryPage = () => {
                   onClick={() => handleEditQuiz(id as string)}
                 /> */}
                 <CancelButton
-                  text="삭제"
+                  text={m('DELETE_BTN')}
                   width="w-44"
                   height="h-12"
                   border="border-1"
