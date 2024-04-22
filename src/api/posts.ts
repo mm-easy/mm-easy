@@ -1,4 +1,6 @@
 import { supabase } from '@/utils/supabase/supabase';
+import { setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 
 // posts 테이블에서 게시글 가져오기
 export const getPosts = async () => {
@@ -13,8 +15,8 @@ export const getPosts = async () => {
 
     // 데이터가 성공적으로 로드된 후, "공지" 카테고리를 최상단으로 재정렬
     if (posts) {
-      const noticePosts = posts.filter(post => post.category === '공지');
-      const otherPosts = posts.filter(post => post.category !== '공지');
+      const noticePosts = posts.filter((post) => post.category === '공지');
+      const otherPosts = posts.filter((post) => post.category !== '공지');
       return [...noticePosts, ...otherPosts];
     }
 
@@ -25,12 +27,11 @@ export const getPosts = async () => {
   }
 };
 
-
 export const getRecentPosts = async () => {
   const { data: posts, error } = await supabase
     .from('posts')
     .select('*')
-    .neq('category', '공지') 
+    .neq('category', '공지')
     .is('deleted_at', null)
     .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
     .limit(3); // 3개의 게시글만 가져옴
@@ -43,7 +44,7 @@ export const getRecentNotice = async () => {
   const { data: posts, error } = await supabase
     .from('posts')
     .select('*')
-    .eq('category', '공지') 
+    .eq('category', '공지')
     .is('deleted_at', null)
     .order('created_at', { ascending: false }) // 최신 게시글부터 정렬
     .limit(3); // 3개의 게시글만 가져옴
@@ -121,6 +122,7 @@ export const getFilterPosts = async (category: string | null) => {
 
 export const getPostDetail = async (postId: string) => {
   try {
+    const myCookie = getCookie('myCookie');
     const { data: post, error } = await supabase
       .from('posts')
       .select(`*, profiles!inner(nickname,avatar_img_url,email)`)
@@ -129,7 +131,7 @@ export const getPostDetail = async (postId: string) => {
       throw error;
     } else {
       const getPost = post[0];
-      if (getPost) {
+      if (getPost && !myCookie) {
         const { error: updateError } = await supabase
           .from('posts')
           .update({ view_count: (getPost.view_count ?? 0) + 1 })
@@ -138,6 +140,7 @@ export const getPostDetail = async (postId: string) => {
         if (updateError) {
           console.error('조회수 업데이트 실패:', updateError);
         }
+        setCookie('myCookie', 'post', { maxAge: 60 * 60, path: '/' });
       }
       return getPost || [];
     }
