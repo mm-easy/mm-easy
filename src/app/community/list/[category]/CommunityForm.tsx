@@ -9,6 +9,7 @@ import { getCommentCount } from '@/api/comment';
 import { useQueries } from '@tanstack/react-query';
 
 import type { CommunityFormProps } from '@/types/posts';
+import { getLike } from '@/api/likes';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
@@ -50,6 +51,13 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     }))
   });
 
+  const likeQueries = useQueries({
+    queries: sortedItems.map((item) => ({
+      queryKey: ['like', item.id],
+      queryFn: () => getLike(item.id)
+    }))
+  });
+
   const totalSet = Math.ceil(Math.ceil(totalNum / pageRange) / btnRange);
   const currentSet = Math.ceil(currentPage / btnRange);
   const startPage = (currentSet - 1) * btnRange + 1;
@@ -61,18 +69,19 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="pl-6 p-4 w-[10%]">{m('COMMUNITY_TABLE_HEADER1')}</th>
+              <th className="pl-6 p-4 w-[9%]">{m('COMMUNITY_TABLE_HEADER1')}</th>
               <th className="w-[16%]">{m('COMMUNITY_TABLE_HEADER2')}</th>
-              <th className="w-[56%]">{m('COMMUNITY_TABLE_HEADER3')}</th>
+              <th className="w-[50%]">{m('COMMUNITY_TABLE_HEADER3')}</th>
               <th className="w-[13%]">{m('COMMUNITY_TABLE_HEADER4')}</th>
-              <th className="w-[5%]">{m('COMMUNITY_TABLE_HEADER5')}</th>
+              <th className="w-[7%]">{m('COMMUNITY_TABLE_HEADER5')}</th>
+              <th className="w-[5%]">{m('COMMUNITY_TABLE_HEADER6')}</th>
             </tr>
           </thead>
           <tbody>
             {sortedItems?.length > 0 ? (
               sortedItems.map((item, idx) => (
                 <tr
-                  className={`cursor-pointer text-[calc(1vh+8px)] ${
+                  className={`cursor-pointer text-[calc(1vh+7px)] ${
                     item['category'] === '공지'
                       ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1'
                       : 'bg-white border-grayColor2 border-y border-solid '
@@ -85,11 +94,12 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                   <td>
                     <span>{item.title}</span>
                     {(commentCounts[idx]?.data ?? 0) > 0 && (
-                      <span className="text-pointColor1">({commentCounts[idx].data})</span>
+                      <span className="text-pointColor1"> ({commentCounts[idx].data})</span>
                     )}
                   </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                   <td>{item['view_count']}</td>
+                  <td>{likeQueries[idx].data?.length ?? 0}</td>
                 </tr>
               ))
             ) : (

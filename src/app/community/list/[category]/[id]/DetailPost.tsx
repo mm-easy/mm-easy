@@ -135,7 +135,7 @@ const DetailPost = () => {
           <div>
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
-              <p className="text-sm">
+              <p className="text-sm font-semibold">
                 {m('COMMUNITY_VIEWS')} {post.view_count}
               </p>
             </div>
@@ -186,10 +186,10 @@ const DetailPost = () => {
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             ></p>
             <div className="py-4 flex justify-between">
-              <div>
+              <div className='font-semibold'>
                 <Like postId={params.id} profile={profile} />
               </div>
-              <div>
+              <div className='font-semibold'>
                 {profile && profile.email !== post.profiles.email && (
                   <ReportButton
                     targetId={params.id}

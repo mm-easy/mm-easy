@@ -16,7 +16,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const deleteLike = useDeleteLike();
 
   const { data: nowLike = [] } = useQuery<LikeType[]>({
-    queryKey: ['like'],
+    queryKey: ['like', postId],
     queryFn: async () => {
       try {
         const data = await getLike(postId);
