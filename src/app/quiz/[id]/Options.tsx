@@ -35,7 +35,7 @@ const Options = ({
       {options.map((option) => {
         const { id, content, is_answer } = option;
         return (
-          <div
+          <label
             key={id}
             className={`pl-4 py-[9px] flex gap-4 border-solid border ${
               resultMode && usersAnswer?.option_id === id
@@ -52,8 +52,8 @@ const Options = ({
               onChange={() => onChange(questionId, is_answer, id)}
               checked={usersAnswer?.option_id === id}
             />
-            <p>{content}</p>
-          </div>
+            {content}
+          </label>
         );
       })}
     </section>
