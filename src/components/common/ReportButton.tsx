@@ -1,5 +1,6 @@
 import { useSubmitReport } from '@/app/quiz/[id]/mutations';
 import { supabase } from '@/utils/supabase/supabase';
+import useMultilingual from '@/utils/useMultilingual';
 import { toast } from 'react-toastify';
 
 const ReportButton = ({
@@ -17,11 +18,12 @@ const ReportButton = ({
   title: string;
   creatorId: string;
 }) => {
+  const m = useMultilingual('report');
   const insertReportMutation = useSubmitReport();
 
   const handleReport = async () => {
     if (!currentUserEmail) {
-      toast.warn('로그인이 필요합니다.');
+      toast.warn(m('NOTIFY_TO_LOGIN'));
       return;
     }
     const { data: reportHistory, error } = await supabase // 신고한 이력이 있는지 조회
@@ -30,15 +32,17 @@ const ReportButton = ({
       .match({ user_id: currentUserEmail, target_id: targetId });
 
     if (error) {
-      toast.warn('신고 이력 조회에 오류가 있습니다.');
+      console.log('신고 이력 조회에 오류가 있습니다.');
       return;
     }
 
     if (reportHistory?.length !== 0) {
       // 이력이 있다면 알림
-      toast.warn(`이미 신고한 ${type === 'quiz' ? '퀴즈' : '포스트'}입니다.`);
+      toast.warn(
+        `${m('NOTIFY_ALREADY_REPORT1')}${type === 'quiz' ? m('NOTIFY_ALREADY_REPORT_QUIZ') : m('NOTIFY_ALREADY_REPORT_POST')}`
+      );
     } else {
-      const reasonForReport = window.prompt('신고 사유를 입력해 주세요.'); // 없다면 사유를 받음
+      const reasonForReport = window.prompt(m('ASK_TO_REASON')); // 없다면 사유를 받음
 
       if (reasonForReport) {
         const report = {
@@ -51,11 +55,11 @@ const ReportButton = ({
         };
 
         insertReportMutation.mutate(report);
-        toast.success('신고가 등록되었습니다.');
+        toast.success(m('NOTIFY_TO_REPORT'));
       } else if (reasonForReport === null) {
         return;
       } else {
-        toast.warn(`신고 사유를 입력해 주세요.`);
+        toast.warn(m('ASK_TO_REASON'));
       }
     }
   };
