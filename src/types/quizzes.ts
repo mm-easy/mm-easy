@@ -6,7 +6,6 @@ export type Quiz = {
   title: string;
   info: string;
   thumbnail_img_url: string | null;
-  nextCursor: string | null;
 };
 
 export type Option = {
