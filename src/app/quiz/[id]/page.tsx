@@ -26,6 +26,7 @@ import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
+import CorrectAnswerBtn from './CorrectAnswerBtn';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -301,7 +302,7 @@ const QuizTryPage = () => {
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
-              const answer = usersAnswer ? (usersAnswer.answer as string) : '';
+              const answer = usersAnswer && (usersAnswer.answer as string);
 
               return (
                 pageMode && (
@@ -312,7 +313,7 @@ const QuizTryPage = () => {
                         {questionOrder + 1}/{questions.length}
                       </h3>
                     </div>
-                    {img_url !== null ? (
+                    {img_url !== null && (
                       <Image
                         src={`${storageUrl}/question-imgs/${img_url}`}
                         alt="문제 이미지"
@@ -320,23 +321,24 @@ const QuizTryPage = () => {
                         height={200}
                         className="h-[200px] mb-2 object-cover rounded-md"
                       />
-                    ) : (
-                      <></>
                     )}
                     {type === QuestionType.objective ? (
                       <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
                     ) : (
                       <div className="w-full relative">
                         {resultMode ? (
-                          <p
-                            className={`w-full pl-4 py-[9px] border-solid border ${
-                              usersAnswer?.answer === correct_answer
-                                ? ' border-pointColor1 bg-bgColor2'
-                                : 'border-pointColor2 bg-bgColor3'
-                            } rounded-md`}
-                          >
-                            {usersAnswer?.answer}
-                          </p>
+                          <>
+                            <p
+                              className={`w-full mb-4 pl-4 py-[9px] border-solid border ${
+                                usersAnswer?.answer === correct_answer
+                                  ? ' border-pointColor1 bg-bgColor2'
+                                  : 'border-pointColor2 bg-bgColor3'
+                              } rounded-md`}
+                            >
+                              {usersAnswer?.answer}
+                            </p>
+                            <CorrectAnswerBtn answer={correct_answer} />
+                          </>
                         ) : (
                           <>
                             <input
