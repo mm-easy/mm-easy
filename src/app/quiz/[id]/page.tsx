@@ -37,7 +37,6 @@ const QuizTryPage = () => {
   const [page, setPage] = useState(0);
   const [score, setScore] = useState(0);
   const [resultMode, setResultMode] = useState(false);
-  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
@@ -303,7 +302,7 @@ const QuizTryPage = () => {
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
-              const answer = usersAnswer ? (usersAnswer.answer as string) : '';
+              const answer = usersAnswer && (usersAnswer.answer as string);
 
               return (
                 pageMode && (
@@ -338,13 +337,7 @@ const QuizTryPage = () => {
                             >
                               {usersAnswer?.answer}
                             </p>
-                            <section className="h-5 flex justify-end gap-2 leading-5 text-pointColor1">
-                              {showCorrectAnswer && <p>{correct_answer}</p>}
-                              <CorrectAnswerBtn
-                                showCorrectAnswer={showCorrectAnswer}
-                                setShowCorrectAnswer={setShowCorrectAnswer}
-                              />
-                            </section>
+                            <CorrectAnswerBtn answer={correct_answer} />
                           </>
                         ) : (
                           <>
