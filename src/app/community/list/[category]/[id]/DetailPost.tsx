@@ -13,7 +13,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostEditButton } from '@/components/common/EditButton';
 import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { useAuth } from '@/hooks/useAuth';
@@ -33,6 +33,8 @@ const DetailPost = () => {
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
   const m = useMultilingual('communityDetail');
+
+  const queryClient = useQueryClient();
 
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
