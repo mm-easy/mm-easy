@@ -35,6 +35,10 @@ const QUIZ_TRY_STRINGS = {
     ko: '다시 풀기',
     en: 'Solve it again'
   },
+  DELETE_BTN: {
+    ko: '삭제하기',
+    en: 'Delete'
+  },
   RESULT_TEXT1: {
     ko: '개 중에 ',
     en: ' out of '
@@ -45,7 +49,19 @@ const QUIZ_TRY_STRINGS = {
   },
   REPORT_BTN: {
     ko: '퀴즈에 오류가 있나요?',
-    en: 'Is there an error in the Quiz?'
+    en: 'Is there an error in the quiz?'
+  },
+  NOTIFY_TO_SOLVE: {
+    ko: '모든 문제를 풀어주세요!',
+    en: 'Please solve all the questions!'
+  },
+  ASK_TO_DELETE: {
+    ko: '해당 퀴즈를 삭제하시겠습니까?',
+    en: 'Delete a quiz?'
+  },
+  NOTIFY_TO_DELETE: {
+    ko: '퀴즈가 삭제되었습니다.',
+    en: 'Quiz has been deleted.'
   }
 };
 
