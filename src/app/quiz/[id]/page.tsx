@@ -5,35 +5,38 @@ import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { CancelButton } from '@/components/common/FormButtons';
+import { useAtom } from 'jotai';
+import { useAuth } from '@/hooks/useAuth';
+import { langAtom } from '@/store/store';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
+import { CancelButton } from '@/components/common/FormButtons';
 import { supabase } from '@/utils/supabase/supabase';
 import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useAuth } from '@/hooks/useAuth';
 import { useDeleteQuiz, useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+
 import Header from './Header';
 import Creator from './Creator';
 import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
-import useMultilingual from '@/utils/useMultilingual';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
   const m = useMultilingual('quiz-try');
+
   const { id } = useParams<Params>();
+  const router = useRouter();
+  const [page, setPage] = useState(0);
+  const [score, setScore] = useState(0);
   const [resultMode, setResultMode] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
-  const [score, setScore] = useState(0);
-  const [page, setPage] = useState(0);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   const { getCurrentUserProfile } = useAuth();
@@ -44,7 +47,6 @@ const QuizTryPage = () => {
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
   const deleteQuizMutation = useDeleteQuiz();
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
