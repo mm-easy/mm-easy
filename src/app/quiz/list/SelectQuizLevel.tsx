@@ -84,6 +84,7 @@ const SelectQuizLevel = () => {
     retry: 0
   });
 
+  if (isLoading) return <LoadingImg height="84vh" />;
   if (!allQuizzes) return <LoadingImg height="84vh" />;
 
   /** 클릭하여 퀴즈 레벨 필터링 */
