@@ -99,14 +99,16 @@ export const getQuizzes = async () => {
 
 /** quizzes 테이블에서 페이지 나뉜 전체 데이터 가져오기 */
 const PAGE_SIZE = 8;
-export const getQuizzesPaged = async (pageParam: number) => {
+export const getQuizzesPaged = async (pageParam: number, level: number | null) => {
   try {
-    const { data, error } = await supabase
-      .from('quizzes')
-      .select('*')
-      .is('deleted_at', null)
-      .order('created_at', { ascending: false })
-      .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1);
+    let query = supabase.from('quizzes').select('*').is('deleted_at', null).order('created_at', { ascending: false });
+
+    // If level is not null, add a filter condition
+    if (level !== null) {
+      query = query.eq('level', level);
+    }
+
+    const { data, error } = await query.range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1);
     if (error) throw error;
     return data;
   } catch (error) {

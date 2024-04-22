@@ -73,11 +73,10 @@ const SelectQuizLevel = () => {
     data: allQuizzes,
     isLoading,
     hasNextPage,
-    fetchNextPage,
-    ...rest
+    fetchNextPage
   } = useInfiniteQuery({
-    queryKey: ['quizzes'],
-    queryFn: ({ pageParam }) => getQuizzesPaged(pageParam),
+    queryKey: ['quizzes', selectedLevel],
+    queryFn: ({ pageParam }) => getQuizzesPaged(pageParam, selectedLevel),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages, lastPageParam) => {
       return lastPageParam + 1;
@@ -89,12 +88,6 @@ const SelectQuizLevel = () => {
 
   /** 클릭하여 퀴즈 레벨 필터링 */
   const handleSelectLevel = (level: number | null) => {
-    if (level === null) {
-      setQuizLevelSelected(allQuizzes.pages.flatMap((page) => page));
-    } else {
-      const filteredQuizzes = allQuizzes.pages.flatMap((page) => page).filter((item) => item.level === level);
-      setQuizLevelSelected(filteredQuizzes);
-    }
     setSelectedLevel(level);
   };
 
@@ -111,13 +104,6 @@ const SelectQuizLevel = () => {
           </p>
         </div>
         <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
-          <button
-            onClick={() => {
-              fetchNextPage();
-            }}
-          >
-            테스트
-          </button>
           <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" />
         </div>
         <div className="flex items-end overflow-hidden mt-30">
@@ -132,8 +118,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -149,8 +135,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -166,8 +152,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
