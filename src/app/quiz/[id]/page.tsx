@@ -28,7 +28,7 @@ import useMultilingual from '@/utils/useMultilingual';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'quiz-try');
+  const m = useMultilingual('quiz-try');
   const { id } = useParams<Params>();
   const [resultMode, setResultMode] = useState(false);
   const [usersAnswers, setUsersAnswers] = useState<Answer[]>([]);
@@ -298,7 +298,6 @@ const QuizTryPage = () => {
               const { id, title, type, img_url, correct_answer } = question;
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
-
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
               const answer = usersAnswer ? (usersAnswer.answer as string) : '';
 

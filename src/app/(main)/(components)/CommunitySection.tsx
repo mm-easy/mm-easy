@@ -4,12 +4,9 @@ import useMultilingual from '@/utils/useMultilingual';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 const CommunitySection = () => {
-  const [lang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'community-section');
+  const m = useMultilingual('community-section');
 
   const { data: posts, isLoading: postsLoading } = useQuery({
     queryKey: ['recentPosts'],
