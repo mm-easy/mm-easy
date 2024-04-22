@@ -160,7 +160,7 @@ const QuizFormPage = () => {
 
       const insertQuizResult = await insertQuizMutation.mutateAsync(newQuiz);
 
-      // 변수 선언하여 성공 여부 체크
+      // _app 성공 여부 체크
       let success = true;
 
       // questions 배열을 순회하면서 각 질문 처리

@@ -139,8 +139,9 @@ const TypingGamePage = () => {
   }, [lives, score, user]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setInput(e.target.value);
-  };
+  }; // input에 ref 걸어서 focus 유지하기
 
   useEffect(() => {
     if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
