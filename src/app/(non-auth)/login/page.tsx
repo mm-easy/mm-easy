@@ -19,7 +19,7 @@ const LoginPage = () => {
   const { signIn, loading, error, signInWithGoogle, signInWithKakao } = useAuth();
   const router = useRouter();
   const [lang, setLang] = useAtom(langAtom);
-  const m = useMultilingual(lang, 'login');
+  const m = useMultilingual('login');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
