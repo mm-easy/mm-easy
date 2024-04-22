@@ -97,6 +97,27 @@ export const getQuizzes = async () => {
   }
 };
 
+/** quizzes 테이블에서 페이지 나뉜 전체 데이터 가져오기 */
+const PAGE_SIZE = 8;
+export const getQuizzesPaged = async (pageParam: number, level: number | null) => {
+  try {
+    let query = supabase.from('quizzes').select('*').is('deleted_at', null).order('created_at', { ascending: false });
+
+    // If level is not null, add a filter condition
+    if (level !== null) {
+      query = query.eq('level', level);
+    }
+
+    const { data, error } = await query.range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('퀴즈 목록 받아오기 실패', error);
+    alert('일시적으로 퀴즈 목록을 받아오지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
 /** quizzes 테이블에서 해당 퀴즈 삭제하기 */
 export const deleteQuiz = async (id: string) => {
   try {

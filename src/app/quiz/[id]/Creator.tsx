@@ -28,7 +28,7 @@ const Creator = ({ creator, creatorText }: { creator: string; creatorText: strin
 
   return (
     <div>
-      <h4>{creatorText}</h4>
+      <h4 className="pb-1 font-semibold">{creatorText}</h4>
       <p>{nickname}</p>
     </div>
   );
