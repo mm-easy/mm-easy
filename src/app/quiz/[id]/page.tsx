@@ -260,7 +260,7 @@ const QuizTryPage = () => {
             <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
               <Creator creator={creator_id} creatorText={m('CREATOR')} />
               <div>
-                <h4>{m('DATE_CREATED')}</h4>
+                <h4 className="pb-1 font-semibold">{m('DATE_CREATED')}</h4>
                 <p>{formatToLocaleDateTimeString(created_at)}</p>
               </div>
             </section>
