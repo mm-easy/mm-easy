@@ -56,7 +56,7 @@ const config: Config = {
             opacity: 1 as any,
             transform: 'translateY(0)'
           }
-        }
+        },
       }
     },
     backgroundSize: { md: '80%', cover: 'cover' },

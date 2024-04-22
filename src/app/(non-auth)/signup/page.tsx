@@ -1,10 +1,13 @@
 'use client';
 import Terms from '@/constant/Terms';
 import PrivacyPolicy from '@/constant/PrivacyPolicy';
+import useMultilingual from '@/utils/useMultilingual';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const TermsPage = () => {
   const [allChecked, setAllChecked] = useState(false);
@@ -15,6 +18,8 @@ const TermsPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const { signUp, error } = useAuth();
   const router = useRouter();
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'signup');
 
   useEffect(() => {
     setTermsChecked(allChecked);
@@ -105,7 +110,7 @@ const TermsPage = () => {
                       type="email"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="이메일을 입력해주세요"
+                      placeholder={m('EMAIL_INPUT_PLACEHOLDER')}
                       autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -120,7 +125,7 @@ const TermsPage = () => {
                       type="password"
                       required
                       className="w-full px-3 py-4 rounded-md border border-pointColor1 shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                      placeholder="비밀번호를 입력해주세요 ( 영문,숫자,특수문자 조합 8자 이상 )"
+                      placeholder={m('PASSWORD_INPUT_PLACEHOLDER')}
                       autoComplete="new-password"
                       value={password}
                       onChange={handlePasswordChange}

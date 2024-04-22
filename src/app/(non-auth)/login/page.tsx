@@ -1,12 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import useMultilingual from '@/utils/useMultilingual';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
 import { SiKakaotalk } from 'react-icons/si';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 import Image from 'next/image';
 
 const LoginPage = () => {
@@ -15,6 +18,8 @@ const LoginPage = () => {
   const [showPasswordImage, setShowPasswordImage] = useState(false);
   const { signIn, loading, error, signInWithGoogle, signInWithKakao } = useAuth();
   const router = useRouter();
+  const [lang, setLang] = useAtom(langAtom);
+  const m = useMultilingual(lang, 'login');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,9 +105,10 @@ const LoginPage = () => {
                 </div>
               </div>
               {error && <div className="text-red-500">{error}</div>}
-              <div className="flex mt-6 justify-between">
-                <Link className="text-sm font-medium text-pointColor1 hover:underline" href="/signup">
-                  회원가입
+              <div className="flex mt-6 text-sm">
+              <span className='mr-2'>{m('SIGN_UP_SPAN')}</span>
+                <Link className="text-pointColor1 font-bold underline" href="/signup">
+                {m('SIGN_UP_BUTTON')}
                 </Link>
               </div>
               <div>
@@ -111,7 +117,7 @@ const LoginPage = () => {
                   className="w-full px-4 py-5 rounded-md text-white bg-pointColor1 shadow hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-black"
                   disabled={loading}
                 >
-                  로그인
+                  {m('LOG_IN_BUTTON')}
                 </button>
               </div>
             </form>
@@ -121,7 +127,7 @@ const LoginPage = () => {
                 className="flex items-center justify-center w-full px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
               >
                 <FcGoogle className="mr-2" size="2em" />
-                Google 로그인
+                {m('GOOGLE_LOGIN_BUTTON')}
               </button>
               {/* <button
                 onClick={handleKakaoSignIn}

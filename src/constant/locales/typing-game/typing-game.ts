@@ -61,7 +61,7 @@ const TYPING_GAME_STRINGS = {
       },
       MODAL_BUTTON2: {
         ko: '로그인 하러가기',
-        en: 'Go to login'
+        en: 'Go to Login'
       }
 };
 
