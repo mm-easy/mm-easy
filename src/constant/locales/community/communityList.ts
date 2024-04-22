@@ -19,6 +19,10 @@ const COMMUNITY_LIST_STRINGS = {
     ko: '조회수',
     en: 'Views'
   },
+  COMMUNITY_TABLE_HEADER6: {
+    ko: '좋아요',
+    en: 'Likes'
+  },
   COMMUNITY_CATEGORY_ALL: {
     ko: '전체',
     en: 'All'
@@ -49,7 +53,7 @@ const COMMUNITY_LIST_STRINGS = {
   },
   COMMUNITY_CREATE_POST: {
     ko: '글쓰기',
-    en: 'Writing'
+    en: 'Write'
   },
   COMMUNITY_NICKNAME_UNKNOWN: {
     ko: '알 수 없음',
