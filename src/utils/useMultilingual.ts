@@ -21,6 +21,7 @@ import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 import ABOUT_STRINGS from '@/constant/locales/about/about';
 import REPORT_STRINGS from '@/constant/locales/admin/reports';
+import ADMIN_STRINGS from '@/constant/locales/admin/admin';
 
 export default function useMultilingual(assets: string) {
   const [lang] = useAtom(langAtom);
@@ -66,6 +67,8 @@ export default function useMultilingual(assets: string) {
     assetsObject = COMMUNITY_POST_STRINGS;
   } else if (assets === 'report') {
     assetsObject = REPORT_STRINGS;
+  } else if (assets === 'admin') {
+    assetsObject = ADMIN_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }
