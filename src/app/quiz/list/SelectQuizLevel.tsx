@@ -10,7 +10,7 @@ import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getQuizzes, getQuizzesPaged } from '@/api/quizzes';
+import { getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -35,7 +35,6 @@ const SelectQuizLevel = () => {
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
         setCurrentUser(userProfile.email);
-        console.log('읭');
       } catch (error) {
         console.error('프로필 정보를 가져오는 데 실패했습니다:', error);
       }

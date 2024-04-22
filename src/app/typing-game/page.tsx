@@ -46,6 +46,12 @@ const TypingGamePage = () => {
       gameoverSound.current = new Audio('game/gameover.mp3');
       wordpopSound.current = new Audio('game/wordpopped.mp3');
       gamestartSound.current = new Audio('game/gamestart.mp3');
+
+      return () => {
+        if (gameoverSound.current) gameoverSound.current.pause();
+        if (wordpopSound.current) wordpopSound.current.pause();
+        if (gamestartSound.current) gamestartSound.current.pause();
+      };
     }
   }, []);
 
@@ -371,7 +377,11 @@ const TypingGamePage = () => {
               {m('START_BUTTON')}
             </button>
             <div className="mt-10 font-semibold text-pointColor1">
-              <p>{m('GAME_GUIDE')}</p>
+              <p className="leading-7 text-center">
+                {m('GAME_GUIDE1')}
+                <br />
+                {m('GAME_GUIDE2')}
+              </p>
             </div>
           </div>
         )}
