@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import MainLogo from '@/assets/logo_horizontal_1.png';
+import MainLogoWhite from '@/assets/logo_horizontal_4.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
 import useMultilingual from '@/utils/useMultilingual';
@@ -79,12 +80,16 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center">
-        <Image src={MainLogo} alt="로고" width={150} />
+    <header className="w-full h-[8vh] leading-[7.5vh] flex font-bold border-solid border-b-2 sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1">
+      <Link
+        href="/"
+        className="sm:w-[35%] w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center"
+      >
+        <Image src={MainLogo} alt="로고" width={150} className="sm:hidden" />
+        <Image src={MainLogoWhite} alt="로고" width={150} className="sm:block sm:ml-5" />
       </Link>
-      <section className="w-[84%] flex justify-between px-[3vw]">
-        <nav className="flex gap-14">
+      <section className="sm:w-[65%] w-[84%] flex sm:justify-end justify-between px-[3vw]">
+        <nav className="sm:hidden flex gap-14">
           <Link
             href="/quiz/list"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
