@@ -10,6 +10,7 @@ import { useQueries } from '@tanstack/react-query';
 
 import type { CommunityFormProps } from '@/types/posts';
 import { getLike } from '@/api/likes';
+import Link from 'next/link';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
@@ -112,35 +113,35 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           </tbody>
         </table>
         {/* 모바일 전용 HTML */}
-        <div className='lg:hidden md:hidden sm:block'>
+        <div className="lg:hidden md:hidden sm:block border-t border-solid border-pointColor1">
           {sortedItems?.length > 0 ? (
             sortedItems.map((item, idx) => (
               <div
-                className={`sm:h-[7vh] cursor-pointer text-[calc(1vh+7px)] ${
-                  item['category'] === '공지'
-                    ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1'
-                    : 'bg-white border-grayColor2 border-y border-solid '
+                className={`border-b border-solid border-pointColor1 flex items-center h-[7vh] cursor-pointer ${
+                  item['category'] === '공지' ? ' bg-bgColor2' : 'bg-white'
                 }`}
                 key={idx}
                 onClick={() => navigateToDetailPost(item)}
               >
                 <div>
-                  <div>
-                    <p>{item.title}</p>
+                  <div className="font-semibold text-base">
+                    <p className="truncate max-w-sm">{item.title}</p>
                   </div>
-                  <div className='sm:'>
+                  <div className="flex text-sm ">
                     <p>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</p>
+                    <p className="px-1">│</p>
                     <p>{formatToLocaleDateTimeString(item['created_at'])}</p>
-                    <p>{item['view_count']}</p>
+                    <p className="px-1">│</p>
+                    <p>
+                      {m('COMMUNITY_TABLE_HEADER5')} {item['view_count']}
+                    </p>
                   </div>
                 </div>
               </div>
             ))
           ) : (
             <div className="bg-white">
-              <td colSpan={5} className="text-center py-4">
-                {m('COMMUNITY_NO_POSTS')}
-              </td>
+              <p className="text-center py-4">{m('COMMUNITY_NO_POSTS')}</p>
             </div>
           )}
         </div>
@@ -169,6 +170,15 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             </button>
           )}
         </nav>
+        <div>
+          <Link
+            href="/community/write"
+            type="button"
+            className="text-5xl flex justify-center items-center fixed bottom-30 right-6 bg-pointColor1 text-white h-16 w-16 rounded-full"
+          >
+            +
+          </Link>
+        </div>
       </section>
     </article>
   );

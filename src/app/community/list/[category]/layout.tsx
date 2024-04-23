@@ -24,7 +24,7 @@ const Layout = ({ children, params }: Props) => {
     <main className="bg-bgColor1 grid grid-cols-[16%_84%] sm:block sm:w-[100%] h-[84%]">
       <section className="sm:pt-4 sm:h-auto sm:bg-white sm:border-b-1 sm:border-pointColor1 sm:border-solid h-[84vh] justify-between bg-bgColor1">
         <div>{!params2.id && <CategorySelector categoryNow={category} />}</div>
-        <div className="flex justify-center w-full pb-4 font-bold mt-10 sm:hidden">
+        <div className="sm:hidden flex justify-center w-full pb-4 font-bold mt-10">
           <Link
             href="/community/write"
             type="button"

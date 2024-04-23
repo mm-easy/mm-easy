@@ -16,7 +16,6 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     [m('COMMUNITY_CATEGORY_CHAT')]: '잡담',
     [m('COMMUNITY_CATEGORY_STUDY')]: '공부',
     [m('COMMUNITY_CATEGORY_DIARY')]: '일기',
-    [m('COMMUNITY_CATEGORY_EVENT')]: '이벤트'
   };
 
   const { data: postNum = {} } = useQuery<Record<string, number>>({
