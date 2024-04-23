@@ -11,6 +11,7 @@ import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
 import { toast } from 'react-toastify';
+import { ImExit } from 'react-icons/im';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
@@ -33,6 +34,7 @@ const TypingGamePage = () => {
   const [slowMotion, setSlowMotion] = useState(false);
   const slowMotionDuration = 5000; // 느린 모션 지속 시간을 5초로 설정
   const [specialWord, setSpecialWord] = useState('');
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const m = useMultilingual('typing-game');
 
   const router = useRouter();
@@ -108,7 +110,7 @@ const TypingGamePage = () => {
         const newWord = {
           id: Date.now(),
           text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
-          top: 0,
+          top: 50,
           left: Math.random() * (gameAreaWidth - 200)
         };
         setWords((prevWords) => [...prevWords, newWord]);
@@ -119,12 +121,12 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed;  // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
       const updatedWords = words.map((word) => ({
         ...word,
         top: word.top + speedAdjustment
       }));
-  
+
       const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
       if (outOfBoundWords.length > 0) {
         setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
@@ -132,10 +134,10 @@ const TypingGamePage = () => {
       } else {
         setWords(updatedWords);
       }
-    }, 500); 
-  
+    }, 500);
+
     return () => clearInterval(interval);
-  }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);  
+  }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);
 
   useEffect(() => {
     if (lives <= 0) {
@@ -182,10 +184,10 @@ const TypingGamePage = () => {
           setSlowMotion(false);
         }, slowMotionDuration);
       }
-    } else { 
+    } else {
     }
-      setInput('');
-  };  
+    setInput('');
+  };
 
   const startGame = () => {
     if (!isLoggedIn) {
@@ -268,16 +270,39 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 3, interval: 7000 },
-    2: { label: m('DIFFICULTY2'), speed: 4, interval: 6000 },
-    3: { label: m('DIFFICULTY3'), speed: 6, interval: 5000 },
-    4: { label: m('DIFFICULTY4'), speed: 8, interval: 3000 },
-    5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
+    1: { label: m('DIFFICULTY1'), speed: 3, interval: 9000 },
+    2: { label: m('DIFFICULTY2'), speed: 4, interval: 8000 },
+    3: { label: m('DIFFICULTY3'), speed: 6, interval: 7000 },
+    4: { label: m('DIFFICULTY4'), speed: 8, interval: 5000 },
+    5: { label: m('DIFFICULTY5'), speed: 10, interval: 3000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
 
   const lifePercentage = (lives / maxLives) * 55;
+
+  const resetGame = () => {
+    setGameStarted(false);
+    setWords([]);
+    setInput('');
+    setScore(0);
+    setLives(maxLives);
+    setCorrectWordsCount(0);
+    setShowLoginModal(false);
+  };
+
+  const handleBackButtonClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const confirmBack = () => {
+    resetGame();
+    setShowConfirmModal(false);
+  };
+
+  const cancelBack = () => {
+    setShowConfirmModal(false);
+  };
 
   return (
     <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
@@ -326,7 +351,9 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${word.text === specialWord ? 'text-red-500' : 'text-blackColor1'} transition-all duration-500`}
+                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${
+                  word.text === specialWord ? 'text-red-500' : 'text-blackColor1'
+                } transition-all duration-[500ms] ease-out`}
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
                 {word.text}
@@ -336,6 +363,14 @@ const TypingGamePage = () => {
               onSubmit={handleSubmit}
               className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor3"
             >
+              <button
+                onClick={handleBackButtonClick}
+                type="button"
+                className="flex items-center justify-center text-pointColor1 bg-pointColor1 rounded-md px-4 mr-2"
+              >
+                <ImExit className="font-bold font-lg text-white mr-2" />
+                <span className="font-bold font-lg text-white">{m('EXIT_BUTTON')}</span>
+              </button>
               <div className="volume-control flex items-center mr-2">
                 <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
                   <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
@@ -408,6 +443,22 @@ const TypingGamePage = () => {
               </button>
               <button onClick={goToLogin} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
                 {m('MODAL_BUTTON2')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-xl border-solid border-2 border-pointColor1">
+            <h2 className="font-bold text-xl mb-4">{m('MODAL_MESSAGE1')}</h2>
+            <p className="mb-4">{m('MODAL_MESSAGE2')}</p>
+            <div className="flex justify-around">
+              <button onClick={cancelBack} className="bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                {m('MODAL_MESSAGE3')}
+              </button>
+              <button onClick={confirmBack} className="bg-pointColor1 text-white font-bold py-2 px-4 rounded">
+                {m('MODAL_MESSAGE4')}
               </button>
             </div>
           </div>
