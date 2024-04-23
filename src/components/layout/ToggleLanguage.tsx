@@ -13,20 +13,24 @@ const ToggleSwitch = () => {
 
   return (
     <main>
-      <div className="relative flex items-center w-16 h-9 rounded-full border-solid border border-pointColor1">
+      <div className="relative flex items-center w-16 h-9 rounded-full border-solid border sm:border-white border-pointColor1">
         <div
-          className={`absolute w-7 z-0 h-7 rounded-full transition-transform duration-300 bg-pointColor1 ${
+          className={`absolute w-7 z-0 h-7 rounded-full transition-transform duration-300 sm:bg-white bg-pointColor1 ${
             isChecked ? 'right-1' : 'left-1'
           }`}
         />
         <p
-          className={`absolute left-2 z-1 cursor-pointer ${isChecked ? 'text-pointColor1' : 'text-white'} text-sm`}
+          className={`absolute left-2 z-1 cursor-pointer ${
+            isChecked ? 'sm:text-white text-pointColor1' : 'sm:text-pointColor1 text-white'
+          } text-sm`}
           onClick={handleToggle}
         >
           EN
         </p>
         <p
-          className={`absolute right-2 z-1 cursor-pointer ${isChecked ? 'text-white' : 'text-pointColor1'} text-sm`}
+          className={`absolute right-2 z-1 cursor-pointer ${
+            isChecked ? 'sm:text-pointColor1 text-white' : 'sm:text-white text-pointColor1'
+          } text-sm`}
           onClick={handleToggle}
         >
           KR
