@@ -108,7 +108,7 @@ const TypingGamePage = () => {
         const newWord = {
           id: Date.now(),
           text: currentWordList[Math.floor(Math.random() * currentWordList.length)],
-          top: 0,
+          top: -50,
           left: Math.random() * (gameAreaWidth - 200)
         };
         setWords((prevWords) => [...prevWords, newWord]);
@@ -119,12 +119,12 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed;  // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
       const updatedWords = words.map((word) => ({
         ...word,
         top: word.top + speedAdjustment
       }));
-  
+
       const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
       if (outOfBoundWords.length > 0) {
         setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
@@ -132,10 +132,10 @@ const TypingGamePage = () => {
       } else {
         setWords(updatedWords);
       }
-    }, 500); 
-  
+    }, 500);
+
     return () => clearInterval(interval);
-  }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);  
+  }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);
 
   useEffect(() => {
     if (lives <= 0) {
@@ -182,10 +182,10 @@ const TypingGamePage = () => {
           setSlowMotion(false);
         }, slowMotionDuration);
       }
-    } else { 
+    } else {
     }
-      setInput('');
-  };  
+    setInput('');
+  };
 
   const startGame = () => {
     if (!isLoggedIn) {
@@ -272,7 +272,7 @@ const TypingGamePage = () => {
     2: { label: m('DIFFICULTY2'), speed: 4, interval: 6000 },
     3: { label: m('DIFFICULTY3'), speed: 6, interval: 5000 },
     4: { label: m('DIFFICULTY4'), speed: 8, interval: 3000 },
-    5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
+    5: { label: m('DIFFICULTY5'), speed: 10, interval: 2000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
@@ -326,7 +326,9 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${word.text === specialWord ? 'text-red-500' : 'text-blackColor1'} transition-all duration-500`}
+                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${
+                  word.text === specialWord ? 'text-red-500' : 'text-blackColor1'
+                } transition-all duration-[500ms] ease-out`}
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
                 {word.text}
