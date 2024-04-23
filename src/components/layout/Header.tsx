@@ -85,7 +85,7 @@ const Header = () => {
         <Image src={MainLogo} alt="로고" width={150} className="hidden md:block lg:block" />
         <Image src={MainLogoWhite} alt="로고" width={150} className="ml-7 md:hidden lg:hidden" />
       </Link>
-      <section className="w-[65%] md:w-[84%] flex justify-end px-[3vw]">
+      <section className="w-[65%] md:w-[84%] flex justify-end md:justify-between px-[3vw]">
         <nav className="md:flex md:gap-14 lg:flex lg:gap-14 hidden">
           <Link
             href="/quiz/list"
