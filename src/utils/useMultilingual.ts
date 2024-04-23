@@ -19,6 +19,7 @@ import NEWS_SECTION_STRINGS from '@/constant/locales/home/news-section';
 import MAIN_FOOTER_STRINGS from '@/constant/locales/home/footer';
 import ABOUT_STRINGS from '@/constant/locales/about/about';
 import REPORT_STRINGS from '@/constant/locales/admin/reports';
+import ADMIN_STRINGS from '@/constant/locales/admin/admin';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
@@ -67,9 +68,11 @@ export default function useMultilingual(assets: string) {
   } else if (assets === 'communityPost') {
     assetsObject = COMMUNITY_POST_STRINGS;
   } else if (assets === 'main-footer') {
-    assetsObject = MAIN_FOOTER_STRINGS;  
+    assetsObject = MAIN_FOOTER_STRINGS;
   } else if (assets === 'report') {
     assetsObject = REPORT_STRINGS;
+  } else if (assets === 'admin') {
+    assetsObject = ADMIN_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }
