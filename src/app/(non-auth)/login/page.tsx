@@ -45,15 +45,15 @@ const LoginPage = () => {
 
   return (
     <article className="h-[84vh]">
-      <div className="grid grid-cols-10 min-h-full bg-bgColor1">
-        <div className="col-span-4 flex items-center justify-center border-r-2 border-solid border-pointColor1">
-          <div className="mr-4 w-[300px] h-[300px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
+      <div className="min-h-full bg-bgColor1 grid grid-cols-10 sm:flex sm:flex-col">
+        <div className="flex items-center justify-center py-8 border-r-2 border-solid border-pointColor1 sm:order-first order-none col-span-5 sm-border-solid sm:border-b-2 sm:border-pointColor1">
+          <div className="bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1 w-[400px] h-[400px] sm:w-[200px] sm:h-[200px]">
             {showPasswordImage ? (
               <Image
                 src={`${assetsStorageUrl}/login_2.png`}
                 alt="로그인 이미지"
-                width={300}
-                height={300}
+                width={400}
+                height={400}
                 quality={100}
                 className="w-full h-full object-cover rounded-full"
               />
@@ -61,16 +61,28 @@ const LoginPage = () => {
               <Image
                 src={`${assetsStorageUrl}/login_1.png`}
                 alt="로그인 이미지"
-                width={300}
-                height={300}
+                width={400}
+                height={400}
                 quality={100}
                 className="w-full h-full object-cover rounded-full"
               />
             )}
           </div>
         </div>
-        <div className="col-span-6 flex items-center bg-white justify-center">
+        <div className="flex items-center bg-white justify-center flex-1 col-span-5">
           <div className="w-full max-w-md p-8 bg-white">
+            <div className="flex py-8 h-[50px] justify-center items-center">
+              <div className="w-[200px] h-[100px] sm:w-[160px]">
+                <Image
+                  src={`${assetsStorageUrl}/logo_horizontal_3.png`}
+                  alt="로그인 이미지"
+                  width={200}
+                  height={100}
+                  quality={100}
+                  className="object-cover"
+                />
+              </div>
+            </div>
             <form className="space-y-6" onSubmit={handleLogin}>
               <div className="flex flex-col gap-2">
                 <div>
@@ -106,9 +118,9 @@ const LoginPage = () => {
               </div>
               {error && <div className="text-red-500">{error}</div>}
               <div className="flex mt-6 text-sm">
-              <span className='mr-2'>{m('SIGN_UP_SPAN')}</span>
+                <span className="mr-2">{m('SIGN_UP_SPAN')}</span>
                 <Link className="text-pointColor1 font-bold underline" href="/signup">
-                {m('SIGN_UP_BUTTON')}
+                  {m('SIGN_UP_BUTTON')}
                 </Link>
               </div>
               <div>

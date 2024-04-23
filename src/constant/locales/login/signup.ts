@@ -1,6 +1,6 @@
 const SIGN_UP_STRINGS = {
     SIGN_UP_LOGO: {
-        ko: '화원 가입',
+        ko: '회원 가입',
         en: 'Register with your e-mail'
       },
       EMAIL_INPUT: {
