@@ -13,7 +13,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostEditButton } from '@/components/common/EditButton';
 import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { useAuth } from '@/hooks/useAuth';
@@ -33,6 +33,8 @@ const DetailPost = () => {
   const router = useRouter();
   const { getCurrentUserProfile } = useAuth();
   const m = useMultilingual('communityDetail');
+
+  const queryClient = useQueryClient();
 
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
@@ -135,7 +137,7 @@ const DetailPost = () => {
           <div>
             <div className="flex justify-between">
               <p className="text-lg font-bold">{post.category}</p>
-              <p className="text-sm">
+              <p className="text-sm font-semibold">
                 {m('COMMUNITY_VIEWS')} {post.view_count}
               </p>
             </div>
@@ -186,10 +188,10 @@ const DetailPost = () => {
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             ></p>
             <div className="py-4 flex justify-between">
-              <div>
+              <div className='font-semibold'>
                 <Like postId={params.id} profile={profile} />
               </div>
-              <div>
+              <div className='font-semibold'>
                 {profile && profile.email !== post.profiles.email && (
                   <ReportButton
                     targetId={params.id}

@@ -53,25 +53,25 @@ const TermsPage = () => {
     
     // 약관 동의를 확인합니다.
     if (!termsChecked || !privacyChecked) {
-      toast('모든 약관에 동의해야 합니다.');
+      toast(m('TOAST_MESSAGE1'));
       return;
     }
 
     // 이메일 유효성 검사
   if (!isValidEmail(email)) {
-    toast.error('유효하지 않은 이메일 주소입니다.');
+    toast.error(m('TOAST_MESSAGE2'));
     return;
   }
     
     // 비밀번호 일치 여부를 확인합니다.
     if (password !== confirmPassword) {
-      toast.error('비밀번호가 서로 일치하지 않습니다.');
+      toast.error(m('TOAST_MESSAGE3'));
       return;
     }
     
      // 비밀번호 길이와 조합을 확인합니다.
   if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password)) {
-    toast.error('비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.');
+    toast.error(m('TOAST_MESSAGE4'));
     return;
   }
     
@@ -84,7 +84,7 @@ const TermsPage = () => {
     }
     
     // 회원가입 성공 메시지를 표시하고 로그인 페이지로 이동합니다.
-    toast.success('회원가입에 성공했습니다! 로그인 페이지로 이동합니다.');
+    toast.success(m('TOAST_MESSAGE5'));
     router.push('/login');
   };
   

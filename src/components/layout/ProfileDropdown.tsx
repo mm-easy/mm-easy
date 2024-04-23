@@ -15,6 +15,7 @@ import { isLoggedInAtom } from '@/store/store';
 import type { User } from '@/types/users';
 import { useRouter } from 'next/navigation';
 import useMultilingual from '@/utils/useMultilingual';
+import { deleteCookie } from 'cookies-next';
 
 const ProfileDropdown = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -27,6 +28,7 @@ const ProfileDropdown = () => {
   const handleLogout = async () => {
     await logout();
     setIsLoggedIn(false);
+    deleteCookie('PostCookie', { path: '/' });
     route.push('/');
     toast.success('로그아웃되었습니다.');
   };

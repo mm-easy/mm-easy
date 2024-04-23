@@ -10,6 +10,7 @@ import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
@@ -131,7 +132,7 @@ const TypingGamePage = () => {
     if (lives <= 0) {
       if (gameoverSound.current) {
         gameoverSound.current.play();
-        alert(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+        toast.info(`게임 오버! 당신의 점수는 ${score}점입니다.`);
         if (user) {
           addGameScore(score);
         }
@@ -155,7 +156,7 @@ const TypingGamePage = () => {
       setCorrectWordsCount(0); // 맞춘 단어 개수 초기화
       setWords([]);
       setLives(5);
-      alert(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
+      toast.success(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
     }
   }, [correctWordsCount, difficulty]);
 
@@ -315,7 +316,7 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className="absolute bg-pointColor1 text-white p-2 rounded"
+                className="absolute bg-bgColor1 text-blackColor1 font-bold p-2 rounded border border-solid border-pointColor1"
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
                 {word.text}
