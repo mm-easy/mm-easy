@@ -1,7 +1,7 @@
 const ABOUT_STRINGS = {
   ABOUT_TITLE1: {
     ko: '재밌게 배우는 한국어!',
-    en: 'Korean that you learn in a fun way!'
+    en: 'Fun Korean Learning!'
   },
   ABOUT_TITLE1_DETAIL1: {
     ko: '직접 퀴즈를 만들면서 한국어 실력을 키워보세요!',
@@ -13,7 +13,7 @@ const ABOUT_STRINGS = {
   },
   ABOUT_TITLE1_DETAIL3: {
     ko: '커뮤니티에서 소통하며 자신감을 길러보세요!',
-    en: 'Build confidence by communicating in the community!'
+    en: 'Boost confidence by engaging in a community!'
   },
   ABOUT_TITLE2: {
     ko: '에서 지금까지',
