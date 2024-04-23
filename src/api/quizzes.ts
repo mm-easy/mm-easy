@@ -103,7 +103,6 @@ export const getQuizzesPaged = async (pageParam: number, level: number | null) =
   try {
     let query = supabase.from('quizzes').select('*').is('deleted_at', null).order('created_at', { ascending: false });
 
-    // If level is not null, add a filter condition
     if (level !== null) {
       query = query.eq('level', level);
     }

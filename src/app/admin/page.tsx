@@ -8,8 +8,11 @@ import { supabase } from '@/utils/supabase/supabase';
 import { formatToLocaleDateTimeString } from '@/utils/date';
 import { getPostsReports, getQuizzesReports } from '@/api/reports';
 import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
+import { toast } from 'react-toastify';
 
 const AdminPage = () => {
+  const m = useMultilingual('admin');
   const [activeTab, setActiveTab] = useState('posts');
   const { getCurrentUserProfile } = useAuth();
   const queryClient = useQueryClient();
@@ -50,7 +53,7 @@ const AdminPage = () => {
   });
 
   const deduplicatedPostsReports = postsReports?.filter((report, index, self) => {
-    // self : quizReports
+    // self : postReports
     return index === self.findIndex((t) => t.target_id === report.target_id);
   });
 
@@ -78,6 +81,8 @@ const AdminPage = () => {
 
       await queryClient.invalidateQueries({ queryKey: ['getquizreports'] });
       await queryClient.invalidateQueries({ queryKey: ['getpostsreports'] });
+
+      toast.success(m('NOTIFY_TO_DELETE'));
     } catch (error) {
       console.error('삭제 중 오류:', error);
     }
@@ -99,6 +104,8 @@ const AdminPage = () => {
 
       await queryClient.invalidateQueries({ queryKey: ['getquizreports'] });
       await queryClient.invalidateQueries({ queryKey: ['getpostsreports'] });
+
+      toast.success(m('NOTIFY_TO_RESTORE'));
     } catch (error) {
       console.error('복구 중 오류:', error);
     }
@@ -114,13 +121,13 @@ const AdminPage = () => {
                 className={`w-[50%] pb-3 ${activeTab === 'posts' && 'font-bold border-solid border-b-3'}`}
                 onClick={() => setActiveTab('posts')}
               >
-                게시글
+                {m('HEADER_POST')}
               </li>
               <li
                 className={`w-[50%] pb-3 ${activeTab === 'quizzes' && 'font-bold  border-solid border-b-3'}`}
                 onClick={() => setActiveTab('quizzes')}
               >
-                퀴즈
+                {m('HEADER_QUIZ')}
               </li>
             </ul>
           </nav>
@@ -128,10 +135,11 @@ const AdminPage = () => {
             <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 text-lg font-bold border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[15%]">처리 상태</th>
-                  <th className="w-[25%]">게시자 이메일</th>
-                  <th className="w-[35%]">{activeTab === 'quizzes' ? '퀴즈' : '게시글'} 제목</th>
-                  <th className="w-[15%]">신고 날짜</th>
+                  <th className="pb-2 w-[10%]">{m('STATUS')}</th>
+                  <th className="w-[20%]">{m('WRITER_EMAIL')}</th>
+                  <th className="w-[22%]">{m('TITLE')}</th>
+                  <th className="w-[22%]">{m('REASON')}</th>
+                  <th className="w-[12%]">{m('DATE_REPORTED')}</th>
                 </tr>
               </thead>
               {activeTab === 'posts' && (
@@ -139,11 +147,12 @@ const AdminPage = () => {
                   {deduplicatedPostsReports?.map((item, idx) => {
                     return (
                       <tr key={idx} className="border-b border-solid border-grayColor2">
-                        <td>{item.status === false ? '처리 중' : '처리 완료'}</td>
+                        <td>{item.status === false ? m('STATUS_PROCESS') : m('STATUS_COMPLETED')}</td>
                         <td>{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs cursor-pointer">
                           <a href={`/community/list/전체/${item.target_id}`}>{item['title']}</a>
                         </td>
+                        <td>{item.reason}</td>
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td className="text-right py-[1vh]">
                           {item.status === false ? (
@@ -151,14 +160,14 @@ const AdminPage = () => {
                               onClick={() => handleDelete(item.id, item.target_id as string)}
                               className="w-28 h-8 bg-red-500 text-white font-bold rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                             >
-                              삭제하기
+                              {m('DELETE_BTN')}
                             </button>
                           ) : (
                             <button
                               onClick={() => handleRestore(item.id, item.target_id as string)}
                               className="w-28 h-8 bg-pointColor1 text-white font-bold rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
                             >
-                              복구하기
+                              {m('RESTORE_BTN')}
                             </button>
                           )}
                         </td>
@@ -167,17 +176,17 @@ const AdminPage = () => {
                   })}
                 </tbody>
               )}
-
               {activeTab === 'quizzes' && (
                 <tbody className="font-medium">
                   {deduplicatedQuizReports?.map((item, idx) => {
                     return (
                       <tr key={idx} className="border-b border-solid border-grayColor2">
-                        <td>{item.status === false ? '처리 중' : '처리 완료'}</td>
+                        <td>{item.status === false ? m('STATUS_PROCESS') : m('STATUS_COMPLETED')}</td>
                         <td>{item.reported_user_id || '알 수 없음'}</td>
                         <td className="truncate max-w-xs cursor-pointer">
                           <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
                         </td>
+                        <td>{item.reason}</td>
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td className="text-right py-[1vh]">
                           {item.status === false ? (
@@ -185,14 +194,14 @@ const AdminPage = () => {
                               onClick={() => handleDelete(item.id, item.target_id as string)}
                               className="w-28 h-8 bg-red-500 text-white font-bold rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                             >
-                              삭제하기
+                              {m('DELETE_BTN')}
                             </button>
                           ) : (
                             <button
                               onClick={() => handleRestore(item.id, item.target_id as string)}
                               className="w-28 h-8 bg-pointColor1 text-white font-bold rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-pointColor1 focus:ring-opacity-50"
                             >
-                              복구하기
+                              {m('RESTORE_BTN')}
                             </button>
                           )}
                         </td>
