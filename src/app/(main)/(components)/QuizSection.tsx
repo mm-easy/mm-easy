@@ -24,7 +24,7 @@ const QuizSection = () => {
 
   return (
     <>
-      <div className="w-[1440px] px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1">
+      <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1">
         <p className="">{m('RECENT_QUIZZES')}</p>
         <Link href={`/quiz/list`} className="font-semibold text-pointColor1">
           {m('MORE')}
