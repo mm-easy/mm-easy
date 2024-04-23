@@ -14,7 +14,7 @@ const NewsSection = async () => {
 
   return (
     <div>
-      <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
+      <p className="w-full px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
         한국은 지금
       </p>
       <section className="px-6 py-4 grid grid-cols-4 sm:grid-cols-2 gap-5">
