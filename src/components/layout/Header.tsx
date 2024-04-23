@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import MainLogo from '@/assets/logo_horizontal_1.png';
+import MainLogoWhite from '@/assets/logo_horizontal_4.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
 import useMultilingual from '@/utils/useMultilingual';
@@ -10,17 +11,14 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { isLoggedInAtom, langAtom } from '../../store/store';
+import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { getUser } from '@/api/users';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const [lang] = useAtom(langAtom);
   const m = useMultilingual('header');
 
   /** 현재 로그인되어 있는지 확인 */
@@ -82,12 +80,13 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-bgColor1 border-solid border-b-2 border-pointColor1">
-      <Link href="/" className="w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center">
-        <Image src={MainLogo} alt="로고" width={150} />
+    <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-pointColor1 border-solid border-b-2 border-pointColor1 md:bg-bgColor1 lg:bg-bgColor1">
+      <Link href="/" className="w-[35%] md:w-[16%] md:px-[2vw] px-[1vw] text-center flex justify-center items-center">
+        <Image src={MainLogo} alt="로고" width={150} className="hidden md:block lg:block" />
+        <Image src={MainLogoWhite} alt="로고" width={150} className="ml-7 md:hidden lg:hidden" />
       </Link>
-      <section className="w-[84%] flex justify-between px-[3vw]">
-        <nav className="flex gap-14">
+      <section className="w-[65%] md:w-[84%] flex justify-end md:justify-between px-[3vw]">
+        <nav className="md:flex md:gap-14 lg:flex lg:gap-14 hidden">
           <Link
             href="/quiz/list"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
@@ -123,7 +122,7 @@ const Header = () => {
           {currentUserEmail === 'daejang@mmeasy.com' && (
             <Link
               href="/admin"
-              className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
+              className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor2 ${
                 isActive('/admin') && 'border-b-5 border-solid border-pointColor2'
               }`}
             >
@@ -131,7 +130,7 @@ const Header = () => {
             </Link>
           )}
         </nav>
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex justify-center items-center gap-3">
           <ToggleLanguage />
           {isLoggedIn ? (
             <ProfileDropdown />
