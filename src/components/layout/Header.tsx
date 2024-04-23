@@ -10,17 +10,14 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { AuthChangeEvent } from '@supabase/supabase-js';
-import { isLoggedInAtom, langAtom } from '../../store/store';
+import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { getUser } from '@/api/users';
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const [lang] = useAtom(langAtom);
   const m = useMultilingual('header');
 
   /** 현재 로그인되어 있는지 확인 */
@@ -123,7 +120,7 @@ const Header = () => {
           {currentUserEmail === 'daejang@mmeasy.com' && (
             <Link
               href="/admin"
-              className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
+              className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor2 ${
                 isActive('/admin') && 'border-b-5 border-solid border-pointColor2'
               }`}
             >
