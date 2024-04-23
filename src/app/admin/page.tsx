@@ -112,7 +112,7 @@ const AdminPage = () => {
   };
 
   return (
-    <main className="h-[84vh] px-[10%] flex flex-col justify-center items-center  bg-bgColor2">
+    <main className="h-[84vh] px-[8%] flex flex-col justify-center items-center  bg-bgColor2">
       {userProfile?.email === 'daejang@mmeasy.com' && (
         <>
           <nav className="w-full flex pb-[4vh] justify-center text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
@@ -135,10 +135,10 @@ const AdminPage = () => {
             <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 text-lg font-bold border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[10%]">{m('STATUS')}</th>
+                  <th className="pb-2 w-[8%]">{m('STATUS')}</th>
                   <th className="w-[20%]">{m('WRITER_EMAIL')}</th>
                   <th className="w-[22%]">{m('TITLE')}</th>
-                  <th className="w-[22%]">{m('REASON')}</th>
+                  <th className="w-[30%]">{m('REASON')}</th>
                   <th className="w-[12%]">{m('DATE_REPORTED')}</th>
                 </tr>
               </thead>
