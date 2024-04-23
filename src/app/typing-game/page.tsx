@@ -30,18 +30,19 @@ const TypingGamePage = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
+  const [slowMotion, setSlowMotion] = useState(false);
+  const slowMotionDuration = 5000; // 느린 모션 지속 시간을 5초로 설정
+  const [specialWord, setSpecialWord] = useState('');
   const m = useMultilingual('typing-game');
 
   const router = useRouter();
   const maxLives = 5;
   const wordHeight = 80;
 
-  // useRef로 오디오 객체 참조를 생성합니다.
   const gameoverSound = useRef<HTMLAudioElement | null>(null);
   const wordpopSound = useRef<HTMLAudioElement | null>(null);
   const gamestartSound = useRef<HTMLAudioElement | null>(null);
 
-  // 컴포넌트가 마운트되면 오디오 객체를 생성합니다.
   useEffect(() => {
     if (typeof window !== 'undefined') {
       gameoverSound.current = new Audio('game/gameover.mp3');
@@ -56,7 +57,6 @@ const TypingGamePage = () => {
     }
   }, []);
 
-  // 볼륨 상태가 변경될 때 오디오 볼륨을 업데이트합니다.
   useEffect(() => {
     if (gameoverSound.current) gameoverSound.current.volume = volume;
     if (wordpopSound.current) wordpopSound.current.volume = volume;
@@ -66,6 +66,17 @@ const TypingGamePage = () => {
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
   }, []);
+
+  useEffect(() => {
+    if (difficulty >= 5) {
+      const difficultyKey = difficulty as keyof typeof wordLists;
+      const currentWordList = wordLists[difficultyKey];
+      const randomWord = currentWordList[Math.floor(Math.random() * currentWordList.length)];
+      setSpecialWord(randomWord);
+    } else {
+      setSpecialWord('');
+    }
+  }, [difficulty, gameStarted]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -79,7 +90,6 @@ const TypingGamePage = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    // window 객체가 있는지 확인하여 서버 사이드에서 실행될 때 오류 방지
     if (typeof window !== 'undefined') {
       if (window.innerWidth > 1440) {
         setGameAreaWidth(1440);
@@ -108,25 +118,24 @@ const TypingGamePage = () => {
   }, [gameStarted, difficulty]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (gameStarted) {
-      interval = setInterval(() => {
-        const updatedWords = words.map((word) => ({
-          ...word,
-          top: word.top + 10
-        }));
-
-        const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
-        if (outOfBoundWords.length > 0) {
-          setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
-          setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
-        } else {
-          setWords(updatedWords);
-        }
-      }, 500);
-    }
+    let interval = setInterval(() => {
+      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed;  // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const updatedWords = words.map((word) => ({
+        ...word,
+        top: word.top + speedAdjustment
+      }));
+  
+      const outOfBoundWords = updatedWords.filter((word) => word.top >= gameAreaHeight - wordHeight);
+      if (outOfBoundWords.length > 0) {
+        setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
+        setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
+      } else {
+        setWords(updatedWords);
+      }
+    }, 500); 
+  
     return () => clearInterval(interval);
-  }, [words, gameStarted]);
+  }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);  
 
   useEffect(() => {
     if (lives <= 0) {
@@ -148,12 +157,12 @@ const TypingGamePage = () => {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setInput(e.target.value);
-  }; // input에 ref 걸어서 focus 유지하기
+  };
 
   useEffect(() => {
     if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
-      setDifficulty(difficulty + 1); // 다음 난이도로 변경
-      setCorrectWordsCount(0); // 맞춘 단어 개수 초기화
+      setDifficulty(difficulty + 1);
+      setCorrectWordsCount(0);
       setWords([]);
       setLives(5);
       toast.success(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
@@ -167,12 +176,16 @@ const TypingGamePage = () => {
       setWords(words.filter((_, index) => index !== wordIndex));
       setScore(score + 10);
       setCorrectWordsCount(correctWordsCount + 1);
-      if (wordpopSound.current) {
-        wordpopSound.current.play();
+      if (input === specialWord) {
+        setSlowMotion(true);
+        setTimeout(() => {
+          setSlowMotion(false);
+        }, slowMotionDuration);
       }
+    } else { 
     }
-    setInput('');
-  };
+      setInput('');
+  };  
 
   const startGame = () => {
     if (!isLoggedIn) {
@@ -220,7 +233,6 @@ const TypingGamePage = () => {
     }
 
     try {
-      // 1. 현재 점수 가져오기
       const { data: existingScores, error: fetchError } = await supabase
         .from('game_tries')
         .select('score')
@@ -228,14 +240,12 @@ const TypingGamePage = () => {
         .single();
 
       if (fetchError && !existingScores) {
-        // 2. 새로운 점수 추가
         const { error: insertError } = await supabase
           .from('game_tries')
           .insert([{ user_id: user.id, score: finalScore, created_at: new Date().toISOString() }]);
         if (insertError) throw insertError;
         console.log('새 점수가 저장되었습니다!');
       } else {
-        // 3. 현재 점수와 새로운 점수 비교 후 업데이트
         const currentScore = existingScores?.score || 0;
         if (finalScore > currentScore) {
           const { error: updateError } = await supabase
@@ -258,11 +268,11 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 20, interval: 5000 },
-    2: { label: m('DIFFICULTY2'), speed: 30, interval: 4000 },
-    3: { label: m('DIFFICULTY3'), speed: 40, interval: 3000 },
-    4: { label: m('DIFFICULTY4'), speed: 70, interval: 2000 },
-    5: { label: m('DIFFICULTY5'), speed: 100, interval: 1000 }
+    1: { label: m('DIFFICULTY1'), speed: 3, interval: 7000 },
+    2: { label: m('DIFFICULTY2'), speed: 4, interval: 6000 },
+    3: { label: m('DIFFICULTY3'), speed: 6, interval: 5000 },
+    4: { label: m('DIFFICULTY4'), speed: 8, interval: 3000 },
+    5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
@@ -316,7 +326,7 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className="absolute bg-bgColor1 text-blackColor1 font-bold p-2 rounded border border-solid border-pointColor1"
+                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${word.text === specialWord ? 'text-red-500' : 'text-blackColor1'} transition-all duration-500`}
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
                 {word.text}
