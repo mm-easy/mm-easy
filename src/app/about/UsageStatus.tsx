@@ -11,13 +11,15 @@ const UsageStatus = ({
 }) => {
   return (
     <section
-      className={`flex flex-col items-center ${isBorderExist && 'px-[4vw] border-x border-solid border-pointColor1'}`}
+      className={`flex flex-col items-center sm:border-0 ${
+        isBorderExist && 'px-[4vw] border-x border-solid border-pointColor1'
+      }`}
     >
       <div className="flex">
-        <h1 className="text-8xl font-semibold text-pointColor1">{number}</h1>
-        <span className="mt-14 w-16 text-xl font-semibold">{unit}</span>
+        <h1 className="sm:text-6xl text-8xl font-semibold text-pointColor1">{number}</h1>
+        <span className="sm:mt-8 mt-14 sm:w-10 w-16 sm:text-base text-xl font-semibold">{unit}</span>
       </div>
-      <p className="text-xl font-semibold">{content}</p>
+      <p className="sm:text-base sm:pr-4 text-xl font-semibold">{content}</p>
     </section>
   );
 };
