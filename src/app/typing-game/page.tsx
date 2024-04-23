@@ -270,11 +270,11 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 3, interval: 7000 },
-    2: { label: m('DIFFICULTY2'), speed: 4, interval: 6000 },
-    3: { label: m('DIFFICULTY3'), speed: 6, interval: 5000 },
-    4: { label: m('DIFFICULTY4'), speed: 8, interval: 3000 },
-    5: { label: m('DIFFICULTY5'), speed: 10, interval: 2000 }
+    1: { label: m('DIFFICULTY1'), speed: 3, interval: 9000 },
+    2: { label: m('DIFFICULTY2'), speed: 4, interval: 8000 },
+    3: { label: m('DIFFICULTY3'), speed: 6, interval: 7000 },
+    4: { label: m('DIFFICULTY4'), speed: 8, interval: 5000 },
+    5: { label: m('DIFFICULTY5'), speed: 10, interval: 3000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
@@ -365,7 +365,7 @@ const TypingGamePage = () => {
             >
               <button
                 onClick={handleBackButtonClick}
-                className="flex items-center justify-center text-pointColor1 bg-pointColor1 rounded-md px-2 mr-2"
+                className="flex items-center justify-center text-pointColor1 bg-pointColor1 rounded-md px-4 mr-2"
               >
                 <ImExit className="font-bold font-lg text-white mr-2" />
                 <span className="font-bold font-lg text-white">{m('EXIT_BUTTON')}</span>
