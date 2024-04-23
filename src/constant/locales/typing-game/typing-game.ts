@@ -70,6 +70,26 @@ const TYPING_GAME_STRINGS = {
   GAME_GUIDE2: {
     ko: '주어지는 생명 5개가 모두 소진되면 게임이 종료됩니다.',
     en: 'The game ends when all 5 lives are used up.'
+  },
+  MODAL_MESSAGE1: {
+    ko: '게임을 종료하시겠습니까?',
+    en: 'Do you want to exit the game?'
+  },
+  MODAL_MESSAGE2: {
+    ko: '종료하기를 선택하면 점수가 저장되지 않습니다.',
+    en: 'If you choose to exit, your score will not be saved'
+  },
+  MODAL_MESSAGE3: {
+    ko: '취소',
+    en: 'Cancel'
+  },
+  MODAL_MESSAGE4: {
+    ko: '종료하기',
+    en: 'Exit'
+  },
+  EXIT_BUTTON: {
+    ko: '나가기',
+    en: 'Exit'
   }
 };
 
