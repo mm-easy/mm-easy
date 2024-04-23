@@ -4,7 +4,7 @@ const MY_ACTIVITY_STRINGS = {
     en: 'The Quiz I Solved'
   },
   QUIZ_I_MADE: {
-    ko: '내가 푼 퀴즈',
+    ko: '내가 만든 퀴즈',
     en: 'The Quiz I Made'
   },
   MY_WRITING: {

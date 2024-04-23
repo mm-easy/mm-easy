@@ -16,7 +16,6 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     [m('COMMUNITY_CATEGORY_CHAT')]: '잡담',
     [m('COMMUNITY_CATEGORY_STUDY')]: '공부',
     [m('COMMUNITY_CATEGORY_DIARY')]: '일기',
-    [m('COMMUNITY_CATEGORY_EVENT')]: '이벤트'
   };
 
   const { data: postNum = {} } = useQuery<Record<string, number>>({
@@ -40,19 +39,19 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   };
 
   return (
-    <nav className="text-pointColor1 font-bold">
-      <ul>
+    <nav className="text-pointColor1 font-bold sm:font-normal sm:mx-4">
+      <ul className='sm:flex sm:w-full'>
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}
-            className={`h-[8vh] flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
-              categoryNow === categoryMenu[category] ? 'bg-pointColor1 text-white' : 'bg-white'
+            className={`sm:border-b-0 sm:flex-1 sm:h-[4vh] sm:pl-0 h-[8vh] flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
+              categoryNow === categoryMenu[category] ? 'sm:font-bold sm:bg-white sm:text-pointColor1 sm:border-b-8 sm:border-solid sm:border-pointColor1 bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
           >
-            <button className="text-lg w-full text-left flex">
+            <button className="sm:justify-center text-lg w-full text-left flex">
               {category}
-              <div className="pl-2">
+              <div className="pl-2 sm:hidden">
                 {category === m('COMMUNITY_CATEGORY_ALL')
                   ? ''
                   : postNum[category] !== undefined
