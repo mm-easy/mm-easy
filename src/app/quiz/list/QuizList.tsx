@@ -49,19 +49,19 @@ const QuizList = ({
   };
 
   return (
-    <main className="p-5 flex flex-col justify-center items-center">
-      <div className="px-6 py-4 grid grid-cols-4 sm:grid-cols-2 gap-10">
+    <main className="sm:p-1 p-5 flex flex-col justify-center items-center">
+      <div className="sm:py-0 sm:px-3 px-6 py-4 grid grid-cols-4 sm:grid-cols-2 sm:gap-3 gap-10">
         {allQuizzes
           .flatMap((page) => page)
           .map((item) => (
             <div
               key={item.id}
-              className="flex flex-col border my-3 border-solid border-grayColor1 rounded-t-3xl rounded-b-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:border-blue-500"
+              className="flex flex-col border my-3 border-solid border-grayColor1 rounded-t-3xl rounded-b-md sm:p-2 p-4 cursor-pointer transition duration-300 ease-in-out transform hover:border-blue-500"
               onClick={() => {
                 handleShowModal(item.id);
               }}
             >
-              <p className="font-bold text-lg mt-4 mb-3 truncate">{item.title}</p>
+              <p className="font-bold sm:text-base text-lg sm:mt-2 mt-4 sm:mb-1 mb-3 truncate">{item.title}</p>
               <div className="flex flex-col gap-3">
                 <Image
                   src={`${storageUrl}/quiz-thumbnails/${item.thumbnail_img_url}`}
@@ -69,9 +69,9 @@ const QuizList = ({
                   width={250}
                   height={250}
                   quality={100}
-                  className="w-full h-[250px] object-cover border-solid border border-grayColor1 rounded-md"
+                  className="w-full sm:h-[180px] h-[250px] object-cover border-solid border border-grayColor1 rounded-md"
                 />
-                <p className="mb-4 line-clamp-2">{item.info}</p>
+                <p className="sm:mb-2 sm:text-sm mb-4 line-clamp-2">{item.info}</p>
               </div>
             </div>
           ))}
