@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import useMultilingual from '@/utils/useMultilingual';
 import { loader } from '@/api/naverAPI';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 import type { NewsType } from '@/types/posts';
-import useMultilingual from '@/utils/useMultilingual';
 
 const NewsSection = async () => {
   // const [lang] = useAtom(langAtom);
