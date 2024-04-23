@@ -81,11 +81,11 @@ const Header = () => {
 
   return (
     <header className="w-full h-[8vh] leading-[7.5vh] flex text-pointColor1 font-bold bg-pointColor1 border-solid border-b-2 border-pointColor1 md:bg-bgColor1 lg:bg-bgColor1">
-      <Link href="/" className="w-[30%] md:w-[16%] md:px-[2vw] px-[1vw] text-center flex justify-center items-center">
+      <Link href="/" className="w-[35%] md:w-[16%] md:px-[2vw] px-[1vw] text-center flex justify-center items-center">
         <Image src={MainLogo} alt="로고" width={150} className="hidden md:block lg:block" />
         <Image src={MainLogoWhite} alt="로고" width={150} className="ml-7 md:hidden lg:hidden" />
       </Link>
-      <section className="w-[70%] md:w-[84%] flex justify-end md:px-[3vw] px-[25vw]">
+      <section className="w-[65%] md:w-[84%] flex justify-end px-[3vw]">
         <nav className="md:flex md:gap-14 lg:flex lg:gap-14 hidden">
           <Link
             href="/quiz/list"
