@@ -41,7 +41,7 @@ const config: Config = {
         },
         spin: {
           from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+          to: { transform: 'rotate(360deg)' }
         },
         dropIn: {
           '0%': {
@@ -66,7 +66,7 @@ const config: Config = {
     backgroundSize: { md: '80%', cover: 'cover' },
     screens: {
       lg: '1441px',
-      md: '861px'
+      md: '501px'
     },
     animation: {
       'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
@@ -74,7 +74,7 @@ const config: Config = {
       slash: 'slash 0.75s ease-out forwards',
       'drop-in': 'dropIn 0.8s ease-out forwards',
       'spin-slow': 'spin 2s linear infinite',
-      'fadein': 'fadein 0.5s ease-out'
+      fadein: 'fadein 0.5s ease-out'
     }
   },
   darkMode: 'class',
