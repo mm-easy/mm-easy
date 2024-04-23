@@ -237,35 +237,28 @@ const QuizTryPage = () => {
 
   return (
     <>
-      <Header
-        level={level}
-        title={title}
-        isAnswerWritten={usersAnswers.length}
-        resultMode={resultMode}
-        headerText={m('HEADER')}
-        levelText={m('LEVEL')}
-        titleText={m('TITLE')}
-      />
-      <div className="grid grid-cols-[16%_84%] bg-bgColor1">
-        <article className="h-[76vh] flex flex-col justify-between text-pointColor1">
-          <section>
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
+      <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
+        <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
+          <section className="sm:text-blackColor">
             <Image
               src={`${storageUrl}/quiz-thumbnails/${url}`}
               alt="샘플 이미지"
               width={230}
               height={230}
               quality={100}
-              className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
+              className="w-full h-[230px] sm:hidden object-cover border-solid border-b-2 border-pointColor1"
             />
+            <p className="pl-4 pt-4 hidden sm:block">{info}</p>
             <CreateInfo
               creatorText={m('CREATOR')}
               creator={creator_id}
-              dateText={formatToLocaleDateTimeString(created_at)}
-              date={m('DATE_CREATED')}
+              dateText={m('DATE_CREATED')}
+              date={formatToLocaleDateTimeString(created_at)}
             />
-            <p className="p-4">{info}</p>
+            <p className="p-4 sm:hidden">{info}</p>
           </section>
-          <div className="flex justify-center font-bold pb-4">
+          <div className="sm:hidden flex justify-center font-bold pb-4">
             {currentUserEmail === creator_id && (
               <div className="flex justify-center items-center">
                 {/* <CancelButton
@@ -286,7 +279,9 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <main className="py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
+        <main
+          className={`${!resultMode && `sm:h-[calc(76vh-118px)]`} py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+        >
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {lang === 'en' ? score : questions.length}
@@ -295,7 +290,7 @@ const QuizTryPage = () => {
               {m('RESULT_TEXT2')} 🎉
             </h1>
           )}
-          <article className="flex flex-col justify-between gap-8">
+          <article className="sm:w-4/5 flex flex-col justify-between gap-8">
             {questions.map((question) => {
               const { id, title, type, img_url, correct_answer } = question;
               const questionOrder = questions.indexOf(question);
@@ -305,7 +300,7 @@ const QuizTryPage = () => {
 
               return (
                 pageMode && (
-                  <section key={id} className="w-[570px] flex flex-col items-center gap-4">
+                  <section key={id} className="w-[570px] sm:w-full flex flex-col items-center gap-4">
                     <div className="w-full flex justify-between place-items-center">
                       <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                       <h3>
@@ -360,7 +355,7 @@ const QuizTryPage = () => {
                 )
               );
             })}
-            <section className="w-[570px] flex flex-col justify-between gap-3">
+            <section className="w-[570px] sm:w-full flex flex-col justify-between gap-3">
               {!resultMode && questions.length > 1 && (
                 <div className="flex justify-between gap-3 font-semibold">
                   <button
