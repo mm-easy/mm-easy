@@ -64,12 +64,12 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const endPage = Math.min(startPage + btnRange - 1, Math.ceil(totalNum / pageRange));
 
   return (
-    <article className="w-full ">
+    <article className="w-full">
       <div className="bg-white w-full">
         <table className="w-full">
           <thead className="text-left">
             <tr className="text-pointColor1 font-bold border-b-2 border-solid border-pointColor1">
-              <th className="pl-6 p-4 w-[9%]">{m('COMMUNITY_TABLE_HEADER1')}</th>
+              <th className="md:pl-6 md:p-4 md:w-[9%] ">{m('COMMUNITY_TABLE_HEADER1')}</th>
               <th className="w-[16%]">{m('COMMUNITY_TABLE_HEADER2')}</th>
               <th className="w-[50%]">{m('COMMUNITY_TABLE_HEADER3')}</th>
               <th className="w-[13%]">{m('COMMUNITY_TABLE_HEADER4')}</th>
