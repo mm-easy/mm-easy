@@ -50,7 +50,7 @@ const QuizList = ({
 
   return (
     <main className="p-5 flex flex-col justify-center items-center">
-      <div className="px-6 py-4 grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-10">
+      <div className="px-6 py-4 grid grid-cols-4 sm:grid-cols-2 gap-10">
         {allQuizzes
           .flatMap((page) => page)
           .map((item) => (
