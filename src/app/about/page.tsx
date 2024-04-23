@@ -201,8 +201,8 @@ const AboutPage = () => {
                     />
                   </div>
                   <h3 className="w-40 my-4 font-bold text-2xl">{member.name}</h3>
-                  <span className="w-[25vw] truncate">{member.content1}</span>
-                  <span className="w-[25vw] truncate">{member.content2}</span>
+                  <span className="w-[25vw] sm:w-[50vw] sm:text-sm truncate">{member.content1}</span>
+                  <span className="w-[25vw] sm:w-[50vw] sm:text-sm truncate">{member.content2}</span>
                 </div>
                 <div className="my-8">
                   {member.Github ? (
