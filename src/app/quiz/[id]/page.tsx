@@ -133,6 +133,7 @@ const QuizTryPage = () => {
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
+  const isAllAnswersSubmitted = questions.length === usersAnswers.length;
 
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
@@ -163,7 +164,7 @@ const QuizTryPage = () => {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
       const isEmptyAnswersExists = usersAnswers.some((usersAnswer) => usersAnswer.answer === '');
 
-      if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
+      if (!isAllAnswersSubmitted || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
         toast.warn(m('NOTIFY_TO_SOLVE'));
       } else {
@@ -383,7 +384,7 @@ const QuizTryPage = () => {
                 </div>
               )}
               <button
-                className="w-full py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
+                className={`w-full py-[9px] ${isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'} text-white font-bold tracking-wider rounded-md`}
                 onClick={handleResultMode}
               >
                 {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}
