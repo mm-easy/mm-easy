@@ -42,7 +42,13 @@ const ReportButton = ({
         `${m('NOTIFY_ALREADY_REPORT1')}${type === 'quiz' ? m('NOTIFY_ALREADY_REPORT_QUIZ') : m('NOTIFY_ALREADY_REPORT_POST')}`
       );
     } else {
-      const reasonForReport = window.prompt(m('ASK_TO_REASON')); // 없다면 사유를 받음
+      let reasonForReport = window.prompt(m('ASK_TO_REASON')); // 없다면 사유를 받음
+
+      while (!reasonForReport || reasonForReport.length > 20) {
+        if (reasonForReport === null) return; // 취소했으면 아무것도 안함
+        toast.warn(m('ASK_TO_REASON')); // 아무것도 입력을 안했거나 20자가 넘었다면 toast
+        return;
+      }
 
       if (reasonForReport) {
         const report = {
@@ -56,10 +62,6 @@ const ReportButton = ({
 
         insertReportMutation.mutate(report);
         toast.success(m('NOTIFY_TO_REPORT'));
-      } else if (reasonForReport === null) {
-        return;
-      } else {
-        toast.warn(m('ASK_TO_REASON'));
       }
     }
   };
