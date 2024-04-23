@@ -237,15 +237,7 @@ const QuizTryPage = () => {
 
   return (
     <>
-      <Header
-        level={level}
-        title={title}
-        isAnswerWritten={usersAnswers.length}
-        resultMode={resultMode}
-        headerText={m('HEADER')}
-        levelText={m('LEVEL')}
-        titleText={m('TITLE')}
-      />
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
         <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
           <section className="sm:text-blackColor">
