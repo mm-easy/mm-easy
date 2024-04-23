@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 
 import type { Quiz } from '@/types/quizzes';
 import useMultilingual from '@/utils/useMultilingual';
+import CreateNewQuizBtn from './CreateNewQuizBtn';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
@@ -218,6 +219,7 @@ const SelectQuizLevel = () => {
         </div>
       </main>
       <QuizList allQuizzes={allQuizzes.pages} quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
+      <CreateNewQuizBtn handleMakeQuizBtn={handleMakeQuizBtn} />
     </>
   );
 };

@@ -8,6 +8,7 @@ import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import { useEffect, useState } from 'react';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import { storageUrl } from '@/utils/supabase/storage';
+import CreateNewQuizBtn from './CreateNewQuizBtn';
 
 const QuizList = ({
   allQuizzes,
