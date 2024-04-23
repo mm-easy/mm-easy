@@ -86,7 +86,7 @@ const Header = () => {
         className="sm:w-[35%] w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center"
       >
         <Image src={MainLogo} alt="로고" width={150} className="sm:hidden" />
-        <Image src={MainLogoWhite} alt="로고" width={150} className="sm:block sm:ml-5" />
+        <Image src={MainLogoWhite} alt="로고" width={150} className="sm:ml-5 sm:block hidden" />
       </Link>
       <section className="sm:w-[65%] w-[84%] flex sm:justify-end justify-between px-[3vw]">
         <nav className="sm:hidden flex gap-14">
@@ -133,7 +133,7 @@ const Header = () => {
             </Link>
           )}
         </nav>
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex justify-center items-center sm:gap-3 gap-5">
           <ToggleLanguage />
           {isLoggedIn ? (
             <ProfileDropdown />
