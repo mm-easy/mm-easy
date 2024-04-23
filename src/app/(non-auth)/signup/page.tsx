@@ -185,7 +185,7 @@ const TermsPage = () => {
                   </span>
                 )}
               </span>
-              <label htmlFor="privacy-checkbox" className="ml-2 text-md font-bold">
+              <label htmlFor="terms-checkbox" className="ml-2 text-md font-bold">
               <span className="text-pointColor1 text-md mr-1 font-bold">{m('REQUIRED')}</span>{m('TERMS_LABEL')}
                 </label>
             </label>
