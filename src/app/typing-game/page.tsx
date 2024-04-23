@@ -365,6 +365,7 @@ const TypingGamePage = () => {
             >
               <button
                 onClick={handleBackButtonClick}
+                type="button"
                 className="flex items-center justify-center text-pointColor1 bg-pointColor1 rounded-md px-4 mr-2"
               >
                 <ImExit className="font-bold font-lg text-white mr-2" />
