@@ -26,7 +26,7 @@ const CommunitySection = () => {
 
   return (
     <>
-      <p className="w-[1440px] px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
+      <p className="w-full px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
         {m('RECENT_POSTS')}
       </p>
       <section className="flex">
