@@ -18,7 +18,6 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useDeleteQuiz, useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 
 import Header from './Header';
-import Creator from './Creator';
 import Options from './Options';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import ReportButton from '@/components/common/ReportButton';
@@ -27,6 +26,7 @@ import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
+import CreateInfo from './CreateInfo';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -257,13 +257,12 @@ const QuizTryPage = () => {
               quality={100}
               className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
             />
-            <section className="p-4 flex flex-col gap-4 border-solid border-b-2 border-pointColor1">
-              <Creator creator={creator_id} creatorText={m('CREATOR')} />
-              <div>
-                <h4 className="pb-1 font-semibold">{m('DATE_CREATED')}</h4>
-                <p>{formatToLocaleDateTimeString(created_at)}</p>
-              </div>
-            </section>
+            <CreateInfo
+              creatorText={m('CREATOR')}
+              creator={creator_id}
+              dateText={formatToLocaleDateTimeString(created_at)}
+              date={m('DATE_CREATED')}
+            />
             <p className="p-4">{info}</p>
           </section>
           <div className="flex justify-center font-bold pb-4">

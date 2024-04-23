@@ -62,7 +62,7 @@ const COMMUNITY_LIST_STRINGS = {
   COMMUNITY_NO_POSTS: {
     ko: '게시글이 없습니다.',
     en: 'No posts.'
-  },
+  }
 };
 
 export default COMMUNITY_LIST_STRINGS;

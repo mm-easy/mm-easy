@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { nextui } from '@nextui-org/react';
+import { redirect } from 'next/dist/server/api-utils';
 
 const config: Config = {
   content: [
@@ -65,8 +66,8 @@ const config: Config = {
     },
     backgroundSize: { md: '80%', cover: 'cover' },
     screens: {
-      lg: '1441px',
-      md: '501px'
+      md: { max: '1440px' },
+      sm: { max: '480px' }
     },
     animation: {
       'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
