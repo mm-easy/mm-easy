@@ -17,7 +17,7 @@ const Layout = ({ children, params }: Props) => {
   const m = useMultilingual('communityList');
 
   return (
-    <main className="bg-bgColor1 grid grid-cols-[16%_84%] h-[84%]">
+    <main className="bg-bgColor1 grid grid-cols-[16%_84%] sm:block sm:w-[100%] h-[84%]">
       <section className="h-[84vh] justify-between bg-bgColor1">
         <div>
           <CategorySelector categoryNow={category} />

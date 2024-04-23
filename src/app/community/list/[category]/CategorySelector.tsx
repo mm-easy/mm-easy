@@ -41,11 +41,11 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
 
   return (
     <nav className="text-pointColor1 font-bold">
-      <ul>
+      <ul className='sm:flex'>
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}
-            className={`h-[8vh] flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
+            className={`h-[8vh] sm:w-full flex items-center pl-12 border-b-2 border-solid border-pointColor1 cursor-pointer ${
               categoryNow === categoryMenu[category] ? 'bg-pointColor1 text-white' : 'bg-white'
             }`}
             onClick={() => handleSelectCategory(category)}
