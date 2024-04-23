@@ -72,31 +72,33 @@ const AboutPage = () => {
 
   return (
     <main className="flex flex-col items-center text-center">
-      <article className="w-full py-24 flex flex-col justify-center items-center bg-pointColor1">
-        <h2 className="text-5xl pb-16 font-black text-white tracking-wider">{m('ABOUT_TITLE1')}</h2>
-        <Image src={Infopeople} alt="로고" width={800} quality={100} />
-        <section className="text-3xl w-full text-white ">
+      <article className="sm:w-full w-full sm:py-16 py-24 flex flex-col justify-center items-center bg-pointColor1">
+        <h2 className="sm:text-3xl text-5xl sm:pb-12 pb-16 font-black text-white tracking-wider">
+          {m('ABOUT_TITLE1')}
+        </h2>
+        <Image src={Infopeople} alt="로고" quality={100} className="w-[800px] sm:w-[440px]" />
+        <section className="sm:text-xl text-3xl w-full text-white ">
           <section>
-            <div className="py-16 flex justify-center items-center gap-6">
-              <Image src={InfoIcon3} alt="로고" width={50} />
+            <div className="py-16 flex justify-center items-center sm:gap-2 gap-6">
+              <Image src={InfoIcon3} alt="로고" className="w-[50px] sm:w-[25px]" />
               <span className="text-white">{m('ABOUT_TITLE1_DETAIL1')}</span>
             </div>
           </section>
           <section>
-            <div className="w-3/5 mx-auto py-16 flex justify-center items-center gap-6 border-t border-solid border-white">
-              <Image src={InfoIcon2} alt="로고" width={50} />
+            <div className="sm:w-full w-3/5 mx-auto py-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-white">
+              <Image src={InfoIcon2} alt="로고" className="w-[50px] sm:w-[25px]" />
               <span className="text-white">{m('ABOUT_TITLE1_DETAIL2')}</span>
             </div>
           </section>
           <section>
-            <div className="w-3/5 mx-auto pt-16 flex justify-center items-center gap-6 border-t border-solid border-white">
-              <Image src={InfoIcon1} alt="로고" width={50} />
+            <div className="sm:w-full w-3/5 mx-auto pt-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-white">
+              <Image src={InfoIcon1} alt="로고" className="w-[50px] sm:w-[25px]" />
               <span className="text-white">{m('ABOUT_TITLE1_DETAIL3')}</span>
             </div>
           </section>
         </section>
       </article>
-      <article className="w-full py-14 bg-sky-50 border-b-2 border-solid border-pointColor1">
+      <article className="sm:w-full w-full py-14 bg-sky-50 border-b-2 border-solid border-pointColor1">
         <section
           className="pb-14 text-4xl font-extrabold text-pointColor1"
           style={{ display: 'inline-flex', alignItems: 'center' }}
