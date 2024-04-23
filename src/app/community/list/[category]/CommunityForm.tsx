@@ -7,10 +7,9 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useMemo } from 'react';
 import { getCommentCount } from '@/api/comment';
 import { useQueries } from '@tanstack/react-query';
+import { getLike } from '@/api/likes';
 
 import type { CommunityFormProps } from '@/types/posts';
-import { getLike } from '@/api/likes';
-import Link from 'next/link';
 
 const CommunityForm: React.FC<CommunityFormProps> = ({
   currentItems,
@@ -113,11 +112,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           </tbody>
         </table>
         {/* 모바일 전용 HTML */}
-        <div className="lg:hidden md:hidden sm:block border-t border-solid border-pointColor1">
+        <div className="hidden md:hidden sm:block border-t border-solid border-pointColor1">
           {sortedItems?.length > 0 ? (
             sortedItems.map((item, idx) => (
               <div
-                className={`border-b border-solid border-pointColor1 flex items-center h-[7vh] cursor-pointer ${
+                className={`border-b border-solid border-pointColor1 flex items-center h-20 cursor-pointer ${
                   item['category'] === '공지' ? ' bg-bgColor2' : 'bg-white'
                 }`}
                 key={idx}
@@ -170,15 +169,6 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
             </button>
           )}
         </nav>
-        <div>
-          <Link
-            href="/community/write"
-            type="button"
-            className="text-5xl flex justify-center items-center fixed bottom-30 right-6 bg-pointColor1 text-white h-16 w-16 rounded-full"
-          >
-            +
-          </Link>
-        </div>
       </section>
     </article>
   );
