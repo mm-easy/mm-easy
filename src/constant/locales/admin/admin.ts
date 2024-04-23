@@ -27,6 +27,10 @@ const ADMIN_STRINGS = {
     ko: '제목',
     en: 'Title'
   },
+  REASON: {
+    ko: '신고 사유',
+    en: 'Reason'
+  },
   DATE_REPORTED: {
     ko: '신고 날짜',
     en: 'Date reported'

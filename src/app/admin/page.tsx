@@ -53,7 +53,7 @@ const AdminPage = () => {
   });
 
   const deduplicatedPostsReports = postsReports?.filter((report, index, self) => {
-    // self : quizReports
+    // self : postReports
     return index === self.findIndex((t) => t.target_id === report.target_id);
   });
 
@@ -135,10 +135,11 @@ const AdminPage = () => {
             <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 text-lg font-bold border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[15%]">{m('STATUS')}</th>
-                  <th className="w-[25%]">{m('WRITER_EMAIL')}</th>
-                  <th className="w-[35%]">{m('TITLE')}</th>
-                  <th className="w-[15%]">{m('DATE_REPORTED')}</th>
+                  <th className="pb-2 w-[10%]">{m('STATUS')}</th>
+                  <th className="w-[20%]">{m('WRITER_EMAIL')}</th>
+                  <th className="w-[22%]">{m('TITLE')}</th>
+                  <th className="w-[22%]">{m('REASON')}</th>
+                  <th className="w-[12%]">{m('DATE_REPORTED')}</th>
                 </tr>
               </thead>
               {activeTab === 'posts' && (
@@ -151,6 +152,7 @@ const AdminPage = () => {
                         <td className="truncate max-w-xs cursor-pointer">
                           <a href={`/community/list/전체/${item.target_id}`}>{item['title']}</a>
                         </td>
+                        <td>{item.reason}</td>
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td className="text-right py-[1vh]">
                           {item.status === false ? (
@@ -174,7 +176,6 @@ const AdminPage = () => {
                   })}
                 </tbody>
               )}
-
               {activeTab === 'quizzes' && (
                 <tbody className="font-medium">
                   {deduplicatedQuizReports?.map((item, idx) => {
@@ -185,6 +186,7 @@ const AdminPage = () => {
                         <td className="truncate max-w-xs cursor-pointer">
                           <a href={`/quiz/${item.target_id}`}>{item['title']}</a>
                         </td>
+                        <td>{item.reason}</td>
                         <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
                         <td className="text-right py-[1vh]">
                           {item.status === false ? (
