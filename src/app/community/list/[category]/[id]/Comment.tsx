@@ -94,7 +94,12 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     />
                   </div>
                 ) : (
-                  <p>{prev.content}</p>
+                  <div>
+                    <p className="w-[80vh]">{prev.content}</p>
+                    <div className="text-gray-400 my-2">
+                      <p>{formatCommentDateToLocal(prev.created_at)}</p>
+                    </div>
+                  </div>
                 )}
               </div>
               <div className="flex flex-col justify-between ml-auto">
@@ -102,7 +107,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   (profile.id === prev.author_id ? (
                     btnChange ? (
                       <>
-                        <div className='flex justify-end'>
+                        <div className="flex justify-end">
                           <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
                             {m('COMMUNITY_COMMENT_SAVE')}
                           </button>
@@ -141,9 +146,6 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   ) : (
                     <div></div>
                   ))}
-                <div className='text-gray-400 mb-2'>
-                  <p>{formatCommentDateToLocal(prev.created_at)}</p>
-                </div>
               </div>
             </div>
           );
