@@ -28,7 +28,7 @@ const MyProfile = ({ data }: { data: User }) => {
 
   /** 수정 모달에서 취소하기 버튼 클릭 시 */
   const handleCancelBtn = () => {
-    if (!window.confirm('프로필 수정을 취소하시겠습니까?')) return;
+    if (!window.confirm(m('CANCEL_EDITING'))) return;
     setFile(null);
     setSelectedImg(`${profileStorageUrl}/${data.avatar_img_url}`);
     setIsEditing(false);
@@ -60,7 +60,7 @@ const MyProfile = ({ data }: { data: User }) => {
         imgUrl = (await uploadAvatarToStorage(file, fileName)) as string;
       }
       if (!nickname) {
-        toast.warning('닉네임을 입력해주세요.');
+        toast.warning(m('FILL_NICKNAME'));
         return;
       }
       const newProfile = {
@@ -72,7 +72,7 @@ const MyProfile = ({ data }: { data: User }) => {
         {
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['loggedInUser'] });
-            toast.success('프로필이 수정되었습니다.');
+            toast.success(m('EDITING_SUCCESS'));
             setIsEditing(false);
           }
         }

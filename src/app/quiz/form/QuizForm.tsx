@@ -69,7 +69,7 @@ const QuizForm = ({
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
           router.push('/login');
-          toast('로그인 후 이용해 주세요');
+          toast(m('ALERT_LOGIN'));
           return;
         }
         const userProfile = await getCurrentUserProfile();
@@ -116,7 +116,9 @@ const QuizForm = ({
 
   /** 취소 버튼 클릭 핸들러 */
   const handleCancelBtn = () => {
-    if (!window.confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?')) return;
+    const confirmation = m('ALERT_CANCEL_MAKING');
+    const result = window.confirm(confirmation);
+    if (!result) return;
     router.push('/quiz/list');
   };
 
@@ -147,7 +149,7 @@ const QuizForm = ({
         }
       ]);
     } else {
-      toast.warning('최대 5개까지 문제를 추가할 수 있습니다.');
+      toast.warning(m('ALERT_AT_MOST_5QUESTION'));
       return;
     }
   };
