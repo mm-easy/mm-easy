@@ -58,6 +58,18 @@ const MY_PROFILE_STRINGS = {
   TO_MY_ACTIVITY: {
     ko: '나의 활동 보러가기',
     en: 'To My Activity'
+  },
+  CANCEL_EDITING: {
+    ko: '프로필 수정을 취소하시겠습니까?',
+    en: 'Are you sure to quit?'
+  },
+  FILL_NICKNAME: {
+    ko: '닉네임을 입력해주세요.',
+    en: 'Please enter your nickname.'
+  },
+  EDITING_SUCCESS: {
+    ko: '프로필이 수정되었습니다.',
+    en: 'Your new profile is saved.'
   }
 };
 

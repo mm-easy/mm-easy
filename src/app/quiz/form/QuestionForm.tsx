@@ -67,7 +67,7 @@ const QuestionForm = ({
         })
       );
     } else {
-      toast.warn('선택지는 5개까지 추가할 수 있습니다.');
+      toast.warn(m('ALERT_AT_MOST_5OPTION'));
     }
   };
 
@@ -98,7 +98,7 @@ const QuestionForm = ({
         })
       );
     } else {
-      toast.warn('최소 2개의 선택지가 있어야 합니다.');
+      toast.warn(m('ALERT_AT_LEAST_2OPTION'));
     }
   };
 
@@ -143,14 +143,14 @@ const QuestionForm = ({
   /** 문제 삭제하기 버튼 핸들러 */
   const handleDeleteQuestion = (id: string | undefined) => {
     if (questions.length > 1) {
-      if (!window.confirm('해당 문제를 삭제하시겠습니까?')) return;
+      if (!window.confirm(m('ALERT_DELETE_QUESTION'))) return;
       deletedQuestions.push(id as string);
       setQuestions((prev) => {
         const newQuestions = prev.filter((question) => question.id !== id);
         return newQuestions;
       });
     } else {
-      toast.warn('최소 1개의 문제가 있어야 합니다.');
+      toast.warn(m('ALERT_AT_LEAST_lQUESTION'));
     }
   };
 

@@ -32,7 +32,7 @@ const TypingGamePage = () => {
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const [slowMotion, setSlowMotion] = useState(false);
-  const slowMotionDuration = 5000; // 느린 모션 지속 시간을 5초로 설정
+  const slowMotionDuration = 3000; // 느린 모션 지속 시간을 5초로 설정
   const [specialWord, setSpecialWord] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const m = useMultilingual('typing-game');
@@ -121,7 +121,7 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const speedAdjustment = slowMotion ? 1 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const speedAdjustment = slowMotion ? 6 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
       const updatedWords = words.map((word) => ({
         ...word,
         top: word.top + speedAdjustment
@@ -270,10 +270,10 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 3, interval: 9000 },
-    2: { label: m('DIFFICULTY2'), speed: 4, interval: 8000 },
-    3: { label: m('DIFFICULTY3'), speed: 6, interval: 7000 },
-    4: { label: m('DIFFICULTY4'), speed: 8, interval: 5000 },
+    1: { label: m('DIFFICULTY1'), speed: 4, interval: 8000 },
+    2: { label: m('DIFFICULTY2'), speed: 6, interval: 7000 },
+    3: { label: m('DIFFICULTY3'), speed: 8, interval: 5000 },
+    4: { label: m('DIFFICULTY4'), speed: 10, interval: 3000 },
     5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
   };
 

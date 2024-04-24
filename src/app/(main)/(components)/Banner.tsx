@@ -6,7 +6,7 @@ const Banner = () => {
   const [randomIdx] = useState(Math.floor(Math.random() * banners.length));
 
   return (
-    <main className="w-full border-solid border-b-2 border-pointColor1">
+    <main className="w-full border-solid border-b-2 border-pointColor1 sm:hidden">
       <Image
         src={`https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/${banners[randomIdx]}`}
         alt="로고"
