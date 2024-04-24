@@ -12,7 +12,7 @@ const RANKING_SECTION_STRINGS = {
     en: 'Quiz Master of the Week'
   },
   KEYBOARD_WARRIOR: {
-    ko: '이번주 키보드 워리어: ',
+    ko: '이번주 키보드 워리어',
     en: 'Keyboard Warrior of the Week'
   },
   COUNT: {

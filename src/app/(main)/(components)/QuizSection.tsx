@@ -30,13 +30,13 @@ const QuizSection = () => {
 
   return (
     <>
-      <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1 sm:text-xl sm:border-none sm:bg-white">
+      <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 sm:border-none sm:text-xl sm:bg-white">
         <p>{m('RECENT_QUIZZES')}</p>
         <Link href="/quiz/list" className="font-semibold text-pointColor1">
           {m('MORE')}
         </Link>
       </div>
-      <div className="hidden sm:block">
+      <div className="hidden sm:block border-b-2 border-solid border-pointColor1">
         <Swiper
           modules={[Pagination, Navigation]}
           spaceBetween={5}
