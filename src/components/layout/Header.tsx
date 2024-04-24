@@ -14,6 +14,7 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
+import { ADMIN_ACC_1 } from '@/constant/admin-ids';
 
 const Header = () => {
   const pathname = usePathname();
@@ -122,7 +123,7 @@ const Header = () => {
           >
             {m('HEADER_MENU4')}
           </Link>
-          {currentUserEmail === 'daejang@mmeasy.com' && (
+          {currentUserEmail === ADMIN_ACC_1 && (
             <Link
               href="/admin"
               className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor2 ${
