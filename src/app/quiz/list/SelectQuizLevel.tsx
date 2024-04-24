@@ -66,7 +66,7 @@ const SelectQuizLevel = () => {
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
     if (!currentUser) {
-      toast.warn('로그인이 필요합니다.');
+      toast.warn(m('ALERT_MSG_LOGIN'));
       return;
     }
     router.push('/quiz/form');

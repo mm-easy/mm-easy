@@ -10,6 +10,10 @@ const MAIN_FOOTER_STRINGS = {
     INTRODUCTION_3: {
         ko: '문의 | redbery0217@gmail.com',
         en: 'Email us | redbery0217@gmail.com'
+      },
+      GO_TO_ABOUT: {
+        ko: '서비스 소개',
+        en: 'About us'
       }
   };
   

@@ -19,6 +19,7 @@ import { supabase } from '@/utils/supabase/supabase';
 import { QuestionType, type Question } from '@/types/quizzes';
 import { SetStateAction } from 'jotai';
 import useMultilingual from '@/utils/useMultilingual';
+import { DebouncedFunc } from 'lodash';
 
 const QuizForm = ({
   questions,
@@ -40,7 +41,7 @@ const QuizForm = ({
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
-  handleSubmitBtn: () => Promise<void>;
+  handleSubmitBtn: DebouncedFunc<() => Promise<void>>;
   level: number;
   setLevel: Dispatch<SetStateAction<number>>;
   title: string;
@@ -69,7 +70,7 @@ const QuizForm = ({
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
           router.push('/login');
-          toast('로그인 후 이용해 주세요');
+          toast(m('ALERT_LOGIN'));
           return;
         }
         const userProfile = await getCurrentUserProfile();
@@ -116,7 +117,9 @@ const QuizForm = ({
 
   /** 취소 버튼 클릭 핸들러 */
   const handleCancelBtn = () => {
-    if (!window.confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?')) return;
+    const confirmation = m('ALERT_CANCEL_MAKING');
+    const result = window.confirm(confirmation);
+    if (!result) return;
     router.push('/quiz/list');
   };
 
@@ -147,7 +150,7 @@ const QuizForm = ({
         }
       ]);
     } else {
-      toast.warning('최대 5개까지 문제를 추가할 수 있습니다.');
+      toast.warning(m('ALERT_AT_MOST_5QUESTION'));
       return;
     }
   };
@@ -198,7 +201,7 @@ const QuizForm = ({
               </div>
             </div>
           </div>
-          <div className="sm:w-full flex flex-col gap-1 w-auto">
+          <div className="sm:w-full sm:flex sm:flex-col sm:gap-1 hidden">
             <p className="sm:text-base sm:font-bold text-xs text-pointColor1">{m('QUIZ_TITLE')}</p>
             <BlueInput
               value={title}

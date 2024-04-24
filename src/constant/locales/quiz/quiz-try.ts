@@ -73,7 +73,7 @@ const QUIZ_TRY_STRINGS = {
   },
   ASK_TO_DELETE: {
     ko: '해당 퀴즈를 삭제하시겠습니까?',
-    en: 'Delete a quiz?'
+    en: 'Do you want to delete this quiz?'
   },
   ASK_TO_EXIT: {
     ko: '변경사항이 저장되지 않을 수 있습니다. 계속하시겠습니까?',
