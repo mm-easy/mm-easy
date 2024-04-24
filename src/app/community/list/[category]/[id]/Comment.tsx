@@ -157,24 +157,54 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       <div></div>
                     ))}
                 </div>
-                <div className="">
-                  {profile && (profile.id === prev.author_id || profile?.email === 'daejang@mmeasy.com') && (
-                    <div className="relative sm:block hidden">
+                <div className="sm:block hidden">
+                  {profile && (profile.id === prev.author_id || profile?.email === 'daejang@mmeasy.com') ? (
+                    <div className="relative">
                       <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="focus:outline-none">
                         <HiDotsVertical />
                       </button>
-                      {isOpen && (
-                        <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                          수정
-                          <div className="border-t border-2 " />
-                          삭제
-                        </div>
-                      )}
+                      {isOpen &&
+                        nowCommentId === prev.id &&
+                        (btnChange && prev.id === nowCommentId ? (
+                          <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                            <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
+                              {m('COMMUNITY_COMMENT_SAVE')}
+                            </button>
+                            <hr className="border-t border-0.5 border-pointColor1" />
+                            <button
+                              className="pl-2 font-bold"
+                              onClick={() => {
+                                setBtnChange(!btnChange);
+                                setContentChange(prev.content);
+                                setIsOpen(false);
+                              }}
+                            >
+                              {m('COMMUNITY_COMMENT_CANCEL')}
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                            <button
+                              className="font-bold"
+                              onClick={() => {
+                                setBtnChange(!btnChange);
+                                setContentChange(prev.content);
+                                setNowCommentId(prev.id);
+                                setIsOpen(true);
+                              }}
+                            >
+                              {m('COMMUNITY_COMMENT_EDIT')}
+                            </button>
+                            <hr className="border-t border-0.5 border-pointColor1" />
+                            <button className="font-bold" onClick={() => handleDeleteBtn(prev.id)}>
+                              {m('COMMUNITY_COMMENT_DELETE')}
+                            </button>
+                          </div>
+                        ))}
                     </div>
+                  ) : (
+                    <></>
                   )}
-                </div>
-                <div className="text-gray-400 mb-2">
-                  <p className="text-[14px]">{formatCommentDateToLocal(prev.created_at)}</p>
                 </div>
               </div>
             </div>
@@ -206,14 +236,27 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
           </div>
         </form>
       </div>
-      <div className="sm:block hidden mt-8 ">
-        <form className="flex sm:w-full" onSubmit={handleSubmitBtn}>
-          <div className="border-solid border border-grayColor2">
-            <div className="p-4">
-              <span className="text-blackColor font-bold">{profile?.nickname}</span>
+
+      <div className="my-8 sm:block hidden">
+        <form className="flex items-center w-full" onSubmit={handleSubmitBtn}>
+          <div className="flex-grow border-b-1 border-t-1 border-r-1 border-grayColor2 border-solid">
+            <div className="pl-4 flex">
+              {profile ? (
+                <div className="sm:w-[40px] sm:h-[40px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
+                  <Image
+                    src={`${profileStorageUrl}/${profile?.avatar_img_url || '프로필이미지'}`}
+                    alt="프로필이미지"
+                    width={50}
+                    height={50}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
               <div>
                 <textarea
-                  className="resize-none pt-3 w-full focus:outline-none"
+                  className={`resize-none w-full focus:outline-none text-center ${profile ? 'pt-3' : 'pt-0'} mt-5`}
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder={m('COMMUNITY_COMMENT_PLACEHOLDER')}
@@ -221,14 +264,12 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
               </div>
             </div>
           </div>
-          {/* <div className="flex justify-end"> */}
           <button
-            className="w-20 h-12 mt-4 p-2 font-bold rounded-md text-white border-solid border border-white bg-pointColor1"
+            className="w-20 h-20 font-bold text-white bg-pointColor1 rounded-md border border-white"
             type="submit"
           >
             {m('COMMUNITY_COMMENT_SUBMIT')}
           </button>
-          {/* </div> */}
         </form>
       </div>
     </div>

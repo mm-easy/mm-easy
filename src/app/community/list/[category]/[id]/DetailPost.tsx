@@ -139,10 +139,10 @@ const DetailPost = () => {
             {post && post.profiles && (
               <>
                 <header className="sm:block hidden text-center w-full h-[8vh] leading-[7.5vh] flex items-center font-bold border-solid border-b-2 sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1">
-                  <div className="flex">
-                    <button className="flex-shrink-0 ml-2">
+                  <div className="flex w-full items-center">
+                    <Link href={`/community/list/${categoryNow}`} className="flex flex-shrink-0 items-center ml-2">
                       <IoMdArrowBack />
-                    </button>
+                    </Link>
                     <div className="flex-grow text-center">{post.category}</div>
                   </div>
                 </header>
@@ -241,8 +241,8 @@ const DetailPost = () => {
                       )}
                     </div>
                   </div>
-                  <div className="border-solid border-t sm:px-5 pt-3">
-                    <span className="text-lg font-bold">{m('COMMUNITY_COMMENTS')}</span>
+                  <div className="border-solid border-t pt-3">
+                    <span className="text-lg font-bold px-5">{m('COMMUNITY_COMMENTS')}</span>
                     <Comment postId={params.id} profile={profile} />
                   </div>
                   <div className="sm:hidden pt-10 flex justify-center item items-center font-bold gap-10">
