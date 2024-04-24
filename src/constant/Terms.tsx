@@ -1,9 +1,6 @@
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 const Terms = () => {
-  const [lang, setLang] = useAtom(langAtom);
   const m = useMultilingual('terms');
 
   return (

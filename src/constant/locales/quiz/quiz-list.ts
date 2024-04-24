@@ -26,6 +26,22 @@ const QUIZLIST_STRINGS = {
   ALERT_MSG_GOTOLOGIN: {
     ko: '로그인 하러가기',
     en: 'Go to log-in'
+  },
+  QUIZ_LEVEL_0: {
+    ko: '모든맛',
+    en: 'ALL'
+  },
+  QUIZ_LEVEL_1: {
+    ko: '순한맛',
+    en: 'EASY'
+  },
+  QUIZ_LEVEL_2: {
+    ko: '중간맛',
+    en: 'MEDIUM'
+  },
+  QUIZ_LEVEL_3: {
+    ko: '매운맛',
+    en: 'HARD'
   }
 };
 

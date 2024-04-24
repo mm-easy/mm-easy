@@ -14,17 +14,17 @@ const NewsSection = async () => {
 
   return (
     <div>
-      <p className="w-full px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1">
+      <p className="w-full px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 border-y-2 border-solid border-pointColor1 sm:border-none sm:bg-white sm:text-xl">
         한국은 지금
       </p>
-      <section className="px-6 py-4 grid grid-cols-4 sm:grid-cols-2 gap-5">
+      <section className="px-6 py-4 grid grid-cols-4 gap-5 sm:grid-cols-2 sm:gap-3 sm:py-2">
         {news &&
           news.map((newsData: NewsType, index: number) => (
             <div
               key={index}
-              className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform"
+              className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform sm:my-2"
             >
-              <p className="font-bold text-lg mt-4 mb-3 truncate">
+              <p className="font-bold text-lg mt-4 mb-3 truncate sm:mb-2">
                 {newsData.title
                   .replace(/<[^>]*>/g, '')
                   .replace(/&quot;/g, '"')

@@ -1,6 +1,6 @@
 import { supabase } from '@/utils/supabase/supabase';
 
-import type { InsertComment, UpdateCommentParams } from '@/types/posts';
+import type { InsertComment, IsOpenType, UpdateCommentParams } from '@/types/posts';
 
 /** 댓글가져오기 */
 export const getComment = async (postId: string | string[] | undefined) => {
@@ -19,18 +19,14 @@ export const getComment = async (postId: string | string[] | undefined) => {
 
 /** 댓글수 가져오기 */
 export const getCommentCount = async (postId: string) => {
-  const { data, error, count } = await supabase
-    .from('comments')
-    .select('*', { count: 'exact' })
-    .eq('post_id', postId);
+  const { data, error, count } = await supabase.from('comments').select('*', { count: 'exact' }).eq('post_id', postId);
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return count; 
+  return count;
 };
-
 
 /** 댓글만들기 */
 export const getInsertComment = async ({ profile, postId, content }: InsertComment) => {
@@ -61,6 +57,17 @@ export const getUpdateComment = async ({ contentChange, id }: UpdateCommentParam
 export const getDeleteComment = async (id: string) => {
   try {
     const { error } = await supabase.from('comments').delete().eq('id', id);
+    if (error) throw error;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/** 모바일 드롭다운 */
+export const isOpenUpdate = async ({ isOpen, id }: IsOpenType) => {
+  try {
+    const { error } = await supabase.from('comments').update({ isOpen: !isOpen }).eq('id', id).select();
+
     if (error) throw error;
   } catch (error) {
     throw error;

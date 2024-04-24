@@ -24,6 +24,7 @@ import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
 import type { StringEssetType } from '@/types/langs';
+import MOBILE_MENU_STRINGS from '@/constant/locales/components/mobileMenu';
 
 export default function useMultilingual(assets: string) {
   const [lang] = useAtom(langAtom);
@@ -73,6 +74,8 @@ export default function useMultilingual(assets: string) {
     assetsObject = REPORT_STRINGS;
   } else if (assets === 'admin') {
     assetsObject = ADMIN_STRINGS;
+  } else if (assets === 'mobile-menu') {
+    assetsObject = MOBILE_MENU_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }

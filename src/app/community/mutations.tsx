@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
-import { getDeleteComment, getInsertComment, getUpdateComment } from '@/api/comment';
+import { getDeleteComment, getInsertComment, getUpdateComment, isOpenUpdate } from '@/api/comment';
 import { deleteLike, insertLike } from '@/api/likes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { InsertComment, LikeParams, UpdateCommentParams } from '@/types/posts';
+import type { InsertComment, IsOpenType, LikeParams, UpdateCommentParams } from '@/types/posts';
 
 export const useInsertComment = () => {
   const queryClient = useQueryClient();
@@ -109,4 +109,26 @@ export const useDeleteLike = () => {
     }
   });
   return insertLikeMuitation;
+};
+
+/** 댓글 드롭다운 */
+export const useCommentIsOpen = () => {
+  const queryClient = useQueryClient();
+
+  const insertCommentIsOpenMuitation = useMutation({
+    mutationFn: async ({ isOpen, id }: IsOpenType) => {
+      try {
+        const result = isOpenUpdate({ isOpen, id });
+        if (result) {
+          return result;
+        }
+      } catch {
+        toast.error('문제가 발생했습니다.');
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    }
+  });
+  return insertCommentIsOpenMuitation;
 };

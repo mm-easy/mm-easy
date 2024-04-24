@@ -18,6 +18,14 @@ const COMMUNITY_SECTION_STRINGS = {
   USER_POSTS: {
     ko: '유저가 쓴 글',
     en: 'Posts'
+  },
+  NOTICE_BUTTON: {
+    ko: '공지글',
+    en: 'Notice'
+  },
+  USER_POSTS_BUTTON: {
+    ko: '게시글',
+    en: 'Posts'
   }
 };
 
