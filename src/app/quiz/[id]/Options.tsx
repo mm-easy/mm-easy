@@ -8,12 +8,14 @@ const Options = ({
   id: questionId,
   resultMode,
   usersAnswer,
-  onChange
+  onChange,
+  onKeyDown
 }: {
   id: string | undefined;
   resultMode: boolean;
   usersAnswer: Answer | undefined;
   onChange: (id: string | undefined, answer: string | boolean, option_id?: string) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }) => {
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
@@ -53,8 +55,9 @@ const Options = ({
               type="radio"
               disabled={resultMode}
               name={questionId}
-              onChange={() => onChange(questionId, is_answer, id)}
               checked={usersAnswer?.option_id === id}
+              onChange={() => onChange(questionId, is_answer, id)}
+              onKeyDown={onKeyDown}
             />
             {content}
           </label>
