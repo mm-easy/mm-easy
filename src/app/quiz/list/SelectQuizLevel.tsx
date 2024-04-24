@@ -98,7 +98,7 @@ const SelectQuizLevel = () => {
 
   return (
     <>
-      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:ml-5 sm:font-bold sm:text-pointColor1 hidden">
+      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:pl-5 sm:font-bold sm:text-pointColor1 hidden">
         난이도를 골라보세요!
       </section>
       <main
