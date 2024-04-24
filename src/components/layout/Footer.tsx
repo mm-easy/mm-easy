@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <section className="mt-auto h-[8vh] px-8 flex justify-between items-center text-center text-sm text-white bg-pointColor1">
+    <section className="mt-auto h-[8vh] px-8 flex sm:hidden justify-between items-center text-center text-sm text-white bg-pointColor1">
       <p>뭔말easy? Project. All rights reserved @ Coding zizon</p>
       <div className="flex gap-6">
         <Link href="https://github.com/mm-easy/mm-easy" target="\_blank">
