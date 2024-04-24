@@ -1,8 +1,6 @@
-import { langAtom } from '@/store/store';
-import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
-import { ImExit } from 'react-icons/im';
+import useMultilingual from '@/utils/useMultilingual';
+import ExitButton from '@/components/common/ExitButton';
 
 const Header = ({
   level,
@@ -15,7 +13,6 @@ const Header = ({
   isAnswerWritten: number;
   resultMode: boolean;
 }) => {
-  const [lang] = useAtom(langAtom);
   const m = useMultilingual('quiz-try');
   const router = useRouter();
 
@@ -44,13 +41,7 @@ const Header = ({
           </h2>
           <h3 className="sm:w-full pl-[2%] sm:pl-4 sm:text-xl sm:font-semibold">{title}</h3>
         </div>
-        <button
-          className={`${lang === 'ko' && 'w-[140px]'} my-2 mr-2 px-4 flex sm:hidden justify-center items-center gap-2 font-bold font-lg text-white bg-pointColor1 rounded-md`}
-          onClick={handleExitBtn}
-        >
-          <ImExit />
-          <span>{m('EXIT_BTN')}</span>
-        </button>
+        <ExitButton size="sm" exitText={m('EXIT_BTN')} onClick={handleExitBtn} />
       </section>
     </header>
   );
