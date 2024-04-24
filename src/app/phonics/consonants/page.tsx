@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { RiNumbersFill } from 'react-icons/ri';
 
 const ConsonantsPage = () => {
-  const audioRefs = useRef<Array<HTMLAudioElement | null>>(Array.from({ length: 19 }, () => null));
+  // const audioRefs = useRef<Array<HTMLAudioElement | null>>(Array.from({ length: 19 }, () => null));
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]' },
     { letter: 'ㄴ', read: '[n]' },
@@ -51,13 +51,13 @@ const ConsonantsPage = () => {
     }
   });
 
-  const handlePlaySound = (index: number) => {
-    const audioRef = audioRefs.current[index];
-    if (audioRef) {
-      audioRef.currentTime = 0;
-      audioRef.play();
-    }
-  };
+  // const handlePlaySound = (index: number) => {
+  //   const audioRef = audioRefs.current[index];
+  //   if (audioRef) {
+  //     audioRef.currentTime = 0;
+  //     audioRef.play();
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-[16%_84%] bgColor1">
@@ -67,7 +67,7 @@ const ConsonantsPage = () => {
         <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
         <div className="mt-14 flex gap-10">
           <div className="grid grid-cols-5 gap-4">
-            {consonantLabels.map((item, index) => (
+            {/* {consonantLabels.map((item, index) => (
               <div
                 key={index}
                 className={`flex flex-col justify-center items-center p-1 w-24 h-24 border-solid border-pointColor1 rounded-full ${
@@ -79,7 +79,7 @@ const ConsonantsPage = () => {
                 <p className="">{item.read}</p>
                 <audio ref={(ref) => (audioRefs.current[index] = ref)} src={consonants[index]} preload="auto"></audio>
               </div>
-            ))}
+            ))} */}
           </div>
           <div className="w-64 h-64 bg-bgColor">
             <Image
