@@ -51,7 +51,7 @@ const RankingSection = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center w-[1440px] px-6 py-4 bg-bgColor1 border-y-2 border-solid border-pointColor1">
+      <div className="flex justify-between items-center w-full px-6 py-4 bg-bgColor1 border-y-2 border-solid border-pointColor1">
         <p className="text-lg font-bold text-pointColor1">{m('HALL_OF_FAME')}</p>
         <button onClick={refreshAllData} className="flex items-center text-pointColor1 text-xl">
           <SlRefresh className="hover:animate-spin-slow" />
