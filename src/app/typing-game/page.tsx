@@ -143,7 +143,7 @@ const TypingGamePage = () => {
     if (lives <= 0) {
       if (gameoverSound.current) {
         gameoverSound.current.play();
-        toast.info(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+        toast.info(`${m('ALERT_MESSAGE1')} ${score} ${m('ALERT_MESSAGE2')}`);
         if (user) {
           addGameScore(score);
         }
@@ -167,7 +167,7 @@ const TypingGamePage = () => {
       setCorrectWordsCount(0);
       setWords([]);
       setLives(5);
-      toast.success(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
+      toast.success(`${m('ALERT_MESSAGE3')} ${difficulty + 1}${m('ALERT_MESSAGE4')}`);
     }
   }, [correctWordsCount, difficulty]);
 
