@@ -2,7 +2,7 @@ import Image from 'next/image';
 import useMultilingual from '@/utils/useMultilingual';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
+import { useCommentIsOpen, useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
 import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
@@ -16,13 +16,13 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState<string>('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
-  const [isOpen, setIsOpen] = useState(false);
 
   const m = useMultilingual('communityDetail');
 
   const insertCommentMutation = useInsertComment();
   const updateCommentMutation = useUpdateComment();
   const deleteCommentMutation = useDeleteComment();
+  const isOpenCommentMutation = useCommentIsOpen();
 
   const { data: postCommentList } = useQuery<PostDetailCommentType[]>({
     queryKey: ['comments', postId],
@@ -69,10 +69,27 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     }
   };
 
-  const userMenuOnBlur = () => {
+  const userMenuOnBlur = (isOpen: boolean, id: string) => {
     setTimeout(() => {
-      setIsOpen(false);
+      isOpenCommentMutation.mutate({ isOpen, id });
     }, 200);
+  };
+
+  const handleIsOpenBtn = (isOpen: boolean, id: string) => {
+    isOpenCommentMutation.mutate({ isOpen, id });
+  };
+
+  const handleIsOpenUpdateBtn = (content: string, isOpen: boolean, id: string) => {
+    setBtnChange(!btnChange);
+    setContentChange(content);
+    isOpenCommentMutation.mutate({ isOpen, id });
+  };
+
+  const handleIsOpenChangeBtn = (content: string, isOpen: boolean, id: string) => {
+    setBtnChange(!btnChange);
+    setContentChange(content);
+    setNowCommentId(id);
+    isOpenCommentMutation.mutate({ isOpen, id });
   };
 
   return (
@@ -160,11 +177,14 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                 <div className="sm:block hidden">
                   {profile && (profile.id === prev.author_id || profile?.email === 'daejang@mmeasy.com') ? (
                     <div className="relative">
-                      <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="focus:outline-none">
+                      <button
+                        onClick={() => handleIsOpenBtn(prev.isOpen, prev.id)}
+                        onBlur={() => userMenuOnBlur(true, prev.id)}
+                        className="focus:outline-none"
+                      >
                         <HiDotsVertical />
                       </button>
-                      {isOpen &&
-                        nowCommentId === prev.id &&
+                      {prev.isOpen &&
                         (btnChange && prev.id === nowCommentId ? (
                           <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
                             <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
@@ -174,9 +194,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                             <button
                               className="pl-2 font-bold"
                               onClick={() => {
-                                setBtnChange(!btnChange);
-                                setContentChange(prev.content);
-                                setIsOpen(false);
+                                handleIsOpenUpdateBtn(prev.content, prev.isOpen, prev.id);
                               }}
                             >
                               {m('COMMUNITY_COMMENT_CANCEL')}
@@ -186,12 +204,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                           <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
                             <button
                               className="font-bold"
-                              onClick={() => {
-                                setBtnChange(!btnChange);
-                                setContentChange(prev.content);
-                                setNowCommentId(prev.id);
-                                setIsOpen(true);
-                              }}
+                              onClick={() => handleIsOpenChangeBtn(prev.content, prev.isOpen, prev.id)}
                             >
                               {m('COMMUNITY_COMMENT_EDIT')}
                             </button>
