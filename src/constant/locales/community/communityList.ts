@@ -33,11 +33,11 @@ const COMMUNITY_LIST_STRINGS = {
   },
   COMMUNITY_CATEGORY_QUESTION: {
     ko: '질문',
-    en: 'Question'
+    en: 'Q&A'
   },
   COMMUNITY_CATEGORY_CHAT: {
     ko: '잡담',
-    en: 'Small talk'
+    en: 'Talk'
   },
   COMMUNITY_CATEGORY_STUDY: {
     ko: '공부',
