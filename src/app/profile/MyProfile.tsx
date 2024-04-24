@@ -85,30 +85,30 @@ const MyProfile = ({ data }: { data: User }) => {
   return (
     <main className="w-full h-full flex flex-col items-center">
       <article className="my-auto">
-        <h3 className="text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
-        <section className="flex gap-20 mt-5">
+        <h3 className="sm:hidden text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
+        <section className="flex sm:flex-col sm:gap-7 gap-20 m-10">
           <section className="w-[230px] h-[230px]">
             <Image
               src={`${profileStorageUrl}/${data.avatar_img_url}`}
               alt="사용자 프로필"
               width={250}
               height={250}
-              className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
+              className="bg-bgColor2 w-full h-full object-cover border-solid border-2 border-pointColor1 rounded-full"
             />
           </section>
           <section className="flex flex-col justify-around">
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 sm:text-center">
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">{m('NICKNAME')}</p>
+                <p className="text-pointColor1 font-bold">{m('NICKNAME')}</p>
                 <p className="text-lg">{data.nickname}</p>
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">{m('EMAIL')}</p>
+                <p className="text-pointColor1 font-bold">{m('EMAIL')}</p>
                 <p className="text-lg">{data.email}</p>
               </div>
             </div>
             <div
-              className="text-pointColor1 underline underline-offset-4 cursor-pointer"
+              className="text-pointColor1 underline underline-offset-4 cursor-pointer sm:text-center sm:mt-10"
               onClick={() => setIsEditing(true)}
             >
               {m('PROFILE_EDIT')}
