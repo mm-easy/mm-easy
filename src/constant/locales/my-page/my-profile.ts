@@ -56,7 +56,7 @@ const MY_PROFILE_STRINGS = {
     en: 'Total Score'
   },
   TO_MY_ACTIVITY: {
-    ko: '나의 활동 보러기',
+    ko: '나의 활동 보러가기',
     en: 'To My Activity'
   }
 };
