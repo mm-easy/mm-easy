@@ -1,6 +1,3 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import QuestionEx from './QuestionEx';
@@ -20,24 +17,12 @@ import type { Quiz } from '@/types/quizzes';
 
 const QuizSection = () => {
   const m = useMultilingual('quiz-section');
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const { data: quiz, isLoading } = useQuery<Quiz[]>({
     queryKey: ['recentQuiz'],
     queryFn: getRecentQuizzes,
     staleTime: 1000 * 60 * 5
   });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 580);
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   if (isLoading) {
     return <LoadingImg height="400px" />;
@@ -51,7 +36,7 @@ const QuizSection = () => {
           {m('MORE')}
         </Link>
       </div>
-      {isSmallScreen ? (
+      <div className="hidden sm:block">
         <Swiper
           modules={[Pagination, Navigation]}
           spaceBetween={5}
@@ -79,32 +64,31 @@ const QuizSection = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      ) : (
-        <section className="px-6 py-4 grid grid-cols-4 gap-5">
-          {quiz?.map((quiz) => (
-            <div
-              key={quiz.id}
-              className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform hover:border-blue-500"
-            >
-              <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
-              <div className="flex flex-col gap-3">
-                <Image
-                  src={`${storageUrl}/quiz-thumbnails/${quiz.thumbnail_img_url}`}
-                  alt="퀴즈 썸네일"
-                  width={250}
-                  height={250}
-                  quality={100}
-                  className="w-full h-[250px] object-cover border border-solid border-grayColor1 rounded-md"
-                />
-                <QuestionEx id={quiz.id} />
-                <Link href={`/quiz/${quiz.id}`}>
-                  <div className="p-2 text-center text-white bg-pointColor1 rounded-md">{m('TAKE_THE_QUIZ')}</div>
-                </Link>
-              </div>
+      </div>
+      <section className="px-6 py-4 grid grid-cols-4 gap-5 flex:block sm:hidden">
+        {quiz?.map((quiz) => (
+          <div
+            key={quiz.id}
+            className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform hover:border-blue-500"
+          >
+            <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
+            <div className="flex flex-col gap-3">
+              <Image
+                src={`${storageUrl}/quiz-thumbnails/${quiz.thumbnail_img_url}`}
+                alt="퀴즈 썸네일"
+                width={250}
+                height={250}
+                quality={100}
+                className="w-full h-[250px] object-cover border border-solid border-grayColor1 rounded-md"
+              />
+              <QuestionEx id={quiz.id} />
+              <Link href={`/quiz/${quiz.id}`}>
+                <div className="p-2 text-center text-white bg-pointColor1 rounded-md">{m('TAKE_THE_QUIZ')}</div>
+              </Link>
             </div>
-          ))}
-        </section>
-      )}
+          </div>
+        ))}
+      </section>
     </>
   );
 };
