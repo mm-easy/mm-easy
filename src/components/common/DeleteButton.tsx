@@ -30,7 +30,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
     <button
       type="submit"
       onClick={handleDeleteClick}
-      className={`font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height}`}
+      className={`sm:rounded-sm font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height}`}
     >
       {text}
     </button>
@@ -60,7 +60,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
     <button
       type="submit"
       onClick={handleDeleteClick}
-      className={`font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height}`}
+      className={`sm:rounded-sm font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height}`}
     >
       {text}
     </button>

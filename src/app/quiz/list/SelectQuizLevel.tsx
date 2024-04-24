@@ -5,6 +5,9 @@ import QuizList from './QuizList';
 import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
+import Level1ENG from '@/assets/card_en_easy.png';
+import Level2ENG from '@/assets/card_en_medium.png';
+import Level3ENG from '@/assets/card_en_hard.png';
 import MobileL0 from '@/assets/face_2.png';
 import MobileL1 from '@/assets/face_3.png';
 import MobileL2 from '@/assets/face_4.png';
@@ -18,6 +21,8 @@ import { getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 import type { Quiz } from '@/types/quizzes';
 import useMultilingual from '@/utils/useMultilingual';
@@ -29,6 +34,7 @@ const SelectQuizLevel = () => {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual('quiz-list');
 
   /** 로그인한 유저의 정보를 불러옴 */
@@ -121,7 +127,7 @@ const SelectQuizLevel = () => {
           onClick={() => handleSelectLevel(null)}
         >
           <Image src={MobileL0} alt="전체 레벨" width={75} />
-          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">모든맛</p>
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">{m('QUIZ_LEVEL_0')}</p>
         </div>
         <div
           className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
@@ -130,7 +136,7 @@ const SelectQuizLevel = () => {
           onClick={() => handleSelectLevel(1)}
         >
           <Image src={MobileL1} alt="순한맛" width={75} />
-          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">순한맛</p>
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">{m('QUIZ_LEVEL_1')}</p>
         </div>
         <div
           className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
@@ -139,7 +145,7 @@ const SelectQuizLevel = () => {
           onClick={() => handleSelectLevel(2)}
         >
           <Image src={MobileL2} alt="중간맛" width={75} />
-          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">중간맛</p>
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">{m('QUIZ_LEVEL_2')}</p>
         </div>
         <div
           className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
@@ -148,7 +154,7 @@ const SelectQuizLevel = () => {
           onClick={() => handleSelectLevel(3)}
         >
           <Image src={MobileL3} alt="매운맛" width={75} />
-          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">매운맛</p>
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">{m('QUIZ_LEVEL_3')}</p>
         </div>
       </main>
       <main className="sm:hidden w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
@@ -167,7 +173,7 @@ const SelectQuizLevel = () => {
         <div className="flex items-end overflow-hidden mt-30">
           <div className="rotate-[-5deg] ml-5">
             <Image
-              src={Level1}
+              src={lang === 'ko' ? Level1 : Level1ENG}
               alt="초급"
               width={350}
               height={240}
@@ -184,7 +190,7 @@ const SelectQuizLevel = () => {
           </div>
           <div className="rotate-[-2deg]">
             <Image
-              src={Level2}
+              src={lang === 'ko' ? Level2 : Level2ENG}
               alt="중급"
               width={350}
               height={240}
@@ -201,7 +207,7 @@ const SelectQuizLevel = () => {
           </div>
           <div className="rotate-3 mr-5">
             <Image
-              src={Level3}
+              src={lang === 'ko' ? Level3 : Level3ENG}
               alt="고급"
               width={350}
               height={240}

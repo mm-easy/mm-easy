@@ -1,15 +1,15 @@
 const MY_ACTIVITY_STRINGS = {
   QUIZ_I_SOLVED: {
     ko: '내가 푼 퀴즈',
-    en: 'The Quiz I Solved'
+    en: 'Solved Quiz'
   },
   QUIZ_I_MADE: {
     ko: '내가 만든 퀴즈',
-    en: 'The Quiz I Made'
+    en: 'My Quiz'
   },
   MY_WRITING: {
     ko: '내가 쓴 글',
-    en: 'My Writing'
+    en: 'My Post'
   },
   MY_COMMENT: {
     ko: '내가 쓴 댓글',
