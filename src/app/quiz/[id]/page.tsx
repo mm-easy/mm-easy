@@ -135,6 +135,13 @@ const QuizTryPage = () => {
   const questions = questionsData as Question[];
   const isAllAnswersSubmitted = questions.length === usersAnswers.length;
 
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && page < questions.length - 1) {
+      e.preventDefault();
+      handleNextPage();
+    }
+  };
+
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
@@ -318,7 +325,13 @@ const QuizTryPage = () => {
                       />
                     )}
                     {type === QuestionType.objective ? (
-                      <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
+                      <Options
+                        id={id}
+                        resultMode={resultMode}
+                        usersAnswer={usersAnswer}
+                        onChange={handleGetAnswer}
+                        onKeyDown={handleEnterKey}
+                      />
                     ) : (
                       <div className="w-full relative">
                         {resultMode ? (
@@ -344,6 +357,7 @@ const QuizTryPage = () => {
                                 handleMaxLength(e, 30);
                                 handleGetAnswer(id, e.target.value);
                               }}
+                              onKeyDown={handleEnterKey}
                             />
                             <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
                               {handleGetLength(id)}/30
