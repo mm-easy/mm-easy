@@ -1,5 +1,8 @@
+import { langAtom } from '@/store/store';
 import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
+import { ImExit } from 'react-icons/im';
 
 const Header = ({
   level,
@@ -12,12 +15,13 @@ const Header = ({
   isAnswerWritten: number;
   resultMode: boolean;
 }) => {
+  const [lang] = useAtom(langAtom);
   const m = useMultilingual('quiz-try');
   const router = useRouter();
 
   const handleExitBtn = () => {
     if (isAnswerWritten && !resultMode) {
-      if (!window.confirm('변경사항이 저장되지 않을 수 있습니다. 계속하시겠습니까?')) return;
+      if (!window.confirm(m('ASK_TO_EXIT'))) return;
     }
     router.push('/quiz/list');
   };
@@ -41,10 +45,11 @@ const Header = ({
           <h3 className="sm:w-full pl-[2%] sm:pl-4 sm:text-xl sm:font-semibold">{title}</h3>
         </div>
         <button
-          className="w-[6%] sm:hidden float-right h-[calc(8vh-2px)] text-3xl font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1"
+          className={`${lang === 'ko' && 'w-[140px]'} my-2 mr-2 px-4 flex sm:hidden justify-center items-center gap-2 font-bold font-lg text-white bg-pointColor1 rounded-md`}
           onClick={handleExitBtn}
         >
-          ✕
+          <ImExit />
+          <span>{m('EXIT_BTN')}</span>
         </button>
       </section>
     </header>
