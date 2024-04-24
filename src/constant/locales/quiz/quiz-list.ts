@@ -42,6 +42,14 @@ const QUIZLIST_STRINGS = {
   QUIZ_LEVEL_3: {
     ko: '매운맛',
     en: 'HARD'
+  },
+  OFFICIAL_CONTENTS: {
+    ko: '마크가 붙어 있는 퀴즈는 뭔말Easy?에서 제작한 공식 퀴즈 콘텐츠입니다.',
+    en: 'Quizzes marked with this blue icon are official content created by MMeasy.'
+  },
+  CHOOSE_DIFFICULTY: {
+    ko: '난이도를 골라보세요!',
+    en: `Choose the difficulty you'd like to try!`
   }
 };
 

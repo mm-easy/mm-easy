@@ -25,6 +25,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { PostParams, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
+import { ADMIN_ACC_1 } from '@/constant/admin-ids';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -166,7 +167,7 @@ const DetailPost = () => {
                       </div>
                     </div>
                     <div className="flex items-center">
-                      {profile && (post.author_id === profile.id || profile?.email === 'daejang@mmeasy.com') && (
+                      {profile && (post.author_id === profile.id || profile?.email === ADMIN_ACC_1) && (
                         <>
                           <DropdownMenu
                             editBtn={

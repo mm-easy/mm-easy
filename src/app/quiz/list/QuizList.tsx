@@ -1,14 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-
+import DaejangContent from '@/assets/logo_circle_blue 2.png';
+import RecommendLoginModal from '@/components/common/RecommendLoginModal';
+import PageUpBtn from '@/components/common/PageUpBtn';
 import { Quiz } from '@/types/quizzes';
 import { useRouter } from 'next/navigation';
-import RecommendLoginModal from '@/components/common/RecommendLoginModal';
+import useMultilingual from '@/utils/useMultilingual';
 import { useEffect, useState } from 'react';
-import PageUpBtn from '@/components/common/PageUpBtn';
 import { storageUrl } from '@/utils/supabase/storage';
-import CreateNewQuizBtn from './CreateNewQuizBtn';
+import { ADMIN_ACC_1 } from '@/constant/admin-ids';
 
 const QuizList = ({
   allQuizzes,
@@ -23,6 +24,7 @@ const QuizList = ({
   const [quizId, setQuizId] = useState<string | undefined>('');
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
+  const m = useMultilingual('quiz-list');
 
   /** 스크롤 이동 추적 */
   useEffect(() => {
@@ -51,6 +53,10 @@ const QuizList = ({
 
   return (
     <main className="sm:p-1 p-5 flex flex-col justify-center items-center">
+      <div className="w-full flex sm:justify-center items-center gap-1 sm:pl-0 sm:pb-3 pl-7 pt-5">
+        <Image src={DaejangContent} alt="아이콘" quality={100} width={30} height={30} />
+        <p className="sm:w-[300px] text-sm font-bold">{m('OFFICIAL_CONTENTS')}</p>
+      </div>
       <div className="sm:py-0 sm:px-3 px-6 py-4 grid grid-cols-4 sm:grid-cols-2 sm:gap-3 gap-10">
         {allQuizzes
           .flatMap((page) => page)
@@ -62,7 +68,25 @@ const QuizList = ({
                 handleShowModal(item.id);
               }}
             >
-              <p className="font-bold sm:text-base text-lg sm:mt-2 mt-4 sm:mb-1 mb-3 truncate">{item.title}</p>
+              <div className="flex items-center gap-1">
+                {item.creator_id === ADMIN_ACC_1 && (
+                  <Image
+                    src={DaejangContent}
+                    alt="아이콘"
+                    quality={100}
+                    width={30}
+                    height={30}
+                    className="sm:w-6 sm:h-6 w-8 h-8"
+                  />
+                )}
+                <p
+                  className={`font-bold sm:text-base text-lg sm:mt-2 mt-4 sm:mb-1 mb-3 truncate ${
+                    item.creator_id === ADMIN_ACC_1 ? 'text-pointColor1' : ''
+                  }`}
+                >
+                  {item.title}
+                </p>
+              </div>
               <div className="flex flex-col gap-3">
                 <Image
                   src={`${storageUrl}/quiz-thumbnails/${item.thumbnail_img_url}`}
