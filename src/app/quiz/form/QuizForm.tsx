@@ -200,7 +200,7 @@ const QuizForm = ({
               </div>
             </div>
           </div>
-          <div className="sm:w-full flex flex-col gap-1 w-auto">
+          <div className="sm:w-full sm:flex sm:flex-col sm:gap-1 hidden">
             <p className="sm:text-base sm:font-bold text-xs text-pointColor1">{m('QUIZ_TITLE')}</p>
             <BlueInput
               value={title}
