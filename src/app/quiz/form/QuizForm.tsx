@@ -117,7 +117,7 @@ const QuizForm = ({
   /** 취소 버튼 클릭 핸들러 */
   const handleCancelBtn = () => {
     if (!window.confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?')) return;
-    router.push('/quiz-list');
+    router.push('/quiz/list');
   };
 
   /** 문제 추가하기 버튼 클릭 핸들러 */
