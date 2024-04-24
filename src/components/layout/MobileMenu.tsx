@@ -22,10 +22,12 @@ const MobileMenu = () => {
   }, [prevScrollPos]);
 
   return (
-    <nav
-      className={`w-full h-[8vh] sm:block bottom-0 fixed z-10 bg-bgColor1 transition-opacity duration-300 ${isMenuVisible ? 'opacity-100' : 'opacity-0 hidden'}`}
-    >
-      MobileMenu
+    <nav className="hidden sm:block">
+      <ul
+        className={`w-full h-[8vh] bottom-0 fixed z-10 bg-bgColor1 transition-opacity duration-300 ${isMenuVisible ? 'opacity-100' : 'opacity-0 hidden'}`}
+      >
+        <li></li>
+      </ul>
     </nav>
   );
 };

@@ -172,7 +172,7 @@ const QuestionForm = ({
         const { id, type, options, title, img_url, img_file, correct_answer } = question;
         return (
           /** 유형, 휴지통 섹션 */
-          <article key={id} className="w-[570px] mx-auto pb-12 flex flex-col gap-4">
+          <article key={id} className="sm:w-full sm:px-4 w-[570px] mx-auto pb-12 flex flex-col gap-4">
             <section className="w-full flex justify-between text-md">
               <section>
                 <SelectQuestionType
@@ -214,15 +214,15 @@ const QuestionForm = ({
                         <input
                           type="checkbox"
                           checked={option.is_answer}
-                          className="w-11 h-11 appearance-none border-solid border border-pointColor1 rounded-md checked:bg-pointColor1 checked:bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/checkbox.png')] bg-md bg-no-repeat bg-center"
+                          className="sm:w-12 sm:h-12 w-11 h-11 appearance-none border-solid border border-pointColor1 rounded-md checked:bg-pointColor1 checked:bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/checkbox.png')] bg-md bg-no-repeat bg-center"
                           onChange={() => {
                             handleCheckObjectAnswer(id, options, option.id);
                           }}
                         />
-                        <div className="w-4/5 relative">
+                        <div className="sm:w-9/12 w-4/5 relative">
                           <input
                             type="text"
-                            className="w-full pl-4 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
+                            className="w-full sm:h-12 pl-4 sm:pr-16 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
                             placeholder={m('QUESTION_OPTION_EXAMPLE1')}
                             value={option.content}
                             onInput={(e) => {
@@ -233,11 +233,13 @@ const QuestionForm = ({
                               handleChangeOption(id, e.target.value, options, option.id);
                             }}
                           />
-                          <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{option.content.length} / 25</p>
+                          <p className="absolute sm:top-1 top-0 right-2 pt-3 pr-1 text-sm">
+                            {option.content.length} / 25
+                          </p>
                         </div>
                         <button
                           type="button"
-                          className="w-11 h-11 text-2xl text-pointColor1 bg-white border-solid border border-pointColor1 rounded-md"
+                          className="sm:w-12 sm:h-12 w-11 h-11 text-2xl text-pointColor1 bg-white border-solid border border-pointColor1 rounded-md"
                           onClick={() => handleDeleteOption(id, options, option.id)}
                         >
                           ✕
@@ -247,7 +249,7 @@ const QuestionForm = ({
                   })}
                   <button
                     type="button"
-                    className={`w-full text-3xl border-solid border ${
+                    className={`w-full sm:h-12 text-3xl border-solid border ${
                       options.length === 5 ? 'text-grayColor2 border-grayColor2 cursor-default' : 'border-pointColor1'
                     } rounded-md`}
                     onClick={() => handleAddOption(id, options)}
@@ -262,7 +264,7 @@ const QuestionForm = ({
                   <div className="w-full relative">
                     <input
                       type="text"
-                      className="w-full px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
+                      className="sm:h-12 w-full sm:pr-16 px-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
                       placeholder={m('QUESTION_OPTION_EXAMPLE2')}
                       value={correct_answer}
                       onInput={(e) => {
@@ -273,7 +275,7 @@ const QuestionForm = ({
                         handleChangeCorrectAnswer(id, e.target.value);
                       }}
                     />
-                    <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length}/30</p>
+                    <p className="absolute sm:top-1 top-0 right-2 pt-3 pr-1 text-sm">{correct_answer.length} / 30</p>
                   </div>
                 </>
               )}
