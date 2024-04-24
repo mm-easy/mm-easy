@@ -312,3 +312,23 @@ em {
 .ql-editor h2 {
   font-size: x-large;
 }
+
+@media (max-width: 480px) {
+  .ql-toolbar {
+    border-top: 1px solid #2B84ED !important;
+    border-bottom: 1px solid #2B84ED !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ql-container {
+    border-bottom: 1px solid #2B84ED !important;
+    height: 750px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ql-formats {
+    margin-right: 10px !important;
+  }
+}
