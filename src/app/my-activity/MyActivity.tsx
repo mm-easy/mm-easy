@@ -168,29 +168,35 @@ const MyActivity = () => {
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <main className="h-[84vh] px-[20%] flex flex-col justify-center items-center">
-      <nav className="w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
-        <ul className="flex justify-center text-xl w-full text-center border-b-2 border-solid">
+    <main className="sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">
+      <nav className="sm:pb-0 w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
+        <ul className="sm:px-4 sm:text-base flex justify-center text-xl w-full text-center border-b-1 border-solid">
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'solvedQuizzes' && 'font-bold border-solid border-b-3'}`}
+            className={`w-[25%] pb-3 ${
+              activeTab === 'solvedQuizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
+            }`}
             onClick={() => changeTab('solvedQuizzes')}
           >
             {m('QUIZ_I_SOLVED')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'quizzes' && 'font-bold  border-solid border-b-3'}`}
+            className={`w-[25%] pb-3 ${
+              activeTab === 'quizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
+            }`}
             onClick={() => changeTab('quizzes')}
           >
             {m('QUIZ_I_MADE')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'posts' && 'font-bold  border-solid border-b-3'}`}
+            className={`w-[25%] pb-3 ${activeTab === 'posts' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
             onClick={() => changeTab('posts')}
           >
             {m('MY_WRITING')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'comments' && 'font-bold  border-solid border-b-3'}`}
+            className={`w-[25%] pb-3 ${
+              activeTab === 'comments' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
+            }`}
             onClick={() => changeTab('comments')}
           >
             {m('MY_COMMENT')}
@@ -199,13 +205,13 @@ const MyActivity = () => {
       </nav>
       <article className="w-full h-[calc(302px+16vh)]">
         {activeTab === 'solvedQuizzes' && (
-          <div className="w-full flex justify-center">
+          <div className="sm:hidden w-full flex justify-center">
             <table className="w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="pb-2 w-[65%]">{m('TITLE')}</th>
                   <th className="w-[13%]">{m('SCORE')}</th>
-                  <th>{m('DATE_SOLVED')}</th>
+                  <th className='w-[22%]'>{m('DATE_SOLVED')}</th>
                 </tr>
               </thead>
               <tbody className="font-medium">
@@ -236,14 +242,49 @@ const MyActivity = () => {
             </table>
           </div>
         )}
+        {/* 모바일 전용 HTML */}
+        {activeTab === 'solvedQuizzes' && (
+        <div className="hidden md:hidden sm:block">
+          {currentSolvedQuizzes && currentSolvedQuizzes.length > 0 ? (
+            currentSolvedQuizzes.map((quiz, index) => (
+              <div key={index} className="h-24 flex px-[5vw] justify-between items-center border-b border-solid border-pointColor1">
+                <div>
+                  <div className='truncate max-w-sm font-semibold'>
+                    <p>{quiz.quizzes.title}</p>
+                  </div>
+                  <div className="text-sm flex">
+                    <p>{m('SCORE')} {quiz.score}</p>
+                    <p className="px-1">│</p>
+                    <p>{formatToLocaleDateTimeString(quiz.created_at)}</p>
+                  </div>
+                </div>
+                <div className="text-right py-[1vh]">
+                  <button
+                    className="text-sm w-20 h-12 border border-solid border-pointColor1 rounded-sm font-bold text-pointColor1"
+                    onClick={() => navigateToQuiz(quiz.quizzes.id)}
+                  >
+                    {m('RETRY_BTN')}
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>
+              <p className="text-center py-6 text-pointColor1 font-bold text-lg">
+                {m('NO_QUIZZES_YOU_SOLVED')}
+              </p>
+            </div>
+          )}
+        </div>
+        )}
         {activeTab === 'quizzes' && (
           <div className="w-full flex justify-center">
-            <table className="w-full">
+            <table className="sm:hidden w-full">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="pb-2 w-[65%]">{m('TITLE')}</th>
                   <th className="w-[13%]">{m('SOLVED_COUNT')}</th>
-                  <th>{m('DATE_CREATED')}</th>
+                  <th className='w-[22%]'>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
               <tbody className="font-medium">
@@ -279,12 +320,12 @@ const MyActivity = () => {
         )}
         {activeTab === 'posts' && (
           <div className="w-full flex justify-center">
-            <table className="w-full font-medium">
+            <table className="sm:hidden w-full font-medium">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">{m('TITLE')}</th>
+                  <th className="pb-2 w-[60%]">{m('TITLE')}</th>
                   <th className="w-[13%]">{m('VIEW_COUNT')}</th>
-                  <th>{m('DATE_CREATED')}</th>
+                  <th className='w-[22%]'>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -314,11 +355,11 @@ const MyActivity = () => {
         )}
         {activeTab === 'comments' && (
           <div className="w-full flex justify-center">
-            <table className="w-full font-medium">
+            <table className="sm:hidden w-full font-medium">
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
-                  <th className="pb-2 w-[55%]">{m('CONTENT')}</th>
-                  <th>{m('DATE_CREATED')}</th>
+                  <th className="pb-2 w-[65%]">{m('CONTENT')}</th>
+                  <th className='w-[35%]'>{m('DATE_CREATED')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -344,16 +385,16 @@ const MyActivity = () => {
           </div>
         )}
       </article>
-      <div className="pt-6">
+      <div className="sm:block sm:pt-60 pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'
               ? userSolvedQuiz.length
               : activeTab === 'quizzes'
-                ? userQuiz.length
-                : activeTab === 'posts'
-                  ? userPost.length
-                  : userComment.length
+              ? userQuiz.length
+              : activeTab === 'posts'
+              ? userPost.length
+              : userComment.length
           }
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}

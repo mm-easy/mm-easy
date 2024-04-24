@@ -91,7 +91,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</td>
-                  <td>
+                  <td className='truncate max-w-sm'>
                     <span>{item.title}</span>
                     {(commentCounts[idx]?.data ?? 0) > 0 && (
                       <span className="sm:hidden text-pointColor1"> ({commentCounts[idx].data})</span>
@@ -124,7 +124,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
               >
                 <div>
                   <div className="font-semibold text-base">
-                    <p className="truncate max-w-sm">{item.title}</p>
+                    <p className="truncate max-w-xs">{item.title}</p>
                   </div>
                   <div className="flex text-sm ">
                     <p>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</p>
