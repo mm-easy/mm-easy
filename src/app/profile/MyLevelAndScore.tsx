@@ -74,35 +74,39 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
 
   return (
     <main className="w-full h-full flex flex-col justify-center items-center bg-bgColor2 border-solid border-t border-pointColor1">
-      <div className="text-xl font-semibold">
+      <div className="sm:w-full sm:py-10 sm:text-center sm:text-lg text-xl font-bold">
         <span>{m('MY_QUIZ_INFO_TEXT1')}</span>
         <span className="text-pointColor1">{lang === 'en' ? myQuizScores?.length : quizData?.length}</span>
         <span>{m('MY_QUIZ_INFO_TEXT2')}</span>
         <span className="text-pointColor1">{lang === 'en' ? quizData?.length : myQuizScores?.length}</span>
         <span>{m('MY_QUIZ_INFO_TEXT3')}</span>
       </div>
-      <div className="flex gap-7 mt-10 font-semibold">
-        <div className="flex flex-col items-center w-32">
+      <div className="sm:px-5 sm:w-full sm:grid sm:grid-cols-2 flex sm:gap-0 gap-7 sm:mb-4 sm:mt-4 mt-10 font-semibold">
+        <div className="sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center w-48 sm:border-solid sm:border-b-1 sm:border-pointColor1">
           <p>{m('LEVEL')}</p>
-          <p className="mt-5 text-3xl text-pointColor1">Lv. {myLevel}</p>
+          <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">Lv. {myLevel}</p>
         </div>
         <VerticalBlueLine />
-        <div className="flex flex-col items-center w-32">
+        <div className="sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center w-48 sm:border-solid sm:border-l-1 sm:border-b-1 sm:border-pointColor1">
           <p>{m('QUIZ_SCORE')}</p>
-          <p className="mt-5 text-3xl text-pointColor1">{totalQuizScore ?? 0}</p>
+          <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">{totalQuizScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
-        <div className={`flex flex-col items-center ${lang === 'en' ? '48' : 'w-32'}`}>
+        <div
+          className={`sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center ${
+            lang === 'en' ? 'w-48' : 'sm:w-48 w-48'
+          }`}
+        >
           <p>{m('TYPING_GAME_SCORE')}</p>
-          <p className="mt-5 text-3xl text-pointColor1">{myGameScore ?? 0}</p>
+          <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">{myGameScore ?? 0}</p>
         </div>
         <VerticalBlueLine />
-        <div className="flex flex-col items-center w-32">
+        <div className="sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center w-48 sm:border-solid sm:border-l-1 sm:border-pointColor1">
           <p>{m('TOTAL_SCORE')}</p>
-          <p className="mt-5 text-3xl text-pointColor1">{myTotalScore}</p>
+          <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">{myTotalScore}</p>
         </div>
       </div>
-      <div className="text-center mt-10 text-pointColor1 underline underline-offset-4">
+      <div className="text-center sm:mb-10 mt-10 text-pointColor1 underline underline-offset-4">
         <Link href="/my-activity">{m('TO_MY_ACTIVITY')}</Link>
       </div>
     </main>
