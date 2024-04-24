@@ -54,10 +54,10 @@ const ProfilePage = () => {
 
   return (
     <main>
-      <div className="h-[47vh]">
+      <div className="sm:h-full h-[47vh]">
         <MyProfile data={data} />
       </div>
-      <div className="h-[37vh]">
+      <div className="sm:h-full h-[37vh]">
         <MyLevelAndScore data={data} />
       </div>
     </main>
