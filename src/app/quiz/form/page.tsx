@@ -3,6 +3,7 @@
 import QuizForm from '@/app/quiz/form/QuizForm';
 import SubHeader from '../../../components/common/SubHeader';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
+import useMultilingual from '@/utils/useMultilingual';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -13,9 +14,9 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
+import { debounce } from 'lodash';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import useMultilingual from '@/utils/useMultilingual';
 
 const QuizFormPage = () => {
   const [level, setLevel] = useState<number>(0);
@@ -209,6 +210,7 @@ const QuizFormPage = () => {
       console.log('퀴즈 생성 중 에러 발생');
     }
   };
+  const debouncedSubmit = debounce(handleSubmitBtn, 1000);
 
   return (
     <>
@@ -216,7 +218,7 @@ const QuizFormPage = () => {
       <QuizForm
         questions={questions}
         setQuestions={setQuestions}
-        handleSubmitBtn={handleSubmitBtn}
+        handleSubmitBtn={debouncedSubmit}
         level={level}
         setLevel={setLevel}
         title={title}
