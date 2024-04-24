@@ -19,6 +19,7 @@ import { supabase } from '@/utils/supabase/supabase';
 import { QuestionType, type Question } from '@/types/quizzes';
 import { SetStateAction } from 'jotai';
 import useMultilingual from '@/utils/useMultilingual';
+import { DebouncedFunc } from 'lodash';
 
 const QuizForm = ({
   questions,
@@ -40,7 +41,7 @@ const QuizForm = ({
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
-  handleSubmitBtn: () => Promise<void>;
+  handleSubmitBtn: DebouncedFunc<() => Promise<void>>;
   level: number;
   setLevel: Dispatch<SetStateAction<number>>;
   title: string;
