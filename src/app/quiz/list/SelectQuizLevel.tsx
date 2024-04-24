@@ -5,6 +5,10 @@ import QuizList from './QuizList';
 import Level1 from '@/assets/level1.png';
 import Level2 from '@/assets/level2.png';
 import Level3 from '@/assets/level3.png';
+import MobileL0 from '@/assets/face_2.png';
+import MobileL1 from '@/assets/face_3.png';
+import MobileL2 from '@/assets/face_4.png';
+import MobileL3 from '@/assets/face_5.png';
 import LoadingImg from '@/components/common/LoadingImg';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
@@ -17,6 +21,7 @@ import { toast } from 'react-toastify';
 
 import type { Quiz } from '@/types/quizzes';
 import useMultilingual from '@/utils/useMultilingual';
+import CreateNewQuizBtn from './CreateNewQuizBtn';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
@@ -61,7 +66,7 @@ const SelectQuizLevel = () => {
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
     if (!currentUser) {
-      toast.warn('로그인이 필요합니다.');
+      toast.warn(m('ALERT_MSG_LOGIN'));
       return;
     }
     router.push('/quiz/form');
@@ -93,7 +98,60 @@ const SelectQuizLevel = () => {
 
   return (
     <>
-      <main className="w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
+      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:pl-5 sm:font-bold sm:text-pointColor1 hidden">
+        난이도를 골라보세요!
+      </section>
+      <main
+        className={`sm:w-full sm:flex sm:justify-center sm:items-center sm:gap-4 sm:h-[23vh] ${
+          selectedLevel === null
+            ? 'sm:bg-bgColor2'
+            : selectedLevel === 1
+            ? 'sm:bg-[#fff2b2]'
+            : selectedLevel === 2
+            ? 'sm:bg-[#ffcc66]'
+            : selectedLevel === 3
+            ? 'sm:bg-[#ffb266]'
+            : ''
+        } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
+      >
+        <div
+          className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
+            selectedLevel === null ? '' : 'sm:border-solid'
+          } sm:border-pointColor1 sm:border sm:bg-bgColor2 hidden`}
+          onClick={() => handleSelectLevel(null)}
+        >
+          <Image src={MobileL0} alt="전체 레벨" width={75} />
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">모든맛</p>
+        </div>
+        <div
+          className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
+            selectedLevel === 1 ? '' : 'sm:border-solid'
+          } sm:border-pointColor1 sm:border sm:bg-[#fff2b2] sm:bg-hidden`}
+          onClick={() => handleSelectLevel(1)}
+        >
+          <Image src={MobileL1} alt="순한맛" width={75} />
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">순한맛</p>
+        </div>
+        <div
+          className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
+            selectedLevel === 2 ? '' : 'sm:border-solid'
+          } sm:border-pointColor1 sm:border sm:bg-[#ffcc66] hidden`}
+          onClick={() => handleSelectLevel(2)}
+        >
+          <Image src={MobileL2} alt="중간맛" width={75} />
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">중간맛</p>
+        </div>
+        <div
+          className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${
+            selectedLevel === 3 ? '' : 'sm:border-solid'
+          } sm:border-pointColor1 sm:border sm:bg-[#ffb266] hidden`}
+          onClick={() => handleSelectLevel(3)}
+        >
+          <Image src={MobileL3} alt="매운맛" width={75} />
+          <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">매운맛</p>
+        </div>
+      </main>
+      <main className="sm:hidden w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
         <div className="mt-5 absolute top-20 z-10 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">{m('SELECT_LEVEL_TITLE')}</p>
           <p
@@ -118,8 +176,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -135,8 +193,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -152,8 +210,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
@@ -161,6 +219,7 @@ const SelectQuizLevel = () => {
         </div>
       </main>
       <QuizList allQuizzes={allQuizzes.pages} quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
+      <CreateNewQuizBtn handleMakeQuizBtn={handleMakeQuizBtn} />
     </>
   );
 };

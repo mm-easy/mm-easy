@@ -18,7 +18,7 @@ const InputQuestionTitle = ({
     <div className="w-full relative">
       <input
         type="text"
-        className="w-full pl-4 py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
+        className="w-full pl-4 sm:h-12 sm:pr-16  py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
         placeholder={m('QUESTION_TITLE_EXAMPLE')}
         value={value}
         onInput={(e) => onInput(e, 30)}
@@ -26,7 +26,7 @@ const InputQuestionTitle = ({
           onChange(id, e.target.value);
         }}
       />
-      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 30</p>
+      <p className="absolute sm:top-1 top-0 right-2 pt-3 pr-1 text-sm">{value.length} / 30</p>
     </div>
   );
 };

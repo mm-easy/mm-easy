@@ -130,9 +130,23 @@ const QuizTryPage = () => {
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as Quiz[];
+
+  if (!quizzes[0]) {
+    toast.warning('존재하지 않는 퀴즈입니다.');
+    router.replace('/quiz/list');
+    return <div className="h-full w-full">삭제되었거나 없는 퀴즈입니다.</div>;
+  }
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
+  const isAllAnswersSubmitted = questions.length === usersAnswers.length;
+
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && page < questions.length - 1) {
+      e.preventDefault();
+      handleNextPage();
+    }
+  };
 
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
@@ -163,7 +177,7 @@ const QuizTryPage = () => {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
       const isEmptyAnswersExists = usersAnswers.some((usersAnswer) => usersAnswer.answer === '');
 
-      if (questions.length !== usersAnswers.length || isEmptyAnswersExists) {
+      if (!isAllAnswersSubmitted || isEmptyAnswersExists) {
         // 모든 문제에 답이 제출됐는지 확인
         toast.warn(m('NOTIFY_TO_SOLVE'));
       } else {
@@ -237,35 +251,28 @@ const QuizTryPage = () => {
 
   return (
     <>
-      <Header
-        level={level}
-        title={title}
-        isAnswerWritten={usersAnswers.length}
-        resultMode={resultMode}
-        headerText={m('HEADER')}
-        levelText={m('LEVEL')}
-        titleText={m('TITLE')}
-      />
-      <div className="grid grid-cols-[16%_84%] bg-bgColor1">
-        <article className="h-[76vh] flex flex-col justify-between text-pointColor1">
-          <section>
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
+      <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
+        <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
+          <section className="sm:text-blackColor">
             <Image
               src={`${storageUrl}/quiz-thumbnails/${url}`}
               alt="샘플 이미지"
               width={230}
               height={230}
               quality={100}
-              className="w-full h-[230px] object-cover border-solid border-b-2 border-pointColor1"
+              className="w-full h-[230px] sm:hidden object-cover border-solid border-b-2 border-pointColor1"
             />
+            <p className="pl-4 pt-4 hidden sm:block">{info}</p>
             <CreateInfo
               creatorText={m('CREATOR')}
               creator={creator_id}
-              dateText={formatToLocaleDateTimeString(created_at)}
-              date={m('DATE_CREATED')}
+              dateText={m('DATE_CREATED')}
+              date={formatToLocaleDateTimeString(created_at)}
             />
-            <p className="p-4">{info}</p>
+            <p className="p-4 sm:hidden">{info}</p>
           </section>
-          <div className="flex justify-center font-bold pb-4">
+          <div className="sm:hidden flex justify-center font-bold pb-4">
             {currentUserEmail === creator_id && (
               <div className="flex justify-center items-center">
                 {/* <CancelButton
@@ -286,7 +293,11 @@ const QuizTryPage = () => {
             )}
           </div>
         </article>
-        <main className="py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1">
+        <main
+          className={`${
+            !resultMode && `sm:h-[calc(76vh-118px)]`
+          } py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+        >
           {resultMode && (
             <h1 className="text-2xl">
               🎉 {lang === 'en' ? score : questions.length}
@@ -295,7 +306,7 @@ const QuizTryPage = () => {
               {m('RESULT_TEXT2')} 🎉
             </h1>
           )}
-          <article className="flex flex-col justify-between gap-8">
+          <article className="sm:w-4/5 flex flex-col justify-between gap-8">
             {questions.map((question) => {
               const { id, title, type, img_url, correct_answer } = question;
               const questionOrder = questions.indexOf(question);
@@ -305,7 +316,7 @@ const QuizTryPage = () => {
 
               return (
                 pageMode && (
-                  <section key={id} className="w-[570px] flex flex-col items-center gap-4">
+                  <section key={id} className="w-[570px] sm:w-full flex flex-col items-center gap-4">
                     <div className="w-full flex justify-between place-items-center">
                       <h3 className="self-start text-lg">{`${questions.indexOf(question) + 1}. ${title}`}</h3>
                       <h3>
@@ -322,7 +333,13 @@ const QuizTryPage = () => {
                       />
                     )}
                     {type === QuestionType.objective ? (
-                      <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
+                      <Options
+                        id={id}
+                        resultMode={resultMode}
+                        usersAnswer={usersAnswer}
+                        onChange={handleGetAnswer}
+                        onKeyDown={handleEnterKey}
+                      />
                     ) : (
                       <div className="w-full relative">
                         {resultMode ? (
@@ -348,6 +365,7 @@ const QuizTryPage = () => {
                                 handleMaxLength(e, 30);
                                 handleGetAnswer(id, e.target.value);
                               }}
+                              onKeyDown={handleEnterKey}
                             />
                             <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
                               {handleGetLength(id)}/30
@@ -360,7 +378,7 @@ const QuizTryPage = () => {
                 )
               );
             })}
-            <section className="w-[570px] flex flex-col justify-between gap-3">
+            <section className="w-[570px] sm:w-full flex flex-col justify-between gap-3">
               {!resultMode && questions.length > 1 && (
                 <div className="flex justify-between gap-3 font-semibold">
                   <button
@@ -388,7 +406,9 @@ const QuizTryPage = () => {
                 </div>
               )}
               <button
-                className="w-full py-[9px] bg-pointColor1 text-white font-bold tracking-wider rounded-md"
+                className={`w-full py-[9px] ${
+                  isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
+                } text-white font-bold tracking-wider rounded-md`}
                 onClick={handleResultMode}
               >
                 {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}

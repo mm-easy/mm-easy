@@ -69,7 +69,7 @@ const QuizForm = ({
         const getSession = await supabase.auth.getSession();
         if (!getSession.data.session) {
           router.push('/login');
-          toast('로그인 후 이용해 주세요');
+          toast(m('ALERT_LOGIN'));
           return;
         }
         const userProfile = await getCurrentUserProfile();
@@ -116,8 +116,10 @@ const QuizForm = ({
 
   /** 취소 버튼 클릭 핸들러 */
   const handleCancelBtn = () => {
-    if (!window.confirm('작성하던 내용이 모두 사라집니다. 취소하시겠습니까?')) return;
-    router.push('/quiz-list');
+    const confirmation = m('ALERT_CANCEL_MAKING');
+    const result = window.confirm(confirmation);
+    if (!result) return;
+    router.push('/quiz/list');
   };
 
   /** 문제 추가하기 버튼 클릭 핸들러 */
@@ -147,7 +149,7 @@ const QuizForm = ({
         }
       ]);
     } else {
-      toast.warning('최대 5개까지 문제를 추가할 수 있습니다.');
+      toast.warning(m('ALERT_AT_MOST_5QUESTION'));
       return;
     }
   };
@@ -163,13 +165,13 @@ const QuizForm = ({
   };
 
   return (
-    <main className="bg-blue-50 flex gap-5 flex-col justify-center items-center">
-      <form className="flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
-        <div className="p-10 flex flex-col gap-4 bg-white justify-center items-center border-solid border-b-2 border-pointColor1">
-          <div className="flex gap-10">
+    <main className="sm:w-full bg-blue-50 flex flex-col justify-center items-center">
+      <form className="sm:w-full flex flex-col min-w-full" onSubmit={(e) => e.preventDefault()}>
+        <div className="sm:w-full sm:py-5 sm:px-4 p-10 flex flex-col gap-4 bg-bgColor1 justify-center items-center border-solid border-b-2 border-pointColor1">
+          <div className="sm:w-full sm:justify-between flex sm:gap-3 gap-10">
             <div
               onClick={handleClickImg}
-              className="relative bg-grayColor1 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
+              className="relative bg-grayColor1 sm:w-32 sm:h-32 w-36 h-36 border-solid border border-pointColor1 rounded-md overflow-hidden"
             >
               <Image
                 src={selectedImg}
@@ -181,12 +183,12 @@ const QuizForm = ({
               {file && <UnloadImgBtn onClick={handleRemoveImg} />}
               <input type="file" id="fileInput" ref={fileInputRef} className="hidden" onChange={handleChangeImg} />
             </div>
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-col gap-1">
-                <p className="text-xs text-pointColor1">{m('QUIZ_LEVEL')}</p>
+            <div className="flex flex-col sm:justify-end justify-between">
+              <div className="sm:w-full flex flex-col gap-1">
+                <p className="sm:w-full sm:text-base sm:font-bold text-xs text-pointColor1">{m('QUIZ_LEVEL')}</p>
                 <BlueLevelSelect value={level} onChange={(value) => setLevel(value)} />
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="sm:hidden flex flex-col gap-1">
                 <p className="text-xs text-pointColor1">{m('QUIZ_TITLE')}</p>
                 <BlueInput
                   value={title}
@@ -198,11 +200,21 @@ const QuizForm = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-1 w-auto">
-            <p className="text-xs text-pointColor1">{m('QUIZ_INFO')}</p>
+          <div className="sm:w-full sm:flex sm:flex-col sm:gap-1 hidden">
+            <p className="sm:text-base sm:font-bold text-xs text-pointColor1">{m('QUIZ_TITLE')}</p>
+            <BlueInput
+              value={title}
+              width="sm:w-full w-[570px]"
+              maxNum={25}
+              onInput={(e) => handleMaxLength(e, 25)}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="sm:w-full flex flex-col gap-1 w-auto">
+            <p className="sm:text-base sm:font-bold text-xs text-pointColor1">{m('QUIZ_INFO')}</p>
             <BlueInput
               value={info}
-              width="w-[570px]"
+              width="sm:w-full w-[570px]"
               maxNum={30}
               onInput={(e) => handleMaxLength(e, 30)}
               onChange={(e) => setInfo(e.target.value)}
@@ -211,9 +223,9 @@ const QuizForm = ({
         </div>
         <QuestionForm questions={questions} setQuestions={setQuestions} deletedQuestions={deletedQuestions} />
         <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
-        <div className="bg-white flex items-center justify-center pt-10 pb-9 gap-5 border-solid border-t-2 border-pointColor1">
-          <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="w-[275px]" />
-          <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="w-[275px]" />
+        <div className="sm:w-full sm:px-4 bg-bgColor1 flex items-center justify-center sm:py-5 py-10 gap-5 border-solid border-t-2 border-pointColor1">
+          <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="sm:h-12 w-[275px]" />
+          <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="sm:h-12 w-[275px]" />
         </div>
       </form>
       <PageUpBtn scrollPosition={scrollPosition} />

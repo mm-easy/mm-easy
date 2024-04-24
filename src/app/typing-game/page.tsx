@@ -11,10 +11,10 @@ import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import { ImExit } from 'react-icons/im';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
+import ExitButton from '@/components/common/ExitButton';
 
 const TypingGamePage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -363,14 +363,7 @@ const TypingGamePage = () => {
               onSubmit={handleSubmit}
               className="h-[10vh] flex gap-3 justify-center absolute bottom-0 left-0 right-0 p-4 bg-pointColor3"
             >
-              <button
-                onClick={handleBackButtonClick}
-                type="button"
-                className="flex items-center justify-center text-pointColor1 bg-pointColor1 rounded-md px-4 mr-2"
-              >
-                <ImExit className="font-bold font-lg text-white mr-2" />
-                <span className="font-bold font-lg text-white">{m('EXIT_BUTTON')}</span>
-              </button>
+              <ExitButton size="md" exitText={m('EXIT_BUTTON')} onClick={handleBackButtonClick} />
               <div className="volume-control flex items-center mr-2">
                 <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
                   <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:

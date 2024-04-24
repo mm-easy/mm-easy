@@ -20,8 +20,8 @@ const REPORT_STRINGS = {
     en: "post you've already reported."
   },
   ASK_TO_REASON: {
-    ko: '신고 사유를 입력해 주세요.',
-    en: 'Please enter the reason for the report.'
+    ko: '신고 사유를 입력해 주세요. (최대 20자)',
+    en: 'Please enter the reason for the report. (Up to 20 characters)'
   }
 };
 
