@@ -34,6 +34,7 @@ export type PostDetailCommentType = {
   content: string;
   created_at: string;
   profiles?: UserProfile;
+  isOpen: boolean;
 };
 
 export type Post = {
@@ -106,7 +107,7 @@ export type FormCommentButtonProps = {
   redirectUrl?: string;
 };
 
-export type Params = {
+export type PostParams = {
   category: string;
   id: string;
 };
@@ -149,4 +150,9 @@ export type NewsType = {
   link: string;
   description: string;
   pubDate: string;
+};
+
+export type IsOpenType = {
+  isOpen: boolean;
+  id: string;
 };
