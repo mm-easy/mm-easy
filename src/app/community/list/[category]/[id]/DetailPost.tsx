@@ -11,13 +11,13 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
-import { IoMdArrowBack } from 'react-icons/io';
 import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { useQuery } from '@tanstack/react-query';
 import { PostEditButton } from '@/components/common/EditButton';
 import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
+import { MobileHeader } from '@/components/common/MobileHeader';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
 import { profileStorageUrl } from '@/utils/supabase/storage';
@@ -138,14 +138,7 @@ const DetailPost = () => {
           <div className="sm:py-0 py-16 sm:px-0 px-[5vw] w-full bg-white">
             {post && post.profiles && (
               <>
-                <header className="sm:block hidden text-center w-full h-[8vh] leading-[7.5vh] flex items-center font-bold border-solid border-b-2 sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1">
-                  <div className="flex w-full items-center">
-                    <Link href={`/community/list/${categoryNow}`} className="flex flex-shrink-0 items-center ml-2">
-                      <IoMdArrowBack />
-                    </Link>
-                    <div className="flex-grow text-center">{post.category}</div>
-                  </div>
-                </header>
+                <MobileHeader backPage={`/community/list/${categoryNow}`} text={post.category} />
                 <div>
                   <div className="flex sm:hidden justify-between">
                     <p className="text-lg font-bold">{post.category}</p>

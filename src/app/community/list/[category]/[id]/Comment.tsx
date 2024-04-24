@@ -69,9 +69,9 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     }
   };
 
-  const userMenuOnBlur = (isOpen: boolean, id: string) => {
+  const userMenuOnBlur = (id: string) => {
     setTimeout(() => {
-      isOpenCommentMutation.mutate({ isOpen, id });
+      isOpenCommentMutation.mutate({ isOpen: true, id });
     }, 200);
   };
 
@@ -85,11 +85,11 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     isOpenCommentMutation.mutate({ isOpen, id });
   };
 
-  const handleIsOpenChangeBtn = (content: string, isOpen: boolean, id: string) => {
+  const handleIsOpenChangeBtn = (content: string, id: string) => {
     setBtnChange(!btnChange);
     setContentChange(content);
     setNowCommentId(id);
-    isOpenCommentMutation.mutate({ isOpen, id });
+    isOpenCommentMutation.mutate({ isOpen: true, id });
   };
 
   return (
@@ -179,7 +179,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     <div className="relative">
                       <button
                         onClick={() => handleIsOpenBtn(prev.isOpen, prev.id)}
-                        onBlur={() => userMenuOnBlur(true, prev.id)}
+                        onBlur={() => userMenuOnBlur(prev.id)}
                         className="focus:outline-none"
                       >
                         <HiDotsVertical />
@@ -202,10 +202,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                           </div>
                         ) : (
                           <div className="absolute flex flex-col right-0 mt-2 py-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                            <button
-                              className="font-bold"
-                              onClick={() => handleIsOpenChangeBtn(prev.content, prev.isOpen, prev.id)}
-                            >
+                            <button className="font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
                               {m('COMMUNITY_COMMENT_EDIT')}
                             </button>
                             <hr className="border-t border-0.5 border-pointColor1" />
