@@ -55,7 +55,7 @@ const PostPage = () => {
   };
 
   return (
-    <article className="border-l-2 border-solid border-pointColor1 bg-white px-[8vw] py-16">
+    <article className="sm:w-[100vw] sm:py-0 sm:px-0 sm:border-l-0 border-l-2 border-solid border-pointColor1 bg-white px-[8vw] py-16">
       <PostEditor
         onCancel={handleCancel}
         onSubmit={async ({ category, title, content }) => {
