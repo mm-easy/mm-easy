@@ -103,7 +103,12 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     />
                   </div>
                 ) : (
-                  <p className="text-[14px]">{prev.content}</p>
+                  <div>
+                    <p className="w-[80vh]">{prev.content}</p>
+                    <div className="text-gray-400 my-2">
+                      <p>{formatCommentDateToLocal(prev.created_at)}</p>
+                    </div>
+                  </div>
                 )}
               </div>
               <div className="flex flex-col justify-between ml-auto">

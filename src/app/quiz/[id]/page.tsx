@@ -130,10 +130,23 @@ const QuizTryPage = () => {
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as Quiz[];
+
+  if (!quizzes[0]) {
+    toast.warning('존재하지 않는 퀴즈입니다.');
+    router.replace('/quiz/list');
+    return <div className="h-full w-full">삭제되었거나 없는 퀴즈입니다.</div>;
+  }
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
   const isAllAnswersSubmitted = questions.length === usersAnswers.length;
+
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && page < questions.length - 1) {
+      e.preventDefault();
+      handleNextPage();
+    }
+  };
 
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
@@ -281,7 +294,9 @@ const QuizTryPage = () => {
           </div>
         </article>
         <main
-          className={`${!resultMode && `sm:h-[calc(76vh-118px)]`} py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+          className={`${
+            !resultMode && `sm:h-[calc(76vh-118px)]`
+          } py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
         >
           {resultMode && (
             <h1 className="text-2xl">
@@ -318,7 +333,13 @@ const QuizTryPage = () => {
                       />
                     )}
                     {type === QuestionType.objective ? (
-                      <Options id={id} resultMode={resultMode} usersAnswer={usersAnswer} onChange={handleGetAnswer} />
+                      <Options
+                        id={id}
+                        resultMode={resultMode}
+                        usersAnswer={usersAnswer}
+                        onChange={handleGetAnswer}
+                        onKeyDown={handleEnterKey}
+                      />
                     ) : (
                       <div className="w-full relative">
                         {resultMode ? (
@@ -344,6 +365,7 @@ const QuizTryPage = () => {
                                 handleMaxLength(e, 30);
                                 handleGetAnswer(id, e.target.value);
                               }}
+                              onKeyDown={handleEnterKey}
                             />
                             <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
                               {handleGetLength(id)}/30
@@ -384,7 +406,9 @@ const QuizTryPage = () => {
                 </div>
               )}
               <button
-                className={`w-full py-[9px] ${isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'} text-white font-bold tracking-wider rounded-md`}
+                className={`w-full py-[9px] ${
+                  isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
+                } text-white font-bold tracking-wider rounded-md`}
                 onClick={handleResultMode}
               >
                 {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}

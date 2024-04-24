@@ -89,7 +89,7 @@ const TextEditor = ({ value, onChange }: TextEditorProps): ReactElement => {
   ];
 
   return (
-    <div style={{ height: '450px' }}>
+    <div className='sm:h-[800px] h-[450px]'>
       <ReactQuill
         ref={quillRef}
         theme="snow"

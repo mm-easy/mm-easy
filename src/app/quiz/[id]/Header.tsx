@@ -1,5 +1,6 @@
-import useMultilingual from '@/utils/useMultilingual';
 import { useRouter } from 'next/navigation';
+import useMultilingual from '@/utils/useMultilingual';
+import ExitButton from '@/components/common/ExitButton';
 
 const Header = ({
   level,
@@ -17,7 +18,7 @@ const Header = ({
 
   const handleExitBtn = () => {
     if (isAnswerWritten && !resultMode) {
-      if (!window.confirm('변경사항이 저장되지 않을 수 있습니다. 계속하시겠습니까?')) return;
+      if (!window.confirm(m('ASK_TO_EXIT'))) return;
     }
     router.push('/quiz/list');
   };
@@ -40,12 +41,7 @@ const Header = ({
           </h2>
           <h3 className="sm:w-full pl-[2%] sm:pl-4 sm:text-xl sm:font-semibold">{title}</h3>
         </div>
-        <button
-          className="w-[6%] sm:hidden float-right h-[calc(8vh-2px)] text-3xl font-bold text-pointColor1 bg-bgColor1 border-l-2 border-solid border-pointColor1"
-          onClick={handleExitBtn}
-        >
-          ✕
-        </button>
+        <ExitButton size="sm" exitText={m('EXIT_BTN')} onClick={handleExitBtn} />
       </section>
     </header>
   );
