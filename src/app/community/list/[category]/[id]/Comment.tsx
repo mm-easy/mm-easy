@@ -1,20 +1,23 @@
 import Image from 'next/image';
+import useMultilingual from '@/utils/useMultilingual';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
 import { useQuery } from '@tanstack/react-query';
 import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
+import { formatCommentDateToLocal } from '@/utils/date';
+import { HiDotsVertical } from 'react-icons/hi';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import useMultilingual from '@/utils/useMultilingual';
-import { formatCommentDateToLocal } from '@/utils/date';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
   const [btnChange, setBtnChange] = useState<boolean>(false);
   const [contentChange, setContentChange] = useState<string>('');
   const [nowCommentId, setNowCommentId] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
+
   const m = useMultilingual('communityDetail');
 
   const insertCommentMutation = useInsertComment();
@@ -66,13 +69,19 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     }
   };
 
+  const userMenuOnBlur = () => {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
+  };
+
   return (
     <div>
       <div>
         {postCommentList?.map((prev) => {
           return (
             <div className="pt-8 flex border-solid border-b border-grayColor2" key={prev.id}>
-              <div className="w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
+              <div className="sm:w-[40px] sm:h-[40px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
                   src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url || '프로필이미지'}`}
                   alt="프로필이미지"
@@ -94,62 +103,80 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     />
                   </div>
                 ) : (
-                  <p>{prev.content}</p>
+                  <p className="text-[14px]">{prev.content}</p>
                 )}
               </div>
               <div className="flex flex-col justify-between ml-auto">
-                {profile &&
-                  (profile.id === prev.author_id ? (
-                    btnChange ? (
-                      <>
-                        <div className='flex justify-end'>
-                          <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
-                            {m('COMMUNITY_COMMENT_SAVE')}
-                          </button>
-                          |
-                          <button
-                            className="pl-2 font-bold"
-                            onClick={() => {
-                              setBtnChange(!btnChange);
-                              setContentChange(prev.content);
-                            }}
-                          >
-                            {m('COMMUNITY_COMMENT_CANCEL')}
-                          </button>
-                        </div>
-                      </>
+                <div className="sm:hidden">
+                  {profile &&
+                    ((prev.id && profile.id === prev.author_id) || profile?.email === 'daejang@mmeasy.com' ? (
+                      btnChange && prev.id === nowCommentId ? (
+                        <>
+                          <div className="flex justify-end">
+                            <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
+                              {m('COMMUNITY_COMMENT_SAVE')}
+                            </button>
+                            |
+                            <button
+                              className="pl-2 font-bold"
+                              onClick={() => {
+                                setBtnChange(!btnChange);
+                                setContentChange(prev.content);
+                              }}
+                            >
+                              {m('COMMUNITY_COMMENT_CANCEL')}
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-end">
+                            <button
+                              className="pr-2 font-bold"
+                              onClick={() => {
+                                setBtnChange(!btnChange);
+                                setContentChange(prev.content);
+                                setNowCommentId(prev.id);
+                              }}
+                            >
+                              {m('COMMUNITY_COMMENT_EDIT')}
+                            </button>
+                            |
+                            <button className="pl-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
+                              {m('COMMUNITY_COMMENT_DELETE')}
+                            </button>
+                          </div>
+                        </>
+                      )
                     ) : (
-                      <>
-                        <div className="flex justify-end">
-                          <button
-                            className="pr-2 font-bold"
-                            onClick={() => {
-                              setBtnChange(!btnChange);
-                              setContentChange(prev.content);
-                              setNowCommentId(prev.id);
-                            }}
-                          >
-                            {m('COMMUNITY_COMMENT_EDIT')}
-                          </button>
-                          |
-                          <button className="pl-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
-                            {m('COMMUNITY_COMMENT_DELETE')}
-                          </button>
+                      <div></div>
+                    ))}
+                </div>
+                <div className="">
+                  {profile && (profile.id === prev.author_id || profile?.email === 'daejang@mmeasy.com') && (
+                    <div className="relative sm:block hidden">
+                      <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="focus:outline-none">
+                        <HiDotsVertical />
+                      </button>
+                      {isOpen && (
+                        <div className="absolute flex flex-col right-0 mt-2 py-2 w-48 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                          수정
+                          <div className="border-t border-2 " />
+                          삭제
                         </div>
-                      </>
-                    )
-                  ) : (
-                    <div></div>
-                  ))}
-                <div className='text-gray-400 mb-2'>
-                  <p>{formatCommentDateToLocal(prev.created_at)}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div className="text-gray-400 mb-2">
+                  <p className="text-[14px]">{formatCommentDateToLocal(prev.created_at)}</p>
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-      <div className="mt-8">
+      <div className="sm:hidden mt-8">
         <form onSubmit={handleSubmitBtn}>
           <div className="border-solid border border-grayColor2">
             <div className="p-4">
@@ -172,6 +199,31 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
               {m('COMMUNITY_COMMENT_SUBMIT')}
             </button>
           </div>
+        </form>
+      </div>
+      <div className="sm:block hidden mt-8 ">
+        <form className="flex sm:w-full" onSubmit={handleSubmitBtn}>
+          <div className="border-solid border border-grayColor2">
+            <div className="p-4">
+              <span className="text-blackColor font-bold">{profile?.nickname}</span>
+              <div>
+                <textarea
+                  className="resize-none pt-3 w-full focus:outline-none"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder={m('COMMUNITY_COMMENT_PLACEHOLDER')}
+                />
+              </div>
+            </div>
+          </div>
+          {/* <div className="flex justify-end"> */}
+          <button
+            className="w-20 h-12 mt-4 p-2 font-bold rounded-md text-white border-solid border border-white bg-pointColor1"
+            type="submit"
+          >
+            {m('COMMUNITY_COMMENT_SUBMIT')}
+          </button>
+          {/* </div> */}
         </form>
       </div>
     </div>

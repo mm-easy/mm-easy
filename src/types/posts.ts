@@ -106,7 +106,7 @@ export type FormCommentButtonProps = {
   redirectUrl?: string;
 };
 
-export type Params = {
+export type PostParams = {
   category: string;
   id: string;
 };
