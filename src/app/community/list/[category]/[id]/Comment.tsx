@@ -80,8 +80,8 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="pt-8 flex border-solid border-b border-grayColor2" key={prev.id}>
-              <div className="sm:w-[40px] sm:h-[40px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
+            <div className="sm:pt-4 pt-8 flex border-solid border-b border-grayColor2" key={prev.id}>
+              <div className="sm:w-[40px] sm:h-[40px] sm:ml-4 w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                 <Image
                   src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url || '프로필이미지'}`}
                   alt="프로필이미지"
@@ -104,7 +104,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   </div>
                 ) : (
                   <div>
-                    <p className="w-[80vh]">{prev.content}</p>
+                    <p className="sm:w-auto w-[80vh]">{prev.content}</p>
                     <div className="text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>
