@@ -474,7 +474,7 @@ const MyActivity = () => {
                 >
                   <div>
                     <div className="truncate max-w-xs font-semibold">
-                      <p>{comment.content}</p>
+                      <p className=''>{comment.content}</p>
                     </div>
                     <div className="text-sm flex">
                       <p>{formatToLocaleDateTimeString(comment.created_at)}</p>
