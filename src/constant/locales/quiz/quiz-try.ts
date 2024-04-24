@@ -63,13 +63,21 @@ const QUIZ_TRY_STRINGS = {
     ko: '퀴즈에 오류가 있나요?',
     en: 'Is there an error in the quiz?'
   },
+  EXIT_BTN: {
+    ko: '그만 풀기',
+    en: 'Exit'
+  },
   NOTIFY_TO_SOLVE: {
     ko: '모든 문제를 풀어주세요!',
     en: 'Please solve all the questions!'
   },
   ASK_TO_DELETE: {
     ko: '해당 퀴즈를 삭제하시겠습니까?',
-    en: 'Delete a quiz?'
+    en: 'Do you want to delete this quiz?'
+  },
+  ASK_TO_EXIT: {
+    ko: '변경사항이 저장되지 않을 수 있습니다. 계속하시겠습니까?',
+    en: 'Your changes might not be saved. Do you want to continue?'
   },
   NOTIFY_TO_DELETE: {
     ko: '퀴즈가 삭제되었습니다.',

@@ -66,7 +66,7 @@ const SelectQuizLevel = () => {
   /** 퀴즈 만들기 버튼 클릭 시 */
   const handleMakeQuizBtn = () => {
     if (!currentUser) {
-      toast.warn('로그인이 필요합니다.');
+      toast.warn(m('ALERT_MSG_LOGIN'));
       return;
     }
     router.push('/quiz/form');
@@ -98,7 +98,7 @@ const SelectQuizLevel = () => {
 
   return (
     <>
-      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:ml-5 sm:font-bold sm:text-pointColor1 hidden">
+      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:pl-5 sm:font-bold sm:text-pointColor1 hidden">
         난이도를 골라보세요!
       </section>
       <main

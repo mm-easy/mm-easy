@@ -28,7 +28,7 @@ const MyProfile = ({ data }: { data: User }) => {
 
   /** 수정 모달에서 취소하기 버튼 클릭 시 */
   const handleCancelBtn = () => {
-    if (!window.confirm('프로필 수정을 취소하시겠습니까?')) return;
+    if (!window.confirm(m('CANCEL_EDITING'))) return;
     setFile(null);
     setSelectedImg(`${profileStorageUrl}/${data.avatar_img_url}`);
     setIsEditing(false);
@@ -60,7 +60,7 @@ const MyProfile = ({ data }: { data: User }) => {
         imgUrl = (await uploadAvatarToStorage(file, fileName)) as string;
       }
       if (!nickname) {
-        toast.warning('닉네임을 입력해주세요.');
+        toast.warning(m('FILL_NICKNAME'));
         return;
       }
       const newProfile = {
@@ -72,7 +72,7 @@ const MyProfile = ({ data }: { data: User }) => {
         {
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['loggedInUser'] });
-            toast.success('프로필이 수정되었습니다.');
+            toast.success(m('EDITING_SUCCESS'));
             setIsEditing(false);
           }
         }
@@ -85,30 +85,30 @@ const MyProfile = ({ data }: { data: User }) => {
   return (
     <main className="w-full h-full flex flex-col items-center">
       <article className="my-auto">
-        <h3 className="text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
-        <section className="flex gap-20 mt-5">
+        <h3 className="sm:hidden text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
+        <section className="flex sm:flex-col sm:gap-7 gap-20 m-10">
           <section className="w-[230px] h-[230px]">
             <Image
               src={`${profileStorageUrl}/${data.avatar_img_url}`}
               alt="사용자 프로필"
               width={250}
               height={250}
-              className="bg-bgColor2 w-full h-full object-cover border-solid border border-pointColor1 rounded-full"
+              className="bg-bgColor2 w-full h-full object-cover border-solid border-2 border-pointColor1 rounded-full"
             />
           </section>
           <section className="flex flex-col justify-around">
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 sm:text-center">
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">{m('NICKNAME')}</p>
+                <p className="text-pointColor1 font-bold">{m('NICKNAME')}</p>
                 <p className="text-lg">{data.nickname}</p>
               </div>
               <div className="flex flex-col gap-1">
-                <p className="text-pointColor1 font-semibold">{m('EMAIL')}</p>
+                <p className="text-pointColor1 font-bold">{m('EMAIL')}</p>
                 <p className="text-lg">{data.email}</p>
               </div>
             </div>
             <div
-              className="text-pointColor1 underline underline-offset-4 cursor-pointer"
+              className="text-pointColor1 underline underline-offset-4 cursor-pointer sm:text-center sm:mt-10"
               onClick={() => setIsEditing(true)}
             >
               {m('PROFILE_EDIT')}

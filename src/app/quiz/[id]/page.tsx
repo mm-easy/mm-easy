@@ -130,6 +130,12 @@ const QuizTryPage = () => {
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
   const quizzes = quizData as Quiz[];
+
+  if (!quizzes[0]) {
+    toast.warning('존재하지 않는 퀴즈입니다.');
+    router.replace('/quiz/list');
+    return <div className="h-full w-full">삭제되었거나 없는 퀴즈입니다.</div>;
+  }
   const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
 
   const questions = questionsData as Question[];
@@ -288,7 +294,9 @@ const QuizTryPage = () => {
           </div>
         </article>
         <main
-          className={`${!resultMode && `sm:h-[calc(76vh-118px)]`} py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+          className={`${
+            !resultMode && `sm:h-[calc(76vh-118px)]`
+          } py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
         >
           {resultMode && (
             <h1 className="text-2xl">
@@ -398,7 +406,9 @@ const QuizTryPage = () => {
                 </div>
               )}
               <button
-                className={`w-full py-[9px] ${isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'} text-white font-bold tracking-wider rounded-md`}
+                className={`w-full py-[9px] ${
+                  isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
+                } text-white font-bold tracking-wider rounded-md`}
                 onClick={handleResultMode}
               >
                 {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}

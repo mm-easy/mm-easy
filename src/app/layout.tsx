@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { gothic_a1 } from './styles/font';
 
 import type { Metadata } from 'next';
+import MobileMenu from '@/components/layout/MobileMenu';
 
 export const metadata: Metadata = {
   title: '뭔말이지?',
@@ -32,6 +33,7 @@ export default function RootLayout({
               <ToastContainer />
               {children}
               <Footer />
+              <MobileMenu />
             </QueryProvider>
           </Provider>
         </main>

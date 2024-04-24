@@ -22,13 +22,13 @@ export const BlueInput: React.FC<BlueInputProps> = ({ value, width, maxNum, onIn
   return (
     <div className="w-full relative text-pointColor1">
       <input
-        className={`border border-solid text-blackColor border-pointColor1 pl-4 py-[9px] rounded-md ${width}`}
+        className={`border border-solid text-blackColor border-pointColor1 sm:h-12 sm:pr-16 pl-4 py-[9px] rounded-md ${width}`}
         type="text"
         value={value}
         onInput={onInput}
         onChange={onChange}
       />
-      <p className="absolute top-0 right-2 pt-3 pr-1 text-sm">
+      <p className="absolute sm:top-1 top-0 right-2 pt-3 pr-1 text-sm">
         {value.length} / {maxNum}
       </p>
     </div>
@@ -56,7 +56,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
     onChange(selectedValue);
   };
   return (
-    <div className="flex gap-2 w-96">
+    <div className="sm:w-full sm:justify-between flex gap-2 w-96">
       <input
         type="radio"
         id="Level1"
@@ -68,7 +68,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
       />
       <label
         htmlFor="Level1"
-        className={`cursor-pointer w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
+        className={`cursor-pointer sm:flex sm:justify-center sm:items-center sm:w-24 w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
           value === 1 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
@@ -85,7 +85,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
       />
       <label
         htmlFor="Level2"
-        className={`cursor-pointer w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
+        className={`cursor-pointer sm:flex sm:justify-center sm:items-center sm:h-12 sm:w-24 w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
           value === 2 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
@@ -102,7 +102,7 @@ export const BlueLevelSelect: React.FC<BlueLevelSelectProps> = ({ value, onChang
       />
       <label
         htmlFor="Level3"
-        className={`cursor-pointer w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
+        className={`cursor-pointer sm:flex sm:justify-center sm:items-center sm:h-12 sm:w-24 w-32 text-center border-solid border border-pointColor1 rounded-md p-2 ${
           value === 3 ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
         }`}
       >
