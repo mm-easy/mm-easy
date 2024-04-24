@@ -56,6 +56,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
 
   return (
     <form
+    className='sm:w-[100vw]'
       onSubmit={(event) => {
         event.preventDefault();
 
@@ -69,11 +70,11 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
         });
       }}
     >
-      <section className="flex border-b border-pointColor1 border-solid">
+      <section className="sm:border-b-0 sm:px-4 sm:pt-6 flex border-b border-pointColor1 border-solid">
         {categories.map(({ id, value, label }) => (
-          <div key={id}>
+          <div key={id} className='sm:px-1'>
             <div
-              className={`font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
+              className={`sm:border-1 sm:border-solid sm:border-pointColor1 sm:rounded-3xl sm:text-sm sm:px-4 sm:py-[6px] font-bold rounded-tl-lg rounded-tr-lg text-lg px-6 pt-1 cursor-pointer  ${
                 selectedCategory === value ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
               onClick={() => {
@@ -87,7 +88,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
       </section>
       <div>
         <input
-          className="w-full focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
+          className="sm:h-20 sm:text-2xl sm:px-4 w-full focus:outline-none font-medium h-24 text-3xl placeholder-gray-300"
           type="text"
           value={title}
           onChange={(event) => {
@@ -100,9 +101,9 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
       <div>
         <TextEditor value={textEditorValue} onChange={setTextEditorValue} />
       </div>
-      <div className="mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
-        <CancelButton text={m('COMMUNITY_POST_CANCEL')} onClick={onCancel} width="w-[15%]" border="border-2" />
-        <SubmitButton text={m('COMMUNITY_POST_SUBMIT')} width="w-[15%]" />
+      <div className="sm:py-6 sm:mt-0 mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
+        <CancelButton text={m('COMMUNITY_POST_CANCEL')} onClick={onCancel} width="sm:w-[45vw] w-[15%]" border="border-2" />
+        <SubmitButton text={m('COMMUNITY_POST_SUBMIT')} width="sm:w-[45vw] w-[15%]" height='sm:h-[7vh]' />
       </div>
     </form>
   );
