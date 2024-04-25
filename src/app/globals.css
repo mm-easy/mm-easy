@@ -85,7 +85,7 @@
     url('fonts/subset-GothicA1-ExtraBold.woff2') format('woff2'),
     url('fonts/subset-GothicA1-ExtraBold.woff') format('woff'),
     url('fonts/subset-GothicA1-ExtraBold.ttf') format('truetype');
-  font-weight: bold;
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
