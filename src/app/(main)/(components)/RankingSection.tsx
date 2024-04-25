@@ -221,37 +221,39 @@ const RankingSection = () => {
             </button>
           </div>
         </div>
-        <section className="flex bg-bgColor2 text-center items-center">
+        <section className="flex bg-bgColor2 items-center">
           {activeRanking === 'quizCreator' && (
-            <div className="flex-col w-full py-2">
-              <p className="font-bold text-xl">{m('QUIZ_CREATOR')}</p>
+            <div className="flex-col w-full p-4">
+              <p className="font-bold text-center text-lg">{m('QUIZ_CREATOR')}</p>
               {quizRank && quizRank.length > 0 ? (
-                <div className="text-center justify-center">
+                <div>
                   {quizRank.map((item, index) => (
                     <div
                       key={index}
-                      className={`justify-center mt-4 pb-4 flex items-center animate-drop-in ${
+                      className={`mt-4 px-8 pb-4 flex justify-between items-center animate-drop-in ${
                         index !== quizRank.length - 1 ? 'border-b border-solid border-pointColor1' : ''
                       }`}
                     >
-                      <GiMedal style={{ color: getMedalColor(index) }} className="mr-4 text-4xl animate-twinkling" />
-                      {item.avatar_img_url && (
-                        <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1">
-                          <Image
-                            src={`${profileStorageUrl}/${item.avatar_img_url}`}
-                            alt="프로필 이미지"
-                            width={60}
-                            height={60}
-                            className="w-full h-full object-cover bg-white"
-                          />
+                      <div className="flex items-center">
+                        {item.avatar_img_url && (
+                          <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1">
+                            <Image
+                              src={`${profileStorageUrl}/${item.avatar_img_url}`}
+                              alt="프로필 이미지"
+                              width={60}
+                              height={60}
+                              className="w-full h-full object-cover bg-white"
+                            />
+                          </div>
+                        )}
+                        <div className="flex flex-col">
+                          <h3 className="text-lg font-semibold mb-1">{item.nickname}</h3>
+                          <h2 className="text-pointColor1">
+                            {m('COUNT')} {item.quiz_count}
+                          </h2>
                         </div>
-                      )}
-                      <div className="flex flex-col">
-                        <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
-                        <h2 className="text-pointColor1">
-                          {m('COUNT')} {item.quiz_count}
-                        </h2>
                       </div>
+                      <GiMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
                     </div>
                   ))}
                 </div>
@@ -262,20 +264,56 @@ const RankingSection = () => {
           )}
           {activeRanking === 'quizMaster' && (
             <div className="flex-col p-4 w-full">
-              <p className="font-bold text-lg">{m('QUIZ_MASTER')}</p>
+              <p className="font-bold text-center text-lg">{m('QUIZ_MASTER')}</p>
               {quizScoreRank && quizScoreRank.length > 0 ? (
                 <div>
                   {quizScoreRank.map((item, index) => (
                     <div
                       key={index}
-                      className={`mt-4 pb-4 flex justify-center items-center animate-drop-in ${
+                      className={`mt-4 px-8 pb-4 flex justify-between items-center animate-drop-in ${
                         index !== quizScoreRank.length - 1 && 'border-b border-solid border-pointColor1'
                       }`}
                     >
-                      <GiStarMedal
-                        style={{ color: getMedalColor(index) }}
-                        className="mr-4 text-4xl animate-twinkling"
-                      />
+                      <div className="flex items-center">
+                        {item.avatar_img_url && (
+                          <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
+                            <Image
+                              src={`${profileStorageUrl}/${item.avatar_img_url}`}
+                              alt="프로필 이미지"
+                              width={60}
+                              height={60}
+                              className="w-full h-full object-cover bg-white"
+                            />
+                          </div>
+                        )}
+                        <div className="flex flex-col">
+                          <h3 className="text-lg font-semibold mb-1">{item.nickname}</h3>
+                          <h2 className="text-pointColor1">
+                            {m('SCORE')} {item.score}
+                          </h2>
+                        </div>
+                      </div>
+                      <GiStarMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p>{m('TAKE_THE_CHALLENGE')}</p>
+              )}
+            </div>
+          )}
+          {activeRanking === 'keyboardWarrior' && gameScores && (
+            <div className="flex-col p-4 w-full">
+              <p className="font-bold text-center text-lg">{m('KEYBOARD_WARRIOR')}</p>
+              <div>
+                {gameScores.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`mt-4 px-8 pb-4 flex justify-between items-center animate-drop-in ${
+                      index !== gameScores.length - 1 ? 'border-b border-solid border-pointColor1' : ''
+                    }`}
+                  >
+                    <div className="flex items-center">
                       {item.avatar_img_url && (
                         <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
                           <Image
@@ -288,48 +326,13 @@ const RankingSection = () => {
                         </div>
                       )}
                       <div className="flex flex-col">
-                        <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
+                        <h3 className="text-lg font-semibold mb-1">{item.nickname}</h3>
                         <h2 className="text-pointColor1">
                           {m('SCORE')} {item.score}
                         </h2>
                       </div>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <p>{m('TAKE_THE_CHALLENGE')}</p>
-              )}
-            </div>
-          )}
-          {activeRanking === 'keyboardWarrior' && gameScores && (
-            <div className="flex-col p-4 w-full">
-              <p className="font-bold text-lg">{m('KEYBOARD_WARRIOR')}</p>
-              <div>
-                {gameScores.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`mt-4 pb-4 flex justify-center items-center animate-drop-in ${
-                      index !== gameScores.length - 1 ? 'border-b border-solid border-pointColor1' : ''
-                    }`}
-                  >
-                    <GiMedalSkull style={{ color: getMedalColor(index) }} className="mr-4 text-4xl animate-twinkling" />
-                    {item.avatar_img_url && (
-                      <div className="mr-4 w-[65px] h-[65px] rounded-full overflow-hidden border-2 border-solid border-pointColor1 flex-shrink-0">
-                        <Image
-                          src={`${profileStorageUrl}/${item.avatar_img_url}`}
-                          alt="프로필 이미지"
-                          width={60}
-                          height={60}
-                          className="w-full h-full object-cover bg-white"
-                        />
-                      </div>
-                    )}
-                    <div className="flex flex-col">
-                      <h3 className="text-xl font-medium mb-1">{item.nickname}</h3>
-                      <h2 className="text-pointColor1">
-                        {m('SCORE')} {item.score}
-                      </h2>
-                    </div>
+                    <GiMedalSkull style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
                   </div>
                 ))}
               </div>
