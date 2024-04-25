@@ -38,7 +38,7 @@ export const getMyQuizScore = async (id: string) => {
 
 /** tries 테이블에서 상위점수 3명 target_date기준 일주일단위로 가져오기 */
 export const getTopQuizScores = async (): Promise<QuizTryRank[]> => {
-  const targetDate = new Date('2024-04-18').toISOString().slice(0, 10); 
+  const targetDate = new Date('2024-04-24').toISOString().slice(0, 10); 
   try {
     const { data: quizScores, error } = await supabase.rpc('get_quiz_tries_with_details', { target_date: targetDate }).limit(3);
     if (error) throw error;
