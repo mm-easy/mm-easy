@@ -32,9 +32,10 @@ const TypingGamePage = () => {
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const [slowMotion, setSlowMotion] = useState(false);
-  const slowMotionDuration = 3000; // 느린 모션 지속 시간을 5초로 설정
+  const slowMotionDuration = 5000; // 느린 모션 지속 시간을 5초로 설정
   const [specialWord, setSpecialWord] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [frozenEffect, setFrozenEffect] = useState(false);
   const m = useMultilingual('typing-game');
 
   const router = useRouter();
@@ -47,6 +48,8 @@ const TypingGamePage = () => {
   const wrongAnswer = useRef<HTMLAudioElement | null>(null);
   const levelUp = useRef<HTMLAudioElement | null>(null);
   const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
+  const lifeDrainingSound = useRef<HTMLAudioElement | null>(null);
+  const specialWordSound = useRef<HTMLAudioElement | null>(null);
 
   const playBackgroundMusic = () => {
     let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
@@ -76,6 +79,8 @@ const TypingGamePage = () => {
       levelUp.current = new Audio('game/levelUp.wav');
       backgroundMusic.current = new Audio('game/SeoulVibes.mp3');
       newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
+      lifeDrainingSound.current = new Audio('game/failure.wav');
+      specialWordSound.current = new Audio('game/specialWord.wav');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
@@ -83,6 +88,8 @@ const TypingGamePage = () => {
         if (wordpopSound.current) wordpopSound.current.pause();
         if (wrongAnswer.current) wrongAnswer.current.pause();
         if (levelUp.current) levelUp.current.pause();
+        if (lifeDrainingSound.current) lifeDrainingSound.current.pause();
+        if (specialWordSound.current) specialWordSound.current.pause();
       };
     }
   }, []);
@@ -94,6 +101,8 @@ const TypingGamePage = () => {
     if (wrongAnswer.current) wrongAnswer.current.volume = volume;
     if (backgroundMusic.current) backgroundMusic.current.volume = volume;
     if (levelUp.current) levelUp.current.volume = volume;
+    if (lifeDrainingSound.current) lifeDrainingSound.current.volume = volume;
+    if (specialWordSound.current) specialWordSound.current.volume = volume;
   }, [volume]);
 
   useEffect(() => {
@@ -152,7 +161,7 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const speedAdjustment = slowMotion ? 6 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const speedAdjustment = slowMotion ? 4 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 4, 아니면 난이도에 따른 속도
       const updatedWords = words.map((word) => ({
         ...word,
         top: word.top + speedAdjustment
@@ -162,6 +171,9 @@ const TypingGamePage = () => {
       if (outOfBoundWords.length > 0) {
         setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
         setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
+        if (lifeDrainingSound.current) {
+          lifeDrainingSound.current.play();
+        }
       } else {
         setWords(updatedWords);
       }
@@ -225,10 +237,14 @@ const TypingGamePage = () => {
         setScore(score + 10);
         setCorrectWordsCount(correctWordsCount + 1);
         if (input === specialWord) {
-          setSlowMotion(true);
-          setTimeout(() => {
-            setSlowMotion(false);
-          }, slowMotionDuration);
+          if (specialWordSound.current) {
+            specialWordSound.current.play();
+            applyFrozenEffect();
+            setSlowMotion(true);
+            setTimeout(() => {
+              setSlowMotion(false);
+            }, slowMotionDuration);
+          }
         }
       } else {
         const newWrongAnswerSound = new Audio('game/wrongAnswer.wav');
@@ -357,8 +373,20 @@ const TypingGamePage = () => {
     setShowConfirmModal(false);
   };
 
+  const applyFrozenEffect = () => {
+    setFrozenEffect(true);
+    setTimeout(() => {
+      setFrozenEffect(false); // 일정 시간 후 배경색을 원래대로 돌립니다
+    }, 5000);
+  };
+
   return (
-    <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
+    <div
+      className={`relative flex flex-col bg-cover bg-no-repeat bg-center ${frozenEffect ? 'frozenEffect' : ''}`}
+      style={{
+        backgroundImage: "url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')"
+      }}
+    >
       {!gameStarted && (
         <div className="top-0 left-0 p-4 h-[4vh] custom-volume-control">
           <div className="volume-control flex items-center">

@@ -6,7 +6,7 @@ import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 import { useState } from 'react';
 import { throttle } from 'lodash';
 
@@ -47,10 +47,9 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     queryFn: getCurrentUserProfile
   });
 
-  const categories =
-    profile?.email === ADMIN_ACC_1
-      ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
-      : baseCategories;
+  const categories = ADMIN.some((admin) => admin.id === profile?.email)
+    ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
+    : baseCategories;
 
   if (isLoading) return null;
 

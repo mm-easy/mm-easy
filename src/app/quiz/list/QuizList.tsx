@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import useMultilingual from '@/utils/useMultilingual';
 import { useEffect, useState } from 'react';
 import { storageUrl } from '@/utils/supabase/storage';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 
 const QuizList = ({
   allQuizzes,
@@ -69,7 +69,7 @@ const QuizList = ({
               }}
             >
               <div className="flex items-center gap-1">
-                {item.creator_id === ADMIN_ACC_1 && (
+                {ADMIN.some((admin) => admin.id === item.creator_id) && (
                   <Image
                     src={DaejangContent}
                     alt="아이콘"
@@ -81,7 +81,7 @@ const QuizList = ({
                 )}
                 <p
                   className={`font-bold sm:text-base text-lg sm:mt-2 mt-4 sm:mb-1 mb-3 truncate ${
-                    item.creator_id === ADMIN_ACC_1 ? 'text-pointColor1' : ''
+                    ADMIN.some((admin) => admin.id === item.creator_id) && 'text-pointColor1'
                   }`}
                 >
                   {item.title}

@@ -5,4 +5,4 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export type TabName = 'solvedQuizzes' | 'quizzes' | 'posts' | 'comments';
+export type TabName = 'solvedQuizzes' | 'quizzes' | 'posts' | 'comments' | 'likes';
