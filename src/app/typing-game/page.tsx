@@ -98,8 +98,8 @@ const TypingGamePage = () => {
     if (gameoverSound.current) gameoverSound.current.volume = volume;
     if (wordpopSound.current) wordpopSound.current.volume = volume;
     if (wrongAnswer.current) wrongAnswer.current.volume = volume;
-    if (levelUp.current) levelUp.current.volume = volume;
     if (backgroundMusic.current) backgroundMusic.current.volume = volume;
+    if (levelUp.current) levelUp.current.volume = volume;
   }, [volume]);
 
   useEffect(() => {
@@ -216,12 +216,13 @@ const TypingGamePage = () => {
     if (typeof window !== 'undefined') {
       const wordIndex = words.findIndex((word) => word.text === input);
       if (wordIndex !== -1) {
-        if (wordpopSound.current) {
-          wordpopSound.current.play();
-          setWords(words.filter((_, index) => index !== wordIndex));
-          setScore(score + 10);
-          setCorrectWordsCount(correctWordsCount + 1);
-        }
+        const newWordpopSound = new Audio('game/wordpopped.wav');
+        newWordpopSound.volume = volume;
+        newWordpopSound.play();
+
+        setWords(words.filter((_, index) => index !== wordIndex));
+        setScore(score + 10);
+        setCorrectWordsCount(correctWordsCount + 1);
         if (input === specialWord) {
           setSlowMotion(true);
           setTimeout(() => {
@@ -229,9 +230,9 @@ const TypingGamePage = () => {
           }, slowMotionDuration);
         }
       } else {
-        if (newWrongAnswerSound.current) {
-          newWrongAnswerSound.current.play();
-        }
+        const newWrongAnswerSound = new Audio('game/wrongAnswer.wav');
+        newWrongAnswerSound.volume = volume;
+        newWrongAnswerSound.play();
       }
     }
     setInput('');
