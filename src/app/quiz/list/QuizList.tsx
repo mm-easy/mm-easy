@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import useMultilingual from '@/utils/useMultilingual';
 import { useEffect, useState } from 'react';
 import { storageUrl } from '@/utils/supabase/storage';
-import { ADMIN } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 
 const QuizList = ({
   allQuizzes,

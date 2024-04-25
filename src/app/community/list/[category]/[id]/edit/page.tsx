@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { fetchPost, updateCommunityPost } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN_ACC_1 } from '@/constant/adminId';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);

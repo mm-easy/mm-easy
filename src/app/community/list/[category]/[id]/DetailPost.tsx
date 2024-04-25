@@ -25,7 +25,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { PostParams, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN_ACC_1 } from '@/constant/adminId';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);

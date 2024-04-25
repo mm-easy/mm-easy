@@ -7,7 +7,7 @@ import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN_ACC_1 } from '@/constant/adminId';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 

@@ -10,7 +10,7 @@ import { formatCommentDateToLocal } from '@/utils/date';
 import { HiDotsVertical } from 'react-icons/hi';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN_ACC_1 } from '@/constant/adminId';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
