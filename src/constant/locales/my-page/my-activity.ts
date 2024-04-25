@@ -15,6 +15,10 @@ const MY_ACTIVITY_STRINGS = {
     ko: '내가 쓴 댓글',
     en: 'My Comment'
   },
+  MY_LIKE: {
+    ko: '내가 한 좋아요',
+    en: 'My Like'
+  },
   TITLE: {
     ko: '제목',
     en: 'Title'
@@ -51,6 +55,10 @@ const MY_ACTIVITY_STRINGS = {
     ko: '삭제하기',
     en: 'Delete'
   },
+  POST_NOW_GO: {
+    ko: '바로가기',
+    en: 'Link'
+  },
   NO_QUIZZES_YOU_SOLVED: {
     ko: '푼 퀴즈가 없습니다.',
     en: 'No Quizzes You Solved.'
@@ -66,6 +74,10 @@ const MY_ACTIVITY_STRINGS = {
   NO_COMMTENTS: {
     ko: '댓글이 없습니다.',
     en: 'No Comments.'
+  },
+  NO_LIKES: {
+    ko: '좋아요가 없습니다.',
+    en: 'No Likes.'
   }
 };
 
