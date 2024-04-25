@@ -74,7 +74,8 @@ const Home = ({ newSection }: { newSection: React.ReactNode }) => {
       <CommunitySection />
       {newSection}
       <Footer />
-      <PageUpBtn scrollPosition={scrollPosition} />
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
+        smallBottom="sm:bottom-28"/>
     </div>
   );
 };

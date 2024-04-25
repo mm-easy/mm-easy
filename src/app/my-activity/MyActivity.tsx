@@ -15,6 +15,8 @@ import { TabName } from '@/types/pagination';
 import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
 import useMultilingual from '@/utils/useMultilingual';
+import { getUserLike } from '@/api/likes';
+import { toast } from 'react-toastify';
 
 const MyActivity = () => {
   const m = useMultilingual('my-activity');
@@ -133,6 +135,28 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
+  // 사용자의 좋아요 가져오기
+  const {
+    data: userLike = [],
+    isLoading: isLikeLoading,
+    isError: isLikeError
+  } = useQuery({
+    queryFn: async () => {
+      try {
+        const userProfile = await getCurrentUserProfile();
+        if (userProfile && userProfile.email) {
+          return await getUserLike(userProfile.id);
+        }
+        return [];
+      } catch (error) {
+        console.error('내 좋아요 불러오기 실패:', error);
+        throw error;
+      }
+    },
+    queryKey: ['userLikes'],
+    enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
+  });
+
   //
   const navigateToQuiz = (quizId: string) => {
     router.push(`/quiz/${quizId}`);
@@ -148,12 +172,18 @@ const MyActivity = () => {
   };
 
   const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    if (!window.confirm(m('QUIZ_DELETE'))) return;
+  
     deleteQuizMutation.mutateAsync(id).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['userQuizzes']
       });
-    });
+      toast.success(m('QUIZ_DELETE_COMPLETE'));
+    })
+  };
+
+  const navigateToPost = (postId: string) => {
+    router.push(`/community/list/전체/${postId}`);
   };
 
   // 페이지
@@ -166,13 +196,14 @@ const MyActivity = () => {
   const currentQuizzes = userQuiz.slice(indexOfFirstItem, indexOfLastItem);
   const currentPosts = userPost.slice(indexOfFirstItem, indexOfLastItem);
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
+  const currentLikes = userLike.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <main className="sm:h-auto sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">
       <nav className="sm:pb-0 w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
-        <ul className="sm:px-4 sm:text-base flex justify-center text-xl w-full text-center border-b-1 border-solid">
+        <ul className="sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'solvedQuizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('solvedQuizzes')}
@@ -180,7 +211,7 @@ const MyActivity = () => {
             {m('QUIZ_I_SOLVED')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'quizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('quizzes')}
@@ -188,18 +219,24 @@ const MyActivity = () => {
             {m('QUIZ_I_MADE')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'posts' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
+            className={`w-[20%] pb-3 ${activeTab === 'posts' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
             onClick={() => changeTab('posts')}
           >
             {m('MY_WRITING')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'comments' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('comments')}
           >
             {m('MY_COMMENT')}
+          </li>
+          <li
+            className={`w-[20%] pb-3 ${activeTab === 'likes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
+            onClick={() => changeTab('likes')}
+          >
+            {m('MY_LIKE')}
           </li>
         </ul>
       </nav>
@@ -474,7 +511,7 @@ const MyActivity = () => {
                 >
                   <div>
                     <div className="truncate max-w-xs font-semibold">
-                      <p className=''>{comment.content}</p>
+                      <p className="">{comment.content}</p>
                     </div>
                     <div className="text-sm flex">
                       <p>{formatToLocaleDateTimeString(comment.created_at)}</p>
@@ -482,7 +519,7 @@ const MyActivity = () => {
                   </div>
                   <div className="text-right py-[1vh]">
                     <div className="text-sm font-bold rounded-sm">
-                    <CommentDeleteBtn text={m('DELETE_BTN')} userId={comment.id} width="w-20" height="h-12" />
+                      <CommentDeleteBtn text={m('DELETE_BTN')} userId={comment.id} width="w-20" height="h-12" />
                     </div>
                   </div>
                 </div>
@@ -494,8 +531,78 @@ const MyActivity = () => {
             )}
           </div>
         )}
+        {activeTab === 'likes' && (
+          <div className="w-full flex justify-center">
+            <table className="sm:hidden w-full font-medium">
+              <thead className="text-left">
+                <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
+                  <th className="pb-2 w-[65%]">{m('TITLE')}</th>
+                  <th className="w-[35%]">{m('LIKE_DATE')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentLikes && currentLikes.length > 0 ? (
+                  currentLikes.map((like, index) => (
+                    <tr key={index} className="border-b border-solid border-grayColor2">
+                      <td className="truncate max-w-xs w-24">{like.posts?.title}</td>
+                      <td>{formatToLocaleDateTimeString(like.created_at)}</td>
+                      <td className="text-right py-[1vh]">
+                        <button
+                          className="w-28 h-8 border border-solid border-pointColor1 rounded-md font-bold text-pointColor1"
+                          onClick={() => navigateToPost(like.post_id)}
+                        >
+                          {m('POST_NOW_GO')}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="text-center py-6 text-pointColor1 font-bold text-lg">
+                      {m('NO_LIKES')}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {/* 내가 한 좋아요 모바일 */}
+        {activeTab === 'likes' && (
+          <div className="hidden md:hidden sm:block">
+            {currentLikes && currentLikes.length > 0 ? (
+              currentLikes.map((like, index) => (
+                <div
+                  key={index}
+                  className="h-[88px] flex px-[5vw] justify-between items-center border-b border-solid border-pointColor1"
+                >
+                  <div>
+                    <div className="truncate max-w-xs font-semibold">
+                      <p className="">{like.posts?.title}</p>
+                    </div>
+                    <div className="text-sm flex">
+                      <p>{formatToLocaleDateTimeString(like.created_at)}</p>
+                    </div>
+                  </div>
+                  <div className="text-right py-[1vh]">
+                    <button
+                      className="text-sm w-20 h-12 border border-solid border-pointColor1 rounded-sm font-bold text-pointColor1"
+                      onClick={() => navigateToPost(like.post_id)}
+                    >
+                      {m('POST_NOW_GO')}
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>
+                <p className="text-center py-6 text-pointColor1 font-bold text-lg">{m('NO_LIKES')}</p>
+              </div>
+            )}
+          </div>
+        )}
       </article>
-      <div className="sm:block sm:pb-20 pt-6">
+      <div className="sm:block sm:pb-28 pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'
@@ -504,7 +611,9 @@ const MyActivity = () => {
               ? userQuiz.length
               : activeTab === 'posts'
               ? userPost.length
-              : userComment.length
+              : activeTab === 'comments'
+              ? userComment.length
+              : userLike.length
           }
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
