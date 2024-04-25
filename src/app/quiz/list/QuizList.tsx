@@ -102,7 +102,8 @@ const QuizList = ({
           ))}
         {showModal && <RecommendLoginModal id={quizId} proceedWithoutLogin={handleMoveQuizTry} />}
       </div>
-      <PageUpBtn scrollPosition={scrollPosition} />
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
+        smallBottom="sm:bottom-48"/>
     </main>
   );
 };
