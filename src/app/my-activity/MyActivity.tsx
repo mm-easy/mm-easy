@@ -198,9 +198,9 @@ const MyActivity = () => {
   return (
     <main className="sm:h-auto sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">
       <nav className="sm:pb-0 w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
-        <ul className="sm:px-4 sm:text-base flex justify-center text-xl w-full text-center border-b-1 border-solid">
+        <ul className="sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'solvedQuizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('solvedQuizzes')}
@@ -208,7 +208,7 @@ const MyActivity = () => {
             {m('QUIZ_I_SOLVED')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'quizzes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('quizzes')}
@@ -216,13 +216,13 @@ const MyActivity = () => {
             {m('QUIZ_I_MADE')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'posts' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
+            className={`w-[20%] pb-3 ${activeTab === 'posts' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
             onClick={() => changeTab('posts')}
           >
             {m('MY_WRITING')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${
+            className={`w-[20%] pb-3 ${
               activeTab === 'comments' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
             }`}
             onClick={() => changeTab('comments')}
@@ -230,7 +230,7 @@ const MyActivity = () => {
             {m('MY_COMMENT')}
           </li>
           <li
-            className={`w-[25%] pb-3 ${activeTab === 'likes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
+            className={`w-[20%] pb-3 ${activeTab === 'likes' && 'sm:border-b-[6px] font-bold border-solid border-b-3'}`}
             onClick={() => changeTab('likes')}
           >
             {m('MY_LIKE')}

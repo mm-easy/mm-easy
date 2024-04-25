@@ -1,23 +1,23 @@
 const MY_ACTIVITY_STRINGS = {
   QUIZ_I_SOLVED: {
-    ko: '내가 푼 퀴즈',
+    ko: '푼 퀴즈',
     en: 'Solved Quiz'
   },
   QUIZ_I_MADE: {
-    ko: '내가 만든 퀴즈',
+    ko: '만든 퀴즈',
     en: 'My Quiz'
   },
   MY_WRITING: {
-    ko: '내가 쓴 글',
-    en: 'My Post'
+    ko: '게시글',
+    en: 'Post'
   },
   MY_COMMENT: {
-    ko: '내가 쓴 댓글',
-    en: 'My Comment'
+    ko: '댓글',
+    en: 'Comment'
   },
   MY_LIKE: {
-    ko: '내가 한 좋아요',
-    en: 'My Like'
+    ko: '좋아요',
+    en: 'Like'
   },
   TITLE: {
     ko: '제목',
