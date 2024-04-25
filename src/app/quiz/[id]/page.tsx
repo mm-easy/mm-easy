@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
@@ -10,12 +10,10 @@ import { useAuth } from '@/hooks/useAuth';
 import { langAtom } from '@/store/store';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
-import { CancelButton } from '@/components/common/FormButtons';
 import { supabase } from '@/utils/supabase/supabase';
 import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useDeleteQuiz, useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 
 import Header from './Header';
 import Options from './Options';
@@ -26,7 +24,7 @@ import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
-import CreateInfo from './CreateInfo';
+import SideHeader from './SideHeader';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -44,10 +42,8 @@ const QuizTryPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
-  const queryClient = useQueryClient();
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
-  const deleteQuizMutation = useDeleteQuiz();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -232,67 +228,18 @@ const QuizTryPage = () => {
     }
   };
 
-  /** 삭제 버튼 클릭 핸들러 */
-  const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm(m('ASK_TO_DELETE'))) return;
-    deleteQuizMutation.mutateAsync(id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
-        toast.success(m('NOTIFY_TO_DELETE'));
-        router.replace('/quiz/list');
-      }
-    });
-  };
-
-  /** 수정 버튼 클릭 핸들러 */
-  // const handleEditQuiz = (id: string) => {
-  //   router.push(`/quiz/form/edit?id=${id}`);
-  // };
-
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
-        <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
-          <section className="sm:text-blackColor">
-            <Image
-              src={`${storageUrl}/quiz-thumbnails/${url}`}
-              alt="샘플 이미지"
-              width={230}
-              height={230}
-              quality={100}
-              className="w-full h-[230px] sm:hidden object-cover border-solid border-b-2 border-pointColor1"
-            />
-            <p className="pl-4 pt-4 hidden sm:block">{info}</p>
-            <CreateInfo
-              creatorText={m('CREATOR')}
-              creator={creator_id}
-              dateText={m('DATE_CREATED')}
-              date={formatToLocaleDateTimeString(created_at)}
-            />
-            <p className="p-4 sm:hidden">{info}</p>
-          </section>
-          <div className="sm:hidden flex justify-center font-bold pb-4">
-            {currentUserEmail === creator_id && (
-              <div className="flex justify-center items-center">
-                {/* <CancelButton
-                  text="수정"
-                  width="w-44"
-                  height="h-12"
-                  border="border-2"
-                  onClick={() => handleEditQuiz(id as string)}
-                /> */}
-                <CancelButton
-                  text={m('DELETE_BTN')}
-                  width="w-44"
-                  height="h-12"
-                  border="border-1"
-                  onClick={() => handleDeleteQuiz(id as string)}
-                />
-              </div>
-            )}
-          </div>
-        </article>
+        <SideHeader
+          url={url}
+          info={info}
+          creator={creator_id}
+          date={created_at}
+          currentUserEmail={currentUserEmail}
+          id={id}
+        />
         <main
           className={`${
             !resultMode && `sm:h-[calc(76vh-118px)]`
