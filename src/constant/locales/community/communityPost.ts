@@ -63,6 +63,14 @@ const COMMUNITY_POST_STRINGS = {
     ko: '게시글이 삭제되었습니다.',
     en: 'The post has been deleted.'
   },
+  COMMUNITY_COMMENT_DELETE: {
+    ko: '해당 댓글을 삭제하시겠습니까?',
+    en: 'Are you sure you want to delete this comment'
+  },
+  COMMUNITY_COMMENT_DELETE_COMPLETE: {
+    ko: '댓글이 삭제되었습니다.',
+    en: 'The comment has been deleted.'
+  },
 }
 
 export default COMMUNITY_POST_STRINGS

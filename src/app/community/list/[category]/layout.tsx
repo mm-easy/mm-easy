@@ -4,6 +4,7 @@ import React from 'react';
 import CategorySelector from '@/app/community/list/[category]/CategorySelector';
 import Link from 'next/link';
 import useMultilingual from '@/utils/useMultilingual';
+import PlusCircle from '@/assets/add_FILL1_wght400_GRAD0_opsz24.svg'
 import { useParams } from 'next/navigation';
 import { PostParams } from '@/types/posts';
 
@@ -39,9 +40,9 @@ const Layout = ({ children, params }: Props) => {
             <Link
               href="/community/write"
               type="button"
-              className="text-5xl flex justify-center items-center fixed bottom-16 right-6 bg-pointColor1 text-white h-16 w-16 rounded-full"
+              className="text-5xl flex justify-center items-center fixed bottom-28 right-6 bg-pointColor1 text-white h-14 w-14 rounded-full"
             >
-              +
+              <PlusCircle style={{fill: '#fff', width: '40px', height: '40px'}}/>
             </Link>
           </div>
         </section>

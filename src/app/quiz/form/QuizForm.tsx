@@ -229,7 +229,8 @@ const QuizForm = ({
           <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="sm:h-12 w-[275px]" />
         </div>
       </form>
-      <PageUpBtn scrollPosition={scrollPosition} />
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
+        smallBottom="sm:bottom-28"/>
     </main>
   );
 };
