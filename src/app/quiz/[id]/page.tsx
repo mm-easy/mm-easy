@@ -290,9 +290,7 @@ const QuizTryPage = () => {
           id={id}
         />
         <main
-          className={`${
-            !resultMode && `sm:h-[calc(76vh-118px)]`
-          } py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+          className={` py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
         >
           {resultMode && (
             <h1 className="text-2xl">
