@@ -92,6 +92,47 @@ const ABOUT_STRINGS = {
     en: 'Congo'
   },
   ABOUT_TITLE4: {
+    ko: '서비스 소개',
+    en: 'Service Introduction'
+  },
+  ABOUT_TITLE4_CONTENT1: {
+    ko: "여러분 모두 외국어를 공부하면서 '이거 무슨 말이지?' 하고 궁금해 하셨던 적이 많으실 거예요.",
+    en: "Many of you must have been curious and wondered, 'What does this mean?' while studying a foreign language."
+  },
+  ABOUT_TITLE4_CONTENT2: {
+    ko: "'뭔말이지?'는 무슨 말이지?의 친근한 표현으로, 열정적인 한국어 학습자의 강렬한 호기심을 내포하고 있습니다.",
+    en: "'뭔말이지?' is a friendly expression for 'What does this mean?', embodying the intense curiosity of passionate Korean language learners."
+  },
+  ABOUT_TITLE4_CONTENT3: {
+    ko: '뭔말easy?에서는 누구나 쉽고 재미있게 한국어를 학습할 수 있습니다. 뭔말이지? 뭔말easy!',
+    en: 'With 뭔말easy? anyone can What does this mean? 뭔말이지? 뭔말easy!'
+  },
+  ABOUT_TITLE4_LOGO1: {
+    ko: '가로형 로고',
+    en: 'Horizontal logo'
+  },
+  ABOUT_TITLE4_LOGO2: {
+    ko: '세로형 로고',
+    en: 'Vertical logo'
+  },
+  ABOUT_TITLE4_SYMBOL: {
+    ko: '심벌',
+    en: 'Symbol'
+  },
+  ABOUT_TITLE4_SYMBOL_CONTENT: {
+    ko: "'뭔말easy?'의 'ㅁ','ㅜ'와 영문명 'mm-easy?'의 'm'에말풍선 형태를 합쳐 언어 학습을 상징하는 심벌",
+    en: "The 'ㅁ' and 'ㅜ' in '뭔말easy?' and the 'm' in the English name 'mm-easy?' are combined with a speech bubble shape to create a symbol representing language learning."
+  },
+  ABOUT_TITLE4_CHARACTER: {
+    ko: '캐릭터',
+    en: 'Character'
+  },
+  ABOUT_TITLE4_CHARACTER_CONTENT: {
+    ko: "'뭔말' 부분의 곡선과 소문자 'e'의 형태를 응용한 대표 캐릭터",
+    en: "The main character is designed using the curves of the '뭔말' part and the shape of the lowercase 'e'."
+  },
+
+  ABOUT_TITLE5: {
     ko: '뭔말이지? 프로젝트에 참여한 사람들',
     en: '뭔말easy? people involved in the project'
   },
