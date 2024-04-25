@@ -396,8 +396,7 @@ const QuizTryPage = () => {
             </ReportButton>
           )}
         </main>
-        <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+        <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
       </div>
     </>
   );
