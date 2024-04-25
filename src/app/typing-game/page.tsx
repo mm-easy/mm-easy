@@ -43,26 +43,56 @@ const TypingGamePage = () => {
 
   const gameoverSound = useRef<HTMLAudioElement | null>(null);
   const wordpopSound = useRef<HTMLAudioElement | null>(null);
-  const gamestartSound = useRef<HTMLAudioElement | null>(null);
+  const backgroundMusic = useRef<HTMLAudioElement | null>(null);
+  const wrongAnswer = useRef<HTMLAudioElement | null>(null);
+  const levelUp = useRef<HTMLAudioElement | null>(null);
 
+  /** 게임 배경음 */
+  useEffect(() => {
+    if (gameStarted) {
+      let bgMusicUrl = '';
+      if (difficulty === 3) {
+        bgMusicUrl = 'game/greatYJ.mp3';
+      } else {
+        bgMusicUrl = 'game/SeoulVibes.mp3';
+      }
+      backgroundMusic.current = new Audio(bgMusicUrl);
+      backgroundMusic.current.loop = true;
+      backgroundMusic.current.play();
+    } else {
+      if (backgroundMusic.current) {
+        backgroundMusic.current.pause();
+        backgroundMusic.current.currentTime = 0;
+      }
+    }
+
+    return () => {
+      if (backgroundMusic.current) backgroundMusic.current.pause();
+    };
+  }, [gameStarted, difficulty]);
+
+  /** 게임 효과음 */
   useEffect(() => {
     if (typeof window !== 'undefined') {
       gameoverSound.current = new Audio('game/gameover.mp3');
-      wordpopSound.current = new Audio('game/wordpopped.mp3');
-      gamestartSound.current = new Audio('game/gamestart.mp3');
+      wordpopSound.current = new Audio('game/wordpopped.wav');
+      wrongAnswer.current = new Audio('game/wrongAnswer.wav');
+      levelUp.current = new Audio('game/levelUp.wav');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
         if (wordpopSound.current) wordpopSound.current.pause();
-        if (gamestartSound.current) gamestartSound.current.pause();
+        if (wrongAnswer.current) wrongAnswer.current.pause();
+        if (levelUp.current) levelUp.current.pause();
       };
     }
   }, []);
 
+  /** 게임 볼륨 조절 */
   useEffect(() => {
     if (gameoverSound.current) gameoverSound.current.volume = volume;
     if (wordpopSound.current) wordpopSound.current.volume = volume;
-    if (gamestartSound.current) gamestartSound.current.volume = volume;
+    if (backgroundMusic.current) backgroundMusic.current.volume = volume;
   }, [volume]);
 
   useEffect(() => {
@@ -139,6 +169,7 @@ const TypingGamePage = () => {
     return () => clearInterval(interval);
   }, [words, gameStarted, slowMotion, gameAreaHeight, difficulty]);
 
+  /** 게임 오버 처리 */
   useEffect(() => {
     if (lives <= 0) {
       if (gameoverSound.current) {
@@ -161,30 +192,39 @@ const TypingGamePage = () => {
     setInput(e.target.value);
   };
 
+  /** 플레이 중 난이도 관리 */
   useEffect(() => {
-    if (correctWordsCount >= 20 && difficulty < maxDifficulty) {
+    if (correctWordsCount >= 20 && difficulty < maxDifficulty && levelUp.current !== null) {
       setDifficulty(difficulty + 1);
       setCorrectWordsCount(0);
       setWords([]);
       setLives(5);
+      levelUp.current.play();
       toast.success(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
     }
   }, [correctWordsCount, difficulty]);
 
+  /** 단어 입력 시 처리 */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const wordIndex = words.findIndex((word) => word.text === input);
-    if (wordIndex !== -1) {
-      setWords(words.filter((_, index) => index !== wordIndex));
-      setScore(score + 10);
-      setCorrectWordsCount(correctWordsCount + 1);
-      if (input === specialWord) {
-        setSlowMotion(true);
-        setTimeout(() => {
-          setSlowMotion(false);
-        }, slowMotionDuration);
+    if (typeof window !== 'undefined') {
+      const wordIndex = words.findIndex((word) => word.text === input);
+      if (wordIndex !== -1) {
+        const newWordpopSound = new Audio('game/wordpopped.wav');
+        newWordpopSound.play();
+        setWords(words.filter((_, index) => index !== wordIndex));
+        setScore(score + 10);
+        setCorrectWordsCount(correctWordsCount + 1);
+        if (input === specialWord) {
+          setSlowMotion(true);
+          setTimeout(() => {
+            setSlowMotion(false);
+          }, slowMotionDuration);
+        }
+      } else {
+        const newWrongAnswerSound = new Audio('game/wrongAnswer.wav');
+        newWrongAnswerSound.play();
       }
-    } else {
     }
     setInput('');
   };
@@ -193,22 +233,6 @@ const TypingGamePage = () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
     } else {
-      if (gamestartSound.current) {
-        gamestartSound.current.play();
-        setGameStarted(true);
-        setWords([]);
-        setInput('');
-        setScore(0);
-        setLives(maxLives);
-        setCorrectWordsCount(0);
-      }
-    }
-  };
-
-  const proceedWithoutLogin = () => {
-    if (gamestartSound.current) {
-      gamestartSound.current.play();
-      setShowLoginModal(false);
       setGameStarted(true);
       setWords([]);
       setInput('');
@@ -216,6 +240,16 @@ const TypingGamePage = () => {
       setLives(maxLives);
       setCorrectWordsCount(0);
     }
+  };
+
+  const proceedWithoutLogin = () => {
+    setShowLoginModal(false);
+    setGameStarted(true);
+    setWords([]);
+    setInput('');
+    setScore(0);
+    setLives(maxLives);
+    setCorrectWordsCount(0);
   };
 
   const goToLogin = () => {
@@ -420,6 +454,8 @@ const TypingGamePage = () => {
                 {m('GAME_GUIDE1')}
                 <br />
                 {m('GAME_GUIDE2')}
+                <br />
+                <span className="text-pointColor2">{m('GAME_GUIDE3')}</span>
               </p>
             </div>
           </div>
