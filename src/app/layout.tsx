@@ -5,7 +5,6 @@ import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
-import { gothic_a1 } from './styles/font';
 
 import type { Metadata } from 'next';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -25,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`text-blackColor bg-bgColor1 ${gothic_a1.className}`}>
+      <body className="text-blackColor bg-bgColor1">
         <main className="mx-auto bg-white w-[1444px] border-x-2 border-solid border-pointColor1 md:w-full md:border-0">
           <Provider>
             <QueryProvider>

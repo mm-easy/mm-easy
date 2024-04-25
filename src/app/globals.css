@@ -2,6 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Bold.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Bold.woff') format('woff'),
+    url('fonts/subset-GothicA1-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Black.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Black.woff') format('woff'),
+    url('fonts/subset-GothicA1-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-ExtraBold.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-ExtraBold.woff') format('woff'),
+    url('fonts/subset-GothicA1-ExtraBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Medium.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Medium.woff') format('woff'),
+    url('fonts/subset-GothicA1-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Light.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Light.woff') format('woff'),
+    url('fonts/subset-GothicA1-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-ExtraLight.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-ExtraLight.woff') format('woff'),
+    url('fonts/subset-GothicA1-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Regular.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Regular.woff') format('woff'),
+    url('fonts/subset-GothicA1-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-Thin.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-Thin.woff') format('woff'),
+    url('fonts/subset-GothicA1-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gothic A1';
+  src:
+    url('fonts/subset-GothicA1-SemiBold.woff2') format('woff2'),
+    url('fonts/subset-GothicA1-SemiBold.woff') format('woff'),
+    url('fonts/subset-GothicA1-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 html,
 body,
 div,
@@ -130,8 +229,8 @@ table {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Gothic A1', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1;
@@ -315,14 +414,14 @@ em {
 
 @media (max-width: 480px) {
   .ql-toolbar {
-    border-top: 1px solid #2B84ED !important;
-    border-bottom: 1px solid #2B84ED !important;
+    border-top: 1px solid #2b84ed !important;
+    border-bottom: 1px solid #2b84ed !important;
   }
 }
 
 @media (max-width: 480px) {
   .ql-container {
-    border-bottom: 1px solid #2B84ED !important;
+    border-bottom: 1px solid #2b84ed !important;
     height: 750px !important;
   }
 }
