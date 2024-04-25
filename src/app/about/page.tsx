@@ -4,9 +4,9 @@ import Image from 'next/image';
 import UsageStatus from './UsageStatus';
 import useMultilingual from '@/utils/useMultilingual';
 import Infopeople from '@/assets/team/info_people.png';
-import InfoIcon1 from '@/assets/info_icon_1.png';
-import InfoIcon2 from '@/assets/info_icon_2.png';
-import InfoIcon3 from '@/assets/info_icon_3.png';
+import InfoIcon1 from '@/assets/info_icon_b3.png';
+import InfoIcon2 from '@/assets/info_icon_b2.png';
+import InfoIcon3 from '@/assets/info_icon_b1.png';
 import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
@@ -72,33 +72,33 @@ const AboutPage = () => {
 
   return (
     <main className="flex flex-col items-center text-center">
-      <article className="sm:w-full w-full sm:py-16 py-24 flex flex-col justify-center items-center bg-pointColor1">
-        <h2 className="sm:text-3xl text-5xl sm:pb-12 pb-16 font-black text-white tracking-wider">
+      <article className="sm:w-full w-full sm:py-16 py-24 flex flex-col justify-center items-center bg-bgColor2">
+        <h2 className="sm:text-3xl text-5xl sm:pb-12 pb-16 font-black text-pointColor1 tracking-wider">
           {m('ABOUT_TITLE1')}
         </h2>
         <Image src={Infopeople} alt="로고" quality={100} className="w-[800px] sm:w-[440px]" />
-        <section className="sm:text-xl text-3xl w-full text-white ">
+        <section className="sm:text-xl text-3xl w-full text-pointColor1 ">
           <section>
             <div className="py-16 flex justify-center items-center sm:gap-2 gap-6">
               <Image src={InfoIcon3} alt="로고" className="w-[50px] sm:w-[25px]" />
-              <span className="text-white">{m('ABOUT_TITLE1_DETAIL1')}</span>
+              <span className="text-pointColor1">{m('ABOUT_TITLE1_DETAIL1')}</span>
             </div>
           </section>
           <section>
-            <div className="sm:w-full w-3/5 mx-auto py-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-white">
+            <div className="sm:w-full w-3/5 mx-auto py-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-pointColor1">
               <Image src={InfoIcon2} alt="로고" className="w-[50px] sm:w-[25px]" />
-              <span className="text-white">{m('ABOUT_TITLE1_DETAIL2')}</span>
+              <span className="text-pointColor1">{m('ABOUT_TITLE1_DETAIL2')}</span>
             </div>
           </section>
           <section>
-            <div className="sm:w-full w-3/5 mx-auto pt-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-white">
+            <div className="sm:w-full w-3/5 mx-auto pt-16 flex justify-center items-center sm:gap-2 gap-6 border-t border-solid border-pointColor1">
               <Image src={InfoIcon1} alt="로고" className="w-[50px] sm:w-[25px]" />
-              <span className="text-white">{m('ABOUT_TITLE1_DETAIL3')}</span>
+              <span className="text-pointColor1">{m('ABOUT_TITLE1_DETAIL3')}</span>
             </div>
           </section>
         </section>
       </article>
-      <article className="sm:w-full w-full sm:p-10 py-14 bg-sky-50 border-b-2 border-solid border-pointColor1">
+      <article className="sm:w-full w-full sm:p-10 py-14 bg-white border-b-2 border-solid border-pointColor1">
         <section
           className="pb-14 sm:text-3xl text-4xl font-extrabold text-pointColor1"
           style={{ display: 'inline-flex', alignItems: 'center' }}
