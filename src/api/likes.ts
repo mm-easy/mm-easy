@@ -33,3 +33,19 @@ export const deleteLike = async ({ userId, postId }: LikeParams) => {
     throw error;
   }
 };
+
+/** 나의활동 좋아요 가져오기 */
+export const getUserLike = async (userId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('likes')
+      .select(`*, posts!inner(title)`)
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
