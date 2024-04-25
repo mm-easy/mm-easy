@@ -46,6 +46,7 @@ const TypingGamePage = () => {
   const backgroundMusic = useRef<HTMLAudioElement | null>(null);
   const wrongAnswer = useRef<HTMLAudioElement | null>(null);
   const levelUp = useRef<HTMLAudioElement | null>(null);
+  const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
 
   /** 게임 배경음 */
   useEffect(() => {
@@ -78,12 +79,16 @@ const TypingGamePage = () => {
       wordpopSound.current = new Audio('game/wordpopped.wav');
       wrongAnswer.current = new Audio('game/wrongAnswer.wav');
       levelUp.current = new Audio('game/levelUp.wav');
+      backgroundMusic.current = new Audio('game/SeoulVibes.mp3');
+      newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
+        if (backgroundMusic.current) backgroundMusic.current.pause();
         if (wordpopSound.current) wordpopSound.current.pause();
         if (wrongAnswer.current) wrongAnswer.current.pause();
         if (levelUp.current) levelUp.current.pause();
+        if (newWrongAnswerSound.current) newWrongAnswerSound.current.pause();
       };
     }
   }, []);
@@ -92,6 +97,8 @@ const TypingGamePage = () => {
   useEffect(() => {
     if (gameoverSound.current) gameoverSound.current.volume = volume;
     if (wordpopSound.current) wordpopSound.current.volume = volume;
+    if (wrongAnswer.current) wrongAnswer.current.volume = volume;
+    if (levelUp.current) levelUp.current.volume = volume;
     if (backgroundMusic.current) backgroundMusic.current.volume = volume;
   }, [volume]);
 
@@ -209,11 +216,12 @@ const TypingGamePage = () => {
     if (typeof window !== 'undefined') {
       const wordIndex = words.findIndex((word) => word.text === input);
       if (wordIndex !== -1) {
-        const newWordpopSound = new Audio('game/wordpopped.wav');
-        newWordpopSound.play();
-        setWords(words.filter((_, index) => index !== wordIndex));
-        setScore(score + 10);
-        setCorrectWordsCount(correctWordsCount + 1);
+        if (wordpopSound.current) {
+          wordpopSound.current.play();
+          setWords(words.filter((_, index) => index !== wordIndex));
+          setScore(score + 10);
+          setCorrectWordsCount(correctWordsCount + 1);
+        }
         if (input === specialWord) {
           setSlowMotion(true);
           setTimeout(() => {
@@ -221,8 +229,9 @@ const TypingGamePage = () => {
           }, slowMotionDuration);
         }
       } else {
-        const newWrongAnswerSound = new Audio('game/wrongAnswer.wav');
-        newWrongAnswerSound.play();
+        if (newWrongAnswerSound.current) {
+          newWrongAnswerSound.current.play();
+        }
       }
     }
     setInput('');
@@ -303,10 +312,10 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 4, interval: 8000 },
-    2: { label: m('DIFFICULTY2'), speed: 6, interval: 7000 },
-    3: { label: m('DIFFICULTY3'), speed: 8, interval: 5000 },
-    4: { label: m('DIFFICULTY4'), speed: 10, interval: 3000 },
+    1: { label: m('DIFFICULTY1'), speed: 4, interval: 5000 },
+    2: { label: m('DIFFICULTY2'), speed: 6, interval: 4000 },
+    3: { label: m('DIFFICULTY3'), speed: 8, interval: 3000 },
+    4: { label: m('DIFFICULTY4'), speed: 10, interval: 2000 },
     5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
   };
 

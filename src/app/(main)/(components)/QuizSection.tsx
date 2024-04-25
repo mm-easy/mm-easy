@@ -32,7 +32,7 @@ const QuizSection = () => {
     <>
       <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1 sm:border-none sm:text-xl sm:bg-white">
         <p>{m('RECENT_QUIZZES')}</p>
-        <Link href="/quiz/list" className="font-semibold text-pointColor1">
+        <Link href="/quiz/list" className="font-semibold text-[16px] text-pointColor1">
           {m('MORE')}
         </Link>
       </div>
@@ -83,7 +83,9 @@ const QuizSection = () => {
               />
               <QuestionEx id={quiz.id} />
               <Link href={`/quiz/${quiz.id}`}>
-                <div className="p-2 text-center text-white bg-pointColor1 rounded-md">{m('TAKE_THE_QUIZ')}</div>
+                <div className="p-[18px] text-center text-white bg-pointColor1 rounded-md hover:bg-pointColor3 transition-colors duration-300 ease-in-out">
+                  {m('TAKE_THE_QUIZ')}
+                </div>
               </Link>
             </div>
           </div>
