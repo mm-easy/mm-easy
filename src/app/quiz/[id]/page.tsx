@@ -16,7 +16,6 @@ import { handleMaxLength } from '@/utils/handleMaxLength';
 import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 import confetti, { Options as ConfettiOptions } from 'canvas-confetti';
 import tailwindColors from '../../../../tailwind.config';
-import { CustomThemeConfig } from 'tailwindcss/types/config';
 
 import Header from './Header';
 import Options from './Options';
@@ -26,6 +25,7 @@ import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
+import type { TailwindColors } from '@/types/tailwind';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
 import SideHeader from './SideHeader';
 import PageAndSubmitBtn from './PageAndSubmitBtn';
@@ -244,7 +244,6 @@ const QuizTryPage = () => {
   const handleConfetti = () => {
     const duration = 3000;
     const animationEnd = Date.now() + duration; // 지금 시간부터 5초동안 폭죽 효과
-    type TailwindColors = Partial<CustomThemeConfig['theme']['extend']['colors']> | undefined;
     const { colors } = tailwindColors.theme?.extend as { colors: TailwindColors };
 
     const setting: ConfettiOptions = {
