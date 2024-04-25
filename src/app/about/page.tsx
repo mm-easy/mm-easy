@@ -203,7 +203,7 @@ const AboutPage = () => {
           </div>
         </div>
       </article>
-      <article className="sm:w-full w-full flex flex-col gap-20 items-center justify-center bg-white sm:text-sm text-xl font-bold w-5/6 pb-20 px-20 border-t-2 border-solid border-pointColor1">
+      <article className="w-full flex flex-col gap-20 items-center justify-center bg-white text-xl font-bold pb-20 px-20 border-t-2 border-solid border-pointColor1 sm:w-full sm:pb-12 sm:text-sm sm:px-4 sm:gap-8">
         <h2 className="sm:text-2xl text-4xl font-extrabold pt-16 text-pointColor1">{m('ABOUT_TITLE4')}</h2>
         <div className="sm:text-xs text-xl">
           <p>{m('ABOUT_TITLE4_CONTENT1')}</p>
@@ -212,14 +212,14 @@ const AboutPage = () => {
         </div>
         <div>
           <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO1')}</h3>
-          <Image src={InfoDesign1} alt="가로형 로고" className="w-[55vw] sm:w-[80vw] rounded-xl" />
+          <Image src={InfoDesign1} alt="가로형 로고" className="w-[55vw] sm:w-[96vw] rounded-xl" />
         </div>
         <div>
           <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO2')}</h3>
-          <Image src={InfoDesign2} alt="세로형 로고" className="w-[55vw] sm:w-[80vw] rounded-xl" />
+          <Image src={InfoDesign2} alt="세로형 로고" className="w-[55vw] sm:w-[96vw] rounded-xl" />
         </div>
-        <div className="flex flex-row gap-12 px-20 sm:px-0">
-          <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-row gap-12 px-20 sm:px-0 sm:gap-4">
+          <div className="flex flex-col items-center gap-4 sm:">
             <h3 className="text-pointColor1">{m('ABOUT_TITLE4_SYMBOL')}</h3>
             <Image src={InfoDesign3} alt="심벌" className="w-[25vw] sm:w-[80vw] rounded-xl" />
             <span className="max-w-[25vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_SYMBOL_CONTENT')}</span>

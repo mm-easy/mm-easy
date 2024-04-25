@@ -105,7 +105,7 @@ const ABOUT_STRINGS = {
   },
   ABOUT_TITLE4_CONTENT3: {
     ko: '뭔말easy?에서는 누구나 쉽고 재미있게 한국어를 학습할 수 있습니다. 뭔말이지? 뭔말easy!',
-    en: '뭔말easy?, anyone can learn Korean easily and enjoyably. What does this mean? 뭔말easy!'
+    en: 'With 뭔말easy? anyone can What does this mean? 뭔말이지? 뭔말easy!'
   },
   ABOUT_TITLE4_LOGO1: {
     ko: '가로형 로고',
