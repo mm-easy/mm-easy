@@ -192,7 +192,7 @@ export const fetchUserQuizzes = async (email: string) => {
       `
       )
       .eq('creator_id', email)
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
     return data;

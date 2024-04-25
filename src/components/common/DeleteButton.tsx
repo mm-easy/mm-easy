@@ -5,11 +5,15 @@ import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useParams } from 'next/navigation';
+
+import type { PostParams } from '@/types/posts';
 
 export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
   const m = useMultilingual('communityPost');
   const queryClient = useQueryClient();
   const router = useRouter();
+  const params = useParams<PostParams>();
 
   const handleDeleteClick = async () => {
     if (window.confirm(m('COMMUNITY_POST_DELETE'))) {
@@ -30,7 +34,11 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
     <button
       type="submit"
       onClick={handleDeleteClick}
-      className={`font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 sm:font-normal sm:text-pointColor1 sm:border-0 sm:bg-transparent ${width} ${height}`}
+      className={`${
+        params.id
+          ? 'font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 sm:font-normal sm:text-pointColor1 sm:border-0 sm:bg-transparent'
+          : 'sm:rounded-sm font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1'
+      } ${width} ${height}`}
     >
       {text}
     </button>
@@ -60,7 +68,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
     <button
       type="submit"
       onClick={handleDeleteClick}
-      className={`font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 sm:font-normal sm:text-pointColor1 sm:border-0 sm:bg-transparent ${width} ${height}`}
+      className={`sm:rounded-sm font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height}`}
     >
       {text}
     </button>

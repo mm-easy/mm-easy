@@ -12,6 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { fetchPost, updateCommunityPost } from '@/api/posts';
 import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
+import { ADMIN_ACC_1 } from '@/constant/admin-ids';
 
 const EditPage = ({ params }: { params: { id: string; category: string } }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -44,7 +45,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
         const userProfile = await getCurrentUserProfile();
         if (!userProfile) return;
 
-        if (post && userProfile.id !== post.author_id && userProfile.email !== 'daejang@mmeasy.com') {
+        if (post && userProfile.id !== post.author_id && userProfile.email !== ADMIN_ACC_1) {
           console.log('author_id', post.author_id);
           console.log('userProfile.id', userProfile.id);
           router.push('/');
