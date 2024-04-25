@@ -14,6 +14,9 @@ import { supabase } from '@/utils/supabase/supabase';
 import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+import confetti, { Options as ConfettiOptions } from 'canvas-confetti';
+import tailwindColors from '../../../../tailwind.config';
+import { CustomThemeConfig } from 'tailwindcss/types/config';
 
 import Header from './Header';
 import Options from './Options';
@@ -83,6 +86,7 @@ const QuizTryPage = () => {
     fetchData();
   }, [isLoggedIn]);
 
+  /** 문제 페이지네이션 */
   const handlePrevPage = () => {
     setPage(page - 1);
   };
@@ -91,6 +95,7 @@ const QuizTryPage = () => {
     setPage(page + 1);
   };
 
+  /** Quiz, Question 데이터 불러오기 */
   const {
     data: quizData,
     isLoading: quizIsLoading,
@@ -104,7 +109,7 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['quizzes', id] // 여기
+    queryKey: ['quizzes', id]
   });
 
   const {
@@ -138,6 +143,7 @@ const QuizTryPage = () => {
   const questions = questionsData as Question[];
   const isAllAnswersSubmitted = questions.length === usersAnswers.length;
 
+  /** 답안 입력 input 에서 엔터 시 다음 페이지로 넘어가도록 */
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && page < questions.length - 1) {
       e.preventDefault();
@@ -145,6 +151,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 답안 저장 */
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
@@ -159,6 +166,7 @@ const QuizTryPage = () => {
     setUsersAnswers(newAnswers);
   };
 
+  /** 주관형 답 길이 알아내기 */
   const handleGetLength = (id: string | undefined) => {
     const usersAnswer = usersAnswers.find((answer) => answer.id === id)?.answer;
 
@@ -169,6 +177,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 결과 페이지 실행 */
   const handleResultMode = () => {
     if (!resultMode) {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
@@ -191,6 +200,7 @@ const QuizTryPage = () => {
         setResultMode(true);
         setScore(countCorrect);
         handleInsertQuizTry(countCorrect);
+        if (countCorrect) handleConfetti();
       }
 
       window.scrollTo({
@@ -203,6 +213,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 점수 DB 에 업로드 */
   const handleInsertQuizTry = async (countCorrect: number) => {
     try {
       const quizTry = {
@@ -227,6 +238,44 @@ const QuizTryPage = () => {
     } catch (error) {
       console.log('퀴즈 점수 저장/업데이트 실패', error);
     }
+  };
+
+  /** 하나라도 정답이라면 폭죽 효과 */
+  const handleConfetti = () => {
+    const duration = 3000;
+    const animationEnd = Date.now() + duration; // 지금 시간부터 5초동안 폭죽 효과
+    type TailwindColors = Partial<CustomThemeConfig['theme']['extend']['colors']> | undefined;
+    const { colors } = tailwindColors.theme?.extend as { colors: TailwindColors };
+
+    const setting: ConfettiOptions = {
+      // 폭죽 효과 CSS 설정
+      particleCount: 100,
+      spread: 100,
+      origin: { y: 1.5 },
+      colors: [colors?.pointColor1, colors?.pointColor2]
+    };
+
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval: NodeJS.Timeout = setInterval(() => {
+      // 일정 시간마다 폭죽 터트림
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        // 시간 다 끝나면 폭죽 끔
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration); // 파티클 개수, 시간에 따라 조절됨
+      confetti({
+        // 위에서 설정한 세팅값을 복사하고, 파티클 수와 발사 위치 정함
+        ...setting,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+      });
+    }, 250);
   };
 
   return (
