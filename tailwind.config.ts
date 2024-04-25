@@ -32,13 +32,20 @@ const config: Config = {
           'from, to': { opacity: 1 as any }
         },
         slash: {
-          from: {
-            transform: 'rotate(-45deg) translateX(-100%)',
-            opacity: 0 as any
+          '0%': {
+            transform: 'scaleX(0) rotate(-45deg)',
+            opacity: 0.5 as any,
+            filter: 'brightness(1)' 
           },
-          to: {
-            transform: 'rotate(-45deg) translateX(100%)',
-            opacity: 1 as any
+          '50%': {
+            transform: 'scaleX(1) rotate(-45deg)',
+            opacity: 1 as any,
+            filter: 'brightness(2.5)'
+          },
+          '100%': {
+            transform: 'scaleX(0) rotate(-45deg)',
+            opacity: 0.5 as any,
+            filter: 'brightness(1)'
           }
         },
         spin: {
@@ -75,10 +82,10 @@ const config: Config = {
       sm: { max: '480px' }
     },
     animation: {
-      'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
+      'wave-opacity': 'wave-opacity 0.75s ease-in-out',
       'twinkling': 'twinkling 2s ease-in-out infinite',
       'hover-opacity': 'hover-opacity 0.3s ease-out',
-      slash: 'slash 0.75s ease-out forwards',
+      slash: 'slash 1s ease-in-out forwards',
       'drop-in': 'dropIn 0.8s ease-out forwards',
       'spin-slow': 'spin 2s linear infinite',
       fadein: 'fadein 0.5s ease-out'

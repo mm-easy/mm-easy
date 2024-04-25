@@ -327,19 +327,19 @@ const TypingGamePage = () => {
       )}
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('DIFFICULTY')}
           </h2>
-          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-[16px] text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('SCORE')}
           </h2>
-          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-[16px] text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('LIFE')}
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
@@ -351,8 +351,8 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${
-                  word.text === specialWord ? 'text-red-500' : 'text-blackColor1'
+                className={`absolute bg-white font-bold p-2 rounded border border-solid border-pointColor1 ${
+                  word.text === specialWord ? 'text-red-500 text-[18px]' : 'text-blackColor1'
                 } transition-all duration-[500ms] ease-out`}
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
@@ -398,13 +398,13 @@ const TypingGamePage = () => {
                 <button
                   key={index + 1}
                   onClick={() => handleDifficultyChange(index + 1)}
-                  className={`text-pointColor1 mx-3 mb-6 ${
+                  className={`text-pointColor1 mx-2 mb-6 px-3 ${
                     difficulty === index + 1
-                      ? 'bg-pointColor1 text-white font-bold'
-                      : 'font-bold border border-solid border-pointColor1'
-                  } p-2 text-lg w-12 rounded-md relative overflow-hidden`}
+                      ? 'bg-pointColor1 text-white font-bold border border-solid border-pointColor1'
+                      : 'bg-white font-bold border border-solid border-pointColor1'
+                  } w-full p-2 text-lg rounded-md relative overflow-hidden`}
                 >
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-0 animate-none hover:animate-slash"></div>
+                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-0 animate-none hover:animate-wave-opacity"></div>
                   {difficultySettings[index + 1].label}
                 </button>
               ))}
