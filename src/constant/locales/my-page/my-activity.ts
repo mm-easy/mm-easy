@@ -39,6 +39,10 @@ const MY_ACTIVITY_STRINGS = {
     ko: '작성 날짜',
     en: 'Date Created'
   },
+  LIKE_DATE: {
+    ko: '날짜',
+    en: 'Date'
+  },
   SOLVED_COUNT: {
     ko: '완료수',
     en: 'Solved'

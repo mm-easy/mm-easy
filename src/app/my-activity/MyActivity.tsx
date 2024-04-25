@@ -534,7 +534,7 @@ const MyActivity = () => {
               <thead className="text-left">
                 <tr className="text-pointColor1 font-bold text-lg border-b-2 border-solid border-pointColor1">
                   <th className="pb-2 w-[65%]">{m('TITLE')}</th>
-                  <th className="w-[35%]">{m('DATE_CREATED')}</th>
+                  <th className="w-[35%]">{m('LIKE_DATE')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -593,7 +593,7 @@ const MyActivity = () => {
               ))
             ) : (
               <div>
-                <p className="text-center py-6 text-pointColor1 font-bold text-lg">{m('NO_QUIZZES_YOU_SOLVED')}</p>
+                <p className="text-center py-6 text-pointColor1 font-bold text-lg">{m('NO_LIKES')}</p>
               </div>
             )}
           </div>
