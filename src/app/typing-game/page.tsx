@@ -46,30 +46,26 @@ const TypingGamePage = () => {
   const backgroundMusic = useRef<HTMLAudioElement | null>(null);
   const wrongAnswer = useRef<HTMLAudioElement | null>(null);
   const levelUp = useRef<HTMLAudioElement | null>(null);
+  const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
 
-  /** 게임 배경음 */
-  useEffect(() => {
-    if (gameStarted) {
-      let bgMusicUrl = '';
-      if (difficulty === 3) {
-        bgMusicUrl = 'game/greatYJ.mp3';
-      } else {
-        bgMusicUrl = 'game/SeoulVibes.mp3';
-      }
-      backgroundMusic.current = new Audio(bgMusicUrl);
-      backgroundMusic.current.loop = true;
-      backgroundMusic.current.play();
-    } else {
-      if (backgroundMusic.current) {
-        backgroundMusic.current.pause();
-        backgroundMusic.current.currentTime = 0;
+  const playBackgroundMusic = () => {
+    let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
+    if (backgroundMusic.current) {
+      if (backgroundMusic.current.src !== bgMusicUrl) {
+        // 소스가 업데이트가 필요한지 확인
+        backgroundMusic.current.src = bgMusicUrl;
+        backgroundMusic.current.loop = true;
+        backgroundMusic.current.play();
       }
     }
+  };
 
-    return () => {
-      if (backgroundMusic.current) backgroundMusic.current.pause();
-    };
-  }, [gameStarted, difficulty]);
+  useEffect(() => {
+    // 게임이 시작되었을 때만 배경음악 변경 실행
+    if (gameStarted) {
+      playBackgroundMusic();
+    }
+  }, [difficulty, gameStarted]);
 
   /** 게임 효과음 */
   useEffect(() => {
@@ -78,9 +74,12 @@ const TypingGamePage = () => {
       wordpopSound.current = new Audio('game/wordpopped.wav');
       wrongAnswer.current = new Audio('game/wrongAnswer.wav');
       levelUp.current = new Audio('game/levelUp.wav');
+      backgroundMusic.current = new Audio('game/SeoulVibes.mp3');
+      newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
+        if (backgroundMusic.current) backgroundMusic.current.pause();
         if (wordpopSound.current) wordpopSound.current.pause();
         if (wrongAnswer.current) wrongAnswer.current.pause();
         if (levelUp.current) levelUp.current.pause();
@@ -176,7 +175,7 @@ const TypingGamePage = () => {
     if (lives <= 0) {
       if (gameoverSound.current) {
         gameoverSound.current.play();
-        toast.info(`게임 오버! 당신의 점수는 ${score}점입니다.`);
+        toast.info(`${m('ALERT_MESSAGE1')} ${score} ${m('ALERT_MESSAGE2')}`);
         if (user) {
           addGameScore(score);
         }
@@ -185,6 +184,10 @@ const TypingGamePage = () => {
         setLives(maxLives);
         setWords([]);
         setCorrectWordsCount(0);
+        if (backgroundMusic.current) {
+          backgroundMusic.current.pause();
+          backgroundMusic.current.currentTime = 0;
+        }
       }
     }
   }, [lives, score, user]);
@@ -196,13 +199,15 @@ const TypingGamePage = () => {
 
   /** 플레이 중 난이도 관리 */
   useEffect(() => {
-    if (correctWordsCount >= 20 && difficulty < maxDifficulty && levelUp.current !== null) {
+    if (correctWordsCount >= 2 && difficulty < maxDifficulty && levelUp.current !== null) {
+      if (levelUp.current) {
+        levelUp.current.play();
+      }
       setDifficulty(difficulty + 1);
       setCorrectWordsCount(0);
       setWords([]);
       setLives(5);
-      levelUp.current.play();
-      toast.success(`축하합니다! 난이도 ${difficulty + 1}로 이동합니다.`);
+      toast.success(`${m('ALERT_MESSAGE3')} ${difficulty + 1}${m('ALERT_MESSAGE4')}`);
     }
   }, [correctWordsCount, difficulty]);
 
@@ -244,6 +249,7 @@ const TypingGamePage = () => {
       setScore(0);
       setLives(maxLives);
       setCorrectWordsCount(0);
+      playBackgroundMusic();
     }
   };
 
@@ -255,6 +261,7 @@ const TypingGamePage = () => {
     setScore(0);
     setLives(maxLives);
     setCorrectWordsCount(0);
+    playBackgroundMusic();
   };
 
   const goToLogin = () => {
@@ -262,8 +269,11 @@ const TypingGamePage = () => {
   };
 
   const handleDifficultyChange = (newDifficulty: number) => {
-    if (newDifficulty >= 1 && newDifficulty <= maxDifficulty) {
+    if (newDifficulty >= 1 && newDifficulty <= maxDifficulty && newDifficulty !== difficulty) {
       setDifficulty(newDifficulty);
+      if (gameStarted) {
+        playBackgroundMusic(); // 난이도 변경 시 배경음악도 변경
+      }
     }
   };
 
@@ -309,10 +319,10 @@ const TypingGamePage = () => {
   };
 
   const difficultySettings: { [key: number]: DifficultySetting } = {
-    1: { label: m('DIFFICULTY1'), speed: 4, interval: 8000 },
-    2: { label: m('DIFFICULTY2'), speed: 6, interval: 7000 },
-    3: { label: m('DIFFICULTY3'), speed: 8, interval: 5000 },
-    4: { label: m('DIFFICULTY4'), speed: 10, interval: 3000 },
+    1: { label: m('DIFFICULTY1'), speed: 4, interval: 5000 },
+    2: { label: m('DIFFICULTY2'), speed: 6, interval: 4000 },
+    3: { label: m('DIFFICULTY3'), speed: 8, interval: 3000 },
+    4: { label: m('DIFFICULTY4'), speed: 10, interval: 2000 },
     5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
   };
 
@@ -328,6 +338,10 @@ const TypingGamePage = () => {
     setLives(maxLives);
     setCorrectWordsCount(0);
     setShowLoginModal(false);
+    if (backgroundMusic.current) {
+      backgroundMusic.current.pause();
+      backgroundMusic.current.currentTime = 0;
+    }
   };
 
   const handleBackButtonClick = () => {
@@ -366,19 +380,19 @@ const TypingGamePage = () => {
       )}
       {gameStarted && (
         <header className="w-full h-[8vh] absolute z-30 flex leading-[7.5vh] font-bold text-xl border-solid border-b-2 border-pointColor1 bg-white">
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('DIFFICULTY')}
           </h2>
-          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-[16px] text-pointColor2 border-solid border-r-2 border-pointColor1">
             {difficultySettings[difficulty].label}
           </h3>
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('SCORE')}
           </h2>
-          <h3 className="w-[9%] h-full text-center text-pointColor2 border-solid border-r-2 border-pointColor1">
+          <h3 className="w-[9%] h-full text-center text-[16px] text-pointColor2 border-solid border-r-2 border-pointColor1">
             {score}
           </h3>
-          <h2 className="w-[9%] h-full text-center bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
+          <h2 className="w-[9%] h-full text-center text-[16px] bg-bgColor1 text-pointColor1 border-solid border-r-2 border-pointColor1">
             {m('LIFE')}
           </h2>
           <div className="h-[calc(8vh-2px)] bg-pointColor2" style={{ width: `${lifePercentage}%` }}></div>
@@ -390,8 +404,8 @@ const TypingGamePage = () => {
             {words.map((word) => (
               <div
                 key={word.id}
-                className={`absolute bg-bgColor1 font-bold p-2 rounded border border-solid border-pointColor1 ${
-                  word.text === specialWord ? 'text-red-500' : 'text-blackColor1'
+                className={`absolute bg-white font-bold p-2 rounded border border-solid border-pointColor1 ${
+                  word.text === specialWord ? 'text-red-500 text-[18px]' : 'text-blackColor1'
                 } transition-all duration-[500ms] ease-out`}
                 style={{ top: `${word.top}px`, left: `${word.left}px` }}
               >
@@ -437,13 +451,13 @@ const TypingGamePage = () => {
                 <button
                   key={index + 1}
                   onClick={() => handleDifficultyChange(index + 1)}
-                  className={`text-pointColor1 mx-3 mb-6 ${
+                  className={`text-pointColor1 mx-2 mb-6 px-3 ${
                     difficulty === index + 1
-                      ? 'bg-pointColor1 text-white font-bold'
-                      : 'font-bold border border-solid border-pointColor1'
-                  } p-2 text-lg w-12 rounded-md relative overflow-hidden`}
+                      ? 'bg-pointColor1 text-white font-bold border border-solid border-pointColor1'
+                      : 'bg-white font-bold border border-solid border-pointColor1'
+                  } w-full p-2 text-lg rounded-md relative overflow-hidden`}
                 >
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-0 animate-none hover:animate-slash"></div>
+                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-0 animate-none hover:animate-wave-opacity"></div>
                   {difficultySettings[index + 1].label}
                 </button>
               ))}

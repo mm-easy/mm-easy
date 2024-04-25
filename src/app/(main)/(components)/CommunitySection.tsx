@@ -58,9 +58,11 @@ const CommunitySection = () => {
             {notices?.map((notice, index) => (
               <div
                 key={notice.id}
-                className={`py-4 ${index !== notices.length - 1 && 'border-b border-solid border-pointColor1'}`}
+                className={`py-4 ${
+                  index !== notices.length - 1 && 'border-b border-solid border-pointColor1 animate-drop-in'
+                }`}
               >
-                <Link href={`/community/list/전체/${notice.id}`} className="flex flex-col gap-2">
+                <Link href={`/community/list/전체/${notice.id}`} className="flex flex-col gap-2 animate-drop-in">
                   <h2 className="text-lg font-bold truncate">{notice.title}</h2>
                   <time>
                     {m('DATE_CREATION')}: {formatToLocaleDateTimeString(notice.created_at)}
@@ -75,9 +77,11 @@ const CommunitySection = () => {
             {posts?.map((post, index) => (
               <div
                 key={post.id}
-                className={`py-4 ${index !== posts.length - 1 && 'border-b border-solid border-pointColor1'}`}
+                className={`py-4 ${
+                  index !== posts.length - 1 && 'border-b border-solid border-pointColor1 animate-drop-in'
+                }`}
               >
-                <Link href={`/community/list/전체/${post.id}`} className="flex flex-col gap-2">
+                <Link href={`/community/list/전체/${post.id}`} className="flex flex-col gap-2 animate-drop-in">
                   <h2 className="text-lg font-bold truncate">{post.title}</h2>
                   <time>
                     {m('DATE_CREATION')}: {formatToLocaleDateTimeString(post.created_at)}
