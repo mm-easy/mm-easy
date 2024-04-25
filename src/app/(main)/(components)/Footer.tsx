@@ -14,7 +14,7 @@ const Footer = () => {
       <Image src={logoVertical4} alt="사이트 로고" width={300} quality={100} className="object-cover block sm:hidden" />
       <article className="py-5 flex flex-col justify-between">
         <section>
-          <div className="mb-2 text-5xl font-black tracking-widest sm:text-4xl sm:bold">뭔말이지? 뭔말easy!</div>
+          <div className="mb-2 text-5xl font-black sm:text-4xl sm:bold">뭔말이지? 뭔말easy!</div>
           <p className="text-3xl sm:text-xl sm:font-semibold">{m('INTRODUCTION_1')}</p>
         </section>
         <section className="pb-1 block sm:hidden">
