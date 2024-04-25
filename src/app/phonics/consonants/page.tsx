@@ -8,7 +8,13 @@ import { RefObject, useRef, useState } from 'react';
 const ConsonantsPage = () => {
   const [letter, setLetter] = useState('');
   const [letterName, setLetterName] = useState('');
-  const audioRefs: RefObject<HTMLAudioElement>[] = Array.from({ length: 25 }, () => useRef<HTMLAudioElement>(null));
+  // 배열 초기화
+  const audioRefs: RefObject<HTMLAudioElement>[] = [];
+
+  // useRef를 사용하여 각 요소 초기화
+  for (let i = 0; i < 25; i++) {
+    audioRefs[i] = useRef<HTMLAudioElement>(null);
+  }
 
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]', name: '기역' },
@@ -50,13 +56,13 @@ const ConsonantsPage = () => {
   });
 
   /** 오디오 재생 핸들러 */
-  const handlePlaySound = (index: number) => {
-    const audioRef = audioRefs[index]?.current;
-    if (audioRef) {
-      audioRef.currentTime = 0;
-      audioRef.play();
-    }
-  };
+  // const handlePlaySound = (index: number) => {
+  //   const audioRef = audioRefs[index]?.current;
+  //   if (audioRef) {
+  //     audioRef.currentTime = 0;
+  //     audioRef.play();
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-[16%_84%] bgColor1">
@@ -76,12 +82,12 @@ const ConsonantsPage = () => {
                   const parentElement = (e.target as HTMLElement).parentNode as HTMLElement;
                   if (index === 18) {
                     if (parentElement.id === '18') {
-                      handlePlaySound(18);
+                      audioRefs[index].current?.play();
                       setLetter(item.letter as string);
                       setLetterName(item.name as string);
                     }
                     if (parentElement.id === '24') {
-                      handlePlaySound(24);
+                      audioRefs[24].current?.play();
                       setLetter(consonantLabels[index + 6].letter as string);
                       setLetterName(consonantLabels[index + 6].name as string);
                     }
@@ -90,7 +96,7 @@ const ConsonantsPage = () => {
                   } else if (nullList.includes(index)) {
                     return;
                   } else {
-                    handlePlaySound(index);
+                    audioRefs[index].current?.play();
                     setLetter(item.letter as string);
                     setLetterName(item.name as string);
                   }
