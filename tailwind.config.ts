@@ -15,7 +15,7 @@ const config: Config = {
         bgColor1: '#FDF8F1',
         bgColor2: '#F0F7FF',
         bgColor3: '#FFF0EF',
-        bgColor4: '##C1DDFF',
+        bgColor4: '#C1DDFF',
         pointColor1: '#2B84ED',
         pointColor2: '#FF8878',
         pointColor3: '#8dbdf6',
@@ -76,7 +76,7 @@ const config: Config = {
     },
     animation: {
       'wave-opacity': 'wave-opacity 3s ease-in-out infinite',
-      'twinkling': 'twinkling 2s ease-in-out infinite',
+      twinkling: 'twinkling 2s ease-in-out infinite',
       'hover-opacity': 'hover-opacity 0.3s ease-out',
       slash: 'slash 0.75s ease-out forwards',
       'drop-in': 'dropIn 0.8s ease-out forwards',
