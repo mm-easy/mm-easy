@@ -8,6 +8,12 @@ import InfoIcon1 from '@/assets/info_icon_b3.png';
 import InfoIcon2 from '@/assets/info_icon_b2.png';
 import InfoIcon3 from '@/assets/info_icon_b1.png';
 import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
+import PageUpBtn from '@/components/common/PageUpBtn';
+import InfoDesign1 from '@/assets/info_design_1.png';
+import InfoDesign2 from '@/assets/info_design_2.png';
+import InfoDesign3 from '@/assets/info_design_3.png';
+import InfoDesign4 from '@/assets/info_design_4.png';
+import { useEffect, useState } from 'react';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
@@ -20,6 +26,8 @@ import type { Quiz } from '@/types/quizzes';
 import type { User } from '@/types/users';
 
 const AboutPage = () => {
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+
   const m = useMultilingual('about');
   const managerData = createManagerData(m);
 
@@ -70,6 +78,17 @@ const AboutPage = () => {
     window.open(blog, '_blank');
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollPosition]);
+
   return (
     <main className="flex flex-col items-center text-center">
       <article className="sm:w-full w-full sm:py-16 py-24 flex flex-col justify-center items-center bg-bgColor2">
@@ -98,7 +117,7 @@ const AboutPage = () => {
           </section>
         </section>
       </article>
-      <article className="sm:w-full w-full sm:p-10 py-14 bg-white border-b-2 border-solid border-pointColor1">
+      <article className="sm:w-full w-full sm:p-10 py-14 border-t-2 border-b-2 border-solid border-pointColor1">
         <section
           className="pb-14 sm:text-3xl text-4xl font-extrabold text-pointColor1"
           style={{ display: 'inline-flex', alignItems: 'center' }}
@@ -127,7 +146,7 @@ const AboutPage = () => {
           />
         </section>
       </article>
-      <article className="flex flex-col sm:text-sm text-xl font-bold w-5/6 sm:pb-10 pb-20">
+      <article className="flex flex-col sm:w-full w-full bg-bgColor4 sm:text-sm text-xl font-bold sm:pb-10 pb-20 px-20">
         <h2 className="sm:text-2xl text-4xl font-extrabold sm:py-10 py-16 text-pointColor1">{m('ABOUT_TITLE3')}</h2>
         <div className="flex flex-col flex-wrap">
           <div className="flex justify-center items-center sm:w-full w-full sm:pl-0 pl-10 relative z-10 sm:pb-8">
@@ -184,15 +203,43 @@ const AboutPage = () => {
           </div>
         </div>
       </article>
-      <article className="sm:w-full w-full sm:mt-0 mt-20 border-t-2 border-solid border-pointColor1 bg-bgColor1">
-        <h2 className="text-pointColor1 sm:text-xl text-4xl font-extrabold pt-16 pb-10">{m('ABOUT_TITLE4')}</h2>
+      <article className="sm:w-full w-full flex flex-col gap-20 items-center justify-center bg-white sm:text-sm text-xl font-bold w-5/6 pb-20 px-20 border-t-2 border-solid border-pointColor1">
+        <h2 className="sm:text-2xl text-4xl font-extrabold pt-16 text-pointColor1">{m('ABOUT_TITLE4')}</h2>
+        <div className="sm:text-xs text-xl">
+          <p>{m('ABOUT_TITLE4_CONTENT1')}</p>
+          <p>{m('ABOUT_TITLE4_CONTENT2')}</p>
+          <p>{m('ABOUT_TITLE4_CONTENT3')}</p>
+        </div>
+        <div>
+          <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO1')}</h3>
+          <Image src={InfoDesign1} alt="가로형 로고" className="w-[55vw] sm:w-[80vw] rounded-xl" />
+        </div>
+        <div>
+          <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO2')}</h3>
+          <Image src={InfoDesign2} alt="세로형 로고" className="w-[55vw] sm:w-[80vw] rounded-xl" />
+        </div>
+        <div className="flex flex-row gap-12 px-20 sm:px-0">
+          <div className="flex flex-col items-center gap-4">
+            <h3 className="text-pointColor1">{m('ABOUT_TITLE4_SYMBOL')}</h3>
+            <Image src={InfoDesign3} alt="심벌" className="w-[25vw] sm:w-[80vw] rounded-xl" />
+            <span className="max-w-[25vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_SYMBOL_CONTENT')}</span>
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <h3 className="text-pointColor1">{m('ABOUT_TITLE4_CHARACTER')}</h3>
+            <Image src={InfoDesign4} alt="캐릭터" className="w-[25vw] sm:w-[80vw] rounded-xl" />
+            <span className="max-w-[25vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_CHARACTER_CONTENT')}</span>
+          </div>
+        </div>
+      </article>
+      <article className="sm:w-full w-full sm:mt-0 mt-20 border-t-2 border-solid border-pointColor1 bg-bgColor2">
+        <h2 className="text-pointColor1 sm:text-xl text-4xl font-extrabold pt-16 pb-10">{m('ABOUT_TITLE5')}</h2>
         <h2 className="sm:hidden text-pointColor1 text-xl font-bold pb-14">Team Coding Zizon</h2>
         <div className="w-3/5 mx-auto grid grid-cols-3 sm:grid-cols-2 sm:gap-x-40 gap-x-64 mb-10">
           {managerData.map((member) => {
             return (
               <div key={member.name} className="">
                 <div className="flex flex-col items-center justify-center gap-1">
-                  <div className="sm:w-[120px] sm:h-[120px] w-[240px] h-[240px] bg-bgColor2 rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
+                  <div className="sm:w-[120px] sm:h-[120px] w-[240px] h-[240px] bg-white rounded-full flex items-center justify-center overflow-hidden border border-solid border-pointColor1">
                     <Image
                       src={member.img}
                       alt="프로필 이미지"
@@ -227,6 +274,7 @@ const AboutPage = () => {
           })}
         </div>
       </article>
+      <PageUpBtn scrollPosition={scrollPosition} />
     </main>
   );
 };
