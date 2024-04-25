@@ -7,7 +7,7 @@ import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
-import { ADMIN_ACC_1 } from '@/constant/adminId';
+import { ADMIN } from '@/constant/adminId';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 
@@ -46,10 +46,9 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     queryFn: getCurrentUserProfile
   });
 
-  const categories =
-    profile?.email === ADMIN_ACC_1
-      ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
-      : baseCategories;
+  const categories = ADMIN.some((admin) => admin.id === profile?.email)
+    ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
+    : baseCategories;
 
   if (isLoading) return null;
 

@@ -10,7 +10,7 @@ import { formatCommentDateToLocal } from '@/utils/date';
 import { HiDotsVertical } from 'react-icons/hi';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { ADMIN_ACC_1 } from '@/constant/adminId';
+import { ADMIN } from '@/constant/adminId';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
@@ -132,7 +132,8 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
               <div className="flex flex-col justify-between ml-auto">
                 <div className="sm:hidden">
                   {profile &&
-                    ((prev.id && profile.id === prev.author_id) || profile?.email === ADMIN_ACC_1 ? (
+                    ((prev.id && profile.id === prev.author_id) ||
+                    ADMIN.some((admin) => admin.id === profile?.email) ? (
                       btnChange && prev.id === nowCommentId ? (
                         <>
                           <div className="flex justify-end">
@@ -176,7 +177,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     ))}
                 </div>
                 <div className="sm:block hidden">
-                  {profile && (profile.id === prev.author_id || profile?.email === ADMIN_ACC_1) ? (
+                  {profile && (profile.id === prev.author_id || ADMIN.some((admin) => admin.id === profile?.email)) ? (
                     <div className="relative">
                       <button
                         onClick={() => handleIsOpenBtn(prev.isOpen, prev.id)}
