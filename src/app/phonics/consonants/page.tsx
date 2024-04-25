@@ -51,7 +51,7 @@ const ConsonantsPage = () => {
 
   /** 오디오 재생 핸들러 */
   const handlePlaySound = (index: number) => {
-    const audioRef = audioRefs[index].current;
+    const audioRef = audioRefs[index]?.current;
     if (audioRef) {
       audioRef.currentTime = 0;
       audioRef.play();
