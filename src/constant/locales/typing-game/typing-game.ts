@@ -71,6 +71,10 @@ const TYPING_GAME_STRINGS = {
     ko: '주어지는 생명 5개가 모두 소진되면 게임이 종료됩니다.',
     en: 'The game ends when all 5 lives are used up.'
   },
+  GAME_GUIDE3: {
+    ko: '게임 시작 전에 볼륨을 조절해주세요.',
+    en: 'Adjust the volume before you start the game.'
+  },
   MODAL_MESSAGE1: {
     ko: '게임을 종료하시겠습니까?',
     en: 'Do you want to exit the game?'
