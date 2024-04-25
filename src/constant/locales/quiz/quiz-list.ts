@@ -44,7 +44,7 @@ const QUIZLIST_STRINGS = {
     en: 'HARD'
   },
   OFFICIAL_CONTENTS: {
-    ko: '마크가 붙어 있는 퀴즈는 뭔말Easy?에서 제작한 공식 퀴즈 콘텐츠입니다.',
+    ko: '마크가 붙어 있는 퀴즈는 뭔말easy?에서 제작한 공식 퀴즈 콘텐츠입니다.',
     en: 'Quizzes marked with this blue icon are official content created by MMeasy.'
   },
   CHOOSE_DIFFICULTY: {

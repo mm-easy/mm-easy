@@ -3,18 +3,10 @@ import { User } from '@/types/users';
 import { useQuery } from '@tanstack/react-query';
 import { profileStorageUrl } from '@/utils/supabase/storage';
 import Image from 'next/image';
+import useMultilingual from '@/utils/useMultilingual';
 
-const CreateInfo = ({
-  creatorText,
-  creator,
-  dateText,
-  date
-}: {
-  creatorText: string;
-  creator: string;
-  dateText: string;
-  date: string | undefined;
-}) => {
+const CreateInfo = ({ creator, date }: { creator: string; date: string | undefined }) => {
+  const m = useMultilingual('quiz-try');
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
       try {
@@ -49,11 +41,11 @@ const CreateInfo = ({
       />
       <section className="flex flex-col gap-4 sm:gap-1">
         <div>
-          <h4 className="sm:hidden pb-1 font-semibold">{creatorText}</h4>
+          <h4 className="sm:hidden pb-1 font-semibold">{m('CREATOR')}</h4>
           <p className="sm:text-lg">{nickname}</p>
         </div>
         <div>
-          <h4 className="sm:hidden pb-1 font-semibold">{dateText}</h4>
+          <h4 className="sm:hidden pb-1 font-semibold">{m('DATE_CREATED')}</h4>
           <p className="sm:text-sm">{date}</p>
         </div>
       </section>
