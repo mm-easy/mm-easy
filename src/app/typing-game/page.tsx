@@ -50,9 +50,17 @@ const TypingGamePage = () => {
   const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
   const lifeDrainingSound = useRef<HTMLAudioElement | null>(null);
   const specialWordSound = useRef<HTMLAudioElement | null>(null);
+  const finalRoundMusic = useRef<HTMLAudioElement | null>(null);
 
   const playBackgroundMusic = () => {
-    let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
+    let bgMusicUrl;
+    if (difficulty === 3) {
+      bgMusicUrl = 'game/greatYJ.mp3';
+    } else if (difficulty === 5) {
+      bgMusicUrl = 'game/FinalRound.mp3';
+    } else {
+      bgMusicUrl = 'game/SeoulVibes.mp3';
+    }
     if (backgroundMusic.current) {
       if (backgroundMusic.current.src !== bgMusicUrl) {
         // 소스가 업데이트가 필요한지 확인
@@ -81,6 +89,7 @@ const TypingGamePage = () => {
       newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
       lifeDrainingSound.current = new Audio('game/failure.wav');
       specialWordSound.current = new Audio('game/specialWord.wav');
+      finalRoundMusic.current = new Audio('game/FinalRound.mp3');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
@@ -90,6 +99,7 @@ const TypingGamePage = () => {
         if (levelUp.current) levelUp.current.pause();
         if (lifeDrainingSound.current) lifeDrainingSound.current.pause();
         if (specialWordSound.current) specialWordSound.current.pause();
+        if (finalRoundMusic.current) finalRoundMusic.current.pause();
       };
     }
   }, []);
