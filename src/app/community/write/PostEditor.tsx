@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
 import useMultilingual from '@/utils/useMultilingual';
@@ -8,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { useState } from 'react';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 
@@ -29,11 +29,11 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
   ];
   // const categories = [...baseCategories];
 
-  const [selectedCategory, setSelectedCategory] = React.useState<string>(
+  const [selectedCategory, setSelectedCategory] = useState<string>(
     defaultValues?.category ? defaultValues.category : baseCategories[0].value
   );
-  const [title, setTitle] = React.useState(defaultValues?.title ? defaultValues.title : '');
-  const [textEditorValue, setTextEditorValue] = React.useState<ReactQuill.Value>(
+  const [title, setTitle] = useState(defaultValues?.title ? defaultValues.title : '');
+  const [textEditorValue, setTextEditorValue] = useState<ReactQuill.Value>(
     defaultValues?.content ? defaultValues.content : ''
   );
 

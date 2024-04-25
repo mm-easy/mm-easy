@@ -112,11 +112,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           </tbody>
         </table>
         {/* 모바일 전용 HTML */}
-        <div className="hidden md:hidden sm:block border-t border-solid border-pointColor1">
+        <div className="hidden md:hidden sm:block">
           {sortedItems?.length > 0 ? (
             sortedItems.map((item, idx) => (
               <div
-                className={`border-b border-solid border-pointColor1 flex items-center h-20 cursor-pointer ${
+                className={`w-full px-4 border-b border-solid border-pointColor1 flex items-center h-20 cursor-pointer ${
                   item['category'] === '공지' ? ' bg-bgColor2' : 'bg-white'
                 }`}
                 key={idx}
@@ -124,7 +124,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
               >
                 <div>
                   <div className="font-semibold text-base">
-                    <p className="truncate max-w-xs">{item.title}</p>
+                    <p className="line-clamp-1">{item.title}</p>
                   </div>
                   <div className="flex text-sm ">
                     <p>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</p>
