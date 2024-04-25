@@ -1,1 +1,1 @@
-export const ADMIN_ACC_1 = 'daejang@mmeasy.com';
+export const ADMIN = [{ id: 'daejang@mmeasy.com' }, { id: 'mmeasy@mmeasy.com' }];
