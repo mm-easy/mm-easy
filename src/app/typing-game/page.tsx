@@ -32,9 +32,10 @@ const TypingGamePage = () => {
   const [gameAreaHeight, setGameAreaHeight] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const [slowMotion, setSlowMotion] = useState(false);
-  const slowMotionDuration = 3000; // 느린 모션 지속 시간을 5초로 설정
+  const slowMotionDuration = 5000; // 느린 모션 지속 시간을 5초로 설정
   const [specialWord, setSpecialWord] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [frozenEffect, setFrozenEffect] = useState(false);
   const m = useMultilingual('typing-game');
 
   const router = useRouter();
@@ -152,7 +153,7 @@ const TypingGamePage = () => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      const speedAdjustment = slowMotion ? 6 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 1, 아니면 난이도에 따른 속도
+      const speedAdjustment = slowMotion ? 4 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 4, 아니면 난이도에 따른 속도
       const updatedWords = words.map((word) => ({
         ...word,
         top: word.top + speedAdjustment
@@ -199,7 +200,7 @@ const TypingGamePage = () => {
 
   /** 플레이 중 난이도 관리 */
   useEffect(() => {
-    if (correctWordsCount >= 2 && difficulty < maxDifficulty && levelUp.current !== null) {
+    if (correctWordsCount >= 20 && difficulty < maxDifficulty && levelUp.current !== null) {
       if (levelUp.current) {
         levelUp.current.play();
       }
@@ -225,6 +226,7 @@ const TypingGamePage = () => {
         setScore(score + 10);
         setCorrectWordsCount(correctWordsCount + 1);
         if (input === specialWord) {
+          applyFrozenEffect();
           setSlowMotion(true);
           setTimeout(() => {
             setSlowMotion(false);
@@ -323,7 +325,7 @@ const TypingGamePage = () => {
     2: { label: m('DIFFICULTY2'), speed: 6, interval: 4000 },
     3: { label: m('DIFFICULTY3'), speed: 8, interval: 3000 },
     4: { label: m('DIFFICULTY4'), speed: 10, interval: 2000 },
-    5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
+    5: { label: m('DIFFICULTY5'), speed: 5, interval: 1000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
@@ -357,8 +359,20 @@ const TypingGamePage = () => {
     setShowConfirmModal(false);
   };
 
+  const applyFrozenEffect = () => {
+    setFrozenEffect(true);
+    setTimeout(() => {
+      setFrozenEffect(false); // 일정 시간 후 배경색을 원래대로 돌립니다
+    }, 5000);
+  };
+
   return (
-    <div className="relative flex flex-col bg-[url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')] bg-cover bg-no-repeat bg-center">
+    <div
+      className={`relative flex flex-col bg-cover bg-no-repeat bg-center ${frozenEffect ? 'frozenEffect' : ''}`}
+      style={{
+        backgroundImage: "url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')"
+      }}
+    >
       {!gameStarted && (
         <div className="top-0 left-0 p-4 h-[4vh] custom-volume-control">
           <div className="volume-control flex items-center">
