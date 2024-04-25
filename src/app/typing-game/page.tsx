@@ -48,6 +48,8 @@ const TypingGamePage = () => {
   const wrongAnswer = useRef<HTMLAudioElement | null>(null);
   const levelUp = useRef<HTMLAudioElement | null>(null);
   const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
+  const lifeDrainingSound = useRef<HTMLAudioElement | null>(null);
+  const specialWordSound = useRef<HTMLAudioElement | null>(null);
 
   const playBackgroundMusic = () => {
     let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
@@ -77,6 +79,8 @@ const TypingGamePage = () => {
       levelUp.current = new Audio('game/levelUp.wav');
       backgroundMusic.current = new Audio('game/SeoulVibes.mp3');
       newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
+      lifeDrainingSound.current = new Audio('game/failure.wav');
+      specialWordSound.current = new Audio('game/specialWord.wav');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
@@ -84,6 +88,8 @@ const TypingGamePage = () => {
         if (wordpopSound.current) wordpopSound.current.pause();
         if (wrongAnswer.current) wrongAnswer.current.pause();
         if (levelUp.current) levelUp.current.pause();
+        if (lifeDrainingSound.current) lifeDrainingSound.current.pause();
+        if (specialWordSound.current) specialWordSound.current.pause();
       };
     }
   }, []);
@@ -95,6 +101,8 @@ const TypingGamePage = () => {
     if (wrongAnswer.current) wrongAnswer.current.volume = volume;
     if (backgroundMusic.current) backgroundMusic.current.volume = volume;
     if (levelUp.current) levelUp.current.volume = volume;
+    if (lifeDrainingSound.current) lifeDrainingSound.current.volume = volume;
+    if (specialWordSound.current) specialWordSound.current.volume = volume;
   }, [volume]);
 
   useEffect(() => {
@@ -163,6 +171,9 @@ const TypingGamePage = () => {
       if (outOfBoundWords.length > 0) {
         setLives((prevLives) => Math.max(0, prevLives - outOfBoundWords.length));
         setWords(updatedWords.filter((word) => word.top < gameAreaHeight - wordHeight));
+        if (lifeDrainingSound.current) {
+          lifeDrainingSound.current.play();
+        }
       } else {
         setWords(updatedWords);
       }
@@ -226,11 +237,14 @@ const TypingGamePage = () => {
         setScore(score + 10);
         setCorrectWordsCount(correctWordsCount + 1);
         if (input === specialWord) {
-          applyFrozenEffect();
-          setSlowMotion(true);
-          setTimeout(() => {
-            setSlowMotion(false);
-          }, slowMotionDuration);
+          if (specialWordSound.current) {
+            specialWordSound.current.play();
+            applyFrozenEffect();
+            setSlowMotion(true);
+            setTimeout(() => {
+              setSlowMotion(false);
+            }, slowMotionDuration);
+          }
         }
       } else {
         const newWrongAnswerSound = new Audio('game/wrongAnswer.wav');
