@@ -48,29 +48,24 @@ const TypingGamePage = () => {
   const levelUp = useRef<HTMLAudioElement | null>(null);
   const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
 
-  /** 게임 배경음 */
-  useEffect(() => {
-    if (gameStarted) {
-      let bgMusicUrl = '';
-      if (difficulty === 3) {
-        bgMusicUrl = 'game/greatYJ.mp3';
-      } else {
-        bgMusicUrl = 'game/SeoulVibes.mp3';
-      }
-      backgroundMusic.current = new Audio(bgMusicUrl);
-      backgroundMusic.current.loop = true;
-      backgroundMusic.current.play();
-    } else {
-      if (backgroundMusic.current) {
-        backgroundMusic.current.pause();
-        backgroundMusic.current.currentTime = 0;
+  const playBackgroundMusic = () => {
+    let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
+    if (backgroundMusic.current) {
+      if (backgroundMusic.current.src !== bgMusicUrl) {
+        // 소스가 업데이트가 필요한지 확인
+        backgroundMusic.current.src = bgMusicUrl;
+        backgroundMusic.current.loop = true;
+        backgroundMusic.current.play();
       }
     }
+  };
 
-    return () => {
-      if (backgroundMusic.current) backgroundMusic.current.pause();
-    };
-  }, [gameStarted, difficulty]);
+  useEffect(() => {
+    // 게임이 시작되었을 때만 배경음악 변경 실행
+    if (gameStarted) {
+      playBackgroundMusic();
+    }
+  }, [difficulty, gameStarted]);
 
   /** 게임 효과음 */
   useEffect(() => {
@@ -88,7 +83,6 @@ const TypingGamePage = () => {
         if (wordpopSound.current) wordpopSound.current.pause();
         if (wrongAnswer.current) wrongAnswer.current.pause();
         if (levelUp.current) levelUp.current.pause();
-        if (newWrongAnswerSound.current) newWrongAnswerSound.current.pause();
       };
     }
   }, []);
@@ -190,6 +184,10 @@ const TypingGamePage = () => {
         setLives(maxLives);
         setWords([]);
         setCorrectWordsCount(0);
+        if (backgroundMusic.current) {
+          backgroundMusic.current.pause();
+          backgroundMusic.current.currentTime = 0;
+        }
       }
     }
   }, [lives, score, user]);
@@ -201,7 +199,10 @@ const TypingGamePage = () => {
 
   /** 플레이 중 난이도 관리 */
   useEffect(() => {
-    if (correctWordsCount >= 20 && difficulty < maxDifficulty && levelUp.current !== null) {
+    if (correctWordsCount >= 2 && difficulty < maxDifficulty && levelUp.current !== null) {
+      if (levelUp.current) {
+        levelUp.current.play();
+      }
       setDifficulty(difficulty + 1);
       setCorrectWordsCount(0);
       setWords([]);
@@ -248,6 +249,7 @@ const TypingGamePage = () => {
       setScore(0);
       setLives(maxLives);
       setCorrectWordsCount(0);
+      playBackgroundMusic();
     }
   };
 
@@ -259,6 +261,7 @@ const TypingGamePage = () => {
     setScore(0);
     setLives(maxLives);
     setCorrectWordsCount(0);
+    playBackgroundMusic();
   };
 
   const goToLogin = () => {
@@ -266,8 +269,11 @@ const TypingGamePage = () => {
   };
 
   const handleDifficultyChange = (newDifficulty: number) => {
-    if (newDifficulty >= 1 && newDifficulty <= maxDifficulty) {
+    if (newDifficulty >= 1 && newDifficulty <= maxDifficulty && newDifficulty !== difficulty) {
       setDifficulty(newDifficulty);
+      if (gameStarted) {
+        playBackgroundMusic(); // 난이도 변경 시 배경음악도 변경
+      }
     }
   };
 
@@ -332,6 +338,10 @@ const TypingGamePage = () => {
     setLives(maxLives);
     setCorrectWordsCount(0);
     setShowLoginModal(false);
+    if (backgroundMusic.current) {
+      backgroundMusic.current.pause();
+      backgroundMusic.current.currentTime = 0;
+    }
   };
 
   const handleBackButtonClick = () => {
