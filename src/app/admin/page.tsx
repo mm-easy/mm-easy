@@ -43,7 +43,7 @@ const AdminPage = () => {
   }
 
   // 에러가 발생했거나 로그인한 사용자가 없거나 특정 이메일이 아닐 경우 로그인 페이지로 리다이렉트
-  if (isProfileError || !userProfile || !ADMIN.every((admin) => admin.id !== userProfile.email)) {
+  if (isProfileError || !userProfile || ADMIN.every((admin) => admin.id !== userProfile.email)) {
     router.push('/');
     alert('접근할 수 없습니다.');
   }
