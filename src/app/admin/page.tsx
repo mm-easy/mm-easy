@@ -10,7 +10,7 @@ import { getPostsReports, getQuizzesReports } from '@/api/reports';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
 import { toast } from 'react-toastify';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 
 const AdminPage = () => {
   const m = useMultilingual('admin');
@@ -43,7 +43,7 @@ const AdminPage = () => {
   }
 
   // 에러가 발생했거나 로그인한 사용자가 없거나 특정 이메일이 아닐 경우 로그인 페이지로 리다이렉트
-  if (isProfileError || !userProfile || userProfile.email !== ADMIN_ACC_1) {
+  if (isProfileError || !userProfile || ADMIN.every((admin) => admin.id !== userProfile.email)) {
     router.push('/');
     alert('접근할 수 없습니다.');
   }
@@ -114,7 +114,7 @@ const AdminPage = () => {
 
   return (
     <main className="h-[84vh] px-[8%] flex flex-col justify-center items-center  bg-bgColor2">
-      {userProfile?.email === ADMIN_ACC_1 && (
+      {ADMIN.some((admin) => admin.id === userProfile?.email) && (
         <>
           <nav className="w-full flex pb-[4vh] justify-center text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
             <ul className="w-full flex justify-center text-xl text-center border-b-2 border-solid">

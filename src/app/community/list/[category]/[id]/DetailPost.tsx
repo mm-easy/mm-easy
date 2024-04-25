@@ -25,7 +25,7 @@ import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { PostParams, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -167,50 +167,51 @@ const DetailPost = () => {
                       </div>
                     </div>
                     <div className="flex items-center">
-                      {profile && (post.author_id === profile.id || profile?.email === ADMIN_ACC_1) && (
-                        <>
-                          <DropdownMenu
-                            editBtn={
-                              <PostEditButton
-                                text={m('COMMUNITY_POST_EDIT')}
-                                postId={post.id}
-                                redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
-                                width="w-20"
-                                height="h-12"
-                              />
-                            }
-                            deleteBtn={
-                              <PostDeleteButton
-                                text={m('COMMUNITY_POST_DELETE')}
-                                redirectUrl={'/community/list/전체'}
-                                postId={post.id}
-                                width="w-20"
-                                height="h-12"
-                              />
-                            }
-                          />
-                          <div className="flex sm:hidden">
-                            <div>
-                              <PostEditButton
-                                text={m('COMMUNITY_POST_EDIT')}
-                                postId={post.id}
-                                redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
-                                width="w-20"
-                                height="h-12"
-                              />
+                      {profile &&
+                        (post.author_id === profile.id || ADMIN.some((admin) => admin.id === profile?.email)) && (
+                          <>
+                            <DropdownMenu
+                              editBtn={
+                                <PostEditButton
+                                  text={m('COMMUNITY_POST_EDIT')}
+                                  postId={post.id}
+                                  redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
+                                  width="w-20"
+                                  height="h-12"
+                                />
+                              }
+                              deleteBtn={
+                                <PostDeleteButton
+                                  text={m('COMMUNITY_POST_DELETE')}
+                                  redirectUrl={'/community/list/전체'}
+                                  postId={post.id}
+                                  width="w-20"
+                                  height="h-12"
+                                />
+                              }
+                            />
+                            <div className="flex sm:hidden">
+                              <div>
+                                <PostEditButton
+                                  text={m('COMMUNITY_POST_EDIT')}
+                                  postId={post.id}
+                                  redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
+                                  width="w-20"
+                                  height="h-12"
+                                />
+                              </div>
+                              <div className="pl-3">
+                                <PostDeleteButton
+                                  text={m('COMMUNITY_POST_DELETE')}
+                                  redirectUrl={'/community/list/전체'}
+                                  postId={post.id}
+                                  width="w-20"
+                                  height="h-12"
+                                />
+                              </div>
                             </div>
-                            <div className="pl-3">
-                              <PostDeleteButton
-                                text={m('COMMUNITY_POST_DELETE')}
-                                redirectUrl={'/community/list/전체'}
-                                postId={post.id}
-                                width="w-20"
-                                height="h-12"
-                              />
-                            </div>
-                          </div>
-                        </>
-                      )}
+                          </>
+                        )}
                     </div>
                   </div>
                   <p

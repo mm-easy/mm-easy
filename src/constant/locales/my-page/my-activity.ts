@@ -1,19 +1,23 @@
 const MY_ACTIVITY_STRINGS = {
   QUIZ_I_SOLVED: {
-    ko: '내가 푼 퀴즈',
+    ko: '푼 퀴즈',
     en: 'Solved Quiz'
   },
   QUIZ_I_MADE: {
-    ko: '내가 만든 퀴즈',
+    ko: '만든 퀴즈',
     en: 'My Quiz'
   },
   MY_WRITING: {
-    ko: '내가 쓴 글',
-    en: 'My Post'
+    ko: '게시글',
+    en: 'Post'
   },
   MY_COMMENT: {
-    ko: '내가 쓴 댓글',
-    en: 'My Comment'
+    ko: '댓글',
+    en: 'Comment'
+  },
+  MY_LIKE: {
+    ko: '좋아요',
+    en: 'Like'
   },
   TITLE: {
     ko: '제목',
@@ -35,6 +39,10 @@ const MY_ACTIVITY_STRINGS = {
     ko: '작성 날짜',
     en: 'Date Created'
   },
+  LIKE_DATE: {
+    ko: '날짜',
+    en: 'Date'
+  },
   SOLVED_COUNT: {
     ko: '완료수',
     en: 'Solved'
@@ -51,6 +59,10 @@ const MY_ACTIVITY_STRINGS = {
     ko: '삭제하기',
     en: 'Delete'
   },
+  POST_NOW_GO: {
+    ko: '바로가기',
+    en: 'Link'
+  },
   NO_QUIZZES_YOU_SOLVED: {
     ko: '푼 퀴즈가 없습니다.',
     en: 'No Quizzes You Solved.'
@@ -66,6 +78,10 @@ const MY_ACTIVITY_STRINGS = {
   NO_COMMTENTS: {
     ko: '댓글이 없습니다.',
     en: 'No Comments.'
+  },
+  NO_LIKES: {
+    ko: '좋아요가 없습니다.',
+    en: 'No Likes.'
   }
 };
 

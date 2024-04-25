@@ -14,7 +14,7 @@ import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
 import { usePathname } from 'next/navigation';
-import { ADMIN_ACC_1 } from '@/constant/admin-ids';
+import { ADMIN } from '@/constant/adminId';
 
 const Header = () => {
   const pathname = usePathname();
@@ -123,7 +123,7 @@ const Header = () => {
           >
             {m('HEADER_MENU4')}
           </Link>
-          {currentUserEmail === ADMIN_ACC_1 && (
+          {ADMIN.some((admin) => admin.id === currentUserEmail) && (
             <Link
               href="/admin"
               className={`text-pointColor2 hover:border-b-5 hover:border-solid hover:border-pointColor2 ${
