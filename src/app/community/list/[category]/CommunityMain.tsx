@@ -80,7 +80,7 @@ const CommunityMain = () => {
   }
 
   return (
-    <section className="sm:min-h-screen sm:mt-0 sm:pt-8 sm:bg-white w-full px-[5vw] flex justify-center mt-[calc(8vh-25px)]">
+    <section className="sm:px-0 sm:min-h-screen sm:mt-0 sm:bg-white w-full px-[5vw] flex justify-center mt-[calc(8vh-25px)]">
       <CommunityForm
         currentItems={currentItems}
         setCurrentPage={setCurrentPage}

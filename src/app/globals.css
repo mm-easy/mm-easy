@@ -417,3 +417,8 @@ em {
     margin-right: 10px !important;
   }
 }
+
+.frozenEffect {
+  filter: brightness(1.2);
+  background-color: rgb(26, 142, 243);
+}

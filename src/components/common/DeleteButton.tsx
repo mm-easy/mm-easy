@@ -46,14 +46,15 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
 };
 
 export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width, height, userId, redirectUrl }) => {
+  const m = useMultilingual('communityPost');
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const handleDeleteClick = async () => {
-    if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
+    if (window.confirm(m('COMMUNITY_COMMENT_DELETE'))) {
       try {
         await handleDeleteBtn(userId);
-        toast('댓글이 삭제되었습니다.');
+        toast(m('COMMUNITY_COMMENT_DELETE_COMPLETE'));
         if (redirectUrl) {
           router.replace(redirectUrl);
         }

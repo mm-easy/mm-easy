@@ -274,7 +274,8 @@ const AboutPage = () => {
           })}
         </div>
       </article>
-      <PageUpBtn scrollPosition={scrollPosition} />
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
+        smallBottom="sm:bottom-28"/>
     </main>
   );
 };

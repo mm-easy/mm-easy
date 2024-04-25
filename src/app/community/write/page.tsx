@@ -25,7 +25,7 @@ const PostPage = () => {
   } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getCurrentUserProfile
-  });
+  })
 
   useEffect(() => {
     const fetchData = async () => {

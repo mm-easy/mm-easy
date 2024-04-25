@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
 import useMultilingual from '@/utils/useMultilingual';
@@ -8,6 +7,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 import { ADMIN } from '@/constant/adminId';
+import { useState } from 'react';
+import { throttle } from 'lodash';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 
@@ -29,11 +30,11 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
   ];
   // const categories = [...baseCategories];
 
-  const [selectedCategory, setSelectedCategory] = React.useState<string>(
+  const [selectedCategory, setSelectedCategory] = useState<string>(
     defaultValues?.category ? defaultValues.category : baseCategories[0].value
   );
-  const [title, setTitle] = React.useState(defaultValues?.title ? defaultValues.title : '');
-  const [textEditorValue, setTextEditorValue] = React.useState<ReactQuill.Value>(
+  const [title, setTitle] = useState(defaultValues?.title ? defaultValues.title : '');
+  const [textEditorValue, setTextEditorValue] = useState<ReactQuill.Value>(
     defaultValues?.content ? defaultValues.content : ''
   );
 
@@ -54,21 +55,26 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
 
   if (error) return null;
 
+
+  const throttledSubmit = throttle((values) => {
+    if (onSubmit) {
+      onSubmit(values);
+    }
+  }, 3000, { 'trailing': false });
+
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    throttledSubmit({
+      category: selectedCategory,
+      title,
+      content: textEditorValue
+    });
+  };
+
   return (
     <form
       className="sm:w-[100vw]"
-      onSubmit={(event) => {
-        event.preventDefault();
-
-        if (!onSubmit) {
-          return;
-        }
-        onSubmit({
-          category: selectedCategory,
-          title,
-          content: textEditorValue
-        });
-      }}
+      onSubmit={handleSubmit}
     >
       <section className="sm:border-b-0 sm:px-4 sm:pt-6 flex border-b border-pointColor1 border-solid">
         {categories.map(({ id, value, label }) => (
