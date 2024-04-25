@@ -15,6 +15,7 @@ import { TabName } from '@/types/pagination';
 import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
 import useMultilingual from '@/utils/useMultilingual';
+import { toast } from 'react-toastify';
 
 const MyActivity = () => {
   const m = useMultilingual('my-activity');
@@ -148,12 +149,14 @@ const MyActivity = () => {
   };
 
   const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    if (!window.confirm(m('QUIZ_DELETE'))) return;
+  
     deleteQuizMutation.mutateAsync(id).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['userQuizzes']
       });
-    });
+      toast.success(m('QUIZ_DELETE_COMPLETE'));
+    })
   };
 
   // 페이지
