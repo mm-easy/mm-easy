@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import pkg from 'next-fonts';
+
 const nextConfig = {
   reactStrictMode: false,
   images: {
@@ -18,4 +20,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+export default pkg(nextConfig);

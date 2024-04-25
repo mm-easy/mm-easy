@@ -94,6 +94,22 @@ const TYPING_GAME_STRINGS = {
   EXIT_BUTTON: {
     ko: '나가기',
     en: 'Exit'
+  },
+  ALERT_MESSAGE1: {
+    ko: '게임 오버! 당신의 점수는 ',
+    en: 'Game Over! Your score is'
+  },
+  ALERT_MESSAGE2: {
+    ko: '점입니다.',
+    en: 'points'
+  },
+  ALERT_MESSAGE3: {
+    ko: '축하합니다! 난이도 ',
+    en: 'Congratulations! You are moving to the'
+  },
+  ALERT_MESSAGE4: {
+    ko: '로 이동합니다.',
+    en: 'level'
   }
 };
 
