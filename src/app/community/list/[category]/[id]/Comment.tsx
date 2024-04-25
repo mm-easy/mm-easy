@@ -248,7 +248,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
         </form>
       </div>
 
-      <div className="my-8 sm:block hidden">
+      <div className="sm:pb-20 my-8 sm:block hidden">
         <form className="flex items-center w-full" onSubmit={handleSubmitBtn}>
           <div className="flex-grow border-b-1 border-t-1 border-r-1 border-grayColor2 border-solid">
             <div className="pl-4 flex">

@@ -199,7 +199,7 @@ const TypingGamePage = () => {
 
   /** 플레이 중 난이도 관리 */
   useEffect(() => {
-    if (correctWordsCount >= 2 && difficulty < maxDifficulty && levelUp.current !== null) {
+    if (correctWordsCount >= 20 && difficulty < maxDifficulty && levelUp.current !== null) {
       if (levelUp.current) {
         levelUp.current.play();
       }

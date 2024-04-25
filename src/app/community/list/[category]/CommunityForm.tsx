@@ -146,7 +146,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
         </div>
       </div>
       <section className="flex justify-center my-[10px] px-20 w-full">
-        <nav className="flex gap-10 text-base font-bold ">
+        <nav className="sm:pt-8 sm:pb-32 flex gap-10 text-base font-bold ">
           {currentSet > 1 && (
             <button className=" text-pointColor1" onClick={() => setCurrentPage(startPage - 1)}>
               &#9664;

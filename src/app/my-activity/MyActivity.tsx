@@ -498,7 +498,7 @@ const MyActivity = () => {
           </div>
         )}
       </article>
-      <div className="sm:block sm:pb-20 pt-6">
+      <div className="sm:block sm:pb-28 pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'
