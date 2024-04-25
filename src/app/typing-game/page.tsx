@@ -339,7 +339,7 @@ const TypingGamePage = () => {
     2: { label: m('DIFFICULTY2'), speed: 6, interval: 4000 },
     3: { label: m('DIFFICULTY3'), speed: 8, interval: 3000 },
     4: { label: m('DIFFICULTY4'), speed: 10, interval: 2000 },
-    5: { label: m('DIFFICULTY5'), speed: 5, interval: 1000 }
+    5: { label: m('DIFFICULTY5'), speed: 12, interval: 1000 }
   };
 
   const maxDifficulty = Object.keys(difficultySettings).length;
