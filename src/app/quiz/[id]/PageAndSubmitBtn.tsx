@@ -46,7 +46,7 @@ const PageAndSubmitBtn = ({
         </div>
       )}
       <button
-        className={`w-full py-[9px] ${
+        className={`w-full py-2.5 ${
           isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
         } text-white font-bold tracking-wider rounded-md`}
         onClick={handleResultMode}

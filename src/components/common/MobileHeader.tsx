@@ -6,10 +6,10 @@ export const MobileHeader = ({ backPage, text }: { backPage: string; text: strin
   return (
     <header className="sm:block hidden w-full h-[8vh] leading-[7.5vh] text-xl flex font-bold border-solid border-b-2 sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1">
       <div className="flex w-full items-center">
-        <Link href={backPage} className="flex flex-shrink-0 ml-2">
+        <Link href={backPage} className="flex absolute flex-shrink-0 ml-2">
           <IoMdArrowBack />
         </Link>
-        <div className="flex-grow text-center -ml-2">{text}</div>
+        <div className="flex-grow text-center">{text}</div>
       </div>
     </header>
   );
