@@ -71,7 +71,7 @@ const config: Config = {
         },
         twinkling: {
           '0%, 100%': { filter: 'brightness(90%)' },
-          '50%': { filter: 'brightness(120%)' }
+          '50%': { filter: 'brightness(110%)' }
         }
       }
     },
