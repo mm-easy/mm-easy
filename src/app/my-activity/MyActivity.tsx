@@ -17,6 +17,7 @@ import { CancelButton } from '@/components/common/FormButtons';
 import useMultilingual from '@/utils/useMultilingual';
 import { getUserLike } from '@/api/likes';
 import { toast } from 'react-toastify';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const MyActivity = () => {
   const m = useMultilingual('my-activity');
@@ -197,6 +198,11 @@ const MyActivity = () => {
   const currentPosts = userPost.slice(indexOfFirstItem, indexOfLastItem);
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
   const currentLikes = userLike.slice(indexOfFirstItem, indexOfLastItem);
+
+  if (isQuizLoading || isSolvedQuizLoading || isPostLoading || isCommentLoading || isLikeLoading) {
+    return <LoadingImg height="84vh" />;
+  }
+
 
   return (
     <main className="sm:h-auto sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">

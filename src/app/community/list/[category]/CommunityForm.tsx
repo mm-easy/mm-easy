@@ -80,8 +80,9 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           <tbody>
             {sortedItems?.length > 0 ? (
               sortedItems.map((item, idx) => (
+                // text-[calc(1vh+7px)
                 <tr
-                  className={`sm:h-[6vh] cursor-pointer text-[calc(1vh+7px)] ${
+                  className={`sm:h-[6vh] cursor-pointer ${
                     item['category'] === '공지'
                       ? 'font-bold bg-bgColor2 border-y border-solid border-pointColor1'
                       : 'bg-white border-grayColor2 border-y border-solid '
