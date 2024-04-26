@@ -59,6 +59,10 @@ const COMMUNITY_DETAIL_STRINGS = {
     ko: '댓글을 남겨보세요.',
     en: 'Leave a comment'
   },
+  COMMUNITY_COMMENT_NOT: {
+    ko: '댓글이 비어있습니다.',
+    en: 'No comments'
+  },
   COMMUNITY_COMMENT_CHECK_LOGIN: {
     ko: '로그인후 작성해주세요.',
     en: 'Please log in to write a comment.'
@@ -74,7 +78,7 @@ const COMMUNITY_DETAIL_STRINGS = {
   COMMUNITY_LATEST_POST: {
     ko: '가장 최신글 입니다.',
     en: 'This is the latest post.'
-  },
-}
+  }
+};
 
-export default COMMUNITY_DETAIL_STRINGS
+export default COMMUNITY_DETAIL_STRINGS;
