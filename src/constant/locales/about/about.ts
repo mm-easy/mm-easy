@@ -97,11 +97,19 @@ const ABOUT_STRINGS = {
   },
   ABOUT_TITLE4_CONTENT1: {
     ko: "여러분 모두 외국어를 공부하면서 '이거 무슨 말이지?' 하고 궁금해 하셨던 적이 많으실 거예요.",
-    en: "Many of you must have been curious and wondered, 'What does this mean?' while studying a foreign language."
+    en: 'Many of you must have been curious and wondered, '
+  },
+  ABOUT_TITLE4_CONTENT1_2: {
+    ko: '',
+    en: "'What does this mean?' while studying a foreign language."
   },
   ABOUT_TITLE4_CONTENT2: {
     ko: "'뭔말이지?'는 무슨 말이지?의 친근한 표현으로, 열정적인 한국어 학습자의 강렬한 호기심을 내포하고 있습니다.",
-    en: "'뭔말이지?' is a friendly expression for 'What does this mean?', embodying the intense curiosity of passionate Korean language learners."
+    en: "'뭔말이지?' is a friendly expression for 'What does this mean?', "
+  },
+  ABOUT_TITLE4_CONTENT2_2: {
+    ko: '',
+    en: 'embodying the intense curiosity of passionate Korean language learners.'
   },
   ABOUT_TITLE4_CONTENT3: {
     ko: '뭔말easy?에서는 누구나 쉽고 재미있게 한국어를 학습할 수 있습니다. 뭔말이지? 뭔말easy!',
