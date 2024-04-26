@@ -3,66 +3,49 @@
 import Image from 'next/image';
 import PhonicsLayout from '../PhonicsLayout';
 import { storageUrl } from '@/utils/supabase/storage';
-import { RefObject, useRef, useState } from 'react';
+import { useState } from 'react';
 
 const ConsonantsPage = () => {
   const [letter, setLetter] = useState('');
   const [letterName, setLetterName] = useState('');
-  // 배열 초기화
-  const audioRefs: RefObject<HTMLAudioElement>[] = [];
-
-  // useRef를 사용하여 각 요소 초기화
-  for (let i = 0; i < 25; i++) {
-    audioRefs[i] = useRef<HTMLAudioElement>(null);
-  }
 
   const consonantLabels = [
-    { letter: 'ㄱ', read: '[g/k]', name: '기역' },
-    { letter: 'ㄴ', read: '[n]', name: '니은' },
-    { letter: 'ㅁ', read: '[m]', name: '디귿' },
-    { letter: 'ㅅ', read: '[s]', name: '시옷' },
-    { letter: 'ㅇ', read: '[ŋ]', name: '이응' },
+    { letter: 'ㄱ', read: '[g/k]', name: '기역', audio: '/audio/consonants/giyeok.wav' },
+    { letter: 'ㄴ', read: '[n]', name: '니은', audio: '/audio/consonants/nieun.wav' },
+    { letter: 'ㅁ', read: '[m]', name: '디귿', audio: '/audio/consonants/digeut.wav' },
+    { letter: 'ㅅ', read: '[s]', name: '시옷', audio: '/audio/consonants/shiot.wav' },
+    { letter: 'ㅇ', read: '[ŋ]', name: '이응', audio: '/audio/consonants/ieung.wav' },
     { letter: null, read: null, name: null }, //5
-    { letter: 'ㄷ', read: '[d/t]', name: '디귿' },
-    { letter: 'ㅂ', read: '[b/p]', name: '비읍' },
-    { letter: 'ㅈ', read: '[d/z]', name: '지읒' },
+    { letter: 'ㄷ', read: '[d/t]', name: '디귿', audio: '/audio/consonants/digeut.wav' },
+    { letter: 'ㅂ', read: '[b/p]', name: '비읍', audio: '/audio/consonants/bieup.wav' },
+    { letter: 'ㅈ', read: '[d/z]', name: '지읒', audio: '/audio/consonants/jieut.wav' },
     { letter: null, read: null, name: null }, //9
-    { letter: 'ㅋ', read: '[k]', name: '키읔' },
-    { letter: 'ㅌ', read: '[t]', name: '티읕' },
-    { letter: 'ㅍ', read: '[ph]', name: '피읖' },
-    { letter: 'ㅊ', read: '[tch]', name: '치읓' },
-    { letter: 'ㅎ', read: '[h]', name: '히읗' },
-    { letter: 'ㄲ', read: '[k]', name: '쌍기역' },
-    { letter: 'ㄸ', read: '[t]', name: '쌍디귿' },
-    { letter: 'ㅃ', read: '[p]', name: '쌍비읍' },
-    { letter: 'ㅆ', read: '[s]', name: '쌍시옷' }, //18 -> 실제 19.wav
+    { letter: 'ㅋ', read: '[k]', name: '키읔', audio: '/audio/consonants/kieuk.wav' },
+    { letter: 'ㅌ', read: '[t]', name: '티읕', audio: '/audio/consonants/tieut.wav' },
+    { letter: 'ㅍ', read: '[ph]', name: '피읖', audio: '/audio/consonants/pieup.wav' },
+    { letter: 'ㅊ', read: '[tch]', name: '치읓', audio: '/audio/consonants/chieut.wav' },
+    { letter: 'ㅎ', read: '[h]', name: '히읗', audio: '/audio/consonants/hieut.wav' },
+    { letter: 'ㄲ', read: '[k]', name: '쌍기역', audio: '/audio/consonants/ssangGiyeok.wav' },
+    { letter: 'ㄸ', read: '[t]', name: '쌍디귿', audio: '/audio/consonants/ssangDigeut.wav' },
+    { letter: 'ㅃ', read: '[p]', name: '쌍비읍', audio: '/audio/consonants/ssangBieup.wav' },
+    { letter: 'ㅆ', read: '[s]', name: '쌍시옷', audio: '/audio/consonants/ssangShiot.wav' }, //18 -> 실제 19.wav
     { letter: null, read: null, name: null }, //19
     { letter: null, read: null, name: null }, //20
-    { letter: 'ㄹ', read: '[r/l]', name: '리을' },
+    { letter: 'ㄹ', read: '[r/l]', name: '리을', audio: '/audio/consonants/Rieul.wav' },
     { letter: null, read: null, name: null }, //22
     { letter: null, read: null, name: null }, //23
-    { letter: 'ㅉ', read: '[t]', name: '쌍지읒' } //24 -> 실제론 25.wav
+    { letter: 'ㅉ', read: '[t]', name: '쌍지읒', audio: '/audio/consonants/ssangJieut.wav' } //24 -> 실제론 25.wav
   ];
 
   const nullList = [5, 9, 19, 20, 22, 23];
 
-  /** 글자에 맞는 오디오 파일 연결 */
-  const consonantAudios = Array.from({ length: 25 }, (_, index) => {
-    if (nullList.includes(index)) {
-      return null;
-    } else {
-      return `/audio/consonants/${index + 1}.wav`;
-    }
-  });
-
   /** 오디오 재생 핸들러 */
-  // const handlePlaySound = (index: number) => {
-  //   const audioRef = audioRefs[index]?.current;
-  //   if (audioRef) {
-  //     audioRef.currentTime = 0;
-  //     audioRef.play();
-  //   }
-  // };
+  const handlePlaySound = (audio: string) => {
+    if (audio) {
+      const audioElement = new Audio(audio);
+      audioElement.play();
+    }
+  };
 
   return (
     <div className="grid grid-cols-[16%_84%] bgColor1">
@@ -82,21 +65,21 @@ const ConsonantsPage = () => {
                   const parentElement = (e.target as HTMLElement).parentNode as HTMLElement;
                   if (index === 18) {
                     if (parentElement.id === '18') {
-                      audioRefs[index].current?.play();
+                      handlePlaySound(item.audio as string);
                       setLetter(item.letter as string);
                       setLetterName(item.name as string);
                     }
                     if (parentElement.id === '24') {
-                      audioRefs[24].current?.play();
-                      setLetter(consonantLabels[index + 6].letter as string);
-                      setLetterName(consonantLabels[index + 6].name as string);
+                      handlePlaySound(consonantLabels[24].audio as string);
+                      setLetter(consonantLabels[24].letter as string);
+                      setLetterName(consonantLabels[24].name as string);
                     }
                   } else if (index === 24) {
                     return;
                   } else if (nullList.includes(index)) {
                     return;
                   } else {
-                    audioRefs[index].current?.play();
+                    handlePlaySound(item.audio as string);
                     setLetter(item.letter as string);
                     setLetterName(item.name as string);
                   }
@@ -110,7 +93,6 @@ const ConsonantsPage = () => {
                     >
                       <p className="text-2xl font-bold">{item.letter}</p>
                       <p className="text-[#C1DDFF] font-bold">{item.read}</p>
-                      <audio ref={audioRefs[index]} src={consonantAudios[index] as string} preload="auto"></audio>
                     </div>
                     <div
                       id="24"
@@ -118,18 +100,12 @@ const ConsonantsPage = () => {
                     >
                       <p className="text-2xl font-bold">{`${consonantLabels[index + 6]?.letter}`}</p>
                       <p className="text-[#C1DDFF] font-bold">{`${consonantLabels[index + 6]?.read}`}</p>
-                      <audio
-                        ref={audioRefs[index + 6]}
-                        src={consonantAudios[index + 6] as string}
-                        preload="auto"
-                      ></audio>
                     </div>
                   </div>
                 ) : index === 24 ? null : (
                   <>
                     <p className="text-2xl font-bold">{item.letter}</p>
                     <p className="text-[#C1DDFF] font-bold">{item.read}</p>
-                    <audio ref={audioRefs[index]} src={consonantAudios[index] as string} preload="auto"></audio>
                   </>
                 )}
               </div>
