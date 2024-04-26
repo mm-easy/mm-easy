@@ -119,6 +119,7 @@ const TypingGamePage = () => {
     if (levelUp.current) levelUp.current.volume = volume;
     if (lifeDrainingSound.current) lifeDrainingSound.current.volume = volume;
     if (specialWordSound.current) specialWordSound.current.volume = volume;
+    if (lobbyMusic.current) lobbyMusic.current.volume = volume;
     if (clickSound.current) clickSound.current.volume = volume;
   }, [volume]);
 
