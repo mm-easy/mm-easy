@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import useMultilingual from '@/utils/useMultilingual';
 import ExitButton from '@/components/common/ExitButton';
+import HeaderTitle from './HeaderTitle';
 
 const Header = ({
   level,
@@ -30,15 +31,11 @@ const Header = ({
       </h2>
       <section className="w-[calc(84%-2px)] flex justify-between">
         <div className="w-[95%] flex sm:flex-col">
-          <h2 className="w-[10%] sm:hidden text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
-            {m('LEVEL')}
-          </h2>
+          <HeaderTitle>{m('LEVEL')}</HeaderTitle>
           <h3 className="w-[10%] sm:w-full sm:h-3/4 sm:pl-4 text-center sm:text-left sm:font-semibold sm:text-pointColor1 border-solid border-r-2 border-pointColor1 sm:border-0">
             {level === 1 ? m('QUIZ_LEVEL_1') : level === 2 ? m('QUIZ_LEVEL_2') : m('QUIZ_LEVEL_3')}
           </h3>
-          <h2 className="w-[10%] sm:hidden text-center font-bold text-pointColor1 bg-bgColor1 border-solid border-r-2 border-pointColor1">
-            {m('TITLE')}
-          </h2>
+          <HeaderTitle>{m('TITLE')}</HeaderTitle>
           <h3 className="sm:w-full pl-[2%] sm:pl-4 sm:text-xl sm:font-semibold">{title}</h3>
         </div>
         <ExitButton size="sm" exitText={m('EXIT_BTN')} onClick={handleExitBtn} />

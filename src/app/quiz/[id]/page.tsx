@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
@@ -10,12 +10,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { langAtom } from '@/store/store';
 import { getQuiz } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
-import { CancelButton } from '@/components/common/FormButtons';
 import { supabase } from '@/utils/supabase/supabase';
 import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { useDeleteQuiz, useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+import confetti, { Options as ConfettiOptions } from 'canvas-confetti';
+import tailwindColors from '../../../../tailwind.config';
 
 import Header from './Header';
 import Options from './Options';
@@ -25,8 +25,10 @@ import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
 
 import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
+import type { TailwindColors } from '@/types/tailwind';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
-import CreateInfo from './CreateInfo';
+import SideHeader from './SideHeader';
+import PageAndSubmitBtn from './PageAndSubmitBtn';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -44,10 +46,8 @@ const QuizTryPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
 
-  const queryClient = useQueryClient();
   const insertQuizMutation = useSubmitQuizTry();
   const updateQuizMutation = useUpdateQuizTry();
-  const deleteQuizMutation = useDeleteQuiz();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,6 +86,7 @@ const QuizTryPage = () => {
     fetchData();
   }, [isLoggedIn]);
 
+  /** 문제 페이지네이션 */
   const handlePrevPage = () => {
     setPage(page - 1);
   };
@@ -94,6 +95,7 @@ const QuizTryPage = () => {
     setPage(page + 1);
   };
 
+  /** Quiz, Question 데이터 불러오기 */
   const {
     data: quizData,
     isLoading: quizIsLoading,
@@ -107,7 +109,7 @@ const QuizTryPage = () => {
         return error;
       }
     },
-    queryKey: ['quizzes', id] // 여기
+    queryKey: ['quizzes', id]
   });
 
   const {
@@ -141,6 +143,7 @@ const QuizTryPage = () => {
   const questions = questionsData as Question[];
   const isAllAnswersSubmitted = questions.length === usersAnswers.length;
 
+  /** 답안 입력 input 에서 엔터 시 다음 페이지로 넘어가도록 */
   const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && page < questions.length - 1) {
       e.preventDefault();
@@ -148,6 +151,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 답안 저장 */
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
@@ -162,6 +166,7 @@ const QuizTryPage = () => {
     setUsersAnswers(newAnswers);
   };
 
+  /** 주관형 답 길이 알아내기 */
   const handleGetLength = (id: string | undefined) => {
     const usersAnswer = usersAnswers.find((answer) => answer.id === id)?.answer;
 
@@ -172,6 +177,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 결과 페이지 실행 */
   const handleResultMode = () => {
     if (!resultMode) {
       // 풀기 모드에서 제출하기 버튼을 눌렀을 때
@@ -194,6 +200,7 @@ const QuizTryPage = () => {
         setResultMode(true);
         setScore(countCorrect);
         handleInsertQuizTry(countCorrect);
+        if (countCorrect) handleConfetti();
       }
 
       window.scrollTo({
@@ -206,6 +213,7 @@ const QuizTryPage = () => {
     }
   };
 
+  /** 점수 DB 에 업로드 */
   const handleInsertQuizTry = async (countCorrect: number) => {
     try {
       const quizTry = {
@@ -232,67 +240,55 @@ const QuizTryPage = () => {
     }
   };
 
-  /** 삭제 버튼 클릭 핸들러 */
-  const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm(m('ASK_TO_DELETE'))) return;
-    deleteQuizMutation.mutateAsync(id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
-        toast.success(m('NOTIFY_TO_DELETE'));
-        router.replace('/quiz/list');
-      }
-    });
-  };
+  /** 하나라도 정답이라면 폭죽 효과 */
+  const handleConfetti = () => {
+    const duration = 3000;
+    const animationEnd = Date.now() + duration; // 지금 시간부터 5초동안 폭죽 효과
+    const { colors } = tailwindColors.theme?.extend as { colors: TailwindColors };
 
-  /** 수정 버튼 클릭 핸들러 */
-  // const handleEditQuiz = (id: string) => {
-  //   router.push(`/quiz/form/edit?id=${id}`);
-  // };
+    const setting: ConfettiOptions = {
+      // 폭죽 효과 CSS 설정
+      particleCount: 100,
+      spread: 100,
+      origin: { y: 1.5 },
+      colors: [colors?.pointColor1, colors?.pointColor2]
+    };
+
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval: NodeJS.Timeout = setInterval(() => {
+      // 일정 시간마다 폭죽 터트림
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        // 시간 다 끝나면 폭죽 끔
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration); // 파티클 개수, 시간에 따라 조절됨
+      confetti({
+        // 위에서 설정한 세팅값을 복사하고, 파티클 수와 발사 위치 정함
+        ...setting,
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+      });
+    }, 250);
+  };
 
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
-        <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
-          <section className="sm:text-blackColor">
-            <Image
-              src={`${storageUrl}/quiz-thumbnails/${url}`}
-              alt="샘플 이미지"
-              width={230}
-              height={230}
-              quality={100}
-              className="w-full h-[230px] sm:hidden object-cover border-solid border-b-2 border-pointColor1"
-            />
-            <p className="pl-4 pt-4 hidden sm:block">{info}</p>
-            <CreateInfo
-              creatorText={m('CREATOR')}
-              creator={creator_id}
-              dateText={m('DATE_CREATED')}
-              date={formatToLocaleDateTimeString(created_at)}
-            />
-            <p className="p-4 sm:hidden">{info}</p>
-          </section>
-          <div className="sm:hidden flex justify-center font-bold pb-4">
-            {currentUserEmail === creator_id && (
-              <div className="flex justify-center items-center">
-                {/* <CancelButton
-                  text="수정"
-                  width="w-44"
-                  height="h-12"
-                  border="border-2"
-                  onClick={() => handleEditQuiz(id as string)}
-                /> */}
-                <CancelButton
-                  text={m('DELETE_BTN')}
-                  width="w-44"
-                  height="h-12"
-                  border="border-1"
-                  onClick={() => handleDeleteQuiz(id as string)}
-                />
-              </div>
-            )}
-          </div>
-        </article>
+        <SideHeader
+          url={url}
+          info={info}
+          creator={creator_id}
+          date={created_at}
+          currentUserEmail={currentUserEmail}
+          id={id}
+        />
         <main
           className={`${
             !resultMode && `sm:h-[calc(76vh-118px)]`
@@ -378,42 +374,15 @@ const QuizTryPage = () => {
                 )
               );
             })}
-            <section className="w-[570px] sm:w-full flex flex-col justify-between gap-3">
-              {!resultMode && questions.length > 1 && (
-                <div className="flex justify-between gap-3 font-semibold">
-                  <button
-                    disabled={page === 0}
-                    className={`w-full py-[9px] ${
-                      page === 0
-                        ? 'text-white bg-grayColor2'
-                        : 'text-pointColor1 border border-solid border-pointColor1'
-                    } rounded-md`}
-                    onClick={handlePrevPage}
-                  >
-                    {m('PREV_QUESTION_BTN')}
-                  </button>
-                  <button
-                    disabled={page === questions.length - 1}
-                    className={`w-full py-[9px] ${
-                      page === questions.length - 1
-                        ? 'text-white bg-grayColor2'
-                        : 'text-pointColor1 border border-solid border-pointColor1'
-                    } rounded-md`}
-                    onClick={handleNextPage}
-                  >
-                    {m('NEXT_QUESTION_BTN')}
-                  </button>
-                </div>
-              )}
-              <button
-                className={`w-full py-[9px] ${
-                  isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
-                } text-white font-bold tracking-wider rounded-md`}
-                onClick={handleResultMode}
-              >
-                {resultMode ? m('RETRY_BTN') : m('SUBMIT_BTN')}
-              </button>
-            </section>
+            <PageAndSubmitBtn
+              resultMode={resultMode}
+              questionsLength={questions.length}
+              page={page}
+              isAllAnswersSubmitted={isAllAnswersSubmitted}
+              handlePrevPage={handlePrevPage}
+              handleNextPage={handleNextPage}
+              handleResultMode={handleResultMode}
+            />
           </article>
           {resultMode && (
             <ReportButton
@@ -427,7 +396,8 @@ const QuizTryPage = () => {
             </ReportButton>
           )}
         </main>
-        <PageUpBtn scrollPosition={scrollPosition} />
+        <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
+        smallBottom="sm:bottom-28"/>
       </div>
     </>
   );

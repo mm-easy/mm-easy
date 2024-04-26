@@ -1,10 +1,12 @@
 import VerticalBlueLine from './VerticalBlueLine';
 import Link from 'next/link';
 import LoadingImg from '@/components/common/LoadingImg';
+import Image from 'next/image';
 import { getQuizzes } from '@/api/quizzes';
 import { getMyGameScore } from '@/api/game_scrore';
 import { useQuery } from '@tanstack/react-query';
 import { getMyQuizScore } from '@/api/tries';
+import { assetsStorageUrl } from '@/utils/supabase/storage';
 
 import type { Quiz, Score } from '@/types/quizzes';
 import type { User } from '@/types/users';
@@ -71,6 +73,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
   const myTotalScore = (totalQuizScore ?? 0) + (myGameScore ?? 0);
   const myLevel =
     myTotalScore < 5000 ? 1 : myTotalScore < 15000 ? 2 : myTotalScore < 35000 ? 3 : myTotalScore < 70000 ? 4 : 5;
+  const imageUrl = `${assetsStorageUrl}/level_${myLevel}.png`;
 
   return (
     <main className="w-full h-full flex flex-col justify-center items-center bg-bgColor2 border-solid border-t border-pointColor1">
@@ -84,7 +87,15 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
       <div className="sm:px-5 sm:w-full sm:grid sm:grid-cols-2 flex sm:gap-0 gap-7 sm:mb-4 sm:mt-4 mt-10 font-semibold">
         <div className="sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center w-48 sm:border-solid sm:border-b-1 sm:border-pointColor1">
           <p>{m('LEVEL')}</p>
-          <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">Lv. {myLevel}</p>
+          <p className="flex mt-4 sm:text-5xl text-3xl text-pointColor1">
+            <Image
+              src={imageUrl}
+              alt={`Level ${myLevel}`}
+              width={30}
+              height={20}
+              className="w-full h-full object-cover"
+            />
+          </p>
         </div>
         <VerticalBlueLine />
         <div className="sm:w-full sm:h-full sm:p-5 flex flex-col sm:justify-center items-center w-48 sm:border-solid sm:border-l-1 sm:border-b-1 sm:border-pointColor1">
