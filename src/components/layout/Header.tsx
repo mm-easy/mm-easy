@@ -108,6 +108,14 @@ const Header = () => {
             {m('HEADER_MENU2')}
           </Link>
           <Link
+            href="/phonics/consonants"
+            className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
+              isActive('/typing-game') ? 'border-b-5 border-solid border-pointColor1' : ''
+            }`}
+          >
+            {m('HEADER_MENU6')}
+          </Link>
+          <Link
             href="/community/list/전체"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
               isActive('/community') && 'border-b-5 border-solid border-pointColor1'
