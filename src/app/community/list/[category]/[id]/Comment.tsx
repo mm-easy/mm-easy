@@ -252,7 +252,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
           <div className="flex-grow border-b-1 border-t-1 border-r-1 border-grayColor2 border-solid">
             <div className="pl-4 flex">
               {profile ? (
-                <div className="sm:w-[40px] sm:h-[40px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
+                <div className="sm:w-[40px] sm:h-[36px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                   <Image
                     src={`${profileStorageUrl}/${profile?.avatar_img_url || '프로필이미지'}`}
                     alt="프로필이미지"
