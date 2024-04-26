@@ -82,6 +82,14 @@ const MY_ACTIVITY_STRINGS = {
   NO_LIKES: {
     ko: '좋아요가 없습니다.',
     en: 'No Likes.'
+  },
+  QUIZ_DELETE: {
+    ko: '해당 퀴즈를 삭제하시겠습니까?',
+    en: 'Do you want to delete this quiz?'
+  },
+  QUIZ_DELETE_COMPLETE: {
+    ko: '퀴즈가 삭제되었습니다.',
+    en: 'Quiz has been deleted.'
   }
 };
 

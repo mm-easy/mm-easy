@@ -16,6 +16,8 @@ import { useDeleteQuiz } from '../quiz/[id]/mutations';
 import { CancelButton } from '@/components/common/FormButtons';
 import useMultilingual from '@/utils/useMultilingual';
 import { getUserLike } from '@/api/likes';
+import { toast } from 'react-toastify';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const MyActivity = () => {
   const m = useMultilingual('my-activity');
@@ -171,12 +173,14 @@ const MyActivity = () => {
   };
 
   const handleDeleteQuiz = (id: string) => {
-    if (!window.confirm('해당 퀴즈를 삭제하시겠습니까?')) return;
+    if (!window.confirm(m('QUIZ_DELETE'))) return;
+  
     deleteQuizMutation.mutateAsync(id).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['userQuizzes']
       });
-    });
+      toast.success(m('QUIZ_DELETE_COMPLETE'));
+    })
   };
 
   const navigateToPost = (postId: string) => {
@@ -194,6 +198,11 @@ const MyActivity = () => {
   const currentPosts = userPost.slice(indexOfFirstItem, indexOfLastItem);
   const currentComments = userComment.slice(indexOfFirstItem, indexOfLastItem);
   const currentLikes = userLike.slice(indexOfFirstItem, indexOfLastItem);
+
+  if (isQuizLoading || isSolvedQuizLoading || isPostLoading || isCommentLoading || isLikeLoading) {
+    return <LoadingImg height="84vh" />;
+  }
+
 
   return (
     <main className="sm:h-auto sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">
@@ -599,7 +608,7 @@ const MyActivity = () => {
           </div>
         )}
       </article>
-      <div className="sm:block sm:pb-20 pt-6">
+      <div className="sm:block sm:pb-28 pt-6">
         <Pagination
           total={
             activeTab === 'solvedQuizzes'

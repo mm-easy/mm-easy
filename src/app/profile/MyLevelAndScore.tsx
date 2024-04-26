@@ -117,7 +117,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
           <p className="mt-5 sm:text-5xl text-3xl text-pointColor1">{myTotalScore}</p>
         </div>
       </div>
-      <div className="text-center sm:mb-10 mt-10 text-pointColor1 underline underline-offset-4">
+      <div className="font-semibold text-center sm:mb-10 mt-10 text-pointColor1 underline underline-offset-4">
         <Link href="/my-activity">{m('TO_MY_ACTIVITY')}</Link>
       </div>
     </main>

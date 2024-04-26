@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss';
 import { nextui } from '@nextui-org/react';
-import { redirect } from 'next/dist/server/api-utils';
 
 const config: Config = {
   content: [
@@ -35,7 +34,7 @@ const config: Config = {
           '0%': {
             transform: 'scaleX(0) rotate(-45deg)',
             opacity: 0.5 as any,
-            filter: 'brightness(1)' 
+            filter: 'brightness(1)'
           },
           '50%': {
             transform: 'scaleX(1) rotate(-45deg)',
@@ -83,7 +82,7 @@ const config: Config = {
     },
     animation: {
       'wave-opacity': 'wave-opacity 0.75s ease-in-out',
-      'twinkling': 'twinkling 2s ease-in-out infinite',
+      twinkling: 'twinkling 2s ease-in-out infinite',
       'hover-opacity': 'hover-opacity 0.3s ease-out',
       slash: 'slash 1s ease-in-out forwards',
       'drop-in': 'dropIn 0.8s ease-out forwards',

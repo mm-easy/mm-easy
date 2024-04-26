@@ -7,7 +7,6 @@ import { useParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/hooks/useAuth';
 import { isLoggedInAtom } from '@/store/store';
 import { supabase } from '@/utils/supabase/supabase';
 
@@ -17,7 +16,6 @@ const CommunityMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { getCurrentUserProfile } = useAuth();
   const params = useParams<{ category: string }>();
   const category = decodeURIComponent(params.category);
 
@@ -56,16 +54,6 @@ const CommunityMain = () => {
     fetchData();
   }, []);
 
-  /** 로그인이 되어 있다면 프로필 가져오기 */
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isLoggedIn) {
-        const userProfile = await getCurrentUserProfile();
-      }
-    };
-
-    fetchData();
-  }, [isLoggedIn]);
 
   const pageRange = 10; // 페이지당 보여줄 게시물 수
   const btnRange = 5; // 보여질 페이지 버튼의 개수
@@ -80,7 +68,7 @@ const CommunityMain = () => {
   }
 
   return (
-    <section className="sm:min-h-screen sm:mt-0 sm:pt-8 sm:bg-white w-full px-[5vw] flex justify-center mt-[calc(8vh-25px)]">
+    <section className="sm:px-0 sm:min-h-screen sm:mt-0 sm:bg-white w-full px-[5vw] flex justify-center mt-[calc(8vh-25px)]">
       <CommunityForm
         currentItems={currentItems}
         setCurrentPage={setCurrentPage}
