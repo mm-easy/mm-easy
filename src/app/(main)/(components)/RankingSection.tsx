@@ -8,9 +8,7 @@ import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SlRefresh } from 'react-icons/sl';
-import { GiMedal } from 'react-icons/gi';
-import { GiMedalSkull } from 'react-icons/gi';
-import { GiStarMedal } from 'react-icons/gi';
+import { assetsStorageUrl } from '@/utils/supabase/storage';
 
 const RankingSection = () => {
   const m = useMultilingual('ranking-section');
@@ -53,16 +51,11 @@ const RankingSection = () => {
     return <LoadingImg height="400px" />;
   }
 
-  const getMedalColor = (index: number) => {
-    switch (index) {
-      case 0:
-        return '#FFD700';
-      case 1:
-        return '#C0C0C0';
-      case 2:
-        return '#CD7F32';
-    }
-  };
+  const rankingImages = [
+    `${assetsStorageUrl}/ranking_1.png`, // 1등 이미지 URL
+    `${assetsStorageUrl}/ranking_2.png`, // 2등 이미지 URL
+    `${assetsStorageUrl}/ranking_3.png` // 3등 이미지 URL
+  ];
 
   return (
     <>
@@ -104,7 +97,17 @@ const RankingSection = () => {
                         </h2>
                       </div>
                     </div>
-                    <GiMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                    {rankingImages[index] && (
+                      <div className="w-8 h-8">
+                        <Image
+                          src={rankingImages[index]}
+                          alt={`Rank ${index + 1}`}
+                          width={32}
+                          height={32}
+                          quality={100}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -141,7 +144,15 @@ const RankingSection = () => {
                         </h2>
                       </div>
                     </div>
-                    <GiStarMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                    <div className="w-8 h-8">
+                      <Image
+                        src={rankingImages[index]}
+                        alt={`Rank ${index + 1}`}
+                        width={32}
+                        height={32}
+                        quality={100}
+                      />
+                    </div>
                   </div>
                 )}
               </div>
@@ -178,7 +189,15 @@ const RankingSection = () => {
                         </h2>
                       </div>
                     </div>
-                    <GiMedalSkull style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                    <div className="w-8 h-8">
+                      <Image
+                        src={rankingImages[index]}
+                        alt={`Rank ${index + 1}`}
+                        width={32}
+                        height={32}
+                        quality={100}
+                      />
+                    </div>
                   </div>
                 )}
               </div>
@@ -253,7 +272,15 @@ const RankingSection = () => {
                           </h2>
                         </div>
                       </div>
-                      <GiMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                      <div className="w-8 h-8">
+                        <Image
+                          src={rankingImages[index]}
+                          alt={`Rank ${index + 1}`}
+                          width={32}
+                          height={32}
+                          quality={100}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -293,7 +320,15 @@ const RankingSection = () => {
                           </h2>
                         </div>
                       </div>
-                      <GiStarMedal style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                      <div className="w-8 h-8">
+                        <Image
+                          src={rankingImages[index]}
+                          alt={`Rank ${index + 1}`}
+                          width={32}
+                          height={32}
+                          quality={100}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -332,7 +367,15 @@ const RankingSection = () => {
                         </h2>
                       </div>
                     </div>
-                    <GiMedalSkull style={{ color: getMedalColor(index) }} className="text-4xl animate-twinkling" />
+                    <div className="w-8 h-8">
+                      <Image
+                        src={rankingImages[index]}
+                        alt={`Rank ${index + 1}`}
+                        width={32}
+                        height={32}
+                        quality={100}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
