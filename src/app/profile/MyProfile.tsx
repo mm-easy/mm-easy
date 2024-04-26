@@ -108,7 +108,7 @@ const MyProfile = ({ data }: { data: User }) => {
               </div>
             </div>
             <div
-              className="text-pointColor1 underline underline-offset-4 cursor-pointer sm:text-center sm:mt-10"
+              className="font-semibold text-pointColor1 underline underline-offset-4 cursor-pointer sm:text-center sm:mt-10"
               onClick={() => setIsEditing(true)}
             >
               {m('PROFILE_EDIT')}
