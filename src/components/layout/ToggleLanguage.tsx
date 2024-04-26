@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
+import { getCookie, setCookie } from 'cookies-next';
+
+type LanguageType = 'en' | 'ko';
 
 const ToggleSwitch = () => {
   const [lang, setLang] = useAtom(langAtom);
   const [isChecked, setIsChecked] = useState(false);
 
+  useEffect(() => {
+    const cookieLang = getCookie('lang') as LanguageType; // 'lang' 쿠키는 'en' 또는 'ko'일 것으로 가정
+    if (cookieLang) {
+      setLang(cookieLang);
+      setIsChecked(cookieLang === 'ko');
+    }
+  }, [setLang]);
+
   const handleToggle = () => {
-    setIsChecked((prev) => !prev);
-    setLang((prevLang) => (prevLang === 'en' ? 'ko' : 'en'));
+    const newLang = lang === 'en' ? 'ko' : 'en';
+    setIsChecked(lang === 'en');
+    setLang(newLang);
+    setCookie('lang', newLang, { path: '/', maxAge: 31536000 }); // 쿠키 유효 기간 (1년)
   };
 
   return (
