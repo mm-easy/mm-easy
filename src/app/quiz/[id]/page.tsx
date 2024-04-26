@@ -280,7 +280,7 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
-      <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
+      <div className="grid grid-cols-[16%_84%] sm:pb-[8vh] sm:block bg-bgColor1 sm:bg-white">
         <SideHeader
           url={url}
           info={info}
