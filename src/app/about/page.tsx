@@ -96,7 +96,7 @@ const AboutPage = () => {
           {m('ABOUT_TITLE1')}
         </h2>
         <Image src={Infopeople} alt="로고" quality={100} className="w-[800px] sm:w-[440px]" />
-        <section className="sm:text-xl text-3xl w-full text-pointColor1 ">
+        <section className="sm:text-xl text-3xl w-full text-pointColor1 font-bold">
           <section>
             <div className="py-16 flex justify-center items-center sm:gap-2 gap-6">
               <Image src={InfoIcon3} alt="로고" className="w-[50px] sm:w-[25px]" />
@@ -203,11 +203,13 @@ const AboutPage = () => {
           </div>
         </div>
       </article>
-      <article className="w-full flex flex-col gap-20 items-center justify-center bg-white text-xl font-bold pb-20 px-20 border-t-2 border-solid border-pointColor1 sm:w-full sm:pb-12 sm:text-sm sm:px-4 sm:gap-8">
+      <article className="w-full flex flex-col gap-20 items-center justify-center bg-white text-xl pb-20 px-20 border-t-2 border-solid border-pointColor1 sm:w-full sm:pb-12 sm:text-sm sm:px-4 sm:gap-8">
         <h2 className="sm:text-2xl text-4xl font-extrabold pt-16 text-pointColor1">{m('ABOUT_TITLE4')}</h2>
         <div className="sm:text-xs text-xl">
           <p>{m('ABOUT_TITLE4_CONTENT1')}</p>
+          <p>{m('ABOUT_TITLE4_CONTENT1_2')}</p>
           <p>{m('ABOUT_TITLE4_CONTENT2')}</p>
+          <p>{m('ABOUT_TITLE4_CONTENT2_2')}</p>
           <p>{m('ABOUT_TITLE4_CONTENT3')}</p>
         </div>
         <div>
@@ -219,15 +221,15 @@ const AboutPage = () => {
           <Image src={InfoDesign2} alt="세로형 로고" className="w-[45vw] sm:w-[96vw] rounded-xl" />
         </div>
         <div className="flex flex-row gap-12 px-20 sm:px-0 sm:gap-4">
-          <div className="flex flex-col items-center gap-4 sm:">
+          <div className="flex flex-col items-center gap-4">
             <h3 className="text-pointColor1">{m('ABOUT_TITLE4_SYMBOL')}</h3>
-            <Image src={InfoDesign3} alt="심벌" className="w-[25vw] sm:w-[80vw] rounded-xl" />
-            <span className="max-w-[25vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_SYMBOL_CONTENT')}</span>
+            <Image src={InfoDesign3} alt="심벌" className="w-[21vw] sm:w-[80vw] rounded-xl" />
+            <span className="max-w-[21vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_SYMBOL_CONTENT')}</span>
           </div>
           <div className="flex flex-col items-center gap-4">
             <h3 className="text-pointColor1">{m('ABOUT_TITLE4_CHARACTER')}</h3>
-            <Image src={InfoDesign4} alt="캐릭터" className="w-[25vw] sm:w-[80vw] rounded-xl" />
-            <span className="max-w-[25vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_CHARACTER_CONTENT')}</span>
+            <Image src={InfoDesign4} alt="캐릭터" className="w-[21vw] sm:w-[80vw] rounded-xl" />
+            <span className="max-w-[21vw] sm:text-xs sm:max-w-[80vw]">{m('ABOUT_TITLE4_CHARACTER_CONTENT')}</span>
           </div>
         </div>
       </article>
