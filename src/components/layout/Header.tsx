@@ -110,7 +110,7 @@ const Header = () => {
           <Link
             href="/phonics/consonants"
             className={`hover:border-b-5 hover:border-solid hover:border-pointColor1 ${
-              isActive('/typing-game') ? 'border-b-5 border-solid border-pointColor1' : ''
+              isActive('/phonics') ? 'border-b-5 border-solid border-pointColor1' : ''
             }`}
           >
             {m('HEADER_MENU6')}
