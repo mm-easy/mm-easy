@@ -212,11 +212,11 @@ const AboutPage = () => {
         </div>
         <div>
           <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO1')}</h3>
-          <Image src={InfoDesign1} alt="가로형 로고" className="w-[55vw] sm:w-[96vw] rounded-xl" />
+          <Image src={InfoDesign1} alt="가로형 로고" className="w-[45vw] sm:w-[96vw] rounded-xl" />
         </div>
         <div>
           <h3 className="text-pointColor1 mb-4">{m('ABOUT_TITLE4_LOGO2')}</h3>
-          <Image src={InfoDesign2} alt="세로형 로고" className="w-[55vw] sm:w-[96vw] rounded-xl" />
+          <Image src={InfoDesign2} alt="세로형 로고" className="w-[45vw] sm:w-[96vw] rounded-xl" />
         </div>
         <div className="flex flex-row gap-12 px-20 sm:px-0 sm:gap-4">
           <div className="flex flex-col items-center gap-4 sm:">
