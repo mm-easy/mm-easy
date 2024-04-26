@@ -98,21 +98,19 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
       <div>
         {postCommentList?.map((prev) => {
           return (
-            <div className="sm:pt-4 pt-8 flex border-solid border-b border-grayColor2" key={prev.id}>
-              <div className="sm:w-[40px] sm:h-[40px] sm:ml-4 w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
-                <Image
-                  src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url || '프로필이미지'}`}
-                  alt="프로필이미지"
-                  width={50}
-                  height={50}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="sm:pt-4 pt-8 flex gap-2 border-solid border-b border-grayColor2" key={prev.id}>
+              <Image
+                src={`${profileStorageUrl}/${prev.profiles?.avatar_img_url || '프로필이미지'}`}
+                alt="프로필이미지"
+                width={50}
+                height={50}
+                className="sm:w-[40px] sm:h-[40px] sm:ml-4 w-[50px] h-[50px] rounded-full overflow-hidden object-cover"
+              />
               <div className="flex flex-col justify-center text-blackColor">
                 <p className="pb-2 font-semibold">{prev.profiles?.nickname}</p>
 
                 {btnChange && nowCommentId === prev.id ? (
-                  <div>
+                  <div className="sm:w-[70vw]">
                     <textarea
                       className="resize-none focus:outline-none border-solid border border-grayColor2"
                       value={contentChange}
@@ -121,8 +119,8 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                     />
                   </div>
                 ) : (
-                  <div>
-                    <p className="sm:w-auto w-[80vh]">{prev.content}</p>
+                  <div className="sm:w-[70vw]">
+                    <p>{prev.content}</p>
                     <div className="text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>

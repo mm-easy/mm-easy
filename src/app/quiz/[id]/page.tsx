@@ -280,7 +280,7 @@ const QuizTryPage = () => {
   return (
     <>
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
-      <div className="grid grid-cols-[16%_84%] sm:block bg-bgColor1 sm:bg-white">
+      <div className="grid grid-cols-[16%_84%] sm:pb-[8vh] sm:block bg-bgColor1 sm:bg-white">
         <SideHeader
           url={url}
           info={info}
@@ -290,9 +290,7 @@ const QuizTryPage = () => {
           id={id}
         />
         <main
-          className={`${
-            !resultMode && `sm:h-[calc(76vh-118px)]`
-          } py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
+          className={` py-14 flex flex-col justify-center items-center gap-10 bg-white border-solid border-l-2 border-pointColor1 sm:border-0`}
         >
           {resultMode && (
             <h1 className="text-2xl">
@@ -396,8 +394,7 @@ const QuizTryPage = () => {
             </ReportButton>
           )}
         </main>
-        <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+        <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
       </div>
     </>
   );
