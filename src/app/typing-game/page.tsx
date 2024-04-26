@@ -50,9 +50,19 @@ const TypingGamePage = () => {
   const newWrongAnswerSound = useRef<HTMLAudioElement | null>(null);
   const lifeDrainingSound = useRef<HTMLAudioElement | null>(null);
   const specialWordSound = useRef<HTMLAudioElement | null>(null);
+  const lobbyMusic = useRef<HTMLAudioElement | null>(null);
+  const clickSound = useRef<HTMLAudioElement | null>(null);
+  // const finalRoundMusic = useRef<HTMLAudioElement | null>(null);
 
   const playBackgroundMusic = () => {
-    let bgMusicUrl = difficulty === 3 ? 'game/greatYJ.mp3' : 'game/SeoulVibes.mp3';
+    let bgMusicUrl;
+    if (difficulty === 3) {
+      bgMusicUrl = 'game/greatYJ.mp3';
+      // } else if (difficulty === 5) {
+      //   bgMusicUrl = 'game/FinalRound.mp3';
+    } else {
+      bgMusicUrl = 'game/SeoulVibes.mp3';
+    }
     if (backgroundMusic.current) {
       if (backgroundMusic.current.src !== bgMusicUrl) {
         // 소스가 업데이트가 필요한지 확인
@@ -81,6 +91,9 @@ const TypingGamePage = () => {
       newWrongAnswerSound.current = new Audio('game/wrongAnswer.wav');
       lifeDrainingSound.current = new Audio('game/failure.wav');
       specialWordSound.current = new Audio('game/specialWord.wav');
+      lobbyMusic.current = new Audio('game/Lobby.mp3');
+      clickSound.current = new Audio('game/clickSound.wav');
+      // finalRoundMusic.current = new Audio('game/FinalRound.mp3');
 
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
@@ -90,6 +103,9 @@ const TypingGamePage = () => {
         if (levelUp.current) levelUp.current.pause();
         if (lifeDrainingSound.current) lifeDrainingSound.current.pause();
         if (specialWordSound.current) specialWordSound.current.pause();
+        if (lobbyMusic.current) lobbyMusic.current.pause();
+        if (clickSound.current) clickSound.current.pause();
+        // if (finalRoundMusic.current) finalRoundMusic.current.pause();
       };
     }
   }, []);
@@ -103,7 +119,18 @@ const TypingGamePage = () => {
     if (levelUp.current) levelUp.current.volume = volume;
     if (lifeDrainingSound.current) lifeDrainingSound.current.volume = volume;
     if (specialWordSound.current) specialWordSound.current.volume = volume;
+    if (clickSound.current) clickSound.current.volume = volume;
   }, [volume]);
+
+  useEffect(() => {
+    if (!gameStarted && lobbyMusic.current) {
+      lobbyMusic.current.play();
+      lobbyMusic.current.loop = true;
+    } else if (gameStarted && lobbyMusic.current) {
+      lobbyMusic.current.pause();
+      lobbyMusic.current.currentTime = 0; // 음악을 처음으로 되돌림
+    }
+  }, [gameStarted]);
 
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
@@ -285,6 +312,7 @@ const TypingGamePage = () => {
   };
 
   const handleDifficultyChange = (newDifficulty: number) => {
+    playClickSound();
     if (newDifficulty >= 1 && newDifficulty <= maxDifficulty && newDifficulty !== difficulty) {
       setDifficulty(newDifficulty);
       if (gameStarted) {
@@ -378,6 +406,12 @@ const TypingGamePage = () => {
     setTimeout(() => {
       setFrozenEffect(false); // 일정 시간 후 배경색을 원래대로 돌립니다
     }, 5000);
+  };
+
+  const playClickSound = () => {
+    if (clickSound.current) {
+      clickSound.current.play();
+    }
   };
 
   return (

@@ -21,7 +21,7 @@ const Home = ({ newSection }: { newSection: React.ReactNode }) => {
         if (user) {
           const id = user.id;
           const email = user.email ?? '';
-          const nickname = email.split('@')[0];
+          const nickname = email.split('@')[0].substring(0, 8);
 
           const { data: existingProfile, error } = await supabase
             .from('profiles')
