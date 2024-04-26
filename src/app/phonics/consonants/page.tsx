@@ -12,7 +12,7 @@ const ConsonantsPage = () => {
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]', name: '기역', audio: '/audio/consonants/giyeok.wav' },
     { letter: 'ㄴ', read: '[n]', name: '니은', audio: '/audio/consonants/nieun.wav' },
-    { letter: 'ㅁ', read: '[m]', name: '미음', audio: '/audio/consonants/digeut.wav' },
+    { letter: 'ㅁ', read: '[m]', name: '미음', audio: '/audio/consonants/mieum.wav' },
     { letter: 'ㅅ', read: '[s]', name: '시옷', audio: '/audio/consonants/shiot.wav' },
     { letter: 'ㅇ', read: '[ŋ]', name: '이응', audio: '/audio/consonants/ieung.wav' },
     { letter: null, read: null, name: null }, //5
