@@ -17,6 +17,7 @@ import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
 import { debounce } from 'lodash';
 
 import { QuestionType, type Question } from '@/types/quizzes';
+import { MobileHeader } from '@/components/common/MobileHeader';
 
 const QuizFormPage = () => {
   const [level, setLevel] = useState<number>(0);
@@ -214,6 +215,9 @@ const QuizFormPage = () => {
 
   return (
     <>
+      <div className="sm:block hidden">
+        <MobileHeader backPage="/quiz/list" text="퀴즈 만들기" />
+      </div>
       <SubHeader text={m('SUBHEADER_TEXT')} />
       <QuizForm
         questions={questions}
