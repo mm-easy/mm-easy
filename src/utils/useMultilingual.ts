@@ -25,6 +25,8 @@ import { langAtom } from '@/store/store';
 
 import type { StringEssetType } from '@/types/langs';
 import MOBILE_MENU_STRINGS from '@/constant/locales/components/mobileMenu';
+import CONSONANTS_STRINGS from '@/constant/locales/hangul/consonants';
+import VOWELS_STRINGS from '@/constant/locales/hangul/vowels';
 
 export default function useMultilingual(assets: string) {
   const [lang] = useAtom(langAtom);
@@ -76,6 +78,10 @@ export default function useMultilingual(assets: string) {
     assetsObject = ADMIN_STRINGS;
   } else if (assets === 'mobile-menu') {
     assetsObject = MOBILE_MENU_STRINGS;
+  } else if (assets === 'hangul-consonants') {
+    assetsObject = CONSONANTS_STRINGS;
+  } else if (assets === 'hangul-vowels') {
+    assetsObject = VOWELS_STRINGS;
   } else {
     assetsObject = QUIZLIST_STRINGS;
   }

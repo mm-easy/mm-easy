@@ -4,11 +4,17 @@ import { storageUrl } from '@/utils/supabase/storage';
 import PhonicsLayout from '../PhonicsLayout';
 import { useState } from 'react';
 import Image from 'next/image';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const VowelPage = () => {
   const [activeTab, setActiveTab] = useState('basicVowels');
   const [letter, setLetter] = useState('');
   const [letterName, setLetterName] = useState('');
+
+  const [lang] = useAtom(langAtom);
+  const m = useMultilingual('hangul-vowels');
 
   const basicVowelLabels = [
     { letter: 'ㅏ', read: '[a]', name: '아', audio: '/audio/vowels/a.wav' },
@@ -61,7 +67,7 @@ const VowelPage = () => {
                 setLetter('');
               }}
             >
-              기본모음
+              {m('VOWEL_MENU1')}
             </li>
             <li
               className={`w-[50%] pb-3 ${
@@ -73,14 +79,14 @@ const VowelPage = () => {
                 setLetter('');
               }}
             >
-              합자
+              {m('VOWEL_MENU2')}
             </li>
           </ul>
         </nav>
         {activeTab === 'basicVowels' && (
           <>
-            <p className="text-xl font-bold">한글의 모음 글자는 21자이다. 이 중에서 10자가 기본 모음 글자이다.</p>
-            <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
+            <p className="text-xl font-bold">{m('VOWEL_TITLE')}</p>
+            <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
             <div className="mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {basicVowelLabels.map((item, index) => (
@@ -115,28 +121,16 @@ const VowelPage = () => {
                   <p className="absolute text-9xl font-bold text-pointColor1">{letter}</p>
                 </div>
                 <p className="text-center items-center">
-                  글자이름 <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
+                  {m('LETTER_NAME')} <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
                 </p>
               </div>
-            </div>
-            <div className="py-14 text-center leading-9">
-              <p>
-                모음 글자를 처음 만들 때 ·, ㅡ, ㅣ의 형태를 기본으로 삼았다.
-                <br />
-                <span className="text-pointColor1 font-bold">ㆍ는 하늘의 둥근 모양</span>을,{' '}
-                <span className="text-pointColor1 font-bold">ㅡ는 땅의 평평한 모양</span>을,{' '}
-                <span className="text-pointColor1 font-bold">ㅣ는 꼿꼿이 서 있는 사람의 모양</span>을 본뜬 것이다.
-                <br />
-                이는 만물의 근본 요소를 하늘, 땅, 사람이라고 생각한 동양 철학을 적용한 것이다.
-                <br />이 세 글자의 조합을 통해 기본 모음 글자 10자를 만들었다. ·는 현재 쓰지 않는 글자이다.
-              </p>
             </div>
           </>
         )}
         {activeTab === 'combinedVowels' && (
           <>
-            <p className="text-xl font-bold">기본 모음 글자의 조합으로 나머지 모음 글자를 만들었다.</p>
-            <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
+            <p className="text-xl font-bold">{m('C_VOWEL_TITLE')}</p>
+            <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
             <div className="mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {combinedVowelLabels.map((item, index) => (
@@ -171,24 +165,38 @@ const VowelPage = () => {
                   <p className="absolute text-9xl font-bold text-pointColor1">{letter}</p>
                 </div>
                 <p className="text-center items-center">
-                  글자이름 <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
+                  {m('LETTER_NAME')} <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
                 </p>
               </div>
             </div>
-            <div className="py-14 text-center leading-9">
-              <p>
-                모음 글자를 처음 만들 때 ·, ㅡ, ㅣ의 형태를 기본으로 삼았다.
-                <br />
+          </>
+        )}
+        <div className="py-14 text-center leading-9">
+          <p>
+            {m('B_VOWEL_INFO1')}
+            <br />
+            {lang === 'ko' && (
+              <>
                 <span className="text-pointColor1 font-bold">ㆍ는 하늘의 둥근 모양</span>을,{' '}
                 <span className="text-pointColor1 font-bold">ㅡ는 땅의 평평한 모양</span>을,{' '}
                 <span className="text-pointColor1 font-bold">ㅣ는 꼿꼿이 서 있는 사람의 모양</span>을 본뜬 것이다.
-                <br />
-                이는 만물의 근본 요소를 하늘, 땅, 사람이라고 생각한 동양 철학을 적용한 것이다.
-                <br />이 세 글자의 조합을 통해 기본 모음 글자 10자를 만들었다. ·는 현재 쓰지 않는 글자이다.
-              </p>
-            </div>
-          </>
-        )}
+              </>
+            )}
+            {lang === 'en' && (
+              <>
+                <span className="text-pointColor1 font-bold">
+                  {m('B_VOWEL_INFO2')}
+                  <br />
+                  {m('B_VOWEL_INFO3')}
+                </span>
+              </>
+            )}
+            <br />
+            {m('B_VOWEL_INFO4')}
+            <br />
+            {m('B_VOWEL_INFO5')}
+          </p>
+        </div>
       </section>
     </div>
   );
