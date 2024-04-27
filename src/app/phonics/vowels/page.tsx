@@ -52,14 +52,15 @@ const VowelPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-[16%_84%] bgColor1">
+    <div className="sm:block grid grid-cols-[16%_84%] bgColor1">
       <PhonicsLayout />
       <section className="flex flex-col justify-center items-center">
-        <nav className="mt-14 sm:pb-0 w-[70%] pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
-          <ul className="sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
+        <nav className="sm:mt-8 sm:mb-6 mt-14 sm:pb-0 w-[70%] pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
+          <ul className="sm:gap-2 sm:border-0 sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
             <li
-              className={`w-[50%] pb-3 ${
-                activeTab === 'basicVowels' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
+              className={`sm:h-7 sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-20 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
+                activeTab === 'basicVowels' &&
+                'sm:bg-pointColor1 sm:text-white sm:rounded-xl sm:border-1 font-bold border-solid border-b-3'
               }`}
               onClick={() => {
                 setActiveTab('basicVowels');
@@ -70,8 +71,9 @@ const VowelPage = () => {
               {m('VOWEL_MENU1')}
             </li>
             <li
-              className={`w-[50%] pb-3 ${
-                activeTab === 'combinedVowels' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
+              className={`sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-20 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
+                activeTab === 'combinedVowels' &&
+                'sm:bg-pointColor1 sm:text-white sm:rounded-xl sm:border-1 font-bold border-solid border-b-3'
               }`}
               onClick={() => {
                 setActiveTab('combinedVowels');
@@ -84,10 +86,14 @@ const VowelPage = () => {
           </ul>
         </nav>
         {activeTab === 'basicVowels' && (
-          <>
-            <p className="text-xl font-bold">{m('VOWEL_TITLE')}</p>
-            <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
-            <div className="mt-14 flex gap-20 items-start">
+          <div>
+            <div className='text-center'>
+              <p className="sm:text-base sm:hidden text-xl font-bold">{m('VOWEL_TITLE')}</p>
+              <p className="sm:block sm:text-base text-xl font-bold hidden">{m('VOWEL_TITLE1')}</p>
+              <p className="sm:block sm:text-base text-xl font-bold hidden">{m('VOWEL_TITLE2')}</p>
+              <p className="sm:font-semibold sm:mt-10 sm:text-xs text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
+            </div>
+            <div className="sm:gap-10 sm:mt-4 sm:flex-col-reverse sm:items-center mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {basicVowelLabels.map((item, index) => (
                   <div
@@ -103,7 +109,7 @@ const VowelPage = () => {
                   >
                     <>
                       <p className="text-xl font-bold">{item.letter}</p>
-                      <p className="text-[#C1DDFF] font-bold">{item.read}</p>
+                      <p className="sm:text-xs text-[#C1DDFF] font-bold">{item.read}</p>
                     </>
                   </div>
                 ))}
@@ -125,13 +131,13 @@ const VowelPage = () => {
                 </p>
               </div>
             </div>
-          </>
+          </div>
         )}
         {activeTab === 'combinedVowels' && (
           <>
-            <p className="text-xl font-bold">{m('C_VOWEL_TITLE')}</p>
-            <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
-            <div className="mt-14 flex gap-20 items-start">
+            <p className="sm:text-base text-xl font-bold">{m('C_VOWEL_TITLE')}</p>
+            <p className="sm:font-semibold sm:mt-10 sm:text-xs text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
+            <div className="sm:gap-10 sm:mt-4 sm:flex-col-reverse sm:items-center mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {combinedVowelLabels.map((item, index) => (
                   <div
@@ -147,7 +153,7 @@ const VowelPage = () => {
                   >
                     <>
                       <p className="text-xl font-bold">{item.letter}</p>
-                      <p className="text-[#C1DDFF] font-bold">{item.read}</p>
+                      <p className="sm:text-xs text-[#C1DDFF] font-bold">{item.read}</p>
                     </>
                   </div>
                 ))}
@@ -171,7 +177,7 @@ const VowelPage = () => {
             </div>
           </>
         )}
-        <div className="py-14 text-center leading-9">
+        <div className="sm:pb-28 sm:pt-10 sm:text-[13px] sm:leading-7 py-14 text-center leading-9">
           <p>
             {m('B_VOWEL_INFO1')}
             <br />
@@ -179,6 +185,7 @@ const VowelPage = () => {
               <>
                 <span className="text-pointColor1 font-bold">ㆍ는 하늘의 둥근 모양</span>을,{' '}
                 <span className="text-pointColor1 font-bold">ㅡ는 땅의 평평한 모양</span>을,{' '}
+                <br/>
                 <span className="text-pointColor1 font-bold">ㅣ는 꼿꼿이 서 있는 사람의 모양</span>을 본뜬 것이다.
               </>
             )}
