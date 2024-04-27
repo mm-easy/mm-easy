@@ -7,7 +7,7 @@ import Infopeople from '@/assets/team/info_people.png';
 import InfoIcon1 from '@/assets/info_icon_b3.png';
 import InfoIcon2 from '@/assets/info_icon_b2.png';
 import InfoIcon3 from '@/assets/info_icon_b1.png';
-import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
+import LogoHorizontal1 from '@/assets/logo/logo_horizontal_1.png';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import InfoDesign1 from '@/assets/info_design_1.png';
 import InfoDesign2 from '@/assets/info_design_2.png';
@@ -276,8 +276,7 @@ const AboutPage = () => {
           })}
         </div>
       </article>
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
     </main>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import DaejangContent from '@/assets/logo_circle_blue 2.png';
+import DaejangContent from '@/assets/logo/logo_circle_blue 2.png';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import { Quiz } from '@/types/quizzes';
@@ -102,8 +102,7 @@ const QuizList = ({
           ))}
         {showModal && <RecommendLoginModal id={quizId} proceedWithoutLogin={handleMoveQuizTry} />}
       </div>
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-48"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-48" />
     </main>
   );
 };
