@@ -65,7 +65,7 @@ const QuizSection = () => {
           ))}
         </Swiper>
       </div>
-      <section className="px-6 py-4 grid grid-cols-4 gap-5 flex:block sm:hidden">
+      <section className="px-11 py-4 grid grid-cols-4 gap-10 flex:block sm:hidden">
         {quiz?.map((quiz) => (
           <div
             key={quiz.id}
