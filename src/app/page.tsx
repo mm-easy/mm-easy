@@ -1,9 +1,8 @@
-import React from 'react';
 import Home from './page.client';
-import NewsSection from './(main)/(components)/NewsSection';
+import NewsData from './(main)/NewsData';
 
 const page = () => {
-  return <Home newSection={<NewsSection />} />;
+  return <Home newsData={<NewsData />} />;
 };
 
 export default page;

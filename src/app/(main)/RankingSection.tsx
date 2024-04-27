@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SlRefresh } from 'react-icons/sl';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
+import RankingBtn from './RankingBtn';
 
 const RankingSection = () => {
   const m = useMultilingual('ranking-section');
@@ -208,36 +209,24 @@ const RankingSection = () => {
         <div className="flex-col items-center w-full px-6 py-4 justify-between border-none">
           <p className="text-lg font-bold text-pointColor1">{m('HALL_OF_FAME')}</p>
           <div className="flex justify-center mt-4 items-center gap-4">
-            <button
+            <RankingBtn
               onClick={() => setActiveRanking('quizCreator')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
-                activeRanking === 'quizCreator'
-                  ? 'bg-pointColor1 text-white font-bold'
-                  : 'bg-white text-pointColor1 font-bold'
-              }`}
-            >
-              {m('RANKING_BUTTON1')}
-            </button>
-            <button
+              activeRanking={activeRanking}
+              rankingTitle="quizCreator"
+              text={m('RANKING_BUTTON1')}
+            />
+            <RankingBtn
               onClick={() => setActiveRanking('quizMaster')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
-                activeRanking === 'quizMaster'
-                  ? 'bg-pointColor1 text-white font-bold'
-                  : 'bg-white text-pointColor1 font-bold'
-              }`}
-            >
-              {m('RANKING_BUTTON2')}
-            </button>
-            <button
+              activeRanking={activeRanking}
+              rankingTitle="quizMaster"
+              text={m('RANKING_BUTTON2')}
+            />
+            <RankingBtn
               onClick={() => setActiveRanking('keyboardWarrior')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
-                activeRanking === 'keyboardWarrior'
-                  ? 'bg-pointColor1 text-white font-bold'
-                  : 'bg-white text-pointColor1 font-bold'
-              }`}
-            >
-              {m('RANKING_BUTTON3')}
-            </button>
+              activeRanking={activeRanking}
+              rankingTitle="keyboardWarrior"
+              text={m('RANKING_BUTTON3')}
+            />
           </div>
         </div>
         <section className="flex bg-bgColor2 items-center">
