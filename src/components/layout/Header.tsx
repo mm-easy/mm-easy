@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import MainLogo from '@/assets/logo_horizontal_1.png';
-import MainLogoWhite from '@/assets/logo_horizontal_4.png';
+import MainLogo from '@/assets/logo/logo_horizontal_1.png';
+import MainLogoWhite from '@/assets/logo/logo_horizontal_4.png';
 import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
 import useMultilingual from '@/utils/useMultilingual';

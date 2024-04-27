@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Face2 from '@/assets/face_2.png';
 import { getUser } from '@/api/users';
 import { supabase } from '@/utils/supabase/supabase';
 import { DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
