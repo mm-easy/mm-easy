@@ -158,7 +158,7 @@ const SelectQuizLevel = () => {
           <p className="sm:block sm:font-bold sm:text-pointColor1 sm:mt-5 hidden">{m('QUIZ_LEVEL_3')}</p>
         </div>
       </main>
-      <main className="sm:hidden w-full h-[400px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
+      <main className="sm:hidden w-full h-[452px] bg-bgColor2 border-b-2 border-pointColor1 flex flex-col justify-center items-center">
         <div className="mt-5 absolute top-20 z-10 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">{m('SELECT_LEVEL_TITLE')}</p>
           <p
@@ -198,7 +198,7 @@ const SelectQuizLevel = () => {
               quality={100}
               className={`w-full h-full transform transition-transform duration-500 ease-in-out border-solid border-2 border-pointColor1 rounded-[30px] rotate-[-2deg] cursor-pointer ${
                 selectedLevel === 2
-                  ? 'translate-y-[65%] z-10'
+                  ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
                     ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
                     : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
