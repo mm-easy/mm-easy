@@ -44,6 +44,31 @@
       <th>
         커뮤니티 페이지
       </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_main.png"  width ="1000"/>
+    </td>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_quiz.png" width ="1000"/>
+    </td>
+    <td>
+     <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_typing-game.png" width ="1000"/>
+    </td>
+       <td>
+       <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_phonics.png" width ="1000"/>
+    </td>
+       <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_community.png" width ="1000"/>
+    </td>
+    
+  </tr>
+  </tbody>
+  <br>
+  <thead>
+    <tr>
        <th>
         소개 페이지
       </th>
@@ -61,34 +86,20 @@
   </tr>
   <tr>
     <td>
-      <img src="public/assets/README/wireframe/wireframe_main.png"  width ="1000"/>
-    </td>
-    <td>
-      <img src="public/assets/README/wireframe/wireframe_quiz.png" width ="1000"/>
-    </td>
-    <td>
-     <img src="public/assets/README/wireframe/wireframe_typing-game.png" width ="1000"/>
-    </td>
-       <td>
-       <img src="public/assets/README/wireframe/wireframe_phonics.png" width ="1000"/>
-    </td>
-       <td>
-      <img src="public/assets/README/wireframe/wireframe_community.png" width ="1000"/>
-    </td>
-    <td>
-      <img src="public/assets/README/wireframe/wireframe_about.png" width ="1000"/>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_about.png" width ="500"/>
     </td>
 		<td>
-      <img src="public/assets/README/wireframe/wireframe_admin.png" width ="1000"/>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_admin.png" width ="1000"/>
     </td>
 		<td>
-      <img src="public/assets/README/wireframe/wireframe_login.png" width ="1000"/>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_login.png" width ="1000"/>
     </td>
 		<td>
-      <img src="public/assets/README/wireframe/wireframe_profile.png" width ="1000"/>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/wireframe_profile.png" width ="1000"/>
     </td>
   </tr>
   </tbody>
+	
 </table>
 
 <br>
