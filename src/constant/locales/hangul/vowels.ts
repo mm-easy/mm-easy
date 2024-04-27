@@ -11,6 +11,14 @@ const VOWELS_STRINGS = {
     ko: '한글의 모음 글자는 21자이다. 이 중에서 10자가 기본 모음 글자이다.',
     en: 'There are 21 vowel letters in Hangul. Among these, 10 are basic vowel letters.'
   },
+  VOWEL_TITLE1: {
+    ko: '한글의 모음 글자는 21자이다.',
+    en: 'There are 21 vowel letters in Hangul.'
+  },
+  VOWEL_TITLE2: {
+    ko: '이 중에서 10자가 기본 모음 글자이다.',
+    en: 'Among these, 10 are basic vowel letters.'
+  },
   GUIDE_TEXT: {
     ko: '글자를 눌러 발음을 들어보세요.',
     en: 'Click on the letter to hear the pronunciation.'
