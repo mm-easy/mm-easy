@@ -119,6 +119,304 @@
 
 <br>
 
+# 화면 구성 및 기능
+
+## 1. 메인페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    메인 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/main.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 2. 퀴즈 페이지
+
+ <table>
+<thead>
+  <tr>
+  <th>
+    퀴즈 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/quiz_1.JPG"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        퀴즈 만들기
+      </th>
+      <th>
+        퀴즈 풀기
+      </th>
+      <th>
+        퀴즈
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/quiz_2.JPG"/>
+      </td>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/quiz_3.JPG"/>
+      </td>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/quiz_4.JPG"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+ <br>
+
+## 3. 타자연습 페이지
+
+  <table>
+<thead>
+  <tr>
+  <th>
+    타자연습 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/game_1.JPG"/>
+    </td>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/game_2.JPG"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+<br>
+
+## 4. 한글공부 페이지
+
+  <table>
+<thead>
+  <tr>
+  <th>
+    한글공부 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/phonics_1.png"/>
+    </td>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/phonics_2.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+<br>
+
+## 5. 커뮤니티 페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/community_1.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        커뮤니티 상세
+      </th>
+      <th>
+        커뮤니티 글 작성
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/community_2.png"/>
+      </td>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/community_3.png"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+## 6. 소개 페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/about.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 7. 관리자 페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/admin.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 8. 로그인 페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/login_1.JPG"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        비밀번호 작성 시
+      </th>
+      <th>
+        회원가입
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/login_2.JPG"/>
+      </td>
+      <td>
+        <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/login_3.JPG"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 9. 마이페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/profile.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 9. 나의활동 페이지
+
+<table>
+<thead>
+  <tr>
+  <th>
+    커뮤니티 페이지
+  </th>
+    </thead>
+  <tbody>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/my-activity.png"/>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br><br>
+
+# 회고
+
 <br>
 
 # 파일구조
