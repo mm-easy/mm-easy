@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/supabase';
-import QuizSection from './(main)/(components)/QuizSection';
-import CommunitySection from './(main)/(components)/CommunitySection';
-import Banner from './(main)/(components)/Banner';
-import RankingSection from './(main)/(components)/RankingSection';
-import Footer from './(main)/(components)/Footer';
+import QuizSection from './(main)/QuizSection';
+import CommunitySection from './(main)/CommunitySection';
+import Banner from './(main)/Banner';
+import RankingSection from './(main)/RankingSection';
+import Footer from './(main)/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
-import NewsSection from './(main)/(components)/NewsSection';
+import NewsSection from './(main)/NewsSection';
 
 const Home = ({ newsData }: { newsData: React.ReactNode }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
