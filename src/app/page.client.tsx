@@ -1,15 +1,16 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { supabase } from '@/utils/supabase/supabase';
 import QuizSection from './(main)/(components)/QuizSection';
 import CommunitySection from './(main)/(components)/CommunitySection';
 import Banner from './(main)/(components)/Banner';
 import RankingSection from './(main)/(components)/RankingSection';
 import Footer from './(main)/(components)/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase/supabase';
+import NewsSection from './(main)/(components)/NewsSection';
 
-const Home = ({ newSection }: { newSection: React.ReactNode }) => {
+const Home = ({ newsData }: { newsData: React.ReactNode }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   /** 소셜 로그인 가입 시 profiles 업데이트 */
@@ -72,10 +73,10 @@ const Home = ({ newSection }: { newSection: React.ReactNode }) => {
       <QuizSection />
       <RankingSection />
       <CommunitySection />
-      {newSection}
+      <NewsSection />
+      {newsData}
       <Footer />
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
     </div>
   );
 };
