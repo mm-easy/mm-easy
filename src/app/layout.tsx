@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify';
 import type { Metadata } from 'next';
 import MobileMenu from '@/components/layout/MobileMenu';
 import { gothic_a1 } from './styles/font';
-import { myFont } from './styles/localFont';
 
 export const metadata: Metadata = {
   title: '뭔말이지?',
@@ -26,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`text-blackColor bg-bgColor1 ${myFont.className}`}>
+      <body className={`text-blackColor bg-bgColor1 ${gothic_a1.className}`}>
         <main className="mx-auto bg-white w-[1444px] border-x-2 border-solid border-pointColor1 md:w-full md:border-0">
           <Provider>
             <QueryProvider>

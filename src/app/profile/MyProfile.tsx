@@ -28,7 +28,6 @@ const MyProfile = ({ data }: { data: User }) => {
 
   /** 수정 모달에서 취소하기 버튼 클릭 시 */
   const handleCancelBtn = () => {
-    if (!window.confirm(m('CANCEL_EDITING'))) return;
     setFile(null);
     setSelectedImg(`${profileStorageUrl}/${data.avatar_img_url}`);
     setIsEditing(false);

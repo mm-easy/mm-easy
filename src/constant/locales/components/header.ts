@@ -19,6 +19,10 @@ const HEADER_STRINGS = {
     ko: '관리자',
     en: 'Admin'
   },
+  HEADER_MENU6: {
+    ko: '한글 공부',
+    en: 'Learn Hangul'
+  },
   HEADER_LOGIN: {
     ko: '로그인',
     en: 'Log in'

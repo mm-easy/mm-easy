@@ -4,15 +4,21 @@ import Image from 'next/image';
 import PhonicsLayout from '../PhonicsLayout';
 import { storageUrl } from '@/utils/supabase/storage';
 import { useState } from 'react';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const ConsonantsPage = () => {
   const [letter, setLetter] = useState('');
   const [letterName, setLetterName] = useState('');
+  const [lang] = useAtom(langAtom);
+
+  const m = useMultilingual('hangul-consonants');
 
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]', name: '기역', audio: '/audio/consonants/giyeok.wav' },
     { letter: 'ㄴ', read: '[n]', name: '니은', audio: '/audio/consonants/nieun.wav' },
-    { letter: 'ㅁ', read: '[m]', name: '디귿', audio: '/audio/consonants/digeut.wav' },
+    { letter: 'ㅁ', read: '[m]', name: '미음', audio: '/audio/consonants/mieum.wav' },
     { letter: 'ㅅ', read: '[s]', name: '시옷', audio: '/audio/consonants/shiot.wav' },
     { letter: 'ㅇ', read: '[ŋ]', name: '이응', audio: '/audio/consonants/ieung.wav' },
     { letter: null, read: null, name: null }, //5
@@ -51,15 +57,17 @@ const ConsonantsPage = () => {
     <div className="grid grid-cols-[16%_84%] bgColor1">
       <PhonicsLayout />
       <section className="flex flex-col items-center">
-        <p className="text-xl font-bold mt-14">한글의 자음 글자는 모두 19자이다.</p>
-        <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
-        <div className="mt-14 flex gap-10">
+        <p className="text-xl font-bold mt-14">{m('CONSONANT_TITLE')}</p>
+        <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
+        <div className="mt-14 flex gap-20">
           <div className="grid grid-cols-5 gap-4 select-none">
             {consonantLabels.map((item, index) => (
               <div
                 key={index}
-                className={`flex flex-col cursor-pointer text-pointColor1 hover:text-white justify-center items-center w-20 h-20 border-solid border-pointColor1 rounded-full ${
-                  item.letter && index !== 24 ? 'border hover:bg-pointColor1' : 'bg-bgColor2 hover:bg-bgColor2'
+                className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-16 h-16 border-solid border-pointColor1 rounded-full ${
+                  item.letter && index !== 24
+                    ? 'cursor-pointer border hover:bg-pointColor1'
+                    : 'bg-bgColor2 hover:bg-bgColor2'
                 }`}
                 onClick={(e) => {
                   const parentElement = (e.target as HTMLElement).parentNode as HTMLElement;
@@ -91,20 +99,20 @@ const ConsonantsPage = () => {
                       id="18"
                       className="z-10 w-1/2 h-full flex flex-col justify-center items-center hover:bg-pointColor1 hover:text-white"
                     >
-                      <p className="text-2xl font-bold">{item.letter}</p>
+                      <p className="text-xl font-bold">{item.letter}</p>
                       <p className="text-[#C1DDFF] font-bold">{item.read}</p>
                     </div>
                     <div
                       id="24"
                       className="z-10 w-1/2 h-full flex flex-col justify-center items-center border-solid border-l-1 border-pointColor1 hover:text-white hover:bg-pointColor1"
                     >
-                      <p className="text-2xl font-bold">{`${consonantLabels[index + 6]?.letter}`}</p>
+                      <p className="text-xl font-bold">{`${consonantLabels[index + 6]?.letter}`}</p>
                       <p className="text-[#C1DDFF] font-bold">{`${consonantLabels[index + 6]?.read}`}</p>
                     </div>
                   </div>
                 ) : index === 24 ? null : (
                   <>
-                    <p className="text-2xl font-bold">{item.letter}</p>
+                    <p className="text-xl font-bold">{item.letter}</p>
                     <p className="text-[#C1DDFF] font-bold">{item.read}</p>
                   </>
                 )}
@@ -112,31 +120,34 @@ const ConsonantsPage = () => {
             ))}
           </div>
           <div className="flex flex-col gap-4">
-            <div className="relative flex justify-center items-center w-64 h-64 bg-bgColor">
+            <div className="relative flex justify-center items-center w-60 h-60 bg-bgColor">
               <Image
                 src={`${storageUrl}/assets/hangeul_background.png`}
                 alt=""
-                width={256}
-                height={256}
+                width={240}
+                height={240}
                 quality={100}
                 className="object-contain"
               />
               <p className="absolute text-9xl font-bold text-pointColor1">{letter}</p>
             </div>
             <p className="text-center items-center">
-              글자이름 <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
+              {m('LETTER_NAME')} <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
             </p>
           </div>
         </div>
         <div className="py-14 text-center leading-9">
           <p>
-            자음 글자는 자음 소리가 나는 발음 기관의 형태를 본떠
+            <span className="text-pointColor1 font-bold">{lang === 'en' && m('CONSONANTS')}</span>{' '}
+            {m('CONSONANT_INFO1')}
             <br />
-            <span className="text-pointColor1 font-bold">ㄱ, ㄴ, ㅁ, ㅅ, ㅇ</span> 다섯 글자를 만들었다. <br />
-            이 다섯 글자를 기초로 해서 소리가 세어질수록 획을 더해 나머지 글자를 만들었다.
+            <span className="text-pointColor1 font-bold">{lang === 'ko' && m('CONSONANTS')}</span>{' '}
+            {m('CONSONANT_INFO2')}
             <br />
-            <span className="text-pointColor1 font-bold">ㄲ, ㄸ, ㅃ, ㅆ, ㅉ</span>은 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ을나란히 써서
-            만든 것이다.
+            {m('CONSONANT_INFO3')}
+            <br />
+            <span className="text-pointColor1 font-bold">{m('SSANG_CONSONANTS')}</span>
+            {m('CONSONANT_INFO4')}
           </p>
         </div>
       </section>

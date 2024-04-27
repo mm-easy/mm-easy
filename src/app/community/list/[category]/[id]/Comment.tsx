@@ -40,6 +40,10 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   /**댓글 작성 */
   const handleSubmitBtn = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!content) {
+      toast.warning(m('COMMUNITY_COMMENT_NOT'));
+      return;
+    }
     if (!profile) {
       toast.warning(m('COMMUNITY_COMMENT_CHECK_LOGIN'));
       setContent('');
