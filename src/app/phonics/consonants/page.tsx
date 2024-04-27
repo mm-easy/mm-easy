@@ -4,10 +4,16 @@ import Image from 'next/image';
 import PhonicsLayout from '../PhonicsLayout';
 import { storageUrl } from '@/utils/supabase/storage';
 import { useState } from 'react';
+import useMultilingual from '@/utils/useMultilingual';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 
 const ConsonantsPage = () => {
   const [letter, setLetter] = useState('');
   const [letterName, setLetterName] = useState('');
+  const [lang] = useAtom(langAtom);
+
+  const m = useMultilingual('hangul-consonants');
 
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]', name: '기역', audio: '/audio/consonants/giyeok.wav' },
@@ -51,8 +57,8 @@ const ConsonantsPage = () => {
     <div className="grid grid-cols-[16%_84%] bgColor1">
       <PhonicsLayout />
       <section className="flex flex-col items-center">
-        <p className="text-xl font-bold mt-14">한글의 자음 글자는 모두 19자이다.</p>
-        <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
+        <p className="text-xl font-bold mt-14">{m('CONSONANT_TITLE')}</p>
+        <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
         <div className="mt-14 flex gap-20">
           <div className="grid grid-cols-5 gap-4 select-none">
             {consonantLabels.map((item, index) => (
@@ -126,19 +132,22 @@ const ConsonantsPage = () => {
               <p className="absolute text-9xl font-bold text-pointColor1">{letter}</p>
             </div>
             <p className="text-center items-center">
-              글자이름 <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
+              {m('LETTER_NAME')} <span className="text-pointColor1 font-bold text-lg">{letterName}</span>
             </p>
           </div>
         </div>
         <div className="py-14 text-center leading-9">
           <p>
-            자음 글자는 자음 소리가 나는 발음 기관의 형태를 본떠
+            <span className="text-pointColor1 font-bold">{lang === 'en' && m('CONSONANTS')}</span>{' '}
+            {m('CONSONANT_INFO1')}
             <br />
-            <span className="text-pointColor1 font-bold">ㄱ, ㄴ, ㅁ, ㅅ, ㅇ</span> 다섯 글자를 만들었다. <br />
-            이 다섯 글자를 기초로 해서 소리가 세어질수록 획을 더해 나머지 글자를 만들었다.
+            <span className="text-pointColor1 font-bold">{lang === 'ko' && m('CONSONANTS')}</span>{' '}
+            {m('CONSONANT_INFO2')}
             <br />
-            <span className="text-pointColor1 font-bold">ㄲ, ㄸ, ㅃ, ㅆ, ㅉ</span>은 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ을 나란히 써서
-            만든 것이다.
+            {m('CONSONANT_INFO3')}
+            <br />
+            <span className="text-pointColor1 font-bold">{m('SSANG_CONSONANTS')}</span>
+            {m('CONSONANT_INFO4')}
           </p>
         </div>
       </section>
