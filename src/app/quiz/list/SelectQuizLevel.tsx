@@ -169,7 +169,7 @@ const SelectQuizLevel = () => {
           </p>
         </div>
         <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
-          <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" />
+          <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" py="py-3" />
         </div>
         <div className="flex items-end overflow-hidden mt-30">
           <div className="rotate-[-5deg] ml-5">
