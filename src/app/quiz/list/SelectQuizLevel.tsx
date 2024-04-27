@@ -1,18 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import QuizList from './QuizList';
-import Level1 from '@/assets/quiz/level1.png';
-import Level2 from '@/assets/quiz/level2.png';
-import Level3 from '@/assets/quiz/level3.png';
-import Level1ENG from '@/assets/quiz/card_en_easy.png';
-import Level2ENG from '@/assets/quiz/card_en_medium.png';
-import Level3ENG from '@/assets/quiz/card_en_hard.png';
-import MobileL0 from '@/assets/quiz/face_2.png';
-import MobileL1 from '@/assets/quiz/face_3.png';
-import MobileL2 from '@/assets/quiz/face_4.png';
-import MobileL3 from '@/assets/quiz/face_5.png';
-import LoadingImg from '@/components/common/LoadingImg';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -24,9 +12,22 @@ import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
 
-import type { Quiz } from '@/types/quizzes';
-import useMultilingual from '@/utils/useMultilingual';
+import QuizList from './QuizList';
 import CreateNewQuizBtn from './CreateNewQuizBtn';
+import Level1 from '@/assets/quiz/level1.png';
+import Level2 from '@/assets/quiz/level2.png';
+import Level3 from '@/assets/quiz/level3.png';
+import MobileL0 from '@/assets/quiz/face_2.png';
+import MobileL1 from '@/assets/quiz/face_3.png';
+import MobileL2 from '@/assets/quiz/face_4.png';
+import MobileL3 from '@/assets/quiz/face_5.png';
+import Level1ENG from '@/assets/quiz/card_en_easy.png';
+import Level2ENG from '@/assets/quiz/card_en_medium.png';
+import Level3ENG from '@/assets/quiz/card_en_hard.png';
+import LoadingImg from '@/components/common/LoadingImg';
+import useMultilingual from '@/utils/useMultilingual';
+
+import type { Quiz } from '@/types/quizzes';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
@@ -161,7 +162,7 @@ const SelectQuizLevel = () => {
         <div className="mt-5 absolute top-20 z-10 flex flex-col items-center">
           <p className="text-pointColor1 text-3xl font-bold">{m('SELECT_LEVEL_TITLE')}</p>
           <p
-            className="text-pointColor1 underline underline-offset-4 text-lg font-bold mt-5 cursor-pointer"
+            className="text-pointColor1 underline underline-offset-4 font-bold mt-5 cursor-pointer"
             onClick={() => handleSelectLevel(null)}
           >
             {m('SEE_ALL_QUIZZES')}
