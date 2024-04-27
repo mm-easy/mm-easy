@@ -12,7 +12,7 @@ const ConsonantsPage = () => {
   const consonantLabels = [
     { letter: 'ㄱ', read: '[g/k]', name: '기역', audio: '/audio/consonants/giyeok.wav' },
     { letter: 'ㄴ', read: '[n]', name: '니은', audio: '/audio/consonants/nieun.wav' },
-    { letter: 'ㅁ', read: '[m]', name: '디귿', audio: '/audio/consonants/digeut.wav' },
+    { letter: 'ㅁ', read: '[m]', name: '미음', audio: '/audio/consonants/mieum.wav' },
     { letter: 'ㅅ', read: '[s]', name: '시옷', audio: '/audio/consonants/shiot.wav' },
     { letter: 'ㅇ', read: '[ŋ]', name: '이응', audio: '/audio/consonants/ieung.wav' },
     { letter: null, read: null, name: null }, //5
@@ -58,8 +58,10 @@ const ConsonantsPage = () => {
             {consonantLabels.map((item, index) => (
               <div
                 key={index}
-                className={`flex flex-col cursor-pointer text-pointColor1 hover:text-white justify-center items-center w-20 h-20 border-solid border-pointColor1 rounded-full ${
-                  item.letter && index !== 24 ? 'border hover:bg-pointColor1' : 'bg-bgColor2 hover:bg-bgColor2'
+                className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-20 h-20 border-solid border-pointColor1 rounded-full ${
+                  item.letter && index !== 24
+                    ? 'cursor-pointer border hover:bg-pointColor1'
+                    : 'bg-bgColor2 hover:bg-bgColor2'
                 }`}
                 onClick={(e) => {
                   const parentElement = (e.target as HTMLElement).parentNode as HTMLElement;
