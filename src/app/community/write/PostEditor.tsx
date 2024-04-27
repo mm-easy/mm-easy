@@ -60,7 +60,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     if (onSubmit) {
       onSubmit(values);
     }
-  }, 3000, { 'trailing': false });
+  }, 10000, { 'trailing': false });
 
   const handleSubmit = (event:any) => {
     event.preventDefault();
