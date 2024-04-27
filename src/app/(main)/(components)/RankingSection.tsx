@@ -210,7 +210,7 @@ const RankingSection = () => {
           <div className="flex justify-center mt-4 items-center gap-4">
             <button
               onClick={() => setActiveRanking('quizCreator')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-2 py-0.5 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
                 activeRanking === 'quizCreator'
                   ? 'bg-pointColor1 text-white font-bold'
                   : 'bg-white text-pointColor1 font-bold'
@@ -220,7 +220,7 @@ const RankingSection = () => {
             </button>
             <button
               onClick={() => setActiveRanking('quizMaster')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-2 py-0.5 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
                 activeRanking === 'quizMaster'
                   ? 'bg-pointColor1 text-white font-bold'
                   : 'bg-white text-pointColor1 font-bold'
@@ -230,7 +230,7 @@ const RankingSection = () => {
             </button>
             <button
               onClick={() => setActiveRanking('keyboardWarrior')}
-              className={`px-2 py-1 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-2 py-0.5 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
                 activeRanking === 'keyboardWarrior'
                   ? 'bg-pointColor1 text-white font-bold'
                   : 'bg-white text-pointColor1 font-bold'
