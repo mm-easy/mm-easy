@@ -2,16 +2,16 @@
 
 import Image from 'next/image';
 import QuizList from './QuizList';
-import Level1 from '@/assets/level1.png';
-import Level2 from '@/assets/level2.png';
-import Level3 from '@/assets/level3.png';
-import Level1ENG from '@/assets/card_en_easy.png';
-import Level2ENG from '@/assets/card_en_medium.png';
-import Level3ENG from '@/assets/card_en_hard.png';
-import MobileL0 from '@/assets/face_2.png';
-import MobileL1 from '@/assets/face_3.png';
-import MobileL2 from '@/assets/face_4.png';
-import MobileL3 from '@/assets/face_5.png';
+import Level1 from '@/assets/quiz/level1.png';
+import Level2 from '@/assets/quiz/level2.png';
+import Level3 from '@/assets/quiz/level3.png';
+import Level1ENG from '@/assets/quiz/card_en_easy.png';
+import Level2ENG from '@/assets/quiz/card_en_medium.png';
+import Level3ENG from '@/assets/quiz/card_en_hard.png';
+import MobileL0 from '@/assets/quiz/face_2.png';
+import MobileL1 from '@/assets/quiz/face_3.png';
+import MobileL2 from '@/assets/quiz/face_4.png';
+import MobileL3 from '@/assets/quiz/face_5.png';
 import LoadingImg from '@/components/common/LoadingImg';
 import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
@@ -112,12 +112,12 @@ const SelectQuizLevel = () => {
           selectedLevel === null
             ? 'sm:bg-bgColor2'
             : selectedLevel === 1
-            ? 'sm:bg-[#fff2b2]'
-            : selectedLevel === 2
-            ? 'sm:bg-[#ffcc66]'
-            : selectedLevel === 3
-            ? 'sm:bg-[#ffb266]'
-            : ''
+              ? 'sm:bg-[#fff2b2]'
+              : selectedLevel === 2
+                ? 'sm:bg-[#ffcc66]'
+                : selectedLevel === 3
+                  ? 'sm:bg-[#ffb266]'
+                  : ''
         } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
       >
         <div
@@ -182,8 +182,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -199,8 +199,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[65%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -216,8 +216,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
