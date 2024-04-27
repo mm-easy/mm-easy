@@ -55,7 +55,11 @@ const VowelPage = () => {
               className={`w-[50%] pb-3 ${
                 activeTab === 'basicVowels' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
               }`}
-              onClick={() => setActiveTab('basicVowels')}
+              onClick={() => {
+                setActiveTab('basicVowels');
+                setLetterName('');
+                setLetter('');
+              }}
             >
               기본모음
             </li>
@@ -63,7 +67,11 @@ const VowelPage = () => {
               className={`w-[50%] pb-3 ${
                 activeTab === 'combinedVowels' && 'sm:border-b-[6px] font-bold border-solid border-b-3'
               }`}
-              onClick={() => setActiveTab('combinedVowels')}
+              onClick={() => {
+                setActiveTab('combinedVowels');
+                setLetterName('');
+                setLetter('');
+              }}
             >
               합자
             </li>
@@ -73,12 +81,12 @@ const VowelPage = () => {
           <>
             <p className="text-xl font-bold">한글의 모음 글자는 21자이다. 이 중에서 10자가 기본 모음 글자이다.</p>
             <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
-            <div className="mt-14 flex gap-10 items-start">
+            <div className="mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {basicVowelLabels.map((item, index) => (
                   <div
                     key={index}
-                    className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-20 h-20 border-solid border-pointColor1 rounded-full ${
+                    className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-16 h-16 border-solid border-pointColor1 rounded-full ${
                       item.letter ? 'cursor-pointer border hover:bg-pointColor1' : 'bg-bgColor2 hover:bg-bgColor2'
                     }`}
                     onClick={() => {
@@ -88,19 +96,19 @@ const VowelPage = () => {
                     }}
                   >
                     <>
-                      <p className="text-2xl font-bold">{item.letter}</p>
+                      <p className="text-xl font-bold">{item.letter}</p>
                       <p className="text-[#C1DDFF] font-bold">{item.read}</p>
                     </>
                   </div>
                 ))}
               </div>
               <div className="flex flex-col gap-4">
-                <div className="relative flex justify-center items-center w-64 h-64 bg-bgColor">
+                <div className="relative flex justify-center items-center w-60 h-60 bg-bgColor">
                   <Image
                     src={`${storageUrl}/assets/hangeul_background.png`}
                     alt=""
-                    width={256}
-                    height={256}
+                    width={240}
+                    height={240}
                     quality={100}
                     className="object-contain"
                   />
@@ -129,12 +137,12 @@ const VowelPage = () => {
           <>
             <p className="text-xl font-bold">기본 모음 글자의 조합으로 나머지 모음 글자를 만들었다.</p>
             <p className="text-pointColor1 mt-2">*글자를 눌러 발음을 들어보세요.</p>
-            <div className="mt-14 flex gap-10 items-start">
+            <div className="mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
                 {combinedVowelLabels.map((item, index) => (
                   <div
                     key={index}
-                    className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-20 h-20 border-solid border-pointColor1 rounded-full ${
+                    className={`flex flex-col text-pointColor1 hover:text-white justify-center items-center w-16 h-16 border-solid border-pointColor1 rounded-full ${
                       item.letter ? 'cursor-pointer border hover:bg-pointColor1' : 'bg-bgColor2 hover:bg-bgColor2'
                     }`}
                     onClick={() => {
@@ -144,19 +152,19 @@ const VowelPage = () => {
                     }}
                   >
                     <>
-                      <p className="text-2xl font-bold">{item.letter}</p>
+                      <p className="text-xl font-bold">{item.letter}</p>
                       <p className="text-[#C1DDFF] font-bold">{item.read}</p>
                     </>
                   </div>
                 ))}
               </div>
               <div className="flex flex-col gap-4">
-                <div className="relative flex justify-center items-center w-64 h-64 bg-bgColor">
+                <div className="relative flex justify-center items-center w-60 h-60 bg-bgColor">
                   <Image
                     src={`${storageUrl}/assets/hangeul_background.png`}
                     alt=""
-                    width={256}
-                    height={256}
+                    width={240}
+                    height={240}
                     quality={100}
                     className="object-contain"
                   />
