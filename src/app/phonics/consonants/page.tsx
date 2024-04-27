@@ -54,12 +54,12 @@ const ConsonantsPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-[16%_84%] bgColor1">
+    <div className="sm:block grid grid-cols-[16%_84%] bgColor1">
       <PhonicsLayout />
       <section className="flex flex-col items-center">
-        <p className="text-xl font-bold mt-14">{m('CONSONANT_TITLE')}</p>
-        <p className="text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
-        <div className="mt-14 flex gap-20">
+        <p className="sm:text-lg sm:mt-8 text-xl font-bold mt-14">{m('CONSONANT_TITLE')}</p>
+        <p className="sm:font-semibold sm:mt-10 sm:text-xs text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
+        <div className="sm:gap-10 sm:flex-col-reverse sm:mt-4 mt-14 flex gap-20">
           <div className="grid grid-cols-5 gap-4 select-none">
             {consonantLabels.map((item, index) => (
               <div
@@ -100,26 +100,26 @@ const ConsonantsPage = () => {
                       className="z-10 w-1/2 h-full flex flex-col justify-center items-center hover:bg-pointColor1 hover:text-white"
                     >
                       <p className="text-xl font-bold">{item.letter}</p>
-                      <p className="text-[#C1DDFF] font-bold">{item.read}</p>
+                      <p className="sm:text-xs text-[#C1DDFF] font-bold">{item.read}</p>
                     </div>
                     <div
                       id="24"
                       className="z-10 w-1/2 h-full flex flex-col justify-center items-center border-solid border-l-1 border-pointColor1 hover:text-white hover:bg-pointColor1"
                     >
                       <p className="text-xl font-bold">{`${consonantLabels[index + 6]?.letter}`}</p>
-                      <p className="text-[#C1DDFF] font-bold">{`${consonantLabels[index + 6]?.read}`}</p>
+                      <p className="sm:text-xs text-[#C1DDFF] font-bold">{`${consonantLabels[index + 6]?.read}`}</p>
                     </div>
                   </div>
                 ) : index === 24 ? null : (
                   <>
                     <p className="text-xl font-bold">{item.letter}</p>
-                    <p className="text-[#C1DDFF] font-bold">{item.read}</p>
+                    <p className="sm:text-xs text-[#C1DDFF] font-bold">{item.read}</p>
                   </>
                 )}
               </div>
             ))}
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="sm:items-center flex flex-col gap-4">
             <div className="relative flex justify-center items-center w-60 h-60 bg-bgColor">
               <Image
                 src={`${storageUrl}/assets/hangeul_background.png`}
@@ -136,7 +136,7 @@ const ConsonantsPage = () => {
             </p>
           </div>
         </div>
-        <div className="py-14 text-center leading-9">
+        <div className="sm:pb-28 sm:pt-10 sm:text-[13px] sm:leading-7 py-14 text-center leading-9">
           <p>
             <span className="text-pointColor1 font-bold">{lang === 'en' && m('CONSONANTS')}</span>{' '}
             {m('CONSONANT_INFO1')}
