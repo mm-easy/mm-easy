@@ -1,10 +1,15 @@
 import Link from 'next/link';
 import { loader } from '@/api/naverAPI';
 import { formatToLocaleDateTimeString } from '@/utils/date';
+import ArrowMore from '@/assets/arrow_back_ios_FILL1_wght400_GRAD0_opsz24.svg';
+import tailwindColors from '../../../../tailwind.config';
+
 import type { NewsType } from '@/types/posts';
+import type { TailwindColors } from '@/types/tailwind';
 
 const NewsData = async () => {
   const news = await loader();
+  const { colors } = tailwindColors.theme?.extend as { colors: TailwindColors };
 
   return (
     <section className="px-6 py-4 grid grid-cols-4 gap-5 sm:grid-cols-1 sm:gap-3 sm:py-2">
@@ -29,11 +34,9 @@ const NewsData = async () => {
                   .replace(/&apos;/g, "'")}
               </span>
             </div>
-            <div className="flex justify-end pt-4">
-              <Link href={newsData.link} target="_blank" className="font-semibold text-pointColor1">
-                더보기
-              </Link>
-            </div>
+            <Link href={newsData.link} target="_blank" className="sm:py-2 origin-center rotate-180">
+              <ArrowMore style={{ fill: colors?.pointColor1 }} />
+            </Link>
           </div>
         ))}
     </section>
