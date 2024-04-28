@@ -24,7 +24,7 @@
 
 # 💻 TECH STACKS
 
-<img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/wireframe/Untitled.png"  width ="1000"/>
+<img src="https://github.com/mm-easy/mm-easy/blob/feat/about/public/readme/Untitled.png"  width ="1000"/>
 
 # 와이어프레임
 
