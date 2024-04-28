@@ -32,12 +32,12 @@ const CommunitySection = () => {
         <span className="sm:text-xl">{m('RECENT_POSTS')}</span>
       </div>
       <div className="hidden sm:block">
-        <div className="w-full px-6 py-4 text-lg font-bold text-pointColor1 bg-bgColor1 flex justify-between border-t-2 border-solid border-pointColor1">
-          <span className="sm:text-xl">{m('RECENT_POSTS')}</span>
-          <div className="flex">
+        <div className="w-full px-6 py-8 text-lg font-bold text-pointColor1 bg-bgColor1 flex justify-between items-center border-t-2 border-solid border-pointColor1">
+          <span className="sm:text-lg">{m('RECENT_POSTS')}</span>
+          <div className="flex gap-[12px]">
             <button
               onClick={() => setActiveTab('notice')}
-              className={`mr-2 px-2 font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-[27px] py-[12px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
                 activeTab === 'notice' ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
             >
@@ -45,7 +45,7 @@ const CommunitySection = () => {
             </button>
             <button
               onClick={() => setActiveTab('posts')}
-              className={`px-2 font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-[27px] py-[12px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
                 activeTab === 'posts' ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
             >

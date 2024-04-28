@@ -33,13 +33,13 @@ const QuizSection = () => {
 
   return (
     <>
-      <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1 sm:text-lg sm:bg-white">
+      <div className="w-full px-6 py-4 flex justify-between items-center text-lg font-bold text-pointColor1 bg-bgColor1 border-b-2 border-solid border-pointColor1 sm:py-8 sm:text-lg sm:bg-white">
         <p>{m('RECENT_QUIZZES')}</p>
         <Link href="/quiz/list" className="font-semibold text-[16px] text-pointColor1">
           {m('MORE')}
         </Link>
       </div>
-      <div className="hidden sm:block border-b-2 border-solid border-pointColor1">
+      <div className="hidden p-8 sm:block border-b-2 border-solid border-pointColor1">
         <Swiper
           modules={[Pagination, Navigation]}
           spaceBetween={5}
@@ -75,11 +75,13 @@ const QuizSection = () => {
                   width={200}
                   height={200}
                   quality={100}
-                  className="object-cover mb-2"
+                  className="object-cover mb-4"
                 />
                 <QuestionEx id={quiz.id} />
                 <Link href={`/quiz/${quiz.id}`}>
-                  <div className="my-2 p-2 text-center text-white bg-pointColor1 rounded-md">{m('TAKE_THE_QUIZ')}</div>
+                  <div className="my-4 p-[18px] text-center text-white bg-pointColor1 rounded-md">
+                    {m('TAKE_THE_QUIZ')}
+                  </div>
                 </Link>
               </div>
             </SwiperSlide>
