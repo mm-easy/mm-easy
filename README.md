@@ -18,7 +18,7 @@
 |                               [@jypark](https://github.com/redberry0217)                                |                                 [@aotoyae](https://github.com/aotoyae)                                 |                              [@YEONJAE](https://github.com/porosadporosad)                              |                                 [@C1oudys](https://github.com/C1oudys)                                  |                                 [@Seoweol](https://github.com/ahddl622)                                 |
 |                                                  리더                                                   |                                                 부리더                                                 |                                                  팀원                                                   |                                                  팀원                                                   |                                                  팀원                                                   |
 |               - 퀴즈 만들기 <br> - 퀴즈 리스트 <br> - 프로필 페이지 <br> - 파닉스 페이지                |                 - 퀴즈 만들기 <br> - 퀴즈 풀기 <br> - 관리자 페이지 <br> - 헤더, 푸터                  |                         - 커뮤니티 상세페이지 <br> - API 호출 <br> - 소개페이지                         |     - 로그인 및 회원가입 <br> - 메인 페이지 <br> - 타자연습 <br> - 관리자 페이지 <br> - 헤더, 푸터      |                    - 커뮤니티 메인페이지 <br> - 나의 활동페이지 <br> - 파닉스 페이지                    |
-|                                                  발표                                                   |                                         시연 영상, 성능최적화                                          |                                           배포 및 README 작성                                           |                                                대 ㅎ 민                                                 |                                               성능최적화                                                |
+|                                                  발표                                                   |                                         시연 영상, 성능 최적화                                         |                                           배포 및 README 작성                                           |                                                대 ㅎ 민                                                 |                                               성능 최적화                                               |
 
 <br><br>
 
@@ -531,13 +531,13 @@
 
 <br>
 
-## 9. 나의활동 페이지
+## 9. 나의 활동 페이지
 
 <table>
 <thead>
   <tr>
   <th>
-    커뮤니티 페이지
+    나의 활동 페이지
   </th>
     </thead>
   <tbody>
@@ -580,13 +580,15 @@
  ┃ ┣ 📜tries.ts
  ┃ ┗ 📜users.ts
  ┣ 📂app
- ┃ ┣ 📂(main) / 📂(components)
+ ┃ ┣ 📂(main)
  ┃ ┃ ┣ 📜Banner.tsx
  ┃ ┃ ┣ 📜CommunitySection.tsx
  ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┣ 📜NewsData.tsx
  ┃ ┃ ┣ 📜NewsSection.tsx
  ┃ ┃ ┣ 📜QuestionEx.tsx
  ┃ ┃ ┣ 📜QuizSection.tsx
+ ┃ ┃ ┣ 📜RankingBtn.tsx
  ┃ ┃ ┗ 📜RankingSection.tsx
  ┃ ┣ 📂(non-auth)
  ┃ ┃ ┣ 📂login
@@ -679,9 +681,15 @@
  ┃ ┣ 📜page.tsx
  ┃ ┗ 📜provider.tsx
  ┣ 📂assets
+ ┃ ┣ 📂about
+ ┃ ┣ 📂logo
+ ┃ ┣ 📂mobile
+ ┃ ┣ 📂quiz
+ ┃ ┗ 📂team
  ┣ 📂components
  ┃ ┣ 📂common
  ┃ ┃ ┣ 📜BlueInput.tsx
+ ┃ ┃ ┣ 📜CloudinaryImage.tsx
  ┃ ┃ ┣ 📜DeleteButton.tsx
  ┃ ┃ ┣ 📜DropdownMenu.tsx
  ┃ ┃ ┣ 📜EditButton.tsx
@@ -714,6 +722,9 @@
  ┃ ┃ ┃ ┣ 📂components
  ┃ ┃ ┃ ┃ ┣ 📜header.ts
  ┃ ┃ ┃ ┃ ┗ 📜mobileMenu.ts
+ ┃ ┃ ┃ ┣ 📂hangul
+ ┃ ┃ ┃ ┃ ┣ 📜consonants.ts
+ ┃ ┃ ┃ ┃ ┗ 📜vowels.ts
  ┃ ┃ ┃ ┣ 📂home
  ┃ ┃ ┃ ┃ ┣ 📜community-section.ts
  ┃ ┃ ┃ ┃ ┣ 📜footer.ts
