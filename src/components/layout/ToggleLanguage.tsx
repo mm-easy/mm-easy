@@ -36,14 +36,14 @@ const ToggleSwitch = () => {
           }`}
         />
         <p
-          className={`absolute left-2 z-10 cursor-pointer ${
+          className={`absolute left-[7px] z-10 cursor-pointer ${
             isChecked ? 'sm:text-white text-pointColor1' : 'sm:text-pointColor1 text-white'
           } text-sm`}
         >
           EN
         </p>
         <p
-          className={`absolute right-2 z-10 cursor-pointer ${
+          className={`absolute right-[7px] z-10 cursor-pointer ${
             isChecked ? 'sm:text-pointColor1 text-white' : 'sm:text-white text-pointColor1'
           } text-sm`}
         >
