@@ -184,7 +184,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       <button
                         onClick={() => handleIsOpenBtn(prev.isOpen, prev.id)}
                         onBlur={() => userMenuOnBlur(prev.id)}
-                        className="focus:outline-none"
+                        className="mr-2 focus:outline-none"
                       >
                         <HiDotsVertical />
                       </button>
