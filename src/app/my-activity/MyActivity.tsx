@@ -174,13 +174,13 @@ const MyActivity = () => {
 
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm(m('QUIZ_DELETE'))) return;
-  
+
     deleteQuizMutation.mutateAsync(id).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['userQuizzes']
       });
       toast.success(m('QUIZ_DELETE_COMPLETE'));
-    })
+    });
   };
 
   const navigateToPost = (postId: string) => {
@@ -203,9 +203,9 @@ const MyActivity = () => {
     return <LoadingImg height="84vh" />;
   }
 
-
   return (
     <main className="sm:h-auto sm:pt-4 sm:justify-start sm:w-[100vw] sm:px-0 h-[84vh] px-[20%] flex flex-col justify-center items-center">
+      <h3 className="sm:hidden mb-[4vh] text-center text-pointColor1 text-xl font-bold">{m('HEADER')}</h3>
       <nav className="sm:pb-0 w-full pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
         <ul className="sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
           <li
@@ -614,12 +614,12 @@ const MyActivity = () => {
             activeTab === 'solvedQuizzes'
               ? userSolvedQuiz.length
               : activeTab === 'quizzes'
-              ? userQuiz.length
-              : activeTab === 'posts'
-              ? userPost.length
-              : activeTab === 'comments'
-              ? userComment.length
-              : userLike.length
+                ? userQuiz.length
+                : activeTab === 'posts'
+                  ? userPost.length
+                  : activeTab === 'comments'
+                    ? userComment.length
+                    : userLike.length
           }
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
