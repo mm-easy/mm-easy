@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import loadingImg from '@/assets/loading.gif';
+import loadingImg from '@/assets/loadingWebP.webp';
 
 const LoadingImg = ({ height }: { height: string }) => {
   return (
