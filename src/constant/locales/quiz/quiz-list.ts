@@ -5,7 +5,7 @@ const QUIZLIST_STRINGS = {
   },
   CREATE_QUIZ_BTN: {
     ko: '퀴즈 만들기',
-    en: 'New Quiz'
+    en: 'Create a New Quiz'
   },
   SEE_ALL_QUIZZES: {
     ko: '전체 보기',

@@ -417,13 +417,13 @@ const TypingGamePage = () => {
 
   return (
     <div
-      className={`relative flex flex-col bg-cover bg-no-repeat bg-center ${frozenEffect ? 'frozenEffect' : ''}`}
+      className={`relative flex flex-col bg-cover bg-no-repeat bg-center ${frozenEffect && 'frozenEffect'}`}
       style={{
         backgroundImage: "url('https://icnlbuaakhminucvvzcj.supabase.co/storage/v1/object/public/assets/game_bg.png')"
       }}
     >
       {!gameStarted && (
-        <div className="top-0 left-0 p-4 h-[4vh] custom-volume-control">
+        <div className="top-0 left-0 p-4 h-[4vh] bg-white bg-opacity-50 custom-volume-control">
           <div className="volume-control flex items-center">
             <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
               <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
@@ -507,7 +507,7 @@ const TypingGamePage = () => {
             </form>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-full">
+          <div className="h-full flex flex-col items-center justify-center bg-white bg-opacity-50">
             <p className="mb-6 font-bold text-2xl text-pointColor1">{m('SELECT_DIFFICULTY')}</p>
             <div className="flex mb-4 items-center justify-center">
               {Array.from({ length: maxDifficulty }, (_, index) => (

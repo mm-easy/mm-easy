@@ -113,12 +113,12 @@ const SelectQuizLevel = () => {
           selectedLevel === null
             ? 'sm:bg-bgColor2'
             : selectedLevel === 1
-              ? 'sm:bg-[#fff2b2]'
-              : selectedLevel === 2
-                ? 'sm:bg-[#ffcc66]'
-                : selectedLevel === 3
-                  ? 'sm:bg-[#ffb266]'
-                  : ''
+            ? 'sm:bg-[#fff2b2]'
+            : selectedLevel === 2
+            ? 'sm:bg-[#ffcc66]'
+            : selectedLevel === 3
+            ? 'sm:bg-[#ffb266]'
+            : ''
         } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
       >
         <div
@@ -169,7 +169,7 @@ const SelectQuizLevel = () => {
           </p>
         </div>
         <div className="mt-5 mr-1/4 absolute top-20 z-10 left-3/4">
-          <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-36" py="py-3" />
+          <WhiteButton text={m('CREATE_QUIZ_BTN')} onClick={() => handleMakeQuizBtn()} width="w-44" py="py-3" />
         </div>
         <div className="flex items-end overflow-hidden mt-30">
           <div className="rotate-[-5deg] ml-5">
@@ -183,8 +183,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -200,8 +200,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -217,8 +217,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
