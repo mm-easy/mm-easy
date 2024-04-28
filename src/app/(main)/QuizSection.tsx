@@ -1,13 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+
+import { getRecentQuizzes } from '@/api/quizzes';
+import { storageUrl } from '@/utils/supabase/storage';
+import { ADMIN } from '@/constant/adminId';
 import QuestionEx from './QuestionEx';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
-import { getRecentQuizzes } from '@/api/quizzes';
-import { useQuery } from '@tanstack/react-query';
-import { storageUrl } from '@/utils/supabase/storage';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
+import DaejangContent from '@/assets/logo/logo_circle_blue 2.png';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -47,7 +50,25 @@ const QuizSection = () => {
           {quiz?.map((quiz) => (
             <SwiperSlide key={quiz.id}>
               <div className="p-8 flex flex-col items-center">
-                <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
+                <div className="flex items-center gap-2">
+                  {ADMIN.some((admin) => admin.id === quiz.creator_id) && (
+                    <Image
+                      src={DaejangContent}
+                      alt="아이콘"
+                      quality={100}
+                      width={20}
+                      height={20}
+                      className="sm:w-4 sm:h-4 w-6 h-6"
+                    />
+                  )}
+                  <p
+                    className={`font-bold text-lg mt-4 mb-3 truncate ${
+                      ADMIN.some((admin) => admin.id === quiz.creator_id) && 'text-pointColor1'
+                    }`}
+                  >
+                    {quiz.title}
+                  </p>
+                </div>
                 <Image
                   src={`${storageUrl}/quiz-thumbnails/${quiz.thumbnail_img_url}`}
                   alt="퀴즈 썸네일"
@@ -65,13 +86,31 @@ const QuizSection = () => {
           ))}
         </Swiper>
       </div>
-      <section className="px-6 py-4 grid grid-cols-4 gap-5 flex:block sm:hidden">
+      <section className="px-11 py-4 grid grid-cols-4 gap-10 flex:block sm:hidden">
         {quiz?.map((quiz) => (
           <div
             key={quiz.id}
             className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform hover:border-blue-500"
           >
-            <p className="font-bold text-lg mt-4 mb-3 truncate">{quiz.title}</p>
+            <div className="flex items-center gap-2">
+              {ADMIN.some((admin) => admin.id === quiz.creator_id) && (
+                <Image
+                  src={DaejangContent}
+                  alt="아이콘"
+                  quality={100}
+                  width={20}
+                  height={20}
+                  className="sm:w-4 sm:h-4 w-6 h-6"
+                />
+              )}
+              <p
+                className={`font-bold text-lg mt-4 mb-3 truncate ${
+                  ADMIN.some((admin) => admin.id === quiz.creator_id) && 'text-pointColor1'
+                }`}
+              >
+                {quiz.title}
+              </p>
+            </div>
             <div className="flex flex-col gap-3">
               <Image
                 src={`${storageUrl}/quiz-thumbnails/${quiz.thumbnail_img_url}`}

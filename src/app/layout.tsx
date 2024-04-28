@@ -1,20 +1,29 @@
 import QueryProvider from './provider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import MobileMenu from '@/components/layout/MobileMenu';
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
+import { gothic_a1 } from './styles/font';
+import { storageUrl } from '@/utils/supabase/storage';
 
 import type { Metadata } from 'next';
-import MobileMenu from '@/components/layout/MobileMenu';
-import { gothic_a1 } from './styles/font';
 
 export const metadata: Metadata = {
-  title: '뭔말이지?',
+  title: '뭔말easy?',
   description: '퀴즈와 게임으로 배우는 재미있는 한국어 세상!',
   icons: {
     icon: '/favicon.png'
+  },
+  keywords: ['한국어', '한글', '한국어공부', 'Korean', 'learnKorean', 'hangul', 'Koreanstudy'],
+  openGraph: {
+    images: [
+      {
+        url: `${storageUrl}/assets/meta_ogImage.png`
+      }
+    ]
   }
 };
 

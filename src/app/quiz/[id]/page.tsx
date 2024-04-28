@@ -29,6 +29,7 @@ import type { TailwindColors } from '@/types/tailwind';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
 import SideHeader from './SideHeader';
 import PageAndSubmitBtn from './PageAndSubmitBtn';
+import { MobileHeader } from '@/components/common/MobileHeader';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -279,6 +280,15 @@ const QuizTryPage = () => {
 
   return (
     <>
+      {!resultMode ? (
+        <div className="sm:block hidden">
+          <MobileHeader backPage="/quiz/list" text="퀴즈 풀기" />
+        </div>
+      ) : (
+        <div className="sm:block hidden">
+          <MobileHeader backPage="/quiz/list" text="퀴즈 결과" />
+        </div>
+      )}
       <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
       <div className="grid grid-cols-[16%_84%] sm:pb-[8vh] sm:block bg-bgColor1 sm:bg-white">
         <SideHeader

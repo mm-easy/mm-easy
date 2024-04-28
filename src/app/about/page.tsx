@@ -4,15 +4,15 @@ import Image from 'next/image';
 import UsageStatus from './UsageStatus';
 import useMultilingual from '@/utils/useMultilingual';
 import Infopeople from '@/assets/team/info_people.png';
-import InfoIcon1 from '@/assets/info_icon_b3.png';
-import InfoIcon2 from '@/assets/info_icon_b2.png';
-import InfoIcon3 from '@/assets/info_icon_b1.png';
-import LogoHorizontal1 from '@/assets/logo_horizontal_1.png';
+import InfoIcon1 from '@/assets/about/info_icon_b3.png';
+import InfoIcon2 from '@/assets/about/info_icon_b2.png';
+import InfoIcon3 from '@/assets/about/info_icon_b1.png';
+import LogoHorizontal1 from '@/assets/logo/logo_horizontal_1.png';
 import PageUpBtn from '@/components/common/PageUpBtn';
-import InfoDesign1 from '@/assets/info_design_1.png';
-import InfoDesign2 from '@/assets/info_design_2.png';
-import InfoDesign3 from '@/assets/info_design_3.png';
-import InfoDesign4 from '@/assets/info_design_4.png';
+import InfoDesign1 from '@/assets/about/info_design_1.png';
+import InfoDesign2 from '@/assets/about/info_design_2.png';
+import InfoDesign3 from '@/assets/about/info_design_3.png';
+import InfoDesign4 from '@/assets/about/info_design_4.png';
 import { useEffect, useState } from 'react';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
@@ -258,15 +258,20 @@ const AboutPage = () => {
                 <div className="my-8">
                   {member.Github ? (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" />
-                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" />
+                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" py="py-2" />
+                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" py="py-2" />
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => member.Behance && handleGitBtn(member.Behance)} text="Behance" />
+                      <WhiteButton
+                        onClick={() => member.Behance && handleGitBtn(member.Behance)}
+                        text="Behance"
+                        py="py-2"
+                      />
                       <WhiteButton
                         onClick={() => member.Instagram && handleGitBtn(member.Instagram)}
                         text="Instagram"
+                        py="py-2"
                       />
                     </div>
                   )}
@@ -276,8 +281,7 @@ const AboutPage = () => {
           })}
         </div>
       </article>
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
     </main>
   );
 };

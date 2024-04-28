@@ -197,7 +197,7 @@ const QuestionForm = ({
               </button>
             </section>
             {/* 이미지, input 섹션 */}
-            <section className="flex flex-col place-items-center gap-4">
+            <section className="flex flex-col items-center gap-4">
               {type === QuestionType.objective ? (
                 <>
                   <InputQuestionTitle id={id} value={title} onInput={handleMaxLength} onChange={handleChangeTitle} />
@@ -210,7 +210,7 @@ const QuestionForm = ({
                   )}
                   {options.map((option) => {
                     return (
-                      <div key={option.id} className="w-full flex place-items-center justify-between">
+                      <div key={option.id} className="w-full flex items-center justify-between sm:gap-2">
                         <input
                           type="checkbox"
                           checked={option.is_answer}
@@ -222,7 +222,7 @@ const QuestionForm = ({
                         <div className="sm:w-9/12 w-4/5 relative">
                           <input
                             type="text"
-                            className="w-full sm:h-12 pl-4 sm:pr-16 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
+                            className="w-full h-11 sm:h-12 pl-4 sm:pr-16 py-[9px] text-blackColor border-solid border border-pointColor1 rounded-md"
                             placeholder={m('QUESTION_OPTION_EXAMPLE1')}
                             value={option.content}
                             onInput={(e) => {
@@ -249,7 +249,7 @@ const QuestionForm = ({
                   })}
                   <button
                     type="button"
-                    className={`w-full sm:h-12 text-3xl border-solid border ${
+                    className={`w-full sm:h-12 pb-1.5 text-3xl border-solid border ${
                       options.length === 5 ? 'text-grayColor2 border-grayColor2 cursor-default' : 'border-pointColor1'
                     } rounded-md`}
                     onClick={() => handleAddOption(id, options)}

@@ -225,12 +225,11 @@ const QuizForm = ({
         <QuestionForm questions={questions} setQuestions={setQuestions} deletedQuestions={deletedQuestions} />
         <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
         <div className="sm:w-full sm:px-4 bg-bgColor1 flex items-center justify-center sm:py-5 py-10 gap-5 border-solid border-t-2 border-pointColor1">
-          <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="sm:h-12 w-[275px]" />
-          <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="sm:h-12 w-[275px]" />
+          <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="w-[275px]" height="sm:h-12 h-11" />
+          <SubmitButton text={m('SUBMIT_BTN')} onClick={handleSubmitBtn} width="w-[275px]" height="sm:h-12 h-11" />
         </div>
       </form>
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-28" />
     </main>
   );
 };

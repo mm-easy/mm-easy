@@ -250,7 +250,7 @@ const DetailPost = () => {
             )}
           </div>
           <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-28"/>
+        smallBottom="sm:bottom-48"/>
         </div>
       </div>
     </>

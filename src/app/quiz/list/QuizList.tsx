@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import DaejangContent from '@/assets/logo_circle_blue 2.png';
+import DaejangContent from '@/assets/logo/logo_circle_blue 2.png';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import { Quiz } from '@/types/quizzes';
@@ -53,9 +53,9 @@ const QuizList = ({
 
   return (
     <main className="sm:p-1 p-5 flex flex-col justify-center items-center">
-      <div className="w-full flex sm:justify-center items-center gap-1 sm:pl-0 sm:pb-3 pl-7 pt-5">
-        <Image src={DaejangContent} alt="아이콘" quality={100} width={30} height={30} />
-        <p className="sm:w-[300px] text-sm font-bold">{m('OFFICIAL_CONTENTS')}</p>
+      <div className="w-full flex sm:justify-center items-center gap-2 sm:pl-0 sm:pb-3 pl-7 pt-5">
+        <Image src={DaejangContent} alt="아이콘" quality={100} width={20} height={20} />
+        <p className="sm:w-[85%] text-sm font-bold">{m('OFFICIAL_CONTENTS')}</p>
       </div>
       <div className="sm:py-0 sm:px-3 px-6 py-4 grid grid-cols-4 sm:grid-cols-2 sm:gap-3 gap-10">
         {allQuizzes
@@ -68,19 +68,19 @@ const QuizList = ({
                 handleShowModal(item.id);
               }}
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {ADMIN.some((admin) => admin.id === item.creator_id) && (
                   <Image
                     src={DaejangContent}
                     alt="아이콘"
                     quality={100}
-                    width={30}
-                    height={30}
-                    className="sm:w-6 sm:h-6 w-8 h-8"
+                    width={20}
+                    height={20}
+                    className="sm:w-4 sm:h-4 w-5 h-5"
                   />
                 )}
                 <p
-                  className={`font-bold sm:text-base text-lg sm:mt-2 mt-4 sm:mb-1 mb-3 truncate ${
+                  className={`font-bold sm:text-base sm:mt-2 mt-4 sm:mb-1 mb-3 text-lg truncate ${
                     ADMIN.some((admin) => admin.id === item.creator_id) && 'text-pointColor1'
                   }`}
                 >
@@ -102,8 +102,7 @@ const QuizList = ({
           ))}
         {showModal && <RecommendLoginModal id={quizId} proceedWithoutLogin={handleMoveQuizTry} />}
       </div>
-      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]"
-        smallBottom="sm:bottom-48"/>
+      <PageUpBtn scrollPosition={scrollPosition} bottom="bottom-[80px]" smallBottom="sm:bottom-48" />
     </main>
   );
 };

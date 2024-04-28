@@ -124,8 +124,8 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   </div>
                 ) : (
                   <div className="sm:w-[70vw]">
-                    <p>{prev.content}</p>
-                    <div className="text-gray-400 my-2">
+                    <p className='sm:leading-5'>{prev.content}</p>
+                    <div className="sm:text-sm text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>
                   </div>
@@ -178,7 +178,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       <div></div>
                     ))}
                 </div>
-                <div className="sm:block hidden">
+                <div className="sm:pr-4 sm:block hidden">
                   {profile && (profile.id === prev.author_id || ADMIN.some((admin) => admin.id === profile?.email)) ? (
                     <div className="relative">
                       <button
@@ -190,13 +190,13 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       </button>
                       {prev.isOpen &&
                         (btnChange && prev.id === nowCommentId ? (
-                          <div className="absolute flex flex-col right-0 mt-2 py-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                            <button className="pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
+                          <div className="absolute flex flex-col right-0 mt-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                            <button className="py-2 pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
                               {m('COMMUNITY_COMMENT_SAVE')}
                             </button>
                             <hr className="border-t border-0.5 border-pointColor1" />
                             <button
-                              className="pl-2 font-bold"
+                              className="py-2 pl-2 font-bold"
                               onClick={() => {
                                 handleIsOpenUpdateBtn(prev.content, prev.isOpen, prev.id);
                               }}
@@ -205,12 +205,12 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                             </button>
                           </div>
                         ) : (
-                          <div className="absolute flex flex-col right-0 mt-2 py-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                            <button className="font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
+                          <div className="absolute flex flex-col right-0 mt-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                            <button className="py-2 font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
                               {m('COMMUNITY_COMMENT_EDIT')}
                             </button>
                             <hr className="border-t border-0.5 border-pointColor1" />
-                            <button className="font-bold" onClick={() => handleDeleteBtn(prev.id)}>
+                            <button className="py-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
                               {m('COMMUNITY_COMMENT_DELETE')}
                             </button>
                           </div>
@@ -256,7 +256,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
           <div className="flex-grow border-b-1 border-t-1 border-r-1 border-grayColor2 border-solid">
             <div className="pl-4 flex">
               {profile ? (
-                <div className="sm:w-[40px] sm:h-[40px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
+                <div className="sm:w-[40px] sm:h-[36px] w-[50px] h-[50px] m-5 ml-0 flex justify-center rounded-full overflow-hidden">
                   <Image
                     src={`${profileStorageUrl}/${profile?.avatar_img_url || '프로필이미지'}`}
                     alt="프로필이미지"

@@ -1,6 +1,7 @@
 interface FormButtonProps {
   onClick?: () => void;
   text: string;
+  py?: string;
   width?: string;
   height?: string;
   border?: string;
@@ -11,7 +12,7 @@ export const CancelButton: React.FC<FormButtonProps> = ({ onClick, text, width, 
     <button
       type="button"
       onClick={onClick}
-      className={`sm:border-1 sm:rounded-sm rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
+      className={`sm:border-1 rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
     >
       {text}
     </button>
@@ -23,7 +24,7 @@ export const SubmitButton: React.FC<FormButtonProps> = ({ onClick, text, width, 
     <button
       type="submit"
       onClick={onClick}
-      className={`sm:border-1 sm:rounded rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height} ${border}`}
+      className={`sm:border-1 rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 ${width} ${height} ${border}`}
     >
       {text}
     </button>
@@ -42,12 +43,12 @@ export const BlueButton: React.FC<FormButtonProps> = ({ onClick, text, width, he
   );
 };
 
-export const WhiteButton: React.FC<FormButtonProps> = ({ onClick, text, width }) => {
+export const WhiteButton: React.FC<FormButtonProps> = ({ onClick, text, py, width }) => {
   return (
     <button
       type="submit"
       onClick={onClick}
-      className={`rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width}`}
+      className={`rounded-md text-pointColor1 border-solid px-2 ${py} border border-pointColor1 bg-white ${width}`}
     >
       {text}
     </button>
