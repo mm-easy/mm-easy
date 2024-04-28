@@ -45,7 +45,7 @@ const RankingSection = () => {
 
   const refreshAllData = async () => {
     await Promise.all([refetchGameScores(), refetchQuizRank(), refetchQuizScoreRank()]);
-    setRefreshKey((prevKey) => prevKey + 1); // Increment the key to trigger re-render
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
   if (isLoadingGameScores || isLoadingQuizRank || isLoadingQuizScoreRank) {
