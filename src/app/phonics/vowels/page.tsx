@@ -58,7 +58,7 @@ const VowelPage = () => {
         <nav className="sm:mt-8 sm:mb-6 mt-14 sm:pb-0 w-[70%] pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
           <ul className="sm:gap-2 sm:border-0 sm:px-4 sm:text-sm flex justify-center text-xl w-full text-center border-b-1 border-solid">
             <li
-              className={`sm:h-7 sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-20 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
+              className={`sm:h-7 sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-28 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
                 activeTab === 'basicVowels' &&
                 'sm:bg-pointColor1 sm:text-white sm:rounded-xl sm:border-1 font-bold border-solid border-b-3'
               }`}
@@ -71,7 +71,7 @@ const VowelPage = () => {
               {m('VOWEL_MENU1')}
             </li>
             <li
-              className={`sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-20 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
+              className={`sm:flex sm:justify-center sm:items-center sm:pb-0 sm:w-28 sm:text-xs sm:border-pointColor1 sm:border-1 sm:border-solid sm:rounded-xl w-[50%] pb-3 ${
                 activeTab === 'combinedVowels' &&
                 'sm:bg-pointColor1 sm:text-white sm:rounded-xl sm:border-1 font-bold border-solid border-b-3'
               }`}
@@ -87,7 +87,7 @@ const VowelPage = () => {
         </nav>
         {activeTab === 'basicVowels' && (
           <div>
-            <div className='text-center'>
+            <div className="text-center">
               <p className="sm:text-base sm:hidden text-xl font-bold">{m('VOWEL_TITLE')}</p>
               <p className="sm:block sm:text-base text-xl font-bold hidden">{m('VOWEL_TITLE1')}</p>
               <p className="sm:block sm:text-base text-xl font-bold hidden">{m('VOWEL_TITLE2')}</p>
@@ -135,7 +135,7 @@ const VowelPage = () => {
         )}
         {activeTab === 'combinedVowels' && (
           <>
-            <p className="sm:text-base text-xl font-bold">{m('C_VOWEL_TITLE')}</p>
+            <p className="sm:text-base sm:text-center text-xl font-bold">{m('C_VOWEL_TITLE')}</p>
             <p className="sm:font-semibold sm:mt-10 sm:text-xs text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
             <div className="sm:gap-10 sm:mt-4 sm:flex-col-reverse sm:items-center mt-14 flex gap-20 items-start">
               <div className="grid grid-cols-5 gap-4 select-none">
@@ -184,8 +184,7 @@ const VowelPage = () => {
             {lang === 'ko' && (
               <>
                 <span className="text-pointColor1 font-bold">ㆍ는 하늘의 둥근 모양</span>을,{' '}
-                <span className="text-pointColor1 font-bold">ㅡ는 땅의 평평한 모양</span>을,{' '}
-                <br/>
+                <span className="text-pointColor1 font-bold">ㅡ는 땅의 평평한 모양</span>을, <br />
                 <span className="text-pointColor1 font-bold">ㅣ는 꼿꼿이 서 있는 사람의 모양</span>을 본뜬 것이다.
               </>
             )}
