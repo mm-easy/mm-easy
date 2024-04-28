@@ -84,8 +84,8 @@ const MyProfile = ({ data }: { data: User }) => {
   return (
     <main className="w-full h-full flex flex-col items-center">
       <article className="my-auto">
-        <h3 className="sm:hidden text-center text-pointColor1 text-xl font-semibold">{m('HEADER')}</h3>
-        <section className="flex sm:flex-col sm:gap-7 gap-20 m-10">
+        <h3 className="sm:hidden text-center text-pointColor1 text-xl font-bold">{m('HEADER')}</h3>
+        <section className="flex sm:flex-col sm:gap-7 gap-20 mt-[5vh] mb-[2vh]">
           <section className="w-[230px] h-[230px]">
             <Image
               src={`${profileStorageUrl}/${data.avatar_img_url}`}

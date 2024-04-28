@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { getUser } from '@/api/users';
 import { supabase } from '@/utils/supabase/supabase';
-import { DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
+import { extendVariants, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
@@ -22,6 +22,19 @@ const ProfileDropdown = () => {
 
   const { logout } = useAuth();
   const route = useRouter();
+
+  const MyAvatar = extendVariants(Avatar, {
+    variants: {
+      color: {
+        white: {
+          base: ['bg-white']
+        }
+      }
+    },
+    defaultVariants: {
+      color: 'white'
+    }
+  });
 
   /** 로그아웃 핸들러 */
   const handleLogout = async () => {
@@ -55,10 +68,10 @@ const ProfileDropdown = () => {
     <div className="flex items-center gap-4">
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
-          <Avatar
+          <MyAvatar
             as="button"
             className="transition-transform"
-            color="default"
+            color="white"
             size="md"
             src={`${profileStorageUrl}/${data?.avatar_img_url}`}
           />

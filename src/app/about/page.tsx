@@ -258,15 +258,20 @@ const AboutPage = () => {
                 <div className="my-8">
                   {member.Github ? (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" />
-                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" />
+                      <WhiteButton onClick={() => handleGitBtn(member.Github)} text="Github" py="py-2" />
+                      <WhiteButton onClick={() => handleBlogBtn(member.Blog)} text="Blog" py="py-2" />
                     </div>
                   ) : (
                     <div className="flex gap-2 items-center justify-center">
-                      <WhiteButton onClick={() => member.Behance && handleGitBtn(member.Behance)} text="Behance" />
+                      <WhiteButton
+                        onClick={() => member.Behance && handleGitBtn(member.Behance)}
+                        text="Behance"
+                        py="py-2"
+                      />
                       <WhiteButton
                         onClick={() => member.Instagram && handleGitBtn(member.Instagram)}
                         text="Instagram"
+                        py="py-2"
                       />
                     </div>
                   )}
