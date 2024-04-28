@@ -107,7 +107,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
       <div>
         <TextEditor value={textEditorValue} onChange={setTextEditorValue} />
       </div>
-      <div className="sm:py-6 sm:mt-0 mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
+      <div className="sm:pb-28 sm:py-6 sm:mt-0 mt-[calc(8vh-50px)] flex justify-center gap-5 font-bold">
         <CancelButton
           text={m('COMMUNITY_POST_CANCEL')}
           onClick={onCancel}

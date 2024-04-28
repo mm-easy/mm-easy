@@ -289,7 +289,7 @@ const QuizTryPage = () => {
           <MobileHeader backPage="/quiz/list" text="퀴즈 결과" />
         </div>
       )}
-      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} />
+      <Header level={level} title={title} isAnswerWritten={usersAnswers.length} resultMode={resultMode} id={id}/>
       <div className="grid grid-cols-[16%_84%] sm:pb-[8vh] sm:block bg-bgColor1 sm:bg-white">
         <SideHeader
           url={url}
