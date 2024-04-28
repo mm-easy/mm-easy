@@ -9,9 +9,10 @@ export const DropdownMenu = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode;
       setIsOpen(false);
     }, 200);
   };
+
   return (
     <div className="relative sm:block hidden">
-      <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="focus:outline-none">
+      <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="mr-2 focus:outline-none">
         <HiDotsVertical />
       </button>
       {isOpen && (
