@@ -18,7 +18,7 @@ const InputQuestionTitle = ({
     <div className="w-full relative">
       <input
         type="text"
-        className="w-full pl-4 sm:h-12 sm:pr-16  py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
+        className="w-full h-11 pl-4 sm:h-12 sm:pr-16  py-2 text-blackColor border-solid border border-pointColor1 rounded-md"
         placeholder={m('QUESTION_TITLE_EXAMPLE')}
         value={value}
         onInput={(e) => onInput(e, 30)}
