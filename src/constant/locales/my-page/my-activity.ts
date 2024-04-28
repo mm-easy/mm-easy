@@ -1,7 +1,7 @@
 const MY_ACTIVITY_STRINGS = {
   HEADER: {
     ko: '나의 활동',
-    en: 'My Profile'
+    en: 'My Activity'
   },
   QUIZ_I_SOLVED: {
     ko: '푼 퀴즈',
