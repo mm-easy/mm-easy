@@ -54,7 +54,7 @@ const QuizList = ({
   return (
     <main className="sm:p-1 p-5 flex flex-col justify-center items-center">
       <div className="w-full flex sm:justify-center items-center gap-2 sm:pl-0 sm:pb-3 pl-7 pt-5">
-        <Image src={DaejangContent} alt="아이콘" quality={100} width={24} height={24} />
+        <Image src={DaejangContent} alt="아이콘" quality={100} width={20} height={20} />
         <p className="sm:w-[85%] text-sm font-bold">{m('OFFICIAL_CONTENTS')}</p>
       </div>
       <div className="sm:py-0 sm:px-3 px-6 py-4 grid grid-cols-4 sm:grid-cols-2 sm:gap-3 gap-10">
@@ -76,7 +76,7 @@ const QuizList = ({
                     quality={100}
                     width={20}
                     height={20}
-                    className="sm:w-4 sm:h-4 w-6 h-6"
+                    className="sm:w-4 sm:h-4 w-5 h-5"
                   />
                 )}
                 <p
