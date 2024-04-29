@@ -43,7 +43,7 @@ const Options = ({
         return (
           <label
             key={id}
-            className={`pl-4 py-[9px] flex gap-4 border-solid border ${
+            className={`sm:h-12 leading-7 pl-4 py-[9px] flex gap-4 border-solid border ${
               resultMode && usersAnswer?.option_id === id
                 ? is_answer
                   ? 'border-pointColor1 bg-bgColor2'
