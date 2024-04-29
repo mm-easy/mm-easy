@@ -148,14 +148,24 @@ export const getRecentQuizzes = async () => {
 /** id에 해당하는 퀴즈 1개 가져오기 */
 export const getQuiz = async (id: string) => {
   try {
-    const { data, error } = await supabase.from('quizzes').select('*').eq('id', id);
+    const { data, error } = await supabase.from('quizzes').select('*').eq('id', id).single();
     if (error) {
       throw error;
     }
     return data;
   } catch (error) {
     console.error('퀴즈 데이터 받아오기 실패', error);
-    alert('일시적으로 퀴즈 데이터를 받아오지 못했습니다. 다시 시도하세요.');
+    throw error;
+  }
+};
+
+/** id에 해당하는 questions 모두 지우기 */
+export const deleteQuestions = async (quizId: string) => {
+  try {
+    await supabase.from('questions').delete().eq('quiz_id', quizId);
+    console.log('질문 삭제 완료');
+  } catch (error) {
+    console.error('문제 삭제하기 실패', error);
     throw error;
   }
 };
@@ -226,42 +236,6 @@ export const UpdateQuiz = async (id: string, updatedQuiz: Quiz) => {
   } catch (error) {
     console.error('퀴즈 업데이트 실패', error);
     alert('일시적인 오류 발생');
-    throw error;
-  }
-};
-
-/** questions 테이블에서 id에 해당하는 question을 update */
-export const updateQuestion = async (id: string, updatedQuestion: QuestionsToInsert) => {
-  try {
-    const { data, error } = await supabase.from('questions').update(updatedQuestion).eq('id', id).single();
-    if (error) throw error;
-    console.log('꺄잉', data);
-    return data;
-  } catch (error) {
-    console.error('문제 수정 실패', error);
-    alert('일시적인 오류 발생');
-    throw error;
-  }
-};
-
-/** question_options 테이블에서 id에 해당하는 option을 update*/
-export const updateOption = async (updatedOptions: Option[]) => {
-  try {
-    const updatePromises = updatedOptions.map(async (option) => {
-      const { id, content, is_answer } = option;
-      const { data, error } = await supabase
-        .from('question_options')
-        .update({ content, is_answer })
-        .eq('id', id)
-        .select('*');
-      if (error) throw error;
-      return data;
-    });
-    const updateResults = await Promise.all(updatePromises);
-    return updateResults;
-  } catch (error) {
-    console.error('선택지 수정 실패', error);
-    alert('객관식 선택지를 수정하지 못했습니다. 다시 시도하세요.');
     throw error;
   }
 };
