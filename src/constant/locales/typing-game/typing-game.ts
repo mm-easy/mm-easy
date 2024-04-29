@@ -91,6 +91,14 @@ const TYPING_GAME_STRINGS = {
     ko: '종료하기',
     en: 'Exit'
   },
+  MOBILE_MODAL_MESSAGE1: {
+    ko: '알림',
+    en: 'Important Notice'
+  },
+  MOBILE_MODAL_MESSAGE2: {
+    ko: '좀 더 원활한 플레이를 위해 PC 환경으로 접속 해주세요.',
+    en: 'Please access this page from a desktop device for a better experience.'
+  },
   EXIT_BUTTON: {
     ko: '나가기',
     en: 'Exit'
