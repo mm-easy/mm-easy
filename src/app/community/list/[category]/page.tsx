@@ -1,4 +1,3 @@
-import React, { Suspense } from 'react';
 import CommunityMain from './CommunityMain';
 
 type Props = {};
@@ -6,9 +5,7 @@ type Props = {};
 const Page = (props: Props) => {
   return (
     <div className="sm:h-full sm:border-l-0 bg-white h-[84vh] border-l-2 border-solid border-pointColor1">
-      <Suspense>
-        <CommunityMain />
-      </Suspense>
+      <CommunityMain />
     </div>
   );
 };
