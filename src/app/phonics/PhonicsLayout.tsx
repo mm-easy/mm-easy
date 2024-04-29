@@ -1,10 +1,12 @@
 'use client';
 
+import useMultilingual from '@/utils/useMultilingual';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const PhonicsLayout = () => {
+  const m = useMultilingual('phonics');
   const pathname = usePathname();
   const [currentMenu, setCurrentMenu] = useState('consonants');
   const router = useRouter();
@@ -25,7 +27,7 @@ const PhonicsLayout = () => {
 
   return (
     <>
-      <nav className="h-full text-pointColor1 bg-bgColor1 font-bold border-solid sm:border-r-0 border-r-2 border-pointColor1">
+      <nav className="h-[84vh] text-pointColor1 font-bold ">
         <div className="sm:flex sm:px-6 sm:bg-white sm:border-b-1 sm:border-solid sm:border-pointColor1">
           <Link
             href="/phonics/consonants"
@@ -33,7 +35,7 @@ const PhonicsLayout = () => {
               isActive('/phonics/consonants') ? 'sm:border-b-[7px] bg-pointColor1 text-white' : 'bg-white'
             }`}
           >
-            자음
+            {m('CONSONANT_CATEGORY')}
           </Link>
           <Link
             href="/phonics/vowels"
@@ -41,7 +43,7 @@ const PhonicsLayout = () => {
               isActive('/phonics/vowels') ? 'sm:border-b-[7px] bg-pointColor1 text-white' : 'bg-white'
             }`}
           >
-            모음
+            {m('VOWEL_CATEGORY')}
           </Link>
         </div>
       </nav>

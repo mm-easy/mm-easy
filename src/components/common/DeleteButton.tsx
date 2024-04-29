@@ -36,7 +36,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
       onClick={handleDeleteClick}
       className={`${
         params.id
-          ? 'font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 sm:font-normal sm:text-pointColor1 sm:border-0 sm:bg-transparent'
+          ? 'sm:w-full font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1 sm:font-bold sm:text-pointColor1 sm:border-0 sm:bg-transparent'
           : 'sm:rounded-sm font-bold rounded-md text-white border-solid p-2 border border-pointColor1 bg-pointColor1'
       } ${width} ${height}`}
     >

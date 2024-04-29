@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 
 export const DropdownMenu = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode; deleteBtn: React.ReactNode }) => {
@@ -16,9 +16,9 @@ export const DropdownMenu = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode;
         <HiDotsVertical />
       </button>
       {isOpen && (
-        <div className="absolute flex flex-col right-0 mt-2 py-2 w-32 border-solid border border-pointColor1 bg-white rounded-md z-20">
+        <div className="absolute flex flex-col right-0 mt-2 w-32 border-solid border border-pointColor1 bg-white rounded-md z-20">
           {editBtn}
-          <hr className="border-t border-0.5 border-pointColor1" />
+          <hr className="border-t-1 border-solid border-pointColor1" />
           {deleteBtn}
         </div>
       )}
