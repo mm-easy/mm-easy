@@ -57,7 +57,7 @@ const ConsonantsPage = () => {
     <div className="sm:block grid grid-cols-[16%_84%] bg-bgColor1">
       <PhonicsLayout />
       <section className="flex flex-col items-center bg-white border-solid sm:border-l-0 border-l-2 border-pointColor1">
-        <p className="sm:text-lg sm:mt-8 text-xl font-bold mt-14">{m('CONSONANT_TITLE')}</p>
+        <p className="sm:text-lg sm:mt-8 text-xl font-bold mt-14 text-center">{m('CONSONANT_TITLE')}</p>
         <p className="sm:font-semibold sm:mt-10 sm:text-xs text-pointColor1 mt-2">* {m('GUIDE_TEXT')}</p>
         <div className="sm:gap-10 sm:flex-col-reverse sm:mt-4 mt-14 flex gap-20">
           <div className="grid grid-cols-5 gap-4 select-none">

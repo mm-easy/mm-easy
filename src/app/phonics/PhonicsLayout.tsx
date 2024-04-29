@@ -27,7 +27,7 @@ const PhonicsLayout = () => {
 
   return (
     <>
-      <nav className="h-[84vh] text-pointColor1 font-bold ">
+      <nav className="h-[84vh] sm:h-full text-pointColor1 font-bold ">
         <div className="sm:flex sm:px-6 sm:bg-white sm:border-b-1 sm:border-solid sm:border-pointColor1">
           <Link
             href="/phonics/consonants"
