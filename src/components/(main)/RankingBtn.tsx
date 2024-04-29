@@ -14,7 +14,7 @@ const RankingBtn = ({
   return (
     <button
       onClick={onClick}
-      className={`px-2 py-0.5 text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
+      className={`px-[27px] py-[10px] text-pointColor1 text-sm hidden sm:block border-2 border-solid border-pointColor1 rounded-full ${
         activeRanking === rankingTitle ? 'bg-pointColor1 text-white font-bold' : 'bg-white text-pointColor1 font-bold'
       }`}
     >
