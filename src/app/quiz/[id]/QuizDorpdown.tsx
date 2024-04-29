@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 
-export const QuizDropdown = ({ deleteBtn }: { deleteBtn: React.ReactNode }) => {
+export const QuizDropdown = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode; deleteBtn: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const userMenuOnBlur = () => {
@@ -16,6 +16,8 @@ export const QuizDropdown = ({ deleteBtn }: { deleteBtn: React.ReactNode }) => {
       </button>
       {isOpen && (
         <div className="absolute right-0 top-12 ">
+          {editBtn}
+          <hr className="border-t-1 border-solid border-pointColor1" />
           {deleteBtn}
         </div>
       )}

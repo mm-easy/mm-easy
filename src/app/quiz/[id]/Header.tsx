@@ -76,6 +76,15 @@ const Header = ({
                       onClick={() => handleDeleteQuiz(id as string)}
                     />
                   }
+                  editBtn={
+                    <CancelButton
+                      text={m('DELETE_BTN')}
+                      width="w-32"
+                      height="h-12"
+                      border="border-1"
+                      onClick={() => handleDeleteQuiz(id as string)}
+                    />
+                  }
                 />
               </div>
               )}
