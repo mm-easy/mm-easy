@@ -16,12 +16,10 @@ import useMultilingual from '@/utils/useMultilingual';
 
 const QuestionForm = ({
   questions,
-  setQuestions,
-  deletedQuestions
+  setQuestions
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
-  deletedQuestions: string[];
 }) => {
   const [loaded, setLoaded] = useState(false);
   const m = useMultilingual('quizEditor');
@@ -144,7 +142,6 @@ const QuestionForm = ({
   const handleDeleteQuestion = (id: string | undefined) => {
     if (questions.length > 1) {
       if (!window.confirm(m('ALERT_DELETE_QUESTION'))) return;
-      deletedQuestions.push(id as string);
       setQuestions((prev) => {
         const newQuestions = prev.filter((question) => question.id !== id);
         return newQuestions;

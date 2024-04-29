@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import type { QuizTry } from '@/types/quizzes';
 import { Report } from '@/types/reports';
 import { insertReport } from '@/api/reports';
+import { useRouter } from 'next/navigation';
 
 export const useSubmitQuizTry = () => {
   const queryClient = useQueryClient();
@@ -72,20 +73,16 @@ export const useSubmitReport = () => {
 
 /** quizzes 테이블에서 id에 해당하는 퀴즈 삭제 */
 export const useDeleteQuiz = () => {
-  const queryClient = useQueryClient();
-
+  const router = useRouter();
   const deleteQuizMutation = useMutation({
     mutationFn: async (id: string) => {
       try {
         await deleteQuiz(id);
+        router.replace('/quiz/list');
       } catch (error) {
         console.error('퀴즈 삭제 실패', error);
         throw error;
       }
-    },
-    onSuccess: () => {
-      toast.success('퀴즈가 삭제되었습니다.');
-      queryClient.invalidateQueries({ queryKey: ['quizzes'] });
     }
   });
 

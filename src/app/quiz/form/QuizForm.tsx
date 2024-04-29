@@ -6,6 +6,7 @@ import UnloadImgBtn from './UnloadImg';
 import PlusQuestionBtn from './PlusQuestionBtn';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
+import useMultilingual from '@/utils/useMultilingual';
 import { Dispatch, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -15,11 +16,10 @@ import { storageUrl } from '@/utils/supabase/storage';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
+import { SetStateAction } from 'jotai';
+import { DebouncedFunc } from 'lodash';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import { SetStateAction } from 'jotai';
-import useMultilingual from '@/utils/useMultilingual';
-import { DebouncedFunc } from 'lodash';
 
 const QuizForm = ({
   questions,
@@ -36,8 +36,7 @@ const QuizForm = ({
   file,
   setFile,
   currentUser,
-  setCurrentUser,
-  deletedQuestions
+  setCurrentUser
 }: {
   questions: Question[];
   setQuestions: Dispatch<SetStateAction<Question[]>>;
@@ -54,7 +53,6 @@ const QuizForm = ({
   setFile: Dispatch<SetStateAction<File | null>>;
   currentUser: string;
   setCurrentUser: Dispatch<SetStateAction<string>>;
-  deletedQuestions: string[];
 }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const { getCurrentUserProfile } = useAuth();
@@ -222,7 +220,7 @@ const QuizForm = ({
             />
           </div>
         </div>
-        <QuestionForm questions={questions} setQuestions={setQuestions} deletedQuestions={deletedQuestions} />
+        <QuestionForm questions={questions} setQuestions={setQuestions} />
         <PlusQuestionBtn disabled={questions.length === 5} onClick={handleAddQuestion} />
         <div className="sm:w-full sm:px-4 bg-bgColor1 flex items-center justify-center sm:py-5 py-10 gap-5 border-solid border-t-2 border-pointColor1">
           <CancelButton text={m('CANCLE_BTN')} onClick={handleCancelBtn} width="w-[275px]" height="sm:h-12 h-11" />

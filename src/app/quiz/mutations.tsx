@@ -1,13 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import {
-  UpdateQuiz,
-  insertOptionsToTable,
-  insertQuestionsToTable,
-  insertQuizToTable,
-  updateOption,
-  updateQuestion
-} from '@/api/quizzes';
+import { UpdateQuiz, insertOptionsToTable, insertQuestionsToTable, insertQuizToTable } from '@/api/quizzes';
 
 import type { Option, OptionsToInsert, QuestionsToInsert, Quiz } from '@/types/quizzes';
 
@@ -102,51 +95,4 @@ export const useUpdateQuiz = () => {
   });
 
   return updateQuizMutation;
-};
-
-/** questions 테이블에서 id에 해당하는 question을 update */
-export const useUpdateQuestions = () => {
-  const queryClient = useQueryClient();
-
-  const updateQuestionsMutation = useMutation({
-    mutationFn: async ({ id, updatedQuestion }: { id: string; updatedQuestion: QuestionsToInsert }) => {
-      try {
-        const result = await updateQuestion(id, updatedQuestion);
-        console.log('끼이이잉', result);
-        return result;
-      } catch (error) {
-        console.error('문제들 수정 실패', error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['questions'] });
-    }
-  });
-
-  return updateQuestionsMutation;
-};
-
-/** question_options 테이블에서 id에 해당하는 option을 update */
-export const useUpdateOptions = () => {
-  const queryClient = useQueryClient();
-
-  const updateOptionsMutation = useMutation({
-    mutationFn: async (updatedOptions: Option[]) => {
-      try {
-        const result = await updateOption(updatedOptions);
-        const optionIds = result.map((result) => result[0]?.id);
-        return optionIds;
-      } catch (error) {
-        console.error('객관식 선택지 수정 실패', error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['options'] });
-      toast.success('퀴즈가 수정되었습니다.');
-    }
-  });
-
-  return updateOptionsMutation;
 };

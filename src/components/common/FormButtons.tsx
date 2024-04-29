@@ -12,7 +12,7 @@ export const CancelButton: React.FC<FormButtonProps> = ({ onClick, text, width, 
     <button
       type="button"
       onClick={onClick}
-      className={`flex justify-center items-center sm:border-1 rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
+      className={`flex justify-center items-center sm:border-0 rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
     >
       {text}
     </button>
