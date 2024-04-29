@@ -52,7 +52,7 @@ const VowelPage = () => {
   };
 
   return (
-    <div className="sm:block grid grid-cols-[16%_84%] bg-bgColor1">
+    <div className="sm:block sm:px-2 grid grid-cols-[16%_84%] bg-bgColor1 sm:bg-white">
       <PhonicsLayout />
       <section className="flex flex-col justify-center items-center bg-white border-solid sm:border-l-0 border-l-2 border-pointColor1">
         <nav className="sm:mt-8 sm:mb-6 mt-14 sm:pb-0 w-[70%] pb-[4vh] flex justify-between text-pointColor1 font-medium  border-solid border-pointColor1 cursor-pointer">
