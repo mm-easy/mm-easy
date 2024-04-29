@@ -652,21 +652,6 @@
  ┃ ┣ 📜tries.ts
  ┃ ┗ 📜users.ts
  ┣ 📂app
- ┃ ┣ 📂(main)
- ┃ ┃ ┣ 📜Banner.tsx
- ┃ ┃ ┣ 📜CommunitySection.tsx
- ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┣ 📜NewsData.tsx
- ┃ ┃ ┣ 📜NewsSection.tsx
- ┃ ┃ ┣ 📜QuestionEx.tsx
- ┃ ┃ ┣ 📜QuizSection.tsx
- ┃ ┃ ┣ 📜RankingBtn.tsx
- ┃ ┃ ┗ 📜RankingSection.tsx
- ┃ ┣ 📂(non-auth)
- ┃ ┃ ┣ 📂login
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┗ 📂signup
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂about
  ┃ ┃ ┣ 📜page.tsx
  ┃ ┃ ┗ 📜UsageStatus.tsx
@@ -693,6 +678,8 @@
  ┃ ┃ ┃ ┣ 📜PostEditor.tsx
  ┃ ┃ ┃ ┗ 📜TextEditor.tsx
  ┃ ┃ ┣ 📜mutations.tsx
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂login
  ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂menu
  ┃ ┃ ┗ 📜page.tsx
@@ -743,6 +730,8 @@
  ┃ ┃ ┃ ┣ 📜QuizList.tsx
  ┃ ┃ ┃ ┗ 📜SelectQuizLevel.tsx
  ┃ ┃ ┗ 📜mutations.tsx
+ ┃ ┣ 📂signup
+ ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂styles
  ┃ ┃ ┗ 📜font.ts
  ┃ ┣ 📂typing-game
@@ -759,6 +748,16 @@
  ┃ ┣ 📂quiz
  ┃ ┗ 📂team
  ┣ 📂components
+ ┃ ┣ 📂(main)
+ ┃ ┃ ┣ 📜Banner.tsx
+ ┃ ┃ ┣ 📜CommunitySection.tsx
+ ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┣ 📜NewsData.tsx
+ ┃ ┃ ┣ 📜NewsSection.tsx
+ ┃ ┃ ┣ 📜QuestionEx.tsx
+ ┃ ┃ ┣ 📜QuizSection.tsx
+ ┃ ┃ ┣ 📜RankingBtn.tsx
+ ┃ ┃ ┗ 📜RankingSection.tsx
  ┃ ┣ 📂common
  ┃ ┃ ┣ 📜BlueInput.tsx
  ┃ ┃ ┣ 📜CloudinaryImage.tsx
