@@ -36,15 +36,14 @@ const SideHeader = ({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['quizzes', id] });
         toast.success(m('NOTIFY_TO_DELETE'));
-        router.replace('/quiz/list');
       }
     });
   };
 
   /** 수정 버튼 클릭 핸들러 */
-  // const handleEditQuiz = (id: string) => {
-  //   router.push(`/quiz/form/edit?id=${id}`);
-  // };
+  const handleEditQuiz = (id: string) => {
+    router.push(`/quiz/form/edit?id=${id}`);
+  };
 
   return (
     <article className="h-[76vh] sm:h-full flex flex-col justify-between text-pointColor1">
@@ -63,17 +62,17 @@ const SideHeader = ({
       </section>
       <div className="sm:hidden flex justify-center font-bold pb-4">
         {currentUserEmail === creator && (
-          <div className="flex justify-center items-center">
-            {/* <CancelButton
-            text="수정"
-            width="w-44"
-            height="h-12"
-            border="border-2"
-            onClick={() => handleEditQuiz(id as string)}
-          /> */}
+          <div className="flex justify-center gap-2 items-center">
+            <CancelButton
+              text={m('EDIT_BTN')}
+              width="w-20"
+              height="h-12"
+              border="border-1"
+              onClick={() => handleEditQuiz(id as string)}
+            />
             <CancelButton
               text={m('DELETE_BTN')}
-              width="w-44"
+              width="w-20"
               height="h-12"
               border="border-1"
               onClick={() => handleDeleteQuiz(id as string)}
