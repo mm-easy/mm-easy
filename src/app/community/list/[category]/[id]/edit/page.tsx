@@ -79,7 +79,7 @@ const EditPage = ({ params }: { params: { id: string; category: string } }) => {
 
   // TODO : 조건부로 랜더링
   return (
-    <article className="bg-white px-32 py-16 border-l-2 border-solid border-pointColor1">
+    <article className="sm:border-l-0 sm:py-0 sm:px-0 bg-white px-32 py-16 border-l-2 border-solid border-pointColor1">
       <PostEditor
         defaultValues={{
           category: post.category,

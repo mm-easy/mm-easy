@@ -57,7 +57,7 @@ const SideHeader = ({
           quality={100}
           className="w-full h-[230px] sm:hidden object-cover border-solid border-b-2 border-pointColor1"
         />
-        <p className="pl-4 pt-4 hidden sm:block">{info}</p>
+        <p className="sm:pt-10 pl-4 pt-4 hidden sm:block">{info}</p>
         <CreateInfo creator={creator} date={formatToLocaleDateTimeString(date)} />
         <p className="p-4 sm:hidden">{info}</p>
       </section>
