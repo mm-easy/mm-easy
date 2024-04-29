@@ -357,7 +357,7 @@ const QuizTryPage = () => {
                         {resultMode ? (
                           <>
                             <p
-                              className={`w-full sm:h-12 mb-4 pl-4 py-[9px] border-solid border ${
+                              className={`w-full sm:h-12 sm:leading-7 mb-4 pl-4 py-[9px] border-solid border ${
                                 usersAnswer?.answer === correct_answer
                                   ? ' border-pointColor1 bg-bgColor2'
                                   : 'border-pointColor2 bg-bgColor3'
