@@ -1,4 +1,4 @@
-# <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/src/assets/logo/logo_horizontal_3.png" width ="300">
+#<p align="center"> <img src="https://github.com/mm-easy/mm-easy/blob/feat/about/src/assets/logo/logo_horizontal_3.png" width ="300"> </p>
 
 <br>
 
