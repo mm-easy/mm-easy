@@ -545,8 +545,8 @@ const TypingGamePage = () => {
         <div className="sm:block hidden">
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-xl border-solid border-2 border-pointColor1">
-              <h2 className="font-bold text-xl mb-4">Important Notice</h2>
-              <p className="mb-4">Please access this page from a desktop device for a better experience.</p>
+              <h2 className="font-bold text-xl mb-4">{m('MOBILE_MODAL_MESSAGE1')}</h2>
+              <p className="mb-4">{m('MOBILE_MODAL_MESSAGE2')}</p>
             </div>
           </div>
         </div>

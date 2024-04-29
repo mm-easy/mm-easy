@@ -17,7 +17,7 @@ const NewsData = async () => {
         news.map((newsData: NewsType, index: number) => (
           <div
             key={index}
-            className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform sm:p-2 sm:my-1"
+            className="p-4 flex flex-col my-5 border border-solid border-grayColor1 rounded-t-3xl rounded-b-md transition duration-300 ease-in-out transform sm:px-[16px] sm:py-2 sm:my-1"
           >
             <p className="font-bold text-lg mt-4 mb-3 truncate sm:mb-2">
               {newsData.title
