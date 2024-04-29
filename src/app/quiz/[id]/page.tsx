@@ -355,7 +355,7 @@ const QuizTryPage = () => {
                         {resultMode ? (
                           <>
                             <p
-                              className={`w-full mb-4 pl-4 py-[9px] border-solid border ${
+                              className={`w-full sm:h-12 sm:leading-7 mb-4 pl-4 py-[9px] border-solid border ${
                                 usersAnswer?.answer === correct_answer
                                   ? ' border-pointColor1 bg-bgColor2'
                                   : 'border-pointColor2 bg-bgColor3'
@@ -370,14 +370,14 @@ const QuizTryPage = () => {
                             <input
                               type="text"
                               value={answer}
-                              className="w-full pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
+                              className="w-full sm:h-12 pl-4 py-[9px] border-solid border border-pointColor1 rounded-md"
                               onChange={(e) => {
                                 handleMaxLength(e, 30);
                                 handleGetAnswer(id, e.target.value);
                               }}
                               onKeyDown={handleEnterKey}
                             />
-                            <p className="absolute top-0 right-2 pt-3 pr-1 text-sm text-pointColor1">
+                            <p className="absolute top-0 right-2 pt-3 sm:pt-4 pr-1 text-sm text-pointColor1">
                               {handleGetLength(id)}/30
                             </p>
                           </>

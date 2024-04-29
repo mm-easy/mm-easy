@@ -109,16 +109,16 @@ const SelectQuizLevel = () => {
         {m('CHOOSE_DIFFICULTY')}
       </section>
       <main
-        className={`sm:w-full sm:flex sm:justify-center sm:items-center sm:gap-4 sm:h-[23vh] ${
+        className={`sm:w-full px-3 sm:flex sm:justify-center sm:items-center sm:gap-4 sm:h-[23vh] ${
           selectedLevel === null
             ? 'sm:bg-bgColor2'
             : selectedLevel === 1
-            ? 'sm:bg-[#fff2b2]'
-            : selectedLevel === 2
-            ? 'sm:bg-[#ffcc66]'
-            : selectedLevel === 3
-            ? 'sm:bg-[#ffb266]'
-            : ''
+              ? 'sm:bg-[#fff2b2]'
+              : selectedLevel === 2
+                ? 'sm:bg-[#ffcc66]'
+                : selectedLevel === 3
+                  ? 'sm:bg-[#ffb266]'
+                  : ''
         } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
       >
         <div
@@ -183,8 +183,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -200,8 +200,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -217,8 +217,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />

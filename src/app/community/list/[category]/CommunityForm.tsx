@@ -92,10 +92,10 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 >
                   <td className="pl-6 py-[calc(1.5vh+2px)]">{item['category']}</td>
                   <td>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</td>
-                  <td className='truncate max-w-sm'>
+                  <td className="truncate max-w-sm">
                     <span>{item.title}</span>
                     {(commentCounts[idx]?.data ?? 0) > 0 && (
-                      <span className="sm:hidden text-pointColor1"> ({commentCounts[idx].data})</span>
+                      <span className="text-pointColor1"> ({commentCounts[idx].data})</span>
                     )}
                   </td>
                   <td>{formatToLocaleDateTimeString(item['created_at'])}</td>
@@ -124,8 +124,11 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
                 onClick={() => navigateToDetailPost(item)}
               >
                 <div>
-                  <div className="font-semibold text-base">
-                    <p className="line-clamp-1">{item.title}</p>
+                  <div className="flex font-semibold text-base">
+                    <span className="line-clamp-1">{item.title}</span>
+                    {(commentCounts[idx]?.data ?? 0) > 0 && (
+                      <span className="text-pointColor1"> ({commentCounts[idx].data})</span>
+                    )}
                   </div>
                   <div className="flex text-sm ">
                     <p>{item.profiles?.nickname || m('COMMUNITY_NICKNAME_UNKNOWN')}</p>
