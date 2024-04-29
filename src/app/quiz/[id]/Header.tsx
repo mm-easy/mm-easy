@@ -38,6 +38,7 @@ const Header = ({
     router.push('/quiz/list');
   };
 
+  /** 삭제 버튼 클릭 핸들러 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm(m('ASK_TO_DELETE'))) return;
     deleteQuizMutation.mutateAsync(id, {
@@ -47,6 +48,12 @@ const Header = ({
         router.replace('/quiz/list');
       }
     });
+  };
+
+  
+  /** 수정 버튼 클릭 핸들러 */
+  const handleEditQuiz = (id: string) => {
+    router.push(`/quiz/form/edit?id=${id}`);
   };
 
   return (
@@ -67,16 +74,16 @@ const Header = ({
               {currentUserEmail === creator && (
                 <div className='pr-4 font-bold'>
                 <QuizDropdown
-                  deleteBtn={
+                  editBtn={
                     <CancelButton
-                      text={m('DELETE_BTN')}
+                      text={m('EDIT_BTN')}
                       width="w-32"
                       height="h-12"
                       border="border-1"
-                      onClick={() => handleDeleteQuiz(id as string)}
+                      onClick={() => handleEditQuiz(id as string)}
                     />
                   }
-                  editBtn={
+                  deleteBtn={
                     <CancelButton
                       text={m('DELETE_BTN')}
                       width="w-32"

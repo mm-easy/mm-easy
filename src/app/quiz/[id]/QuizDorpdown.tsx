@@ -15,7 +15,7 @@ export const QuizDropdown = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode;
         <HiDotsVertical />
       </button>
       {isOpen && (
-        <div className="absolute right-0 top-12 ">
+        <div className="absolute right-0 top-12 border-solid border border-pointColor1 rounded-md">
           {editBtn}
           <hr className="border-t-1 border-solid border-pointColor1" />
           {deleteBtn}
