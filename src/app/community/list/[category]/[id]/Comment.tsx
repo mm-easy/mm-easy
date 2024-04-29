@@ -121,6 +121,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       onChange={(e) => setContentChange(e.target.value)}
                       placeholder="Reply to comment…"
                     />
+                    <p className='sm:h-[19px] h-[11px]'></p>
                   </div>
                 ) : (
                   <div className="sm:w-[70vw]">
@@ -190,7 +191,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       </button>
                       {prev.isOpen &&
                         (btnChange && prev.id === nowCommentId ? (
-                          <div className="absolute flex flex-col right-0 mt-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                          <div className="absolute flex flex-col right-0 mt-2 w-32 border-solid border border-pointColor1 bg-white rounded-md z-20">
                             <button className="py-2 pr-2 font-bold" onClick={() => handleUpdateBtn(prev.id)}>
                               {m('COMMUNITY_COMMENT_SAVE')}
                             </button>
@@ -205,12 +206,12 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                             </button>
                           </div>
                         ) : (
-                          <div className="absolute flex flex-col right-0 mt-2 w-20 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                            <button className="py-2 font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
+                          <div className="absolute flex flex-col right-0 mt-2 w-32 border-solid border border-pointColor1 bg-white rounded-md z-20">
+                            <button className="h-10 py-2 font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
                               {m('COMMUNITY_COMMENT_EDIT')}
                             </button>
                             <hr className="border-t border-0.5 border-pointColor1" />
-                            <button className="py-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
+                            <button className="h-10 py-2 font-bold" onClick={() => handleDeleteBtn(prev.id)}>
                               {m('COMMUNITY_COMMENT_DELETE')}
                             </button>
                           </div>

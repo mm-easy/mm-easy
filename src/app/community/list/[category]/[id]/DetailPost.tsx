@@ -166,7 +166,7 @@ const DetailPost = () => {
                         <time className="text-sm">{formatToLocaleDateTimeString(post.created_at)}</time>
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center sm:pr-4">
                       {profile &&
                         (post.author_id === profile.id || ADMIN.some((admin) => admin.id === profile?.email)) && (
                           <>
@@ -176,8 +176,8 @@ const DetailPost = () => {
                                   text={m('COMMUNITY_POST_EDIT')}
                                   postId={post.id}
                                   redirectUrl={`/community/list/${categoryNow}/${post.id}/edit`}
-                                  width="w-20"
-                                  height="h-12"
+                                  width="w-16"
+                                  height="h-10"
                                 />
                               }
                               deleteBtn={
@@ -185,8 +185,8 @@ const DetailPost = () => {
                                   text={m('COMMUNITY_POST_DELETE')}
                                   redirectUrl={'/community/list/전체'}
                                   postId={post.id}
-                                  width="w-20"
-                                  height="h-12"
+                                  width="w-16"
+                                  height="h-10"
                                 />
                               }
                             />
