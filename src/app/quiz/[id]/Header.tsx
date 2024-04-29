@@ -7,19 +7,24 @@ import { CancelButton } from '@/components/common/FormButtons';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteQuiz } from './mutations';
 import { toast } from 'react-toastify';
+import { create } from 'lodash';
 
 const Header = ({
   level,
   title,
   isAnswerWritten,
   resultMode,
-  id
+  id,
+  currentUserEmail,
+  creator
 }: {
   level: number;
   title: string;
   isAnswerWritten: number;
   resultMode: boolean;
   id: string;
+  currentUserEmail: string | null;
+  creator: string;
 }) => {
   const m = useMultilingual('quiz-try');
   const router = useRouter();
@@ -59,7 +64,8 @@ const Header = ({
                   {level === 1 ? m('QUIZ_LEVEL_1') : level === 2 ? m('QUIZ_LEVEL_2') : m('QUIZ_LEVEL_3')}
                 </h3>
               </div>
-              <div className='pr-4 font-bold'>
+              {currentUserEmail === creator && (
+                <div className='pr-4 font-bold'>
                 <QuizDropdown
                   deleteBtn={
                     <CancelButton
@@ -72,6 +78,7 @@ const Header = ({
                   }
                 />
               </div>
+              )}
             </div>
           </div>
           <HeaderTitle>{m('TITLE')}</HeaderTitle>

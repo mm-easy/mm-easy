@@ -18,7 +18,7 @@ const QuestionEx = ({ id }: { id: string | undefined }) => {
   });
 
   if (isLoading) {
-    return <p className='h-[16px]'></p>
+    return <p className='h-[16px] text-pointColor1 font-bold'>로딩 중 입니다.</p>
   }
 
   const question = data as Question[];
