@@ -132,14 +132,12 @@ const QuizTryPage = () => {
   if (quizIsLoading || questionsIsLoading) return <LoadingImg height="84vh" />;
   if (quizIsError || questionsIsError) return <div>에러..</div>;
 
-  const quizzes = quizData as Quiz[];
-
-  if (!quizzes[0]) {
+  if (!quizData) {
     toast.warning('존재하지 않는 퀴즈입니다.');
     router.replace('/quiz/list');
     return <div className="h-full w-full">삭제되었거나 없는 퀴즈입니다.</div>;
   }
-  const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizzes[0];
+  const { title, level, info, thumbnail_img_url: url, creator_id, created_at } = quizData;
 
   const questions = questionsData as Question[];
   const isAllAnswersSubmitted = questions.length === usersAnswers.length;

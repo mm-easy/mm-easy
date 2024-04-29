@@ -48,8 +48,12 @@ const QUIZ_TRY_STRINGS = {
     en: 'Solve it again'
   },
   DELETE_BTN: {
-    ko: '삭제하기',
+    ko: '삭제',
     en: 'Delete'
+  },
+  EDIT_BTN: {
+    ko: '수정',
+    en: 'Edit'
   },
   RESULT_TEXT1: {
     ko: '개 중에 ',

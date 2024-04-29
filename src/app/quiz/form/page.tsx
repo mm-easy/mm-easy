@@ -141,7 +141,6 @@ const QuizFormPage = () => {
       }
     }
 
-    // 퀴즈 썸네일 이미지를 스토리지에 업로드
     try {
       // 퀴즈 썸네일 이미지를 스토리지에 업로드
       let imgUrl = null;
@@ -235,7 +234,6 @@ const QuizFormPage = () => {
         setFile={setFile}
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
-        deletedQuestions={deletedQuestions}
       />
     </>
   );
