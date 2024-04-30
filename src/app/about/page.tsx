@@ -117,7 +117,7 @@ const AboutPage = () => {
             </div>
           </section>
           <section>
-            <div className="w-3/5 mx-auto pt-16 flex justify-center items-center gap-6 border-t border-solid border-pointColor1sm:w-full sm:gap-2">
+            <div className="w-3/5 mx-auto pt-16 flex justify-center items-center gap-6 border-t border-solid border-pointColor1 sm:w-full sm:gap-2">
               <Image src={InfoIcon1} alt="로고" className="w-[50px] sm:w-[25px]" />
               <span className="text-pointColor1">{m('ABOUT_TITLE1_DETAIL3')}</span>
             </div>
