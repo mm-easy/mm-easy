@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import { getCookie, setCookie } from 'cookies-next';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
-import { getCookie, setCookie } from 'cookies-next';
 
 type LanguageType = 'en' | 'ko';
 

@@ -1,26 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import MainLogo from '@/assets/logo/logo_horizontal_1.png';
-import MainLogoWhite from '@/assets/logo/logo_horizontal_4.png';
 import Image from 'next/image';
-import ProfileDropdown from './ProfileDropdown';
-import useMultilingual from '@/utils/useMultilingual';
-import ToggleLanguage from './ToggleLanguage';
-import { useEffect } from 'react';
-import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useAtom } from 'jotai';
 import { AuthChangeEvent } from '@supabase/supabase-js';
 import { isLoggedInAtom } from '../../store/store';
 import { supabase } from '@/utils/supabase/supabase';
-import { usePathname } from 'next/navigation';
 import { ADMIN } from '@/constant/adminId';
+import useMultilingual from '@/utils/useMultilingual';
+import MainLogo from '@/assets/logo/logo_horizontal_1.png';
+import MainLogoWhite from '@/assets/logo/logo_horizontal_4.png';
+import ProfileDropdown from './ProfileDropdown';
+import ToggleLanguage from './ToggleLanguage';
 
 const Header = () => {
+  const m = useMultilingual('header');
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUserEmail, setCurrentUserEmail] = useState<string>();
-  const m = useMultilingual('header');
 
   /** 현재 로그인되어 있는지 확인 */
   useEffect(() => {
@@ -76,6 +76,7 @@ const Header = () => {
     };
   }, [setIsLoggedIn]);
 
+  /** 현재 위치한 페이지 확인 */
   const isActive = (path: string) => {
     return pathname.includes(path);
   };

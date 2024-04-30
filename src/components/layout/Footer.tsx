@@ -1,8 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import GithubIcon from '@/assets/github_icon.png';
 import InstagramIcon from '@/assets/instagram_icon.png';
 import { PiNotePencilFill } from 'react-icons/pi';
-import Image from 'next/image';
 
 const Footer = () => {
   return (
