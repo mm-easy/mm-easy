@@ -1,6 +1,5 @@
 'use client';
 
-import useMultilingual from '@/utils/useMultilingual';
 import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect, useRef } from 'react';
 import { wordLists } from '@/utils/wordList';
@@ -11,10 +10,11 @@ import { isLoggedInAtom } from '@/store/store';
 import { useRouter } from 'next/navigation';
 import { BiSolidVolumeFull } from 'react-icons/bi';
 import { toast } from 'react-toastify';
+import ExitButton from '@/components/common/ExitButton';
+import useMultilingual from '@/utils/useMultilingual';
 
 import type { User } from '@/types/users';
 import type { DifficultySetting } from '@/types/difficultySetting';
-import ExitButton from '@/components/common/ExitButton';
 
 const TypingGamePage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -52,14 +52,16 @@ const TypingGamePage = () => {
   const specialWordSound = useRef<HTMLAudioElement | null>(null);
   const lobbyMusic = useRef<HTMLAudioElement | null>(null);
   const clickSound = useRef<HTMLAudioElement | null>(null);
-  // const finalRoundMusic = useRef<HTMLAudioElement | null>(null);
+  const finalRoundMusic = useRef<HTMLAudioElement | null>(null);
 
+  /** 게임 난이도에 따라 다른 배경음악을 재생. difficulty 상태에 따라 선택된 음악 파일 경로를 설정하고, 
+  backgroundMusic ref를 통해 오디오 플레이어의 소스를 변경하며 재생을 시작 */
   const playBackgroundMusic = () => {
     let bgMusicUrl;
     if (difficulty === 3) {
       bgMusicUrl = 'game/greatYJ.mp3';
-      // } else if (difficulty === 5) {
-      //   bgMusicUrl = 'game/FinalRound.mp3';
+    } else if (difficulty === 5) {
+      bgMusicUrl = 'game/FinalRound.mp3';
     } else {
       bgMusicUrl = 'game/SeoulVibes.mp3';
     }
@@ -73,6 +75,7 @@ const TypingGamePage = () => {
     }
   };
 
+  /** 게임이 시작되거나 난이도가 변경될 때 playBackgroundMusic 함수를 호출하여 배경음악을 조절 */
   useEffect(() => {
     // 게임이 시작되었을 때만 배경음악 변경 실행
     if (gameStarted) {
@@ -93,8 +96,9 @@ const TypingGamePage = () => {
       specialWordSound.current = new Audio('game/specialWord.wav');
       lobbyMusic.current = new Audio('game/Lobby.mp3');
       clickSound.current = new Audio('game/clickSound.wav');
-      // finalRoundMusic.current = new Audio('game/FinalRound.mp3');
+      finalRoundMusic.current = new Audio('game/FinalRound.mp3');
 
+      /** 클린업 함수 */
       return () => {
         if (gameoverSound.current) gameoverSound.current.pause();
         if (backgroundMusic.current) backgroundMusic.current.pause();
@@ -105,7 +109,7 @@ const TypingGamePage = () => {
         if (specialWordSound.current) specialWordSound.current.pause();
         if (lobbyMusic.current) lobbyMusic.current.pause();
         if (clickSound.current) clickSound.current.pause();
-        // if (finalRoundMusic.current) finalRoundMusic.current.pause();
+        if (finalRoundMusic.current) finalRoundMusic.current.pause();
       };
     }
   }, []);
@@ -123,6 +127,7 @@ const TypingGamePage = () => {
     if (clickSound.current) clickSound.current.volume = volume;
   }, [volume]);
 
+  /** 게임의 시작 상태에 따라 로비 음악을 재생하거나 정지 */
   useEffect(() => {
     if (!gameStarted && lobbyMusic.current) {
       lobbyMusic.current.play();
@@ -133,10 +138,12 @@ const TypingGamePage = () => {
     }
   }, [gameStarted]);
 
+  /** window.innerHeight를 사용하여 게임 영역의 높이를 동적으로 계산 */
   useEffect(() => {
     setGameAreaHeight(Math.floor(window.innerHeight * 0.8));
   }, []);
 
+  /** 난이도가 5 이상일 때 무작위로 특별 단어를 선택하고 상태를 업데이트 */
   useEffect(() => {
     if (difficulty >= 5) {
       const difficultyKey = difficulty as keyof typeof wordLists;
@@ -148,6 +155,7 @@ const TypingGamePage = () => {
     }
   }, [difficulty, gameStarted]);
 
+  /** 사용자 프로필 정보 패칭 */
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (isLoggedIn) {
@@ -159,6 +167,7 @@ const TypingGamePage = () => {
     fetchUserProfile();
   }, [isLoggedIn]);
 
+  /** 게임 영역의 최대 너비를 1440px로 제한 */
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (window.innerWidth > 1440) {
@@ -169,6 +178,7 @@ const TypingGamePage = () => {
     }
   }, []);
 
+  /** 단어 생성 타이머 */
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (gameStarted) {
@@ -187,6 +197,7 @@ const TypingGamePage = () => {
     return () => clearInterval(interval);
   }, [gameStarted, difficulty]);
 
+  /** 단어 속도, 생명 감소 타이머 */
   useEffect(() => {
     let interval = setInterval(() => {
       const speedAdjustment = slowMotion ? 4 : difficultySettings[difficulty].speed; // slowMotion 활성화 시 속도는 4, 아니면 난이도에 따른 속도
@@ -232,6 +243,7 @@ const TypingGamePage = () => {
     }
   }, [lives, score, user]);
 
+  /** 입력 처리 상태 업데이트 */
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setInput(e.target.value);
@@ -264,6 +276,7 @@ const TypingGamePage = () => {
         setWords(words.filter((_, index) => index !== wordIndex));
         setScore(score + 10);
         setCorrectWordsCount(correctWordsCount + 1);
+        /** 특수 단어 입력 처리 */
         if (input === specialWord) {
           if (specialWordSound.current) {
             specialWordSound.current.play();
@@ -283,6 +296,7 @@ const TypingGamePage = () => {
     setInput('');
   };
 
+  /** 게임 시작 함수 */
   const startGame = () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
@@ -297,6 +311,7 @@ const TypingGamePage = () => {
     }
   };
 
+  /** 로그인 없이 시작 함수 */
   const proceedWithoutLogin = () => {
     setShowLoginModal(false);
     setGameStarted(true);
@@ -308,10 +323,12 @@ const TypingGamePage = () => {
     playBackgroundMusic();
   };
 
+  /** 로그인 페이지 리디렉션 */
   const goToLogin = () => {
     router.push('/login');
   };
 
+  /** 난이도 변경 함수 */
   const handleDifficultyChange = (newDifficulty: number) => {
     playClickSound();
     if (newDifficulty >= 1 && newDifficulty <= maxDifficulty && newDifficulty !== difficulty) {
@@ -322,9 +339,9 @@ const TypingGamePage = () => {
     }
   };
 
+  /** 점수 저장 함수 */
   const addGameScore = async (finalScore: number) => {
     if (!user) {
-      console.error('로그인한 유저가 없어, 점수를 저장할 수 없습니다.');
       return;
     }
 
@@ -340,7 +357,6 @@ const TypingGamePage = () => {
           .from('game_tries')
           .insert([{ user_id: user.id, score: finalScore, created_at: new Date().toISOString() }]);
         if (insertError) throw insertError;
-        console.log('새 점수가 저장되었습니다!');
       } else {
         const currentScore = existingScores?.score || 0;
         if (finalScore > currentScore) {
@@ -349,20 +365,18 @@ const TypingGamePage = () => {
             .update({ score: finalScore, created_at: new Date().toISOString() })
             .eq('user_id', user.id);
           if (updateError) throw updateError;
-          console.log('점수가 업데이트되었습니다!');
         } else {
-          console.log('현재 점수보다 낮기 때문에 업데이트되지 않았습니다.');
         }
       }
-    } catch (error) {
-      console.error('점수 저장 중 오류 발생:', error);
-    }
+    } catch (error) {}
   };
 
+  /** 볼륨 슬라이더 입력 처리 */
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(e.target.valueAsNumber);
   };
 
+  /** 각 난이도 관리 */
   const difficultySettings: { [key: number]: DifficultySetting } = {
     1: { label: m('DIFFICULTY1'), speed: 4, interval: 5000 },
     2: { label: m('DIFFICULTY2'), speed: 6, interval: 4000 },
@@ -375,6 +389,7 @@ const TypingGamePage = () => {
 
   const lifePercentage = (lives / maxLives) * 55;
 
+  /** 게임 리셋 */
   const resetGame = () => {
     setGameStarted(false);
     setWords([]);
@@ -402,6 +417,7 @@ const TypingGamePage = () => {
     setShowConfirmModal(false);
   };
 
+  /** 속도 느려지게 만드는 효과 */
   const applyFrozenEffect = () => {
     setFrozenEffect(true);
     setTimeout(() => {
