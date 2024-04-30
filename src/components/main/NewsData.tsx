@@ -34,7 +34,12 @@ const NewsData = async () => {
                   .replace(/&apos;/g, "'")}
               </span>
             </div>
-            <Link href={newsData.link} target="_blank" className="sm:py-2 origin-center rotate-180">
+            <Link
+              href={newsData.link}
+              aria-label="더 보기"
+              target="_blank"
+              className="sm:py-2 origin-center rotate-180"
+            >
               <ArrowMore style={{ fill: colors?.pointColor1 }} />
             </Link>
           </div>

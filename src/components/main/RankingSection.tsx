@@ -62,7 +62,11 @@ const RankingSection = () => {
     <>
       <div className="flex justify-between items-center w-full px-6 py-4 bg-bgColor1 border-y-2 border-solid border-pointColor1 sm:hidden">
         <p className="text-lg font-bold text-pointColor1">{m('HALL_OF_FAME')}</p>
-        <button onClick={refreshAllData} className="flex items-center text-pointColor1 text-xl sm:hidden">
+        <button
+          onClick={refreshAllData}
+          aria-label="새로고침"
+          className="flex items-center text-pointColor1 text-xl sm:hidden"
+        >
           <SlRefresh className="hover:animate-spin-slow" />
         </button>
       </div>
