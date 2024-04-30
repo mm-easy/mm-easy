@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 import { UpdateQuiz, insertOptionsToTable, insertQuestionsToTable, insertQuizToTable } from '@/api/quizzes';
 
-import type { Option, OptionsToInsert, QuestionsToInsert, Quiz } from '@/types/quizzes';
+import type { OptionsToInsert, QuestionsToInsert, Quiz } from '@/types/quizzes';
 
 /** quiz를 quizzes 테이블에 insert */
 export const useSubmitQuiz = () => {

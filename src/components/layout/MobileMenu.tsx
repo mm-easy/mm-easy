@@ -4,23 +4,24 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import tailwindColors from '../../../tailwind.config';
-
+import useMultilingual from '@/utils/useMultilingual';
 import HomeIcon from '@/assets/mobile/mobile_btn_home.svg';
 import QuizIcon from '@/assets/mobile/mobile_btn_quiz.svg';
-// import TypingIcon from '@/assets/mobile/mobile_btn_typing.svg';
+// import TypingIcon from '@/assets/mobile/mobile_btn_typing.svg'; // 타자연습 모바일 아이콘
 import PhonicsIcon from '@/assets/mobile/mobile_btn_phonics.svg';
 import CommunityIcon from '@/assets/mobile/mobile_btn_community.svg';
 import AboutIcon from '@/assets/mobile/mobile_btn_about.svg';
-import useMultilingual from '@/utils/useMultilingual';
+
 import type { TailwindColors } from '@/types/tailwind';
 
 const MobileMenu = () => {
-  const pathname = usePathname();
   const m = useMultilingual('mobile-menu');
+  const pathname = usePathname();
   const [isMenuVisible, setIsMenuVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPost] = useState(0);
   const { colors } = tailwindColors.theme?.extend as { colors: TailwindColors };
 
+  /** 스크롤 내려갈 땐 메뉴 hidden */
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;

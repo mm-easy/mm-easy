@@ -1,7 +1,7 @@
-import { useSubmitReport } from '@/app/quiz/[id]/mutations';
 import { supabase } from '@/utils/supabase/supabase';
-import useMultilingual from '@/utils/useMultilingual';
 import { toast } from 'react-toastify';
+import { useSubmitReport } from '@/app/quiz/[id]/mutations';
+import useMultilingual from '@/utils/useMultilingual';
 
 const ReportButton = ({
   children,
@@ -39,7 +39,9 @@ const ReportButton = ({
     if (reportHistory?.length !== 0) {
       // 이력이 있다면 알림
       toast.warn(
-        `${m('NOTIFY_ALREADY_REPORT1')}${type === 'quiz' ? m('NOTIFY_ALREADY_REPORT_QUIZ') : m('NOTIFY_ALREADY_REPORT_POST')}`
+        `${m('NOTIFY_ALREADY_REPORT1')}${
+          type === 'quiz' ? m('NOTIFY_ALREADY_REPORT_QUIZ') : m('NOTIFY_ALREADY_REPORT_POST')
+        }`
       );
     } else {
       let reasonForReport = window.prompt(m('ASK_TO_REASON')); // 없다면 사유를 받음

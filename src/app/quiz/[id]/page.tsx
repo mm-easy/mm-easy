@@ -2,34 +2,33 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { useParams, useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { useAuth } from '@/hooks/useAuth';
 import { langAtom } from '@/store/store';
-import { getQuiz } from '@/api/quizzes';
-import { getQuestions } from '@/api/questions';
 import { supabase } from '@/utils/supabase/supabase';
 import { storageUrl } from '@/utils/supabase/storage';
+import { getQuiz } from '@/api/quizzes';
+import { getQuestions } from '@/api/questions';
+import { useAuth } from '@/hooks/useAuth';
 import { handleMaxLength } from '@/utils/handleMaxLength';
-import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
 import confetti, { Options as ConfettiOptions } from 'canvas-confetti';
+import { useSubmitQuizTry, useUpdateQuizTry } from './mutations';
+import { MobileHeader } from '@/components/common/MobileHeader';
 import tailwindColors from '../../../../tailwind.config';
-
+import PageUpBtn from '@/components/common/PageUpBtn';
+import LoadingImg from '@/components/common/LoadingImg';
+import ReportButton from '@/components/common/ReportButton';
+import useMultilingual from '@/utils/useMultilingual';
+import CorrectAnswerBtn from './CorrectAnswerBtn';
+import PageAndSubmitBtn from './PageAndSubmitBtn';
+import SideHeader from './SideHeader';
 import Header from './Header';
 import Options from './Options';
-import PageUpBtn from '@/components/common/PageUpBtn';
-import ReportButton from '@/components/common/ReportButton';
-import LoadingImg from '@/components/common/LoadingImg';
-import useMultilingual from '@/utils/useMultilingual';
 
-import { QuestionType, type Question, Answer, Quiz, Params } from '@/types/quizzes';
+import { QuestionType, type Question, Answer, Params } from '@/types/quizzes';
 import type { TailwindColors } from '@/types/tailwind';
-import CorrectAnswerBtn from './CorrectAnswerBtn';
-import SideHeader from './SideHeader';
-import PageAndSubmitBtn from './PageAndSubmitBtn';
-import { MobileHeader } from '@/components/common/MobileHeader';
 
 const QuizTryPage = () => {
   const [lang] = useAtom(langAtom);
@@ -96,7 +95,7 @@ const QuizTryPage = () => {
     setPage(page + 1);
   };
 
-  /** Quiz, Question 데이터 불러오기 */
+  /** quiz, question 데이터 불러오기 */
   const {
     data: quizData,
     isLoading: quizIsLoading,
@@ -150,7 +149,7 @@ const QuizTryPage = () => {
     }
   };
 
-  /** 답안 저장 */
+  /** 유저 답안 저장 */
   const handleGetAnswer = (id: string | undefined, answer: string | boolean, option_id?: string) => {
     const idx = usersAnswers.findIndex((usersAnswer) => usersAnswer.id === id);
     const newAnswers = [...usersAnswers];
@@ -322,7 +321,7 @@ const QuizTryPage = () => {
               const questionOrder = questions.indexOf(question);
               const pageMode = !resultMode ? page === questionOrder : true;
               const usersAnswer = usersAnswers.find((answer) => answer.id === id);
-              const answer = usersAnswer && (usersAnswer.answer as string);
+              const answer = usersAnswer && (usersAnswer.answer as string); // 이 문제의 유저 답
 
               return (
                 pageMode && (

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { FaHighlighter } from 'react-icons/fa';
 
 const CorrectAnswerBtn = ({ answer }: { answer: string | undefined }) => {
