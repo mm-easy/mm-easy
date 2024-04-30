@@ -1,8 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import UsageStatus from './UsageStatus';
+import { getPosts } from '@/api/posts';
+import { getQuizzes } from '@/api/quizzes';
+import { getUsers } from '@/api/users';
+import { WhiteButton } from '@/components/common/FormButtons';
 import PageUpBtn from '@/components/common/PageUpBtn';
+import useMultilingual from '@/utils/useMultilingual';
+import { createManagerData } from '@/utils/managerData';
 import Infopeople from '@/assets/team/info_people.png';
 import InfoIcon1 from '@/assets/about/info_icon_b3.png';
 import InfoIcon2 from '@/assets/about/info_icon_b2.png';
@@ -12,14 +20,6 @@ import InfoDesign1 from '@/assets/about/info_design_1.png';
 import InfoDesign2 from '@/assets/about/info_design_2.png';
 import InfoDesign3 from '@/assets/about/info_design_3.png';
 import InfoDesign4 from '@/assets/about/info_design_4.png';
-import useMultilingual from '@/utils/useMultilingual';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getPosts } from '@/api/posts';
-import { getQuizzes } from '@/api/quizzes';
-import { getUsers } from '@/api/users';
-import { WhiteButton } from '@/components/common/FormButtons';
-import { createManagerData } from '@/utils/managerData';
 
 import type { Post } from '@/types/posts';
 import type { Quiz } from '@/types/quizzes';
