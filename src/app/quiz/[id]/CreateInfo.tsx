@@ -1,12 +1,14 @@
+import Image from 'next/image';
 import { getProfile } from '@/api/profiles';
-import { User } from '@/types/users';
 import { useQuery } from '@tanstack/react-query';
 import { profileStorageUrl } from '@/utils/supabase/storage';
-import Image from 'next/image';
 import useMultilingual from '@/utils/useMultilingual';
+
+import type { User } from '@/types/users';
 
 const CreateInfo = ({ creator, date }: { creator: string; date: string | undefined }) => {
   const m = useMultilingual('quiz-try');
+
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
       try {
@@ -23,7 +25,6 @@ const CreateInfo = ({ creator, date }: { creator: string; date: string | undefin
   if (isError) return <div>error..</div>;
 
   const profile = data as User[];
-
   if (profile.length === 0) {
     return null;
   }

@@ -18,6 +18,10 @@ const MOBILE_MENU_STRINGS = {
   COMMUNITY_MENU: {
     ko: '커뮤니티',
     en: 'community'
+  },
+  ABOUT_MENU: {
+    ko: '서비스 소개',
+    en: 'about'
   }
 };
 

@@ -1,31 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import DOMPurify from 'dompurify';
-import Comment from './Comment';
+import useMultilingual from '@/utils/useMultilingual';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabase/supabase';
+import { profileStorageUrl } from '@/utils/supabase/storage';
+import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
+import { useAuth } from '@/hooks/useAuth';
+import { isLoggedInAtom } from '@/store/store';
 import Like from './Like';
+import Comment from './Comment';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 import ReportButton from '@/components/common/ReportButton';
 import LoadingImg from '@/components/common/LoadingImg';
 import PageUpBtn from '@/components/common/PageUpBtn';
-import useMultilingual from '@/utils/useMultilingual';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
-import { useAtom } from 'jotai';
-import { getFilterPosts, getPostCategoryDetail, getPostDetail, getPosts } from '@/api/posts';
-import { isLoggedInAtom } from '@/store/store';
-import { useQuery } from '@tanstack/react-query';
+import { ADMIN } from '@/constant/adminId';
 import { PostEditButton } from '@/components/common/EditButton';
 import { PostDeleteButton } from '@/components/common/DeleteButton';
 import { DropdownMenu } from '@/components/common/DropdownMenu';
 import { MobileHeader } from '@/components/common/MobileHeader';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/utils/supabase/supabase';
-import { profileStorageUrl } from '@/utils/supabase/storage';
-import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { PostParams, Post, PostDetailDateType } from '@/types/posts';
 import type { User } from '@/types/users';
-import { ADMIN } from '@/constant/adminId';
 
 const DetailPost = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -38,6 +38,7 @@ const DetailPost = () => {
   const { getCurrentUserProfile } = useAuth();
   const m = useMultilingual('communityDetail');
 
+  /** 게시글 상세정보 가져오기 */
   const { data: post, isLoading } = useQuery<PostDetailDateType>({
     queryKey: ['posts', params.id],
     queryFn: async () => {
@@ -54,6 +55,8 @@ const DetailPost = () => {
       }
     }
   });
+
+  /** 게시글 필터링  */
   const { data: nextBeforePost = [] } = useQuery<Post[]>({
     queryKey: ['postPage'],
     queryFn: async () => {
@@ -70,7 +73,8 @@ const DetailPost = () => {
       }
     }
   });
-  /** 이전글 가기 */
+
+  /** 이전 게시글 가기 */
   const beforePostBtn = (postId: string) => {
     const nowPostNum = nextBeforePost.findIndex((prev) => prev.id === postId);
     if (nowPostNum + 1 === nextBeforePost.length) {
@@ -91,6 +95,7 @@ const DetailPost = () => {
     }
   };
 
+  /** 페이지업 버튼 */
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);

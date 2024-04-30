@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getOptions } from '@/api/question_options';
-import { Dispatch, SetStateAction } from 'react';
-import type { Answer, Option } from '@/types/quizzes';
 import CorrectAnswerBtn from './CorrectAnswerBtn';
+
+import type { Answer, Option } from '@/types/quizzes';
 
 const Options = ({
   id: questionId,
@@ -29,11 +29,10 @@ const Options = ({
     queryKey: ['question_options', questionId]
   });
 
-  if (isLoading) return <div>옵션 로드 중..</div>;
-  if (isError) return <div>옵션 로드 에러..</div>;
+  if (isLoading) return <div>loading options..</div>;
+  if (isError) return <div>error..</div>;
 
   const options = data as Option[];
-
   const correctAnswer = options.find((option) => option.is_answer === true)?.content;
 
   return (
@@ -43,7 +42,7 @@ const Options = ({
         return (
           <label
             key={id}
-            className={`pl-4 py-[9px] flex gap-4 border-solid border ${
+            className={`sm:h-12 sm:leading-7 pl-4 py-[9px] flex gap-4 border-solid border ${
               resultMode && usersAnswer?.option_id === id
                 ? is_answer
                   ? 'border-pointColor1 bg-bgColor2'

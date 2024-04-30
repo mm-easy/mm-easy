@@ -1,27 +1,26 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { deleteCookie } from 'cookies-next';
 import { getUser } from '@/api/users';
-import { supabase } from '@/utils/supabase/supabase';
-import { extendVariants, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
+import { extendVariants, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from '@nextui-org/react';
+import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
-import { profileStorageUrl } from '@/utils/supabase/storage';
-import { useAuth } from '@/hooks/useAuth';
 import { isLoggedInAtom } from '@/store/store';
+import { useAuth } from '@/hooks/useAuth';
+import { profileStorageUrl } from '@/utils/supabase/storage';
+import useMultilingual from '@/utils/useMultilingual';
 
 import type { User } from '@/types/users';
-import { useRouter } from 'next/navigation';
-import useMultilingual from '@/utils/useMultilingual';
-import { deleteCookie } from 'cookies-next';
 
 const ProfileDropdown = () => {
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const m = useMultilingual('header');
-
-  const { logout } = useAuth();
   const route = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const { logout } = useAuth();
 
   const MyAvatar = extendVariants(Avatar, {
     variants: {
@@ -61,8 +60,8 @@ const ProfileDropdown = () => {
     refetchOnWindowFocus: false
   });
 
-  if (isLoading) return <div>로딩</div>;
-  if (isError) return <div>정보 로드 에러</div>;
+  if (isLoading) return <div>profile</div>;
+  if (isError) return <div>error..</div>;
 
   return (
     <div className="flex items-center gap-4">

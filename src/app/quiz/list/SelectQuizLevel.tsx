@@ -1,17 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
-
 import QuizList from './QuizList';
 import CreateNewQuizBtn from './CreateNewQuizBtn';
 import Level1 from '@/assets/quiz/level1.png';
@@ -26,12 +21,13 @@ import Level2ENG from '@/assets/quiz/card_en_medium.png';
 import Level3ENG from '@/assets/quiz/card_en_hard.png';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
-
-import type { Quiz } from '@/types/quizzes';
+import { langAtom } from '@/store/store';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getQuizzesPaged } from '@/api/quizzes';
+import { WhiteButton } from '@/components/common/FormButtons';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
-  const [quizLevelSelected, setQuizLevelSelected] = useState<Quiz[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
@@ -54,7 +50,7 @@ const SelectQuizLevel = () => {
     fetchData();
   }, []);
 
-  /** 스크롤에 따라 다음 데이터 페이지 불러오도록 fetchNextPage 호출 */
+  /** 스크롤이 조건을 만족할 때 fetchNextPage 호출 */
   const handleScroll = () => {
     const isAtBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.body.offsetHeight;
     if (isAtBottom && !isLoading && hasNextPage) {
@@ -109,7 +105,7 @@ const SelectQuizLevel = () => {
         {m('CHOOSE_DIFFICULTY')}
       </section>
       <main
-        className={`sm:w-full sm:flex sm:justify-center sm:items-center sm:gap-4 sm:h-[23vh] ${
+        className={`sm:w-full px-3 sm:flex sm:justify-center sm:items-center sm:gap-4 sm:h-[23vh] ${
           selectedLevel === null
             ? 'sm:bg-bgColor2'
             : selectedLevel === 1
@@ -225,7 +221,7 @@ const SelectQuizLevel = () => {
           </div>
         </div>
       </main>
-      <QuizList allQuizzes={allQuizzes.pages} quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
+      <QuizList allQuizzes={allQuizzes.pages} currentUser={currentUser} />
       <CreateNewQuizBtn handleMakeQuizBtn={handleMakeQuizBtn} />
     </>
   );

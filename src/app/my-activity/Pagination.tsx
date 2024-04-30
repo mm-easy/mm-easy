@@ -1,4 +1,4 @@
-import { PaginationProps } from '@/types/pagination';
+import type { PaginationProps } from '@/types/pagination';
 
 export const Pagination: React.FC<PaginationProps> = ({ total, itemsPerPage, currentPage, onPageChange }) => {
   const pageNumbers = [];

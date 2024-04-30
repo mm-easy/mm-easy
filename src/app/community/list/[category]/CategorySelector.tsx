@@ -4,7 +4,8 @@ import useMultilingual from '@/utils/useMultilingual';
 import { useParams, useRouter } from 'next/navigation';
 import { getFilterPosts } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
-import { PostParams } from '@/types/posts';
+
+import type { PostParams } from '@/types/posts';
 
 const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     [m('COMMUNITY_CATEGORY_DIARY')]: '일기'
   };
 
+  /** 카테고리별 게시글 가져오기 */
   const { data: postNum = {} } = useQuery<Record<string, number>>({
     queryKey: ['categoryPostNums'],
     queryFn: async () => {
@@ -36,6 +38,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
     }
   });
 
+  /** 카테고리 이동 */
   const handleSelectCategory = (category: string) => {
     router.push(`/community/list/${categoryMenu[category]}`);
   };
