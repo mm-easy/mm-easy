@@ -10,8 +10,12 @@ export const QuizDropdown = ({ editBtn, deleteBtn }: { editBtn: React.ReactNode;
     }, 200);
   };
   return (
-    <div className="relative ">
-      <button onClick={() => setIsOpen(!isOpen)} onBlur={userMenuOnBlur} className="focus:outline-none text-pointColor1">
+    <div className="relative pr-4 font-bold hidden sm:block">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        onBlur={userMenuOnBlur}
+        className="focus:outline-none text-pointColor1"
+      >
         <HiDotsVertical />
       </button>
       {isOpen && (
