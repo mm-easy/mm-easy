@@ -46,6 +46,10 @@ const HEADER_STRINGS = {
   HEADER_DROPDOWN_LOGOUT: {
     ko: '로그아웃',
     en: 'Logout'
+  },
+  NOTIFY_TO_LOGOUT: {
+    ko: '로그아웃되었습니다.',
+    en: 'Logged out.'
   }
 };
 

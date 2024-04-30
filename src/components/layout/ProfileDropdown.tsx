@@ -41,7 +41,7 @@ const ProfileDropdown = () => {
     setIsLoggedIn(false);
     deleteCookie('PostCookie', { path: '/' });
     route.push('/');
-    toast.success('로그아웃되었습니다.');
+    toast.success(m('NOTIFY_TO_LOGOUT'));
   };
 
   /** 로그인한 사용자의 정보를 profiles 테이블에서 불러옴 */
