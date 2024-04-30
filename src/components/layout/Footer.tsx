@@ -15,7 +15,7 @@ const Footer = () => {
         <Link href="https://www.instagram.com/mm_easy_official" target="\_blank">
           <Image src={InstagramIcon} alt="인스타그램 아이콘" width={20} height={20} />
         </Link>
-        <Link href="https://forms.gle/v7HmDm1xSNc1WTeg7" target="\_blank">
+        <Link href="https://forms.gle/v7HmDm1xSNc1WTeg7" target="\_blank" aria-label="구글폼 설문조사">
           <PiNotePencilFill size={20} />
         </Link>
       </div>
