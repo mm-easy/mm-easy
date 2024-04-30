@@ -24,7 +24,7 @@ const Layout = ({ children, params }: Props) => {
   return (
     <main className="bg-bgColor1 grid grid-cols-[16%_84%] sm:block sm:w-[100%] h-[84%]">
       <div className={`sm:${paramsPostId.id ? 'hidden' : ''}`}>
-        <section className="sm:pt-6 sm:h-auto sm:bg-white sm:border-b-1 sm:border-pointColor1 sm:border-solid h-[84vh] justify-between bg-bgColor1">
+        <section className="sm:pt-6 sm:h-[7vh] sm:bg-white sm:border-b-1 sm:border-pointColor1 sm:border-solid h-[84vh] justify-between bg-bgColor1">
           <div>
             <CategorySelector categoryNow={category} />
           </div>
@@ -41,7 +41,7 @@ const Layout = ({ children, params }: Props) => {
             <Link
               href="/community/write"
               type="button"
-              className="text-5xl flex justify-center items-center fixed bottom-28 right-6 bg-pointColor1 text-white h-14 w-14 rounded-full"
+              className="text-5xl flex justify-center items-center fixed bottom-28 right-[20px] bg-pointColor1 text-white h-[60px] w-[60px] rounded-full"
             >
               <PlusCircle style={{fill: '#fff', width: '40px', height: '40px'}}/>
             </Link>

@@ -75,22 +75,26 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
     }
   };
 
+  /**모바일 드롭다운 다른곳 클릭 시 닫기*/
   const userMenuOnBlur = (id: string) => {
     setTimeout(() => {
       isOpenCommentMutation.mutate({ isOpen: true, id });
     }, 200);
   };
 
+  /**모바일 드롭다운버튼*/
   const handleIsOpenBtn = (isOpen: boolean, id: string) => {
     isOpenCommentMutation.mutate({ isOpen, id });
   };
 
+  /**모바일 드롭다운 수정완료*/
   const handleIsOpenUpdateBtn = (content: string, isOpen: boolean, id: string) => {
     setBtnChange(!btnChange);
     setContentChange(content);
     isOpenCommentMutation.mutate({ isOpen, id });
   };
 
+  /**모바일 드롭다운 수정완료 활성화 버튼*/
   const handleIsOpenChangeBtn = (content: string, id: string) => {
     setBtnChange(!btnChange);
     setContentChange(content);
@@ -126,7 +130,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   </div>
                 ) : (
                   <div className="sm:w-[70vw]">
-                    <p className="sm:leading-5">{prev.content}</p>
+                    <p className="sm:leading-relaxed">{prev.content}</p>
                     <div className="sm:text-sm text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>
@@ -180,6 +184,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       <div></div>
                     ))}
                 </div>
+                {/* 모바일 댓글 */}
                 <div className="sm:pr-4 sm:block hidden">
                   {profile && (profile.id === prev.author_id || ADMIN.some((admin) => admin.id === profile?.email)) ? (
                     <div className="relative">
@@ -256,6 +261,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
         </form>
       </div>
 
+      {/* 모바일 댓글 */}
       <div className="sm:pb-20 my-8 sm:block hidden">
         <form className="flex items-center w-full" onSubmit={handleSubmitBtn}>
           <div className="flex-grow border-b-1 border-t-1 border-r-1 border-grayColor2 border-solid">

@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import logoVertical4 from '@/assets/logo/logo_vertical_4.png';
 import Link from 'next/link';
+import logoVertical4 from '@/assets/logo/logo_vertical_4.png';
 import useMultilingual from '@/utils/useMultilingual';
 
 const Footer = () => {

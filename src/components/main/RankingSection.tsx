@@ -1,15 +1,15 @@
 import Image from 'next/image';
+import RankingBtn from './RankingBtn';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
+import { useState } from 'react';
+import { SlRefresh } from 'react-icons/sl';
+import { useQuery } from '@tanstack/react-query';
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
 import { profileStorageUrl } from '@/utils/supabase/storage';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { SlRefresh } from 'react-icons/sl';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
-import RankingBtn from './RankingBtn';
 
 const RankingSection = () => {
   const m = useMultilingual('ranking-section');
@@ -206,8 +206,8 @@ const RankingSection = () => {
         </div>
       </section>
       <div className="hidden sm:block sm:bg-bgColor2">
-        <div className="flex-col items-center w-full px-6 py-4 justify-between border-none">
-          <p className="text-lg font-bold text-pointColor1 py-8">{m('HALL_OF_FAME')}</p>
+        <div className="flex-col items-center w-full px-6 pb-2 justify-between border-none">
+          <p className="text-lg font-bold text-pointColor1 pt-8">{m('HALL_OF_FAME')}</p>
           <div className="flex justify-center mt-4 items-center gap-3">
             <RankingBtn
               onClick={() => setActiveRanking('quizCreator')}

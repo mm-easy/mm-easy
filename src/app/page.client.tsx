@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase/supabase';
 import QuizSection from '../components/main/QuizSection';
 import CommunitySection from '../components/main/CommunitySection';
 import Banner from '../components/main/Banner';
@@ -9,6 +7,8 @@ import RankingSection from '../components/main/RankingSection';
 import Footer from '../components/main/Footer';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import NewsSection from '../components/main/NewsSection';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/utils/supabase/supabase';
 
 const Home = ({ newsData }: { newsData: React.ReactNode }) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);

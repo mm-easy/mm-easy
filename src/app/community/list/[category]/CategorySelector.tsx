@@ -49,7 +49,7 @@ const CategorySelector = ({ categoryNow }: { categoryNow: string | null }) => {
         {Object.keys(categoryMenu).map((category) => (
           <li
             key={category}
-            className={`sm:border-b-0 sm:flex-1 sm:h-[4vh] sm:pl-0 h-[8vh] flex items-center pl-[30px] border-b-2 border-solid border-pointColor1 cursor-pointer ${
+            className={`sm:border-b-1 sm:flex-1 sm:h-[4vh] sm:pl-0 h-[8vh] flex items-center pl-[30px] border-b-2 border-solid border-pointColor1 cursor-pointer ${
               categoryNow === categoryMenu[category] ? 'sm:font-bold sm:bg-white sm:text-pointColor1 sm:border-b-[6px] sm:border-solid sm:border-pointColor1 bg-pointColor1 text-white' : 'bg-white text-pointColor1 '
             }`}
             onClick={() => handleSelectCategory(category)}
