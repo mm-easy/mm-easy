@@ -6,7 +6,7 @@ interface FormButtonProps {
   height?: string;
   border?: string;
 }
-// flex justify-center items-center 퀴즈풀기 때문에 추가했으니 문제 있는지 확인해보기..
+
 export const CancelButton: React.FC<FormButtonProps> = ({ onClick, text, width, height, border }) => {
   return (
     <button

@@ -3,16 +3,15 @@
 import { Dispatch, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SetStateAction } from 'jotai';
-
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { storageUrl } from '@/utils/supabase/storage';
-import SelectQuestionType from './SelectQuestionType';
 import InputQuestionTitle from './InputQuestionTitle';
 import InputQuestionImg from './InputQuestionImg';
 import UnloadImgBtn from './UnloadImg';
+import useMultilingual from '@/utils/useMultilingual';
 
 import { type Option, type Question, QuestionType } from '@/types/quizzes';
-import useMultilingual from '@/utils/useMultilingual';
+import SelectQuestionType from './SelectQuestionType';
 
 const QuestionForm = ({
   questions,

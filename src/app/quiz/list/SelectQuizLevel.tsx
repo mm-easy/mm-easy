@@ -1,17 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { WhiteButton } from '@/components/common/FormButtons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { getQuizzesPaged } from '@/api/quizzes';
 import { supabase } from '@/utils/supabase/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'react-toastify';
 import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
-
 import QuizList from './QuizList';
 import CreateNewQuizBtn from './CreateNewQuizBtn';
 import Level1 from '@/assets/quiz/level1.png';
@@ -26,12 +21,13 @@ import Level2ENG from '@/assets/quiz/card_en_medium.png';
 import Level3ENG from '@/assets/quiz/card_en_hard.png';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
-
-import type { Quiz } from '@/types/quizzes';
+import { langAtom } from '@/store/store';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getQuizzesPaged } from '@/api/quizzes';
+import { WhiteButton } from '@/components/common/FormButtons';
 
 const SelectQuizLevel = () => {
   const router = useRouter();
-  const [quizLevelSelected, setQuizLevelSelected] = useState<Quiz[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState('');
   const { getCurrentUserProfile } = useAuth();
@@ -54,7 +50,7 @@ const SelectQuizLevel = () => {
     fetchData();
   }, []);
 
-  /** 스크롤에 따라 다음 데이터 페이지 불러오도록 fetchNextPage 호출 */
+  /** 스크롤이 조건을 만족할 때 fetchNextPage 호출 */
   const handleScroll = () => {
     const isAtBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.body.offsetHeight;
     if (isAtBottom && !isLoading && hasNextPage) {
@@ -113,12 +109,12 @@ const SelectQuizLevel = () => {
           selectedLevel === null
             ? 'sm:bg-bgColor2'
             : selectedLevel === 1
-              ? 'sm:bg-[#fff2b2]'
-              : selectedLevel === 2
-                ? 'sm:bg-[#ffcc66]'
-                : selectedLevel === 3
-                  ? 'sm:bg-[#ffb266]'
-                  : ''
+            ? 'sm:bg-[#fff2b2]'
+            : selectedLevel === 2
+            ? 'sm:bg-[#ffcc66]'
+            : selectedLevel === 3
+            ? 'sm:bg-[#ffb266]'
+            : ''
         } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
       >
         <div
@@ -183,8 +179,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 1
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(1)}
             />
@@ -200,8 +196,8 @@ const SelectQuizLevel = () => {
                 selectedLevel === 2
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(2)}
             />
@@ -217,15 +213,15 @@ const SelectQuizLevel = () => {
                 selectedLevel === 3
                   ? 'translate-y-[60%] z-10'
                   : selectedLevel === null
-                    ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
-                    : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
+                  ? 'z-0 translate-y-[70%] hover:translate-y-[65%]'
+                  : 'z-0 translate-y-[80%] hover:translate-y-[70%]'
               }`}
               onClick={() => handleSelectLevel(3)}
             />
           </div>
         </div>
       </main>
-      <QuizList allQuizzes={allQuizzes.pages} quizLevelSelected={quizLevelSelected} currentUser={currentUser} />
+      <QuizList allQuizzes={allQuizzes.pages} currentUser={currentUser} />
       <CreateNewQuizBtn handleMakeQuizBtn={handleMakeQuizBtn} />
     </>
   );
