@@ -161,7 +161,7 @@ const AdminPage = () => {
                           {item.status === false ? (
                             <button
                               onClick={() => handleDelete(item.id, item.target_id as string)}
-                              className="w-28 h-8 bg-red-500 text-white font-bold rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                              className="w-28 h-8 bg-pointColor2 text-white font-bold rounded-md hover:bg-red-500 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                             >
                               {m('DELETE_BTN')}
                             </button>
@@ -195,7 +195,7 @@ const AdminPage = () => {
                           {item.status === false ? (
                             <button
                               onClick={() => handleDelete(item.id, item.target_id as string)}
-                              className="w-28 h-8 bg-red-500 text-white font-bold rounded-md hover:bg-red-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                              className="w-28 h-8 bg-pointColor2 text-white font-bold rounded-md hover:bg-red-500 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                             >
                               {m('DELETE_BTN')}
                             </button>
