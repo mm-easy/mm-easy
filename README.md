@@ -681,8 +681,6 @@
  ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂login
  ┃ ┃ ┗ 📜page.tsx
- ┃ ┣ 📂menu
- ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂my-activity
  ┃ ┃ ┣ 📜MyActivity.tsx
  ┃ ┃ ┣ 📜page.tsx
@@ -692,10 +690,8 @@
  ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂vowels
  ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📜examplePage.tsx
  ┃ ┃ ┣ 📜page.tsx
  ┃ ┃ ┣ 📜PhonicsLayout.tsx
- ┃ ┃ ┗ 📜PhonicsPlayer.tsx
  ┃ ┣ 📂profile
  ┃ ┃ ┣ 📜mutations.tsx
  ┃ ┃ ┣ 📜MyLevelAndScore.tsx
@@ -858,3 +854,5 @@
 
 
 ```
+
+┃ ┃ ┣ 📜examplePage.tsx
