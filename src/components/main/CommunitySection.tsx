@@ -32,12 +32,12 @@ const CommunitySection = () => {
         <span className="sm:text-xl">{m('RECENT_POSTS')}</span>
       </div>
       <div className="hidden sm:block">
-        <div className="w-full px-6 py-8 text-lg font-bold text-pointColor1 bg-bgColor1 flex justify-between items-center border-t-2 border-solid border-pointColor1">
+        <div className="w-full px-6 pt-8 text-lg font-bold text-pointColor1 bg-bgColor1 flex flex-col justify-between border-t-2 border-solid border-pointColor1">
           <span className="sm:text-lg">{m('RECENT_POSTS')}</span>
-          <div className="flex gap-[12px]">
+          <div className="pt-4 flex justify-center gap-[12px]">
             <button
               onClick={() => setActiveTab('notice')}
-              className={`px-[27px] py-[12px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-4 py-[10px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
                 activeTab === 'notice' ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
             >
@@ -45,7 +45,7 @@ const CommunitySection = () => {
             </button>
             <button
               onClick={() => setActiveTab('posts')}
-              className={`px-[27px] py-[12px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
+              className={`px-4 py-[10px] font-bold text-sm border-2 border-solid border-pointColor1 rounded-full ${
                 activeTab === 'posts' ? 'bg-pointColor1 text-white' : 'bg-white text-pointColor1'
               }`}
             >
@@ -54,7 +54,7 @@ const CommunitySection = () => {
           </div>
         </div>
         {activeTab === 'notice' && (
-          <div className="p-4 bg-bgColor1 border-solid border-b-2 border-pointColor1">
+          <div className="p-4 pt-2 bg-bgColor1 border-solid border-b-2 border-pointColor1">
             {notices?.map((notice, index) => (
               <div
                 key={notice.id}
