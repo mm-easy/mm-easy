@@ -1,5 +1,5 @@
 import Home from './page.client';
-import NewsData from '../components/(main)/NewsData';
+import NewsData from '../components/main/NewsData';
 
 const page = () => {
   return <Home newsData={<NewsData />} />;
