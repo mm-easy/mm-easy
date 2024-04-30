@@ -1,15 +1,15 @@
 import Image from 'next/image';
+import RankingBtn from './RankingBtn';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
+import { useState } from 'react';
+import { SlRefresh } from 'react-icons/sl';
+import { useQuery } from '@tanstack/react-query';
 import { getGameScore } from '@/api/game_scrore';
 import { getQuizRank } from '@/api/quizzes';
 import { getTopQuizScores } from '@/api/tries';
 import { profileStorageUrl } from '@/utils/supabase/storage';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { SlRefresh } from 'react-icons/sl';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
-import RankingBtn from './RankingBtn';
 
 const RankingSection = () => {
   const m = useMultilingual('ranking-section');

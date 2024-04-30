@@ -123,6 +123,7 @@ export const getFilterPosts = async (category: string | null) => {
   }
 };
 
+/** 게시글 상세 정보 가져오기 */
 export const getPostDetail = async (postId: string) => {
   try {
     const { data: post, error } = await supabase
@@ -141,6 +142,7 @@ export const getPostDetail = async (postId: string) => {
   }
 };
 
+/** 카테고리 게시글 정보 가져오기 */
 export const getPostCategoryDetail = async (categoryNow: string | null, postId: string) => {
   try {
     const { data: post, error } = await supabase
