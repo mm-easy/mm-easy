@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import useMultilingual from '@/utils/useMultilingual';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { FcGoogle } from 'react-icons/fc';
-import { SiKakaotalk } from 'react-icons/si';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
-import Image from 'next/image';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
+import { FcGoogle } from 'react-icons/fc';
+import useMultilingual from '@/utils/useMultilingual';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ const LoginPage = () => {
   const router = useRouter();
   const m = useMultilingual('login');
 
+  /** signIn 함수 호출 후 로그인 시도 함수 */
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const loginSuccess = await signIn(email, password);
@@ -27,14 +29,12 @@ const LoginPage = () => {
     }
   };
 
+  /** 구글 로그인 */
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
   };
 
-  // const handleKakaoSignIn = async () => {
-  //   await signInWithKakao();
-  // };
-
+  /** 비밀번호 입력 상태 업데이트 */
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setShowPasswordImage(!!e.target.value);
@@ -137,13 +137,6 @@ const LoginPage = () => {
               <FcGoogle className="mr-2" size="2em" />
               {m('GOOGLE_LOGIN_BUTTON')}
             </button>
-            {/* <button
-                onClick={handleKakaoSignIn}
-                className="flex items-center justify-center w-full px-1 py-3 text-pointColor1 border border-pointColor1 hover:bg-gray-300 rounded-md shadow"
-              >
-                <SiKakaotalk className="mr-2 bg-black text-yellow-500" size="2em" />
-                Kakao 로그인
-              </button> */}
           </div>
         </div>
       </div>

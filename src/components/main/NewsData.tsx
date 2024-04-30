@@ -1,8 +1,8 @@
 import Link from 'next/link';
+import tailwindColors from '../../../tailwind.config';
+import ArrowMore from '@/assets/arrow_back_ios_FILL1_wght400_GRAD0_opsz24.svg';
 import { loader } from '@/api/naverAPI';
 import { formatToLocaleDateTimeString } from '@/utils/date';
-import ArrowMore from '@/assets/arrow_back_ios_FILL1_wght400_GRAD0_opsz24.svg';
-import tailwindColors from '../../../tailwind.config';
 
 import type { NewsType } from '@/types/posts';
 import type { TailwindColors } from '@/types/tailwind';

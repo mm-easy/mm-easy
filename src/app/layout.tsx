@@ -1,9 +1,9 @@
+import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import QueryProvider from './provider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileMenu from '@/components/layout/MobileMenu';
-import './globals.css';
-import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'jotai';
 import { ToastContainer } from 'react-toastify';
 import { gothic_a1 } from './styles/font';

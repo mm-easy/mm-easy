@@ -84,7 +84,7 @@ const TYPING_GAME_STRINGS = {
     en: 'If you choose to exit, your score will not be saved'
   },
   MODAL_MESSAGE3: {
-    ko: '취소',
+    ko: '취소하기',
     en: 'Cancel'
   },
   MODAL_MESSAGE4: {
