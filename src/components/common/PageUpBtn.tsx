@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import ArrowCircle from '@/assets/arrow_circle_right_FILL1_wght400_GRAD0_opsz24.svg';
+import Arrow from '@/assets/pageup_btn.png';
+import Image from 'next/image';
 
 interface PageUpBtnProps {
   scrollPosition: number;
@@ -31,14 +32,14 @@ const PageUpBtn = ({ scrollPosition, bottom, smallBottom }: PageUpBtnProps) => {
     };
   }, [scrollPosition]);
 
-  const buttonClass = `fixed ${smallBottom} ${bottom} sm:right-[20px] right-[25px] bg-pointColor1 rounded-full origin-center rotate-[270deg] cursor-pointer`;
+  const buttonClass = `fixed ${smallBottom} ${bottom} sm:right-[20px] right-[25px] bg-pointColor1 rounded-full`;
 
   return (
     <>
       {isVisible && (
-        <div className={buttonClass}>
-          <ArrowCircle onClick={handlePageUp} style={{ fill: '#fff', width: '60px', height: '60px' }} />
-        </div>
+        <button className={buttonClass} onClick={handlePageUp}>
+          <Image src={Arrow} width={60} height={60} alt="페이지업 버튼 이미지" />
+        </button>
       )}
     </>
   );

@@ -154,19 +154,19 @@ const ABOUT_STRINGS = {
   },
   ABOUT_MANAGERDATA1_CONTENT2: {
     ko: '즐겁게 이용해 주세요!',
-    en: 'Please enjoy our service'
+    en: 'Please enjoy our service.'
   },
   ABOUT_MANAGERDATA2_NAME: {
     ko: '김연재',
     en: 'K.YeonJae'
   },
   ABOUT_MANAGERDATA2_CONTENT1: {
-    ko: '원장님 사랑해요',
-    en: 'Love you, Wonjang'
+    ko: '원장님 사랑해요.',
+    en: 'Love you, Wonjang.'
   },
   ABOUT_MANAGERDATA2_CONTENT2: {
-    ko: '혁우님도 사랑합니다',
-    en: 'Love you too, Hyukwoo'
+    ko: '혁우님도 사랑합니다.',
+    en: 'Love you too, Hyukwoo.'
   },
   ABOUT_MANAGERDATA3_NAME: {
     ko: '김형민',
@@ -174,11 +174,11 @@ const ABOUT_STRINGS = {
   },
   ABOUT_MANAGERDATA3_CONTENT1: {
     ko: '눈에서 불이날것 같아요.',
-    en: 'Feels like fire on my eyes'
+    en: 'Feels like fire on my eyes.'
   },
   ABOUT_MANAGERDATA3_CONTENT2: {
     ko: '열심히 만들었으니 즐겨주시면 감사하겠습니다!',
-    en: 'Hope you enjoy our service'
+    en: 'Hope you enjoy our service.'
   },
   ABOUT_MANAGERDATA4_NAME: {
     ko: '박재민',
@@ -190,7 +190,7 @@ const ABOUT_STRINGS = {
   },
   ABOUT_MANAGERDATA4_CONTENT2: {
     ko: '피드백은 언제나 환영입니다!',
-    en: 'Your feedback is always welcome'
+    en: 'Your feedback is always welcome.'
   },
   ABOUT_MANAGERDATA5_NAME: {
     ko: '박지영',
@@ -201,8 +201,8 @@ const ABOUT_STRINGS = {
     en: 'Yelled 뭔말easy? like 23482 times developing.'
   },
   ABOUT_MANAGERDATA5_CONTENT2: {
-    ko: '정말 너무 재밌고 즐거운 프로젝트였어요',
-    en: 'But it was so fun and rewarding to do it'
+    ko: '정말 너무 재밌고 즐거운 프로젝트였어요.',
+    en: 'But it was so fun and rewarding to do it.'
   },
   ABOUT_MANAGERDATA6_NAME: {
     ko: '정예슬',
