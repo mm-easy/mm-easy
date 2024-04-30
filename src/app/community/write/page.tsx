@@ -1,16 +1,16 @@
 'use client';
 
-import PostEditor from './PostEditor';
-import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/hooks/useAuth';
-import { toast } from 'react-toastify';
-import { insertPost } from '@/api/posts';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { supabase } from '@/utils/supabase/supabase';
-import { isLoggedInAtom } from '@/store/store';
-import { useAtom } from 'jotai';
 import useMultilingual from '@/utils/useMultilingual';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { useAtom } from 'jotai';
+import { insertPost } from '@/api/posts';
+import { useAuth } from '@/hooks/useAuth';
+import { isLoggedInAtom } from '@/store/store';
+import PostEditor from './PostEditor';
 
 const PostPage = () => {
   const { getCurrentUserProfile } = useAuth();
@@ -18,6 +18,7 @@ const PostPage = () => {
   const router = useRouter();
   const m = useMultilingual('communityPost');
 
+  /** 사용자 프로필 가져오기 */
   const {
     data: userProfile,
     isLoading,
@@ -27,6 +28,7 @@ const PostPage = () => {
     queryFn: getCurrentUserProfile
   })
 
+  /** 사용자 인증 */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,6 +49,7 @@ const PostPage = () => {
     fetchData();
   }, []);
 
+  /** 게시글 작성 취소 */
   const handleCancel = () => {
     const confirmLeave = window.confirm(m('COMMUNITY_POST_LEAVE_CONFIRM'));
     if (confirmLeave) {
@@ -72,12 +75,12 @@ const PostPage = () => {
             return;
           }
           try {
+            /** 게시글 업로드 */
             const newPost = await insertPost(title, content as unknown as string, category, userProfile.id);
             toast(m('COMMUNITY_POST_COMPLETE'));
             router.push(`/community/list/${category}/${newPost}`);
           } catch (error) {
             toast(m('COMMUNITY_POST_ERROR'));
-            console.error(error);
           }
         }}
       />

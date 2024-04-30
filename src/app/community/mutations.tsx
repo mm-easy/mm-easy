@@ -8,6 +8,7 @@ import type { InsertComment, IsOpenType, LikeParams, UpdateCommentParams } from 
 export const useInsertComment = () => {
   const queryClient = useQueryClient();
 
+  /** 댓글 등록 */
   const insertCommentMuitation = useMutation({
     mutationFn: async ({ profile, postId, content }: InsertComment) => {
       try {
