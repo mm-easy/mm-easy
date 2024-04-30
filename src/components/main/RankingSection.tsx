@@ -206,7 +206,7 @@ const RankingSection = () => {
         </div>
       </section>
       <div className="hidden sm:block sm:bg-bgColor2">
-        <div className="flex-col items-center w-full px-6 py-4 justify-between border-none">
+        <div className="flex-col items-center w-full px-6 pb-2 justify-between border-none">
           <p className="text-lg font-bold text-pointColor1 pt-8">{m('HALL_OF_FAME')}</p>
           <div className="flex justify-center mt-4 items-center gap-3">
             <RankingBtn
