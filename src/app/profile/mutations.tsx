@@ -1,11 +1,9 @@
-import { updateProfile } from '@/api/users';
+import { useMutation } from '@tanstack/react-query';
 import { ProfileToUpdate } from '@/types/users';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateProfile } from '@/api/users';
 
 /** 프로필 업데이트 */
 export const useUpdateProfile = () => {
-  const queryClient = useQueryClient();
-
   const updateProfileMutation = useMutation({
     mutationFn: async ({ id, newProfile }: { id: string; newProfile: ProfileToUpdate }) => {
       try {

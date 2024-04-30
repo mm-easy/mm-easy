@@ -1,12 +1,12 @@
 'use client';
 
-import { storageUrl } from '@/utils/supabase/storage';
-import PhonicsLayout from '../PhonicsLayout';
-import { useState } from 'react';
 import Image from 'next/image';
-import useMultilingual from '@/utils/useMultilingual';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
+import { useState } from 'react';
+import PhonicsLayout from '../PhonicsLayout';
+import useMultilingual from '@/utils/useMultilingual';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const VowelPage = () => {
   const [activeTab, setActiveTab] = useState('basicVowels');

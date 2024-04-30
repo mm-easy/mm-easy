@@ -1,28 +1,16 @@
 'use client';
 
-import useMultilingual from '@/utils/useMultilingual';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import useMultilingual from '@/utils/useMultilingual';
 
 const PhonicsLayout = () => {
   const m = useMultilingual('phonics');
   const pathname = usePathname();
-  const [currentMenu, setCurrentMenu] = useState('consonants');
-  const router = useRouter();
 
-  const categoryMenu: Record<string, string> = {
-    자음: 'consonants',
-    모음: 'vowels'
-  };
-
+  /** 현재 선택한 메뉴인지 확인 */
   const isActive = (path: string) => {
     return pathname.includes(path);
-  };
-
-  const handleSelectCategory = (category: string) => {
-    router.push(`/phonics/${category}`);
-    setCurrentMenu(category);
   };
 
   return (

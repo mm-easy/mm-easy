@@ -1,25 +1,18 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import DaejangContent from '@/assets/logo/logo_circle_blue 2.png';
 import RecommendLoginModal from '@/components/common/RecommendLoginModal';
 import PageUpBtn from '@/components/common/PageUpBtn';
-import { Quiz } from '@/types/quizzes';
-import { useRouter } from 'next/navigation';
 import useMultilingual from '@/utils/useMultilingual';
-import { useEffect, useState } from 'react';
 import { storageUrl } from '@/utils/supabase/storage';
 import { ADMIN } from '@/constant/adminId';
 
-const QuizList = ({
-  allQuizzes,
-  quizLevelSelected,
-  currentUser
-}: {
-  allQuizzes: Quiz[][];
-  quizLevelSelected: Quiz[];
-  currentUser: string;
-}) => {
+import type { Quiz } from '@/types/quizzes';
+
+const QuizList = ({ allQuizzes, currentUser }: { allQuizzes: Quiz[][]; currentUser: string }) => {
   const router = useRouter();
   const [quizId, setQuizId] = useState<string | undefined>('');
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -38,6 +31,7 @@ const QuizList = ({
     };
   }, [scrollPosition]);
 
+  /** 로그인 권장 모달 */
   const handleShowModal = (id: string | undefined) => {
     setQuizId(id);
     if (!currentUser) {
@@ -47,6 +41,7 @@ const QuizList = ({
     }
   };
 
+  /** 퀴즈 클릭하여 퀴즈 풀기로 이동하는 핸들러 */
   const handleMoveQuizTry = (id: string | undefined) => {
     router.push(`/quiz/${id}`);
   };

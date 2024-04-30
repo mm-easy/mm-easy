@@ -1,5 +1,5 @@
-import useMultilingual from '@/utils/useMultilingual';
 import { useRouter } from 'next/navigation';
+import useMultilingual from '@/utils/useMultilingual';
 
 const RecommendLoginModal = ({
   id,
