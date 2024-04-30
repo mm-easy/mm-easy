@@ -1,5 +1,6 @@
 import useMultilingual from '@/utils/useMultilingual';
 
+/** 문제 이전, 다음, 제출 버튼 */
 const PageAndSubmitBtn = ({
   resultMode,
   questionsLength,
