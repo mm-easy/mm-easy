@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import LoadingImg from '@/components/common/LoadingImg';
 import useMultilingual from '@/utils/useMultilingual';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { getRecentPosts, getRecentNotice } from '@/api/posts';
 import { useQuery } from '@tanstack/react-query';
+import { getRecentPosts, getRecentNotice } from '@/api/posts';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 
 const CommunitySection = () => {
   const m = useMultilingual('community-section');

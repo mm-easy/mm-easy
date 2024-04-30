@@ -16,10 +16,10 @@ const UsageStatus = ({
       }`}
     >
       <div className="flex">
-        <h1 className="sm:text-6xl text-8xl font-semibold text-pointColor1">{number}</h1>
-        <span className="sm:mt-8 mt-14 sm:w-10 w-16 sm:text-base text-xl font-semibold">{unit}</span>
+        <h1 className="text-8xl font-semibold text-pointColor1 sm:text-6xl">{number}</h1>
+        <span className="mt-14 w-16 text-xl font-semibold sm:mt-8 sm:w-10 sm:text-base">{unit}</span>
       </div>
-      <p className="sm:text-base sm:pr-4 text-xl font-semibold">{content}</p>
+      <p className="text-xl font-semibold sm:text-base sm:pr-4">{content}</p>
     </section>
   );
 };
