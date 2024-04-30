@@ -1,12 +1,12 @@
-import LikeToggleButton from './LikeToggleButton';
+import useMultilingual from '@/utils/useMultilingual';
 import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useDeleteLike, useInsertLike } from '../../../mutations';
 import { getLike } from '@/api/likes';
-import { useQuery } from '@tanstack/react-query';
+import LikeToggleButton from './LikeToggleButton';
 
 import type { LikeParams, LikeProps, LikeType } from '@/types/posts';
-import useMultilingual from '@/utils/useMultilingual';
 
 const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const m = useMultilingual('communityDetail');
@@ -15,6 +15,7 @@ const Like: React.FC<LikeProps> = ({ postId, profile }) => {
   const insertLike = useInsertLike();
   const deleteLike = useDeleteLike();
 
+  /** 게시글 좋아요 */
   const { data: nowLike = [] } = useQuery<LikeType[]>({
     queryKey: ['like', postId],
     queryFn: async () => {

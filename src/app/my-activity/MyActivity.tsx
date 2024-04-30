@@ -1,28 +1,29 @@
 'use client';
 
-import { getMyActivityComment } from '@/api/comments';
-import { getMyActivityPosts } from '@/api/posts';
-import { fetchUserQuizzes, userSolvedQuizzes } from '@/api/quizzes';
-import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
-import { useAuth } from '@/hooks/useAuth';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { supabase } from '@/utils/supabase/supabase';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { Pagination } from './Pagination';
-import { TabName } from '@/types/pagination';
-import { useDeleteQuiz } from '../quiz/[id]/mutations';
-import { CancelButton } from '@/components/common/FormButtons';
 import useMultilingual from '@/utils/useMultilingual';
-import { getUserLike } from '@/api/likes';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
 import { toast } from 'react-toastify';
+import { getUserLike } from '@/api/likes';
+import { getMyActivityPosts } from '@/api/posts';
+import { getMyActivityComment } from '@/api/comments';
+import { fetchUserQuizzes, userSolvedQuizzes } from '@/api/quizzes';
+import { useAuth } from '@/hooks/useAuth';
+import { useDeleteQuiz } from '../quiz/[id]/mutations';
+import { Pagination } from './Pagination';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+import { CancelButton } from '@/components/common/FormButtons';
+import { CommentDeleteBtn, PostDeleteButton } from '@/components/common/DeleteButton';
 import LoadingImg from '@/components/common/LoadingImg';
+
+import type { TabName } from '@/types/pagination';
 
 const MyActivity = () => {
   const m = useMultilingual('my-activity');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [activeTab, setActiveTab] = useState('solvedQuizzes'); // 활성 탭 상태
+  const [activeTab, setActiveTab] = useState('solvedQuizzes');
   const [currentPage, setCurrentPage] = useState(1);
   const { getCurrentUserProfile } = useAuth();
   const queryClient = useQueryClient();
@@ -48,7 +49,7 @@ const MyActivity = () => {
     fetchData();
   }, []);
 
-  // 사용자가 만든 quiz 불러오기
+  /** 사용자가 만든 quiz 불러오기 */
   const {
     data: userQuiz = [],
     isLoading: isQuizLoading,
@@ -70,7 +71,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  // 사용자가 푼 quiz 불러오기
+  /** 사용자가 푼 quiz 불러오기 */
   const {
     data: userSolvedQuiz = [],
     isLoading: isSolvedQuizLoading,
@@ -92,7 +93,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  // 사용자가 작성한 post 불러오기
+  /** 사용자가 작성한 post 불러오기 */ 
   const {
     data: userPost = [],
     isLoading: isPostLoading,
@@ -114,7 +115,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  // 사용자가 작성한 comment 불러오기
+  /** 사용자가 작성한 comment 불러오기 */
   const {
     data: userComment = [],
     isLoading: isCommentLoading,
@@ -136,7 +137,7 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  // 사용자의 좋아요 가져오기
+  /** 사용자의 좋아요 가져오기 */
   const {
     data: userLike = [],
     isLoading: isLikeLoading,
@@ -158,23 +159,22 @@ const MyActivity = () => {
     enabled: isLoggedIn // 로그인 상태일 때만 쿼리 활성화
   });
 
-  //
-  const navigateToQuiz = (quizId: string) => {
-    router.push(`/quiz/${quizId}`);
-  };
-
+  
+  /** 페이지 변경 */
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-
+  
+  /** 탭 변경 시 페이지 초기화 */
   const changeTab = (newTab: TabName) => {
     setActiveTab(newTab);
     setCurrentPage(1); // 탭을 변경할 때 페이지를 1로 리셋
   };
-
+  
+  /** 퀴즈 삭제 */
   const handleDeleteQuiz = (id: string) => {
     if (!window.confirm(m('QUIZ_DELETE'))) return;
-
+    
     deleteQuizMutation.mutateAsync(id).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['userQuizzes']
@@ -182,17 +182,23 @@ const MyActivity = () => {
       toast.success(m('QUIZ_DELETE_COMPLETE'));
     });
   };
+  
+  /** 퀴즈 이동 */
+  const navigateToQuiz = (quizId: string) => {
+    router.push(`/quiz/${quizId}`);
+  };
 
+  /** 게시글 이동 */
   const navigateToPost = (postId: string) => {
     router.push(`/community/list/전체/${postId}`);
   };
 
-  // 페이지
+  /** 페이지 */
   const itemsPerPage = 8; // 페이지 당 항목 수
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  // 각 탭의 데이터 슬라이싱
+  /** 각 탭 슬라이싱 */
   const currentSolvedQuizzes = userSolvedQuiz.slice(indexOfFirstItem, indexOfLastItem);
   const currentQuizzes = userQuiz.slice(indexOfFirstItem, indexOfLastItem);
   const currentPosts = userPost.slice(indexOfFirstItem, indexOfLastItem);

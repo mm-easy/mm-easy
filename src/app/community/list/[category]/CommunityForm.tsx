@@ -1,13 +1,12 @@
 'use client';
 
-import React from 'react';
 import useMultilingual from '@/utils/useMultilingual';
-import { useRouter } from 'next/navigation';
-import { formatToLocaleDateTimeString } from '@/utils/date';
 import { useMemo } from 'react';
-import { getCommentCount } from '@/api/comment';
 import { useQueries } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { getCommentCount } from '@/api/comment';
 import { getLike } from '@/api/likes';
+import { formatToLocaleDateTimeString } from '@/utils/date';
 
 import type { CommunityFormProps } from '@/types/posts';
 
@@ -23,6 +22,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
   const m = useMultilingual('communityList');
   const router = useRouter();
 
+  /** 공지 상단 정렬 */
   const sortedItems = useMemo(() => {
     return [...currentItems].sort((a, b) => {
       if (a.category === '공지' && b.category !== '공지') {
@@ -35,7 +35,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     });
   }, [currentItems]);
 
-  // 게시글 상세 페이지로 이동
+  /** 게시글 상세 페이지로 이동 */
   const navigateToDetailPost = (post: { id: string }): void => {
     if (category === null) {
       router.push(`/community/list/전체/${post.id}`);
@@ -44,6 +44,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     }
   };
 
+  /** 게시글 조회수 가져오기 */
   const commentCounts = useQueries({
     queries: sortedItems.map((post) => ({
       queryKey: ['commentCount', post.id],
@@ -51,6 +52,7 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
     }))
   });
 
+  /** 게시글 좋아요 가져오기 */
   const likeQueries = useQueries({
     queries: sortedItems.map((item) => ({
       queryKey: ['like', item.id],
@@ -80,7 +82,6 @@ const CommunityForm: React.FC<CommunityFormProps> = ({
           <tbody>
             {sortedItems?.length > 0 ? (
               sortedItems.map((item, idx) => (
-                // text-[calc(1vh+7px)
                 <tr
                   className={`sm:h-[6vh] cursor-pointer ${
                     item['category'] === '공지'

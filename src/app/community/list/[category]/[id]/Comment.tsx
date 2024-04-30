@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import useMultilingual from '@/utils/useMultilingual';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { useCommentIsOpen, useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
 import { useQuery } from '@tanstack/react-query';
-import { getComment } from '@/api/comment';
 import { profileStorageUrl } from '@/utils/supabase/storage';
-import { formatCommentDateToLocal } from '@/utils/date';
 import { HiDotsVertical } from 'react-icons/hi';
+import { toast } from 'react-toastify';
+import { getComment } from '@/api/comment';
+import { ADMIN } from '@/constant/adminId';
+import { formatCommentDateToLocal } from '@/utils/date';
+import { useCommentIsOpen, useDeleteComment, useInsertComment, useUpdateComment } from '../../../mutations';
 
 import type { PostCommentProps, PostDetailCommentType } from '@/types/posts';
-import { ADMIN } from '@/constant/adminId';
 
 const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const [content, setContent] = useState('');
@@ -25,6 +25,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
   const deleteCommentMutation = useDeleteComment();
   const isOpenCommentMutation = useCommentIsOpen();
 
+  /** 댓글 가져오기 */
   const { data: postCommentList } = useQuery<PostDetailCommentType[]>({
     queryKey: ['comments', postId],
     queryFn: async () => {
@@ -121,11 +122,11 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                       onChange={(e) => setContentChange(e.target.value)}
                       placeholder="Reply to comment…"
                     />
-                    <p className='sm:h-[19px] h-[11px]'></p>
+                    <p className="sm:h-[19px] h-[11px]"></p>
                   </div>
                 ) : (
                   <div className="sm:w-[70vw]">
-                    <p className='sm:leading-5'>{prev.content}</p>
+                    <p className="sm:leading-5">{prev.content}</p>
                     <div className="sm:text-sm text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>
@@ -207,7 +208,10 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                           </div>
                         ) : (
                           <div className="absolute flex flex-col right-0 mt-2 w-32 border-solid border border-pointColor1 bg-white rounded-md z-20">
-                            <button className="h-10 py-2 font-bold" onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}>
+                            <button
+                              className="h-10 py-2 font-bold"
+                              onClick={() => handleIsOpenChangeBtn(prev.content, prev.id)}
+                            >
                               {m('COMMUNITY_COMMENT_EDIT')}
                             </button>
                             <hr className="border-t border-0.5 border-pointColor1" />

@@ -1,14 +1,14 @@
 'use client';
 
-import CommunityForm from './CommunityForm';
-import LoadingImg from '@/components/common/LoadingImg';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/utils/supabase/supabase';
 import { useAtom } from 'jotai';
 import { getFilterPosts, getPosts } from '@/api/posts';
-import { useQuery } from '@tanstack/react-query';
 import { isLoggedInAtom } from '@/store/store';
-import { supabase } from '@/utils/supabase/supabase';
+import CommunityForm from './CommunityForm';
+import LoadingImg from '@/components/common/LoadingImg';
 
 import type { Post } from '@/types/posts';
 
@@ -19,6 +19,7 @@ const CommunityMain = () => {
   const params = useParams<{ category: string }>();
   const category = decodeURIComponent(params.category);
 
+  /** 게시글 가져오기 */
   const { data: post = [], isLoading } = useQuery<Post[]>({
     queryKey: ['postPage', category],
     queryFn: async () => {
@@ -37,6 +38,7 @@ const CommunityMain = () => {
     }
   });
 
+  /** 사용자 로그인 인증 */
   useEffect(() => {
     const fetchData = async () => {
       try {
