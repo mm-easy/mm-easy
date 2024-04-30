@@ -1,7 +1,5 @@
 'use client';
-import Terms from '@/constant/Terms';
-import PrivacyPolicy from '@/constant/PrivacyPolicy';
-import useMultilingual from '@/utils/useMultilingual';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -11,6 +9,9 @@ import { langAtom } from '@/store/store';
 import { HiMiniInformationCircle } from 'react-icons/hi2';
 import { FaCheckCircle } from 'react-icons/fa';
 import { IoIosCloseCircle } from 'react-icons/io';
+import Terms from '@/constant/Terms';
+import PrivacyPolicy from '@/constant/PrivacyPolicy';
+import useMultilingual from '@/utils/useMultilingual';
 
 const TermsPage = () => {
   const [allChecked, setAllChecked] = useState(false);
@@ -29,7 +30,7 @@ const TermsPage = () => {
     setPrivacyChecked(allChecked);
   }, [allChecked]);
 
-  // 개별 체크박스 상태 변경 핸들러
+  /** 개별 체크박스 상태 변경 핸들러 */
   const handleTermsChange = () => {
     setTermsChecked(!termsChecked);
   };
@@ -38,6 +39,7 @@ const TermsPage = () => {
     setPrivacyChecked(!privacyChecked);
   };
 
+  /** 이메일 유효성 검사 */
   const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -51,31 +53,31 @@ const TermsPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 약관 동의를 확인합니다.
+    /** 약관 동의를 확인합니다. */
     if (!termsChecked || !privacyChecked) {
       toast(m('TOAST_MESSAGE1'));
       return;
     }
 
-    // 이메일 유효성 검사
+    /** 이메일 유효성 검사 토스트 */
     if (!isValidEmail(email)) {
       toast.error(m('TOAST_MESSAGE2'));
       return;
     }
 
-    // 비밀번호 일치 여부를 확인합니다.
+    /** 비밀번호 일치 여부를 확인합니다. */
     if (password !== confirmPassword) {
       toast.error(m('TOAST_MESSAGE3'));
       return;
     }
 
-    // 비밀번호 길이와 조합을 확인합니다.
+    /** 비밀번호 길이와 조합을 확인합니다. */
     if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password)) {
       toast.error(m('TOAST_MESSAGE4'));
       return;
     }
 
-    // 회원가입을 시도하고 결과를 처리합니다.
+    /** 회원가입을 시도하고 결과를 처리합니다. */
     const signUpResult = await signUp(email, password);
 
     if (signUpResult && signUpResult.error) {
@@ -83,7 +85,7 @@ const TermsPage = () => {
       return;
     }
 
-    // 회원가입 성공 메시지를 표시하고 로그인 페이지로 이동합니다.
+    /** 회원가입 성공 메시지를 표시하고 로그인 페이지로 이동합니다. */
     toast.success(m('TOAST_MESSAGE5'));
     router.push('/login');
   };
@@ -95,9 +97,6 @@ const TermsPage = () => {
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
   };
-
-  const match = password === confirmPassword && confirmPassword.length > 0;
-  const noMatch = password !== confirmPassword && confirmPassword.length > 0;
 
   return (
     <article className="min-h-screen flex items-center justify-center">
