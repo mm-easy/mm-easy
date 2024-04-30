@@ -32,11 +32,6 @@ const Footer = () => {
           <section className="pb-1 hidden sm:block">
             <p className="text-sm font-semibold">{m('INTRODUCTION_2')}</p>
             <p className="text-sm font-semibold mb-2">{m('INTRODUCTION_3')}</p>
-            {/* <Link href="/about">
-              <div className="w-full py-2 font-semibold text-center rounded-sm border border-solid border-white">
-                {m('GO_TO_ABOUT')}
-              </div>
-            </Link> */}
           </section>
         </article>
       </article>
