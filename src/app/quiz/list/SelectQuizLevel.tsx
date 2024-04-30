@@ -101,7 +101,7 @@ const SelectQuizLevel = () => {
 
   return (
     <>
-      <section className="sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:pl-5 sm:font-bold sm:text-pointColor1 hidden">
+      <section className="sm:border-solid sm:border-b-1 border-pointColor1 sm:w-full sm:flex sm:items-center sm:h-[7vh] sm:pl-5 sm:font-bold sm:text-pointColor1 hidden">
         {m('CHOOSE_DIFFICULTY')}
       </section>
       <main
@@ -115,7 +115,7 @@ const SelectQuizLevel = () => {
             : selectedLevel === 3
             ? 'sm:bg-[#ffb266]'
             : ''
-        } sm:border-solid sm:border-y-1 border-pointColor1 hidden`}
+        } sm:border-solid sm:border-b-1 border-pointColor1 hidden`}
       >
         <div
           className={`sm:flex sm:flex-col sm:justify-center sm:items-center sm:w-[95px] sm:h-36 sm:rounded-lg ${

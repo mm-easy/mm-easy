@@ -82,7 +82,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full h-[8vh] leading-[7.5vh] flex font-bold border-solid border-b-2 sm:border-b sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1 sm:border-white">
+    <header className="w-full h-[8vh] leading-[7.5vh] flex font-bold border-solid border-b-2 sm:border-b sm:text-white sm:bg-pointColor1 text-pointColor1 bg-bgColor1 border-pointColor1 ">
       <Link
         href="/"
         className="sm:w-[35%] w-[16%] md:px-[2vw] sm:px-[1vw] text-center flex justify-center items-center"

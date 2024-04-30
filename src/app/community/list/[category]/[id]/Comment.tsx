@@ -130,7 +130,7 @@ const Comment: React.FC<PostCommentProps> = ({ postId, profile }) => {
                   </div>
                 ) : (
                   <div className="sm:w-[70vw]">
-                    <p className="sm:leading-5">{prev.content}</p>
+                    <p className="sm:leading-relaxed">{prev.content}</p>
                     <div className="sm:text-sm text-gray-400 my-2">
                       <p>{formatCommentDateToLocal(prev.created_at)}</p>
                     </div>
