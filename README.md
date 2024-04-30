@@ -681,8 +681,6 @@
  ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂login
  ┃ ┃ ┗ 📜page.tsx
- ┃ ┣ 📂menu
- ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂my-activity
  ┃ ┃ ┣ 📜MyActivity.tsx
  ┃ ┃ ┣ 📜page.tsx
@@ -692,10 +690,8 @@
  ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂vowels
  ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📜examplePage.tsx
  ┃ ┃ ┣ 📜page.tsx
  ┃ ┃ ┣ 📜PhonicsLayout.tsx
- ┃ ┃ ┗ 📜PhonicsPlayer.tsx
  ┃ ┣ 📂profile
  ┃ ┃ ┣ 📜mutations.tsx
  ┃ ┃ ┣ 📜MyLevelAndScore.tsx
@@ -712,6 +708,7 @@
  ┃ ┃ ┃ ┣ 📜Options.tsx
  ┃ ┃ ┃ ┣ 📜page.tsx
  ┃ ┃ ┃ ┣ 📜PageAndSubmitBtn.tsx
+ ┃ ┃ ┃ ┣ 📜QuizDorpdown.tsx
  ┃ ┃ ┃ ┗ 📜SideHeader.tsx
  ┃ ┃ ┣ 📂form
  ┃ ┃ ┃ ┣ 📂edit
@@ -748,19 +745,8 @@
  ┃ ┣ 📂quiz
  ┃ ┗ 📂team
  ┣ 📂components
- ┃ ┣ 📂(main)
- ┃ ┃ ┣ 📜Banner.tsx
- ┃ ┃ ┣ 📜CommunitySection.tsx
- ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┣ 📜NewsData.tsx
- ┃ ┃ ┣ 📜NewsSection.tsx
- ┃ ┃ ┣ 📜QuestionEx.tsx
- ┃ ┃ ┣ 📜QuizSection.tsx
- ┃ ┃ ┣ 📜RankingBtn.tsx
- ┃ ┃ ┗ 📜RankingSection.tsx
  ┃ ┣ 📂common
  ┃ ┃ ┣ 📜BlueInput.tsx
- ┃ ┃ ┣ 📜CloudinaryImage.tsx
  ┃ ┃ ┣ 📜DeleteButton.tsx
  ┃ ┃ ┣ 📜DropdownMenu.tsx
  ┃ ┃ ┣ 📜EditButton.tsx
@@ -779,6 +765,16 @@
  ┃ ┃ ┣ 📜MobileMenu.tsx
  ┃ ┃ ┣ 📜ProfileDropdown.tsx
  ┃ ┃ ┗ 📜ToggleLanguage.tsx
+ ┃ ┣ 📂main
+ ┃ ┃ ┣ 📜Banner.tsx
+ ┃ ┃ ┣ 📜CommunitySection.tsx
+ ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┣ 📜NewsData.tsx
+ ┃ ┃ ┣ 📜NewsSection.tsx
+ ┃ ┃ ┣ 📜QuestionEx.tsx
+ ┃ ┃ ┣ 📜QuizSection.tsx
+ ┃ ┃ ┣ 📜RankingBtn.tsx
+ ┃ ┃ ┗ 📜RankingSection.tsx
  ┃ ┗ 📂constant
  ┃ ┃ ┣ 📂locales
  ┃ ┃ ┃ ┣ 📂about
@@ -786,15 +782,17 @@
  ┃ ┃ ┃ ┣ 📂admin
  ┃ ┃ ┃ ┃ ┣ 📜admin.ts
  ┃ ┃ ┃ ┃ ┗ 📜reports.ts
- ┃ ┃ ┃ ┣ 📂about
+ ┃ ┃ ┃ ┣ 📂community
  ┃ ┃ ┃ ┃ ┣ 📜communityDetail.ts
  ┃ ┃ ┃ ┃ ┣ 📜communityList.ts
  ┃ ┃ ┃ ┃ ┗ 📜communityPost.ts
  ┃ ┃ ┃ ┣ 📂components
  ┃ ┃ ┃ ┃ ┣ 📜header.ts
+ ┃ ┃ ┃ ┃ ┣ 📜loading.ts
  ┃ ┃ ┃ ┃ ┗ 📜mobileMenu.ts
  ┃ ┃ ┃ ┣ 📂hangul
  ┃ ┃ ┃ ┃ ┣ 📜consonants.ts
+ ┃ ┃ ┃ ┃ ┣ 📜phonics.ts
  ┃ ┃ ┃ ┃ ┗ 📜vowels.ts
  ┃ ┃ ┃ ┣ 📂home
  ┃ ┃ ┃ ┃ ┣ 📜community-section.ts
@@ -843,7 +841,6 @@
  ┣ 📂utill
  ┃ ┗ 📂supabase
  ┃ ┃ ┣ 📜client.ts
- ┃ ┃ ┣ 📜create-client.ts
  ┃ ┃ ┣ 📜middleware.ts
  ┃ ┃ ┣ 📜server.ts
  ┃ ┃ ┣ 📜storage.ts
