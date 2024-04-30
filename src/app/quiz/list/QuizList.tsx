@@ -91,7 +91,7 @@ const QuizList = ({ allQuizzes, currentUser }: { allQuizzes: Quiz[][]; currentUs
                   quality={100}
                   className="w-full sm:h-[180px] h-[250px] object-cover border-solid border border-grayColor1 rounded-md"
                 />
-                <p className="sm:mb-2 sm:text-sm mb-4 line-clamp-2">{item.info}</p>
+                <p className="sm:mb-2 sm:text-sm mb-4 leading-relaxed line-clamp-2">{item.info}</p>
               </div>
             </div>
           ))}

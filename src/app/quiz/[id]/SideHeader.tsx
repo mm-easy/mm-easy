@@ -58,7 +58,7 @@ const SideHeader = ({
         />
         <p className="sm:pt-10 pl-4 pt-4 hidden sm:block">{info}</p>
         <CreateInfo creator={creator} date={formatToLocaleDateTimeString(date)} />
-        <p className="p-4 sm:hidden">{info}</p>
+        <p className="p-4 sm:hidden leading-relaxed">{info}</p>
       </section>
       <div className="sm:hidden flex justify-center font-bold pb-4">
         {currentUserEmail === creator && (
