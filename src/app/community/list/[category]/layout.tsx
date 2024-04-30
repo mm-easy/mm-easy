@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
-import CategorySelector from '@/app/community/list/[category]/CategorySelector';
 import Link from 'next/link';
 import useMultilingual from '@/utils/useMultilingual';
-import PlusCircle from '@/assets/add_FILL1_wght400_GRAD0_opsz24.svg'
 import { useParams } from 'next/navigation';
-import { PostParams } from '@/types/posts';
+import CategorySelector from '@/app/community/list/[category]/CategorySelector';
+import PlusCircle from '@/assets/add_FILL1_wght400_GRAD0_opsz24.svg'
+
+import type { PostParams } from '@/types/posts';
 
 type Props = {
   children: React.ReactNode;
@@ -15,6 +15,7 @@ type Props = {
   };
 };
 
+/** 커뮤니티 카테고리 레이아웃 */
 const Layout = ({ children, params }: Props) => {
   const category = decodeURIComponent(params.category);
   const m = useMultilingual('communityList');

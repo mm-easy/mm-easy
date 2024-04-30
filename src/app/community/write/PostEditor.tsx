@@ -3,12 +3,12 @@
 import dynamic from 'next/dynamic';
 import ReactQuill from 'react-quill';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAuth } from '@/hooks/useAuth';
-import { useQuery } from '@tanstack/react-query';
-import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
-import { ADMIN } from '@/constant/adminId';
-import { useState } from 'react';
 import { throttle } from 'lodash';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/hooks/useAuth';
+import { ADMIN } from '@/constant/adminId';
+import { CancelButton, SubmitButton } from '@/components/common/FormButtons';
 
 const TextEditor = dynamic(() => import('./TextEditor'), { ssr: false });
 
@@ -28,7 +28,6 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     { id: 'study', value: '공부', label: '공부' },
     { id: 'diary', value: '일기', label: '일기' }
   ];
-  // const categories = [...baseCategories];
 
   const [selectedCategory, setSelectedCategory] = useState<string>(
     defaultValues?.category ? defaultValues.category : baseCategories[0].value
@@ -38,6 +37,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     defaultValues?.content ? defaultValues.content : ''
   );
 
+  /** 사용자 정보 가져오기 */
   const {
     data: profile,
     isLoading,
@@ -47,6 +47,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
     queryFn: getCurrentUserProfile
   });
 
+  /** 어드민만 공지 카테고리 선택 가능 */
   const categories = ADMIN.some((admin) => admin.id === profile?.email)
     ? [{ id: 'notice', value: '공지', label: '공지' }, ...baseCategories]
     : baseCategories;
@@ -56,6 +57,7 @@ const PostEditor = ({ defaultValues, onCancel, onSubmit }: Props) => {
   if (error) return null;
 
 
+  /** 게시글 등록 쓰로틀링 */
   const throttledSubmit = throttle((values) => {
     if (onSubmit) {
       onSubmit(values);

@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { getPostsReports, getQuizzesReports } from '@/api/reports';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/utils/supabase/supabase';
-import { formatToLocaleDateTimeString } from '@/utils/date';
-import { getPostsReports, getQuizzesReports } from '@/api/reports';
-import LoadingImg from '@/components/common/LoadingImg';
-import useMultilingual from '@/utils/useMultilingual';
-import { toast } from 'react-toastify';
 import { ADMIN } from '@/constant/adminId';
+import { formatToLocaleDateTimeString } from '@/utils/date';
+import useMultilingual from '@/utils/useMultilingual';
+import LoadingImg from '@/components/common/LoadingImg';
 
 const AdminPage = () => {
   const m = useMultilingual('admin');
@@ -58,6 +58,7 @@ const AdminPage = () => {
     return index === self.findIndex((t) => t.target_id === report.target_id);
   });
 
+  /** 신고글 숨김 처리 */
   const handleDelete = async (id: string | undefined, target_id: string | undefined) => {
     try {
       const { error: adminError } = await supabase.from('reports').update({ status: true }).eq('id', id);
@@ -89,6 +90,7 @@ const AdminPage = () => {
     }
   };
 
+  /** 신고글 복구 처리 */
   const handleRestore = async (id: string | undefined, target_id: string | undefined) => {
     try {
       const { error: adminError } = await supabase.from('reports').update({ status: false }).eq('id', id);

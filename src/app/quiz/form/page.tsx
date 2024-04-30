@@ -1,23 +1,23 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { supabase } from '@/utils/supabase/supabase';
+import { debounce } from 'lodash';
 import QuizForm from '@/app/quiz/form/QuizForm';
 import SubHeader from '../../../components/common/SubHeader';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
 import useMultilingual from '@/utils/useMultilingual';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { useAuth } from '@/hooks/useAuth';
 import { useSubmitOptions, useSubmitQuestions, useSubmitQuiz } from '../mutations';
 import { generateFileName, generateImgFileName } from '@/utils/generateFileName';
 import { uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { storageUrl } from '@/utils/supabase/storage';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/utils/supabase/supabase';
 import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
-import { debounce } from 'lodash';
+import { MobileHeader } from '@/components/common/MobileHeader';
 
 import { QuestionType, type Question } from '@/types/quizzes';
-import { MobileHeader } from '@/components/common/MobileHeader';
 
 const QuizFormPage = () => {
   const [level, setLevel] = useState<number>(0);
@@ -26,7 +26,6 @@ const QuizFormPage = () => {
   const [selectedImg, setSelectedImg] = useState(`${storageUrl}/assets/quiz_144x144.png`);
   const [file, setFile] = useState<File | null>(null);
   const [currentUser, setCurrentUser] = useState('');
-  const [deletedQuestions, setDeletedQuestions] = useState(['']);
   const { getCurrentUserProfile } = useAuth();
   const m = useMultilingual('quizEditor');
 
@@ -54,6 +53,7 @@ const QuizFormPage = () => {
     fetchData();
   }, []);
 
+  /** questions 초깃값 */
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: crypto.randomUUID(),
@@ -147,7 +147,6 @@ const QuizFormPage = () => {
       if (file) {
         const fileName = generateFileName(file);
         imgUrl = await uploadThumbnailToStorage(file, fileName);
-        console.log('스토리지에 이미지 업로드 성공', imgUrl);
       }
 
       // newQuiz 구성하여 quizzes 테이블에 인서트
@@ -207,9 +206,10 @@ const QuizFormPage = () => {
         router.replace('/quiz/list');
       }
     } catch (error) {
-      console.log('퀴즈 생성 중 에러 발생');
+      console.error('퀴즈 생성 중 에러 발생');
     }
   };
+
   const debouncedSubmit = debounce(handleSubmitBtn, 1000);
 
   return (

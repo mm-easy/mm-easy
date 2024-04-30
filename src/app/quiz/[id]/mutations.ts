@@ -1,13 +1,13 @@
+import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertQuizTry, updateQuizScore } from '@/api/tries';
 import { deleteQuiz } from '@/api/quizzes';
-import { toast } from 'react-toastify';
+import { insertReport } from '@/api/reports';
 
 import type { QuizTry } from '@/types/quizzes';
-import { Report } from '@/types/reports';
-import { insertReport } from '@/api/reports';
-import { useRouter } from 'next/navigation';
+import type { Report } from '@/types/reports';
 
+/** 퀴즈 점수 등록 */
 export const useSubmitQuizTry = () => {
   const queryClient = useQueryClient();
 
@@ -29,6 +29,7 @@ export const useSubmitQuizTry = () => {
   return mutation;
 };
 
+/** 이미 푼 퀴즈 점수 업데이트 */
 export const useUpdateQuizTry = () => {
   const queryClient = useQueryClient();
 
@@ -50,6 +51,7 @@ export const useUpdateQuizTry = () => {
   return mutation;
 };
 
+/** 퀴즈 신고 등록 */
 export const useSubmitReport = () => {
   const queryClient = useQueryClient();
 

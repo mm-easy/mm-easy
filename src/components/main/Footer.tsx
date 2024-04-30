@@ -2,15 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logoVertical4 from '@/assets/logo/logo_vertical_4.png';
 import useMultilingual from '@/utils/useMultilingual';
-import { useAtom } from 'jotai';
-import { langAtom } from '@/store/store';
 
 const Footer = () => {
-  const [lang] = useAtom(langAtom);
   const m = useMultilingual('main-footer');
 
   return (
-    <main className="p-8 flex gap-8 text-white bg-pointColor1 border-b-2 border-solid border-white sm:px-6 sm:py-2">
+    <footer className="p-8 flex gap-8 text-white bg-pointColor1 border-b-2 border-solid border-white sm:px-6 sm:py-2 sm:pb-[10vh] sm:border-0">
       <Image src={logoVertical4} alt="사이트 로고" width={300} quality={100} className="object-cover block sm:hidden" />
       <article className="py-5 flex flex-col justify-between">
         <section>
@@ -35,15 +32,15 @@ const Footer = () => {
           <section className="pb-1 hidden sm:block">
             <p className="text-sm font-semibold">{m('INTRODUCTION_2')}</p>
             <p className="text-sm font-semibold mb-2">{m('INTRODUCTION_3')}</p>
-            <Link href="/about">
+            {/* <Link href="/about">
               <div className="w-full py-2 font-semibold text-center rounded-sm border border-solid border-white">
                 {m('GO_TO_ABOUT')}
               </div>
-            </Link>
+            </Link> */}
           </section>
         </article>
       </article>
-    </main>
+    </footer>
   );
 };
 

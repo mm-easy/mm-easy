@@ -1,5 +1,5 @@
-import { FormPostButtonProps } from '@/types/posts';
 import { useRouter } from 'next/navigation';
+import { FormPostButtonProps } from '@/types/posts';
 
 export const PostEditButton: React.FC<FormPostButtonProps> = ({ text, width, height, redirectUrl }) => {
   const router = useRouter();

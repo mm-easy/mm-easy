@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 import { useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
+import useMultilingual from '@/utils/useMultilingual';
 import { BlueInput } from '@/components/common/BlueInput';
 import { handleMaxLength } from '@/utils/handleMaxLength';
 import { generateFileName } from '@/utils/generateFileName';
 import { uploadAvatarToStorage } from '@/api/users';
-import { toast } from 'react-toastify';
-import { profileStorageUrl } from '@/utils/supabase/storage';
 import { useUpdateProfile } from './mutations';
+import { profileStorageUrl } from '@/utils/supabase/storage';
 
 import type { User } from '@/types/users';
-import { useQueryClient } from '@tanstack/react-query';
-import useMultilingual from '@/utils/useMultilingual';
 
 const MyProfile = ({ data }: { data: User }) => {
   const m = useMultilingual('my-profile');

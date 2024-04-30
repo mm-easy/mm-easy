@@ -6,13 +6,13 @@ interface FormButtonProps {
   height?: string;
   border?: string;
 }
-// flex justify-center items-center 퀴즈풀기 때문에 추가했으니 문제 있는지 확인해보기..
+
 export const CancelButton: React.FC<FormButtonProps> = ({ onClick, text, width, height, border }) => {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex justify-center items-center sm:border-1 rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
+      className={`flex justify-center items-center sm:border-0 rounded-md text-pointColor1 border-solid p-2 border border-pointColor1 bg-white ${width} ${height} ${border}`}
     >
       {text}
     </button>

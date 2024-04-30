@@ -1,20 +1,20 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabase/supabase';
+import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/store/store';
+import { getUser } from '@/api/users';
 import MyLevelAndScore from './MyLevelAndScore';
 import MyProfile from './MyProfile';
 import LoadingImg from '@/components/common/LoadingImg';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/utils/supabase/supabase';
-import { useAtom } from 'jotai';
-import { isLoggedInAtom } from '@/store/store';
-import { useQuery } from '@tanstack/react-query';
-import { getUser } from '@/api/users';
 
 import type { User } from '@/types/users';
 
 const ProfilePage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [isLoggedIn] = useAtom(isLoggedInAtom);
   const router = useRouter();
 
   /** 현재 로그인되어 있는지 확인 */

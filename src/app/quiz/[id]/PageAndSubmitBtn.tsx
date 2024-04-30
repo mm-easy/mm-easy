@@ -1,5 +1,6 @@
 import useMultilingual from '@/utils/useMultilingual';
 
+/** 문제 이전, 다음, 제출 버튼 */
 const PageAndSubmitBtn = ({
   resultMode,
   questionsLength,
@@ -25,7 +26,7 @@ const PageAndSubmitBtn = ({
         <div className="flex justify-between gap-3 font-semibold">
           <button
             disabled={page === 0}
-            className={`w-full py-[7px] ${
+            className={`w-full sm:h-10 py-[7px] ${
               page === 0 ? 'text-white bg-grayColor2' : 'text-pointColor1 border border-solid border-pointColor1'
             } rounded-md`}
             onClick={handlePrevPage}
@@ -34,7 +35,7 @@ const PageAndSubmitBtn = ({
           </button>
           <button
             disabled={page === questionsLength - 1}
-            className={`w-full py-[7px] ${
+            className={`w-full sm:h-10 py-[7px] ${
               page === questionsLength - 1
                 ? 'text-white bg-grayColor2'
                 : 'text-pointColor1 border border-solid border-pointColor1'
@@ -46,7 +47,7 @@ const PageAndSubmitBtn = ({
         </div>
       )}
       <button
-        className={`w-full py-[8px] ${
+        className={`w-full sm:h-10 py-[8px] ${
           isAllAnswersSubmitted ? 'bg-pointColor1' : 'bg-grayColor2 cursor-default'
         } text-white font-semibold tracking-wider rounded-md`}
         onClick={handleResultMode}
