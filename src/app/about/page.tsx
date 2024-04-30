@@ -1,13 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import UsageStatus from './UsageStatus';
 import { getPosts } from '@/api/posts';
 import { getQuizzes } from '@/api/quizzes';
 import { getUsers } from '@/api/users';
 import { WhiteButton } from '@/components/common/FormButtons';
+import { BiSolidVolumeFull } from 'react-icons/bi';
+import { BiPauseCircle, BiPlayCircle } from 'react-icons/bi';
 import PageUpBtn from '@/components/common/PageUpBtn';
 import useMultilingual from '@/utils/useMultilingual';
 import { createManagerData } from '@/utils/managerData';
@@ -27,9 +29,41 @@ import type { User } from '@/types/users';
 
 const AboutPage = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [playing, setPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
 
   const m = useMultilingual('about');
   const managerData = createManagerData(m);
+
+  const ThemeSong = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      ThemeSong.current = new Audio('about/CodingZizon.mp3');
+      return () => {
+        if (ThemeSong.current) ThemeSong.current.pause();
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (ThemeSong.current) ThemeSong.current.volume = volume;
+  }, [volume]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(e.target.valueAsNumber);
+  };
+
+  useEffect(() => {
+    // 재생 상태가 변경될 때마다 오디오 재생 또는 일시정지
+    if (ThemeSong.current) {
+      playing ? ThemeSong.current.play() : ThemeSong.current.pause();
+    }
+  }, [playing]);
+
+  const togglePlay = () => {
+    setPlaying(!playing); // 재생 상태 토글
+  };
 
   /** 퀴즈 만들어진 수 */
   const { data: quizNum } = useQuery<Quiz[]>({
@@ -246,6 +280,23 @@ const AboutPage = () => {
       {/** 팀 소개 */}
       <article className="w-full mt-20 bg-bgColor2 border-t-2 border-solid border-pointColor1 sm:w-full sm:mt-0">
         <h2 className="pt-16 pb-10 text-pointColor1 text-4xl font-extrabold sm:text-xl">{m('ABOUT_TITLE5')}</h2>
+        <button onClick={togglePlay} className="play-pause-btn text-pointColor1">
+          {playing ? <BiPauseCircle size="3em" /> : <BiPlayCircle size="3em" />}
+        </button>
+        <div className="volume-control flex justify-center items-center mt-2 mb-6">
+          <label htmlFor="volume-slider" className="flex items-center mr-2 text-pointColor1">
+            <BiSolidVolumeFull className="mr-1 text-xl text-pointColor1" />:
+          </label>
+          <input
+            type="range"
+            id="volume-slider"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+          />
+        </div>
         <h2 className="pb-14 text-pointColor1 text-xl font-bold sm:hidden">Team Coding Zizon</h2>
         <div className="w-3/5 mx-auto mb-10 grid grid-cols-3 gap-x-64 sm:grid-cols-2 sm:gap-x-40">
           {managerData.map((member) => {
