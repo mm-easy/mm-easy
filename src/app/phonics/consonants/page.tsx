@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import PhonicsLayout from '../PhonicsLayout';
-import { storageUrl } from '@/utils/supabase/storage';
 import { useState } from 'react';
-import useMultilingual from '@/utils/useMultilingual';
 import { useAtom } from 'jotai';
 import { langAtom } from '@/store/store';
+import PhonicsLayout from '../PhonicsLayout';
+import useMultilingual from '@/utils/useMultilingual';
+import { storageUrl } from '@/utils/supabase/storage';
 
 const ConsonantsPage = () => {
   const [letter, setLetter] = useState('');
@@ -34,17 +34,14 @@ const ConsonantsPage = () => {
     { letter: 'ㄲ', read: '[k]', name: '쌍기역', audio: '/audio/consonants/ssangGiyeok.wav' },
     { letter: 'ㄸ', read: '[t]', name: '쌍디귿', audio: '/audio/consonants/ssangDigeut.wav' },
     { letter: 'ㅃ', read: '[p]', name: '쌍비읍', audio: '/audio/consonants/ssangBieup.wav' },
-    { letter: 'ㅆ', read: '[s]', name: '쌍시옷', audio: '/audio/consonants/ssangShiot.wav' }, //18 -> 실제 19.wav
-    { letter: null, read: null, name: null }, //19
-    { letter: null, read: null, name: null }, //20
+    { letter: 'ㅆ', read: '[s]', name: '쌍시옷', audio: '/audio/consonants/ssangShiot.wav' },
+    { letter: null, read: null, name: null },
+    { letter: null, read: null, name: null },
     { letter: 'ㄹ', read: '[r/l]', name: '리을', audio: '/audio/consonants/Rieul.wav' },
-    { letter: null, read: null, name: null }, //22
-    { letter: null, read: null, name: null }, //23
-    { letter: 'ㅉ', read: '[t]', name: '쌍지읒', audio: '/audio/consonants/ssangJieut.wav' } //24 -> 실제론 25.wav
+    { letter: null, read: null, name: null },
+    { letter: null, read: null, name: null },
+    { letter: 'ㅉ', read: '[t]', name: '쌍지읒', audio: '/audio/consonants/ssangJieut.wav' }
   ];
-
-  const nullList = [5, 9, 19, 20, 22, 23];
-
   /** 오디오 재생 핸들러 */
   const handlePlaySound = (audio: string) => {
     if (audio) {
@@ -83,8 +80,6 @@ const ConsonantsPage = () => {
                       setLetterName(consonantLabels[24].name as string);
                     }
                   } else if (index === 24) {
-                    return;
-                  } else if (nullList.includes(index)) {
                     return;
                   } else {
                     handlePlaySound(item.audio as string);

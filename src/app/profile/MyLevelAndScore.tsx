@@ -1,18 +1,18 @@
-import VerticalBlueLine from './VerticalBlueLine';
 import Link from 'next/link';
-import LoadingImg from '@/components/common/LoadingImg';
 import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { langAtom } from '@/store/store';
 import { getQuizzes } from '@/api/quizzes';
 import { getMyGameScore } from '@/api/game_scrore';
-import { useQuery } from '@tanstack/react-query';
 import { getMyQuizScore } from '@/api/tries';
+import useMultilingual from '@/utils/useMultilingual';
+import LoadingImg from '@/components/common/LoadingImg';
+import VerticalBlueLine from './VerticalBlueLine';
 import { assetsStorageUrl } from '@/utils/supabase/storage';
 
 import type { Quiz, Score } from '@/types/quizzes';
 import type { User } from '@/types/users';
-import { useAtom } from 'jotai';
-import useMultilingual from '@/utils/useMultilingual';
-import { langAtom } from '@/store/store';
 
 const MyLevelAndScore = ({ data }: { data: User }) => {
   const [lang] = useAtom(langAtom);
@@ -46,11 +46,7 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
   });
 
   /** 내가 푼 퀴즈 점수들 가져오기 */
-  const {
-    data: myQuizScores,
-    isLoading,
-    isError
-  } = useQuery<Score[]>({
+  const { data: myQuizScores, isLoading } = useQuery<Score[]>({
     queryKey: ['quiz_tries'],
     queryFn: async () => {
       try {
@@ -64,13 +60,15 @@ const MyLevelAndScore = ({ data }: { data: User }) => {
   });
 
   if (isLoading) return <LoadingImg height="84vh" />;
-  if (isError) return <div>에러...</div>;
 
+  /** 퀴즈 점수 계산 */
   const totalQuizScore = myQuizScores?.reduce((a, b) => {
     return a + b.score;
   }, 0);
 
   const myTotalScore = (totalQuizScore ?? 0) + (myGameScore ?? 0);
+
+  /** 점수에 따른 레벨 산정 */
   const myLevel =
     myTotalScore < 5000 ? 1 : myTotalScore < 15000 ? 2 : myTotalScore < 35000 ? 3 : myTotalScore < 70000 ? 4 : 5;
   const imageUrl = `${assetsStorageUrl}/level_${myLevel}.png`;

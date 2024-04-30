@@ -1,12 +1,12 @@
-import useMultilingual from '@/utils/useMultilingual';
-import { handleDeleteBtn } from '@/api/comments';
-import { removeCommunityPost } from '@/api/posts';
-import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useParams } from 'next/navigation';
+import useMultilingual from '@/utils/useMultilingual';
+import { removeCommunityPost } from '@/api/posts';
+import { handleDeleteBtn } from '@/api/comments';
 
+import { FormCommentButtonProps, FormPostButtonProps } from '@/types/posts';
 import type { PostParams } from '@/types/posts';
 
 export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, height, postId, redirectUrl }) => {
@@ -15,6 +15,7 @@ export const PostDeleteButton: React.FC<FormPostButtonProps> = ({ text, width, h
   const router = useRouter();
   const params = useParams<PostParams>();
 
+  /** 게시글 삭제 클릭 핸들러 */
   const handleDeleteClick = async () => {
     if (window.confirm(m('COMMUNITY_POST_DELETE'))) {
       try {
@@ -50,6 +51,7 @@ export const CommentDeleteBtn: React.FC<FormCommentButtonProps> = ({ text, width
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  /** 댓글 삭제 클릭 핸들러 */
   const handleDeleteClick = async () => {
     if (window.confirm(m('COMMUNITY_COMMENT_DELETE'))) {
       try {

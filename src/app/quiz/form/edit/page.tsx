@@ -1,24 +1,23 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabase/supabase';
+import { toast } from 'react-toastify';
+import { debounce } from 'lodash';
 import SubHeader from '@/components/common/SubHeader';
 import QuizForm from '../QuizForm';
 import useConfirmPageLeave from '@/hooks/useConfirmPageLeave';
-
-import { useEffect, useState } from 'react';
-import { storageUrl } from '@/utils/supabase/storage';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 import { deleteQuestions, getQuiz, uploadImageToStorage, uploadThumbnailToStorage } from '@/api/quizzes';
 import { getQuestions } from '@/api/questions';
 import { getOptions } from '@/api/question_options';
-import { supabase } from '@/utils/supabase/supabase';
-import { toast } from 'react-toastify';
-
-import { Question, QuestionType } from '@/types/quizzes';
 import { generateFileName, generateImgFileName } from '@/utils/generateFileName';
 import { getRandomThumbnail } from '@/utils/getRandomThumbnail';
 import { useSubmitOptions, useSubmitQuestions, useUpdateQuiz } from '../../mutations';
-import { debounce } from 'lodash';
+import { storageUrl } from '@/utils/supabase/storage';
+
+import { Question, QuestionType } from '@/types/quizzes';
 
 const QuizEditPage = () => {
   const [level, setLevel] = useState<number>(0);
@@ -38,7 +37,7 @@ const QuizEditPage = () => {
   const insertQuestionsMutation = useSubmitQuestions();
   const insertOptionsMutation = useSubmitOptions();
 
-  /** '수정' 버튼을 통해 쿼리를 달고 왔다면 */
+  /** 수정할 게시글의 기존 내용을 불러옴 */
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const queryParams = new URLSearchParams(window.location.search);
@@ -78,8 +77,6 @@ const QuizEditPage = () => {
               };
             })
           );
-
-          console.log('options 포함한 questions:', questionsWithOptions);
           setMyquizData(questionsWithOptions);
           setQuestions(questionsWithOptions);
         } catch (error) {
@@ -111,6 +108,7 @@ const QuizEditPage = () => {
     fetchData();
   }, []);
 
+  /** questions 초깃값 */
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: crypto.randomUUID(),
@@ -203,7 +201,6 @@ const QuizEditPage = () => {
       if (file) {
         const fileName = generateFileName(file);
         imgUrl = (await uploadThumbnailToStorage(file, fileName)) as string;
-        console.log('스토리지에 이미지 업로드 성공', imgUrl);
       }
 
       // updatedQuiz 구성하여 quizzes 테이블에서 id에 해당하는 quiz를 update
@@ -266,9 +263,10 @@ const QuizEditPage = () => {
         router.replace('/quiz/list');
       }
     } catch (error) {
-      console.log('퀴즈 생성 중 에러 발생');
+      console.error('퀴즈 생성 중 에러 발생');
     }
   };
+
   const debouncedSubmit = debounce(handleSubmitBtn, 1000);
 
   return (
