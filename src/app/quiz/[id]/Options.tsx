@@ -17,6 +17,7 @@ const Options = ({
   onChange: (id: string | undefined, answer: string | boolean, option_id?: string) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }) => {
+  /** 객관식 문제 options 데이터 불러오기 */
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
       try {
