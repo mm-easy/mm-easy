@@ -39,7 +39,7 @@ const QuizSection = () => {
           {m('MORE')}
         </Link>
       </div>
-      <div className="hidden p-8 sm:block border-b-2 border-solid border-pointColor1">
+      <div className="hidden pb-8 sm:block border-b-2 border-solid border-pointColor1">
         <Swiper
           modules={[Pagination, Navigation]}
           spaceBetween={5}
@@ -58,7 +58,7 @@ const QuizSection = () => {
                       quality={100}
                       width={20}
                       height={20}
-                      className="sm:w-4 sm:h-4 w-6 h-6"
+                      className="sm:w-4 sm:h-4 w-6 h-6 object-cover"
                     />
                   )}
                   <p
@@ -75,11 +75,11 @@ const QuizSection = () => {
                   width={200}
                   height={200}
                   quality={100}
-                  className="object-cover mb-4"
+                  className="mb-8 w-[200px] h-[200px] object-cover border border-solid border-pointColor1 rounded-lg"
                 />
                 <QuestionEx id={quiz.id} />
                 <Link href={`/quiz/${quiz.id}`}>
-                  <div className="my-4 p-[18px] text-center text-white bg-pointColor1 rounded-md">
+                  <div className="w-[200px] mt-6 mb-4 p-[18px] text-center text-white bg-pointColor1 rounded-md">
                     {m('TAKE_THE_QUIZ')}
                   </div>
                 </Link>
